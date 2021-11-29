@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="UTF-8" />
+    <title>素体選択</title>
+  </head>
+  <body>
+    <!-- タイトル -->
+    <div class="title">
+      <h2>素体選択</h2>
+      <hr />
+    </div>
+    <!-- アイテム(FlexBox) -->
+    <div class="box_wrpper">
+      <%= category %>
+
+      <% for( let index = 0; index < name_subcategory.length; index++ ) { %>
+      <div class="item">
+        <h4><%= name_subcategory[index] %></h4>
+        <!--<img src="*" alt="<%#name_subcategory[index]%>" />-->
+
+        <form action="/create/select_color" method="post">
+          <input type="hidden" name="category_sub" value="<%=name_subcategory[index]%>">
+          <input type="submit" value="素体を選択する">
+      </form>
+      <% } %>
+
+    </div>
+  </body>
+</html>

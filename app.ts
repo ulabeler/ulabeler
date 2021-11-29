@@ -1,14 +1,12 @@
 export{};
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
+const createError = require('http-errors');
+const express = require('express');
 const app = express();
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+
+
 
 import { send_discord } from './tools/discord_send_message'; //メッセ送信処理 できればこれで状態監視できるようにしたい
 
@@ -24,6 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //ルーティング設定
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 const createRouter = require('./routes/create');
 
 app.use('/', indexRouter);
