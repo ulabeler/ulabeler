@@ -6,4 +6,4 @@
  ただし、.envはgitに上げないようにしてるので中身については聞いてください。
 
 # TODO
- [DB]base_category.name_subcategoryのNullAbleを禁止にする
+- [ ] [DB]base_category.name_subcategoryのNullAbleを禁止にする
