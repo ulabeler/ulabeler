@@ -7,3 +7,5 @@
 
 # TODO
 - [ ] [DB]base_category.name_subcategoryのNullAbleを禁止にする
+- [ ] [決済]PayPayの組み込み
+- [ ] Webページ全般
