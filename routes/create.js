@@ -61,11 +61,14 @@ router.post('/select_object_sub', (request, response) => {
         });
     });
 });
-router.post('/select_color', (result, response) => {
+router.post('/select_color', (request, response) => {
     // POSTパラメータを取得
-    let category = result.body.category_sub;
+    let category = request.body.category_sub;
     response.render('create/select_color', {
         category: category
     });
+});
+router.get('/customize_editing', (request, response) => {
+    response.render('create/customize_editing');
 });
 module.exports = router;

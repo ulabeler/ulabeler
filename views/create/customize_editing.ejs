@@ -1,0 +1,116 @@
+<!-- パンくずリスト -->
+<div class="">
+  <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ 作品設定 ＞ 作品設定確認</h5>
+</div>
+
+<!-- ページ名 -->
+<h2>カスタマイズ</h2>
+
+<!-- フォント設定 -->
+<div class="">
+  <p>テキスト</p>
+  <form action="#" method="post">
+    <select name="font" class="">
+      <option value="1">游ゴシック</option>
+      <option value="2">游明朝</option>
+      <option value="3">ヒラギノ</option>
+      <option value="4">メイリオ</option>
+      <option value="5">源ノ角ゴシック</option>
+      <option value="6">Century</option>
+      <option value="7">Arial</option>
+      <option value="8">Noto</option>
+      <option value="9">sons</option>
+    </select>
+    <div class="">
+      <select name="font_size" class="">
+        <option value="1">8</option>
+        <option value="2">9</option>
+        <option value="3">10</option>
+        <option value="4">11</option>
+        <option value="5">12</option>
+        <option value="6">14</option>
+        <option value="7">16</option>
+        <option value="8">18</option>
+        <option value="9">20</option>
+        <option value="10">22</option>
+        <option value="11">24</option>
+        <option value="12">26</option>
+        <option value="13">28</option>
+        <option value="14">36</option>
+        <option value="15">48</option>
+        <option value="16">72</option>
+      </select>
+      <input type="color" id="" name="" value="#fff" class="" />
+    </div>
+    <input type="text" id="" name="" class="" />
+  </form>
+</div>
+
+<!-- ツールバー -->
+<div class="">
+  <!-- 画像 -->
+  <div class="">
+    <a href="#">
+      <img src="" alt="画像" />
+      <p>画像</p>
+    </a>
+  </div>
+  <!-- グリット -->
+  <div class="">
+    <a href="#">
+      <img src="" alt="グリット画像" />
+      <p>グリット</p>
+    </a>
+  </div>
+  <!-- 3Dビュー -->
+  <div class="">
+    <a href="#">
+      <img src="" alt="3Dビュー画像" />
+      <p>3Dビュー</p>
+    </a>
+  </div>
+  <!-- 素体名 -->
+  <div class="">
+    <p>素体名</p>
+    <h3 id="object_name"></h3>
+    <h3 id="selected_color"></h3>
+    <!--可変-->
+  </div>
+</div>
+
+<!-- スタンプ設定 -->
+<div class="">
+  <p>スタンプ</p>
+  <div class=""></div>
+  <p>仮1,2,3</p>
+</div>
+
+<!-- カスタム画面 -->
+<div class=""></div>
+
+<!-- ボタン -->
+<div class="">
+  <div class="">
+    <button type="“button”" onclick="location.href='#'">素体選択に戻る</button>
+    <button type="“button”" onclick="location.href='#'">完成</button>
+  </div>
+</div>
+
+<div id="msg"></div>
+
+<script>
+    const object_name = document.querySelector('#object_name');
+  window.onload = function () {
+    const cookie_object = {};
+    const cookie_array = document.cookie.split(";");
+    for (let i = 0; i < cookie_array.length; i++) {
+      const key = cookie_array[i].split("=")[0].trim();
+      const value = cookie_array[i].split("=")[1];
+      cookie_object[key] = value;
+    }
+    object_name.innerHTML = cookie_object.object_name;
+    const selected_color = document.querySelector('#selected_color');
+    selected_color.innerHTML = "Selected=" + cookie_object.color;
+    console.log(cookie_object);
+  };
+</script>

@@ -19,17 +19,17 @@
 
     <!-- 素体名 -->
     <div class="object_name">
-      <p><%= category %> </p>
+      <p id="object_name"><%= category %></p>
     </div>
 
     <!-- カラー選択 -->
     <div>
-      <input type="color" id="head" name="head"/>
+      <input type="color" id="color" name="color"/>
     </div>
 
     <!-- ボタン -->
     <p class="back">戻る</p>
-    <p class="select">決定</p>
+    <button id="submit">決定</button>
   </body>
 
   <script>
@@ -41,5 +41,17 @@
         const color = "#" + r + g + b;
         // 上記で作成した文字列をid headに設定する
         //document.getElementById("head").value = color;
+
+        //submitが押されたらされたら実行する
+        //querySelectorを利用してcolorとobjectnameをCookieに保存する
+        document.querySelector("#submit").addEventListener("click", function(){
+          document.cookie = "color=" + document.querySelector("#color").value;
+          document.cookie = "object_name=" + document.querySelector("#object_name").innerText;
+
+          console.log("color=" + document.getElementById("color").value)
+          console.log("object_name=" + document.getElementById("object_name").innerHTML)
+          //submitを押したら、create_object.ejsに移動する
+          location.href = "/create/customize_editing";
+        });
   </script>
 </html>

@@ -1,3 +1,5 @@
+import { request } from "http";
+
 //ここからts共通部分
 export { };
 const express = require('express');
@@ -70,12 +72,16 @@ router.post('/select_object_sub', (request: any, response: any) => {
         });
 });
 
-router.post('/select_color', (result: any, response: any) => {
+router.post('/select_color', (request: any, response: any) => {
     // POSTパラメータを取得
-    let category = result.body.category_sub;
+    let category = request.body.category_sub;
     response.render('create/select_color', {
         category: category
     });
+});
+
+router.get('/customize_editing', (request:any, response:any) => {
+    response.render('create/customize_editing');
 });
 
 module.exports = router;
