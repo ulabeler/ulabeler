@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 入力フォーム -->
+    <!-- 商品名/単価/個数/ユーザー名/ -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>商品購入</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <form action="/payment/paypay/create_qr_code" method="post">
+                    <div class="form-group">
+                        <label for="item_name">商品名</label>
+                        <input type="text" class="form-control" id="item_name" name="item_name" placeholder="商品名を入力してください">
+                    </div>
+                    <div class="form-group">
+                        <label for="item_price">単価(円)</label>
+                        <input type="text" class="form-control" id="item_price" name="item_price" placeholder="単価を入力してください">
+                    </div>
+                    <div class="form-group">
+                        <label for="item_count">個数</label>
+                        <input type="text" class="form-control" id="item_count" name="item_count" placeholder="個数を入力してください">
+                    </div>
+                    <div class="form-group">
+                        <label for="user_name">ユーザー名</label>
+                        <input type="text" class="form-control" id="user_name" name="user_name" placeholder="ユーザー名を入力してください">
+                    </div>
+                    <button type="submit" class="btn btn-default">購入</button>
+                </form>
+            </div>
+        </div>
+</body>
+</html>

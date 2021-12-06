@@ -5,6 +5,7 @@ const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const favicon = require('serve-favicon');
 
 
 
@@ -18,17 +19,22 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.static(path.join(__dirname, '/public')));
+//fabiconの設定
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //ルーティング設定
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const createRouter = require('./routes/create');
+const paymentRouter = require('./routes/payment/payment');
+const PayPayRouter = require('./routes/payment/paypay');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/create', createRouter);
+app.use('/payment', paymentRouter);
+app.use('/payment/paypay', PayPayRouter);
 
 // catch 404 and forward to error handler
 app.use(function(request:any, response:any, next:any) {
