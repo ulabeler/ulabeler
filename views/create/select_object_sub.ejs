@@ -1,28 +1,42 @@
 <!DOCTYPE html>
-<html lang="jp">
-  <head>
-    <meta charset="UTF-8" />
-    <title>素体選択</title>
-  </head>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="none,noindex,nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="none,noindex,nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <title>U-labeler</title>
+</head>
+
   <body>
-    <!-- タイトル -->
-    <div class="title">
-      <h2>素体選択</h2>
-      <hr />
-    </div>
-    <!-- アイテム(FlexBox) -->
-    <div class="box_wrpper">
-      <%= category %>
+  <!-- パンくずリスト -->
+  <div class="">
+    <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ 作品設定 ＞ 作品設定確認</h5>
+  </div>
+
+  <!-- ページ名 -->
+  <h2>素体選択</h2>
+
+    <!-- ページサブ名 -->
+    <h2><%= category %></h2>
+
+    <!-- 素体 -->
+    <div class="">
 
       <% for( let index = 0; index < name_subcategory.length; index++ ) { %>
-      <div class="item">
-        <h4><%= name_subcategory[index] %></h4>
-        <!--<img src="*" alt="<%#name_subcategory[index]%>" />-->
+        <section class="">
+          <h3><%= name_subcategory[index] %></h3>
+          <div class="">
+            <img src="" alt="<%= name_subcategory[index] %>">
+          </div>
+          <form action="/create/select_color" method="post">
+            <input type="hidden" name="category_sub" value="<%=name_subcategory[index]%>">
+            <input type="submit" value="素体を選択する">
+          </form>
+          <!-- <button type=“button” onclick="location.href='#'">選択</button> -->
+        </section>
 
-        <form action="/create/select_color" method="post">
-          <input type="hidden" name="category_sub" value="<%=name_subcategory[index]%>">
-          <input type="submit" value="素体を選択する">
-      </form>
       <% } %>
 
     </div>

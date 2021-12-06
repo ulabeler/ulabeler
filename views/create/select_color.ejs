@@ -30,6 +30,9 @@
     <!-- ボタン -->
     <p class="back">戻る</p>
     <button id="submit">決定</button>
+    <form action="customize_editing" method="POST">
+      <input type="hidden" name="color" id="selected_color" value="" />
+    </form>
   </body>
 
   <script>
@@ -50,8 +53,10 @@
 
           console.log("color=" + document.getElementById("color").value)
           console.log("object_name=" + document.getElementById("object_name").innerHTML)
-          //submitを押したら、create_object.ejsに移動する
-          location.href = "/create/customize_editing";
+          //submitを押したら、postメソッドで、document.querySelector("#object_name").innerTextを送信する
+          //移動先はcustomize_editing
+          location.href = "customize_editing?object_name=" + document.querySelector("#object_name").innerText;
+
         });
   </script>
 </html>

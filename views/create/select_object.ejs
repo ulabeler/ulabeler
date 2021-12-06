@@ -1,20 +1,33 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>素体選択</title>
+    <meta name="robots" content="none,noindex,nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="none,noindex,nofollow">
+    <link rel="stylesheet" href="css/style.css">
+    <title>U-labeler</title>
 </head>
+
 <body>
-<!-- タイトル -->
-<div>
-<h2>素体選択</h2>
-<hr>
-</div>
+    <!-- パンくずリスト -->
+    <div class="">
+        <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ 作品設定 ＞ 作品設定確認</h5>
+    </div>
+
+    <!-- ページ名 -->
+    <h2>素体選択</h2>
+
+    <!-- 素体 -->
+    <div class="">
+
 
     <% for( let index = 0; index < name_category.length; index++ ) { %>
-            <div class="item">
-                <h4><%= name_category[index] %></h4>
-                <img src="*" alt=" <%=name_category[index] %> ">
+        <section class="">
+                <h3><%= name_category[index] %></h3>
+                <div class="">
+                    <img src="*" alt=" <%=name_category[index] %> ">
+                </div>
                 <%# GETで渡すやつ%>
                 <% //let url_category = encodeURI(name_category[index]) %>
                 <!--<a href="/create/select_object_sub?category=<%=//url_category%>">選択</a>-->
@@ -23,8 +36,8 @@
                     <input type="hidden" name="category" value="<%=name_category[index]%>">
                     <input type="submit" value="素体を選択する">
                 </form>
-
-            </div>
+<!--            <button type=“button” onclick="location.href='#'">選択</button>  ここどうしよう-->
+            </section>
         <% } %>
 </div>
 
