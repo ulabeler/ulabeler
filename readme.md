@@ -7,6 +7,6 @@
  TypeScriptで書いたブツに関してはコンパイルの必要があります。
 
 # TODO
-- [*] [DB]base_category.name_subcategoryのNullAbleを禁止にする
-- [*] [決済]PayPayの組み込み
+- [x] [DB]base_category.name_subcategoryのNullAbleを禁止にする
+- [x] [決済]PayPayの組み込み
 - [ ] Webページ全般
