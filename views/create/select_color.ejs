@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>カラー選択</title>
+  </head>
+  <body>
+    <!-- タイトル -->
+    <div>
+      <h2>カラー選択</h2>
+      <hr />
+    </div>
+
+    <!-- 画像 -->
+    <div class="img_area">
+      <img src="*" alt="素体画像" />
+    </div>
+
+    <!-- 素体名 -->
+    <div class="object_name">
+      <p id="object_name"><%= category %></p>
+    </div>
+
+    <!-- カラー選択 -->
+    <div>
+      <input type="color" id="color" name="color"/>
+    </div>
+
+    <!-- ボタン -->
+    <p class="back">戻る</p>
+    <button id="submit">決定</button>
+    <form action="customize_editing" method="POST">
+      <input type="hidden" name="color" id="selected_color" value="" />
+    </form>
+  </body>
+
+  <script>
+      // 0から255まででランダムな数字を3つ用意し、それぞれを16進数に変換する
+        const r = Math.floor(Math.random() * 256).toString(16);
+        const g = Math.floor(Math.random() * 256).toString(16);
+        const b = Math.floor(Math.random() * 256).toString(16);
+        // 16進数の文字列を連結して#rrggbb形式の文字列にする
+        const color = "#" + r + g + b;
+        // 上記で作成した文字列をid headに設定する
+        //document.getElementById("head").value = color;
+
+        //submitが押されたらされたら実行する
+        //querySelectorを利用してcolorとobjectnameをCookieに保存する
+        document.querySelector("#submit").addEventListener("click", function(){
+          document.cookie = "color=" + document.querySelector("#color").value;
+          document.cookie = "object_name=" + document.querySelector("#object_name").innerText;
+
+          console.log("color=" + document.getElementById("color").value)
+          console.log("object_name=" + document.getElementById("object_name").innerHTML)
+          //submitを押したら、postメソッドで、document.querySelector("#object_name").innerTextを送信する
+          //移動先はcustomize_editing
+          location.href = "customize_editing?object_name=" + document.querySelector("#object_name").innerText;
+
+        });
+  </script>
+</html>
