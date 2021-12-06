@@ -10,3 +10,4 @@
 - [x] [DB]base_category.name_subcategoryのNullAbleを禁止にする
 - [x] [決済]PayPayの組み込み
 - [ ] Webページ全般
+- [ ] 「画像アップロード」と名前を付けた機能関係の保管先どうする問題
