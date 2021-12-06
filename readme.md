@@ -3,9 +3,10 @@
 
 # 導入
  `npm install`すれば必要なパッケージは入るはず。 
- ただし、.envはgitに上げないようにしてるので中身については聞いてください。
+ ただし、.envはgitに上げないようにしてるので中身については聞いてください。 
+ TypeScriptで書いたブツに関してはコンパイルの必要があります。
 
 # TODO
-- [ ] [DB]base_category.name_subcategoryのNullAbleを禁止にする
-- [ ] [決済]PayPayの組み込み
+- [*] [DB]base_category.name_subcategoryのNullAbleを禁止にする
+- [*] [決済]PayPayの組み込み
 - [ ] Webページ全般
