@@ -78,6 +78,8 @@ router.post('/select_object_sub', (request: any, response: any) => {
 router.post('/select_color', (request: any, response: any) => {
     // POSTパラメータを取得
     let category = request.body.category_sub;
+    //Cookieに格納
+    response.cookie('category_sub', category);
     response.render('create/select_color', {
         category: category
     });
@@ -100,8 +102,20 @@ router.get('/select_image_filter', function (request: any, response: any, next: 
     response.render('create/select_image_filter', { uploaded_picture: uploaded_picture });
 });
 
+router.post('/work_settings', (request: any, response: any) => {
+    //未完
+    let category_sub = request.body.category_sub;
+    response.render('create/work_settings', { category_sub: category_sub });
+});
+
+router.get('/work_settings', (request: any, response: any) => {
+    //テスト用
+    response.render('create/work_settings');
+});
+
 router.post('/work_setting_confirmation', (request: any, response: any) => {
-    //POSTパラメータを取得
+    //未完
+    
     response.render('create/work_setting_confirmation');
 });
 
@@ -109,6 +123,7 @@ router.get('/work_setting_confirmation', (request: any, response: any) => {
     //テスト用
     response.render('create/work_setting_confirmation');
 });
+
 
 module.exports = router;
 
