@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+
+body {
+
+	font-family: Helvetica , "游ゴシック" , "Yu Gothic" , sans-serif;
+	background: ;
+	color: #000;
+	font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", YuGothic, sans-serif;
+  font-size: 16px;
+	margin: auto;
+	padding:auto;
+	color: #333;
+background-color: #ffffff;
+	background-image: url(../images/back3.jpg);
+  background-size: 100%;
+	background-attachment: fixed;
+	display: flex;
+}
+}
+
+h1 {
+	font-size: 18px;
+}
+
+
+.wrapper {
+	width: 500px;
+	margin: auto;
+	padding: 50%;
+	background: #ffffff;
+}
+
+.name_input {
+	color: #6e6e6e;
+	width:300px;
+	padding:10px;
+	font-size:16px;
+	border:solid 1px #6e6e6e;
+	border-top-left-radius: 40px;
+	border-top-right-radius: 40px;
+	border-bottom-right-radius: 40px;
+	border-bottom-left-radius: 40px;
+}
+
+.textarea {
+	width:400px;
+	height: 200px;
+	padding:10px;
+	font-size:16px;
+	border:solid 1px #6e6e6e;
+	border-top-left-radius: 30px;
+	border-top-right-radius: 30px;
+	border-bottom-right-radius: 30px;
+	border-bottom-left-radius: 30px;
+}
+
+.submit_btn {
+	width:100px;
+	height: 30px;
+	font-size:16px;
+	color: #6e6e6e;
+	border:solid 1px #6e6e6e;
+	border-top-left-radius: 40px;
+	border-top-right-radius: 40px;
+	border-bottom-right-radius: 40px;
+	border-bottom-left-radius: 40px;
+	background-color: #fff;
+	margin-left: auto;
+
+
+}
+
+.btn {
+	width: 600px;
+	margin-top: 40px;
+	text-align: left;
+	margin-left: auto;
+}
+
+dl {
+	border-bottom: 1px solid #eee;
+	padding: 20px 0;
+	margin: 0;
+}
+dt, dd {
+	display: table-cell;
+	vertical-align: middle;
+}
+dt {
+	width: 200px;
+
+}
