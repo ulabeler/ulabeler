@@ -80,8 +80,16 @@ router.post('/select_color', (request: any, response: any) => {
     });
 });
 
-router.get('/customize_editing', (request: any, response: any) => {
-    response.render('create/customize_editing');
+router.post('/customize_editing', (request: any, response: any) => {
+    //colorとcategory_subを取得
+    let color = request.body.color;
+    let category_sub = request.body.category_sub;
+    console.log(color);
+    console.log(category_sub);
+    response.render('create/customize_editing', {
+        color: color,
+        category_sub: category_sub
+    });
 });
 
 module.exports = router;
