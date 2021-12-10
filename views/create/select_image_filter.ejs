@@ -15,7 +15,7 @@
 </head>
 <body>
 <div>
-    
+    <h1>現状未使用！！！！</h1>
       <div class="filter_choise">
         <div class="img_area2">
       <h2>フィルター選択</h2>
@@ -24,23 +24,27 @@
       
       <div class="img_area3">
         <div class="img_area4">
-        <img src="images/color.jpeg" alt="">
+        <!-- <img src="/images/system/color.jpeg" alt=""> -->
+
+        <canvas id="workSpace"></canvas>
+        </div>
         <hr class="hr2">
+        </div>
 </div>
 
 <div class = "filter">
         <!-- ここにスリック -->
         <div id="slider">
           <ul class="animals">
-            <li><div class="photo"><a title="ねこ１"><img src="images/cat1s_monochrome.jpg"></a><br><p>フィルターname1</p></div></li>
-            <li><div class="photo"><a title="ねこ２"><img src="images/cat2s.jpg"></a><br><p>フィルターname2</p></div></li>
-            <li><div class="photo"><a title="いぬ１"><img src="images/dog1s.jpg"></a><br><p>フィルターname3</p></div></li>
-            <li><div class="photo"><a title="いぬ２"><img src="images/dog2s.jpg"></a><br><p>フィルターname4</p></div></li>
-            <li><div class="photo"><a title="ねこ３"><img src="images/gao1s.jpg"></a><br><p>フィルターname5</p></div></li>
-            <li><div class="photo"><a title="りす１"><img src="images/risu1s.jpg"></a><br><p>フィルターname6</p></div></li>
-            <li><div class="photo"><a title="りす２"><img src="images/risu2s.jpg"></a><br><p>フィルターname7</p></div></li>
-            <li><div class="photo"><a title="うさぎ１"><img src="images/usa1s.jpg"></a><br><p>フィルターname8</p></div></li>
-            <li><div class="photo"><a title="うさぎ２"><img src="images/usa2s.jpg"></a><br><p>フィルターname9</p></div></li>
+            <li><div class="photo"><a title="ねこ１" id="btn-invert"><img src="/images/filter_sample/cat1s.jpg"></a><p>反転</p></div></li>
+            <li><div class="photo"><a title="ねこ２" id="btn-blur"><img src="/images/filter_sample/cat2s.jpg"></a><p>ぼかし</p></div></li>
+            <li><div class="photo"><a title="いぬ１" id="btn-contrast"><img src="/images/filter_sample/dog1s.jpg"></a><p>コントラスト</p></div></li>
+            <li><div class="photo"><a title="いぬ２" id="btn-emboss"><img src="/images/filter_sample/dog2s.jpg"></a><p>エンボス</p></div></li>
+            <li><div class="photo"><a title="ねこ３" id="btn-sharpen"><img src="/images/filter_sample/gao1s.jpg"></a><p>シャープ</p></div></li>
+            <li><div class="photo"><a title="りす１" id="btn-sepia"><img src="/images/filter_sample/risu1s.jpg"></a><p>セピア</p></div></li>
+            <li><div class="photo"><a title="りす２" id="btn-grayscale"><img src="/images/filter_sample/risu2s.jpg"></a><p>白黒</p></div></li>
+            <li><div class="photo"><a title="うさぎ１" id="btn-pixelate"><img src="/images/filter_sample/usa1s.jpg"></a><p>ピクセル化</p></div></li>
+            <li><div class="photo"><a title="うさぎ２" id="btn-binarization"><img src="/images/filter_sample/usa2s.jpg"></a><p>2値化</p></div></li>
           </ul>
         </div>
       </div>
@@ -49,17 +53,33 @@
       
       <div class="bottom">
         <a href="#" class="back"><button>戻る</button></a>
+        <button id="btn-reset">変更を破棄する</button>
         <form action="#" class= "select" method="post">
           <button>決定</button>
         </form>
       </div>
     
-      <script type="text/javascript" src="js/slick.min.js"></script>
+      <script type="text/javascript" src="/javascripts/slick.min.js"></script>
 
       <!-- スリック速度js -->
-      <script src="js/slick.js"></script>
+      <script src="/javascripts/slick.js"></script>
     </div>
 
   </div>
 
+
+  <script>
+    //canvasに"/images/system/color.jpeg"を表示する
+    //idはworkspace
+    var canvas = document.getElementById("workSpace");
+    var ctx = canvas.getContext("2d");
+    var img = new Image();
+    img.src = "/images/test/4.jpg";
+    img.onload = function () {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+    }
+  </script>
+<script src="/javascripts/filter.js"></script>
 </body>

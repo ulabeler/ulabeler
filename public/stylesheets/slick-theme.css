@@ -21,7 +21,7 @@ margin: 0 0 0 0;
 
 .slick-loading .slick-list
 {
-    background: #fff url('../ajax-loader.gif') center center no-repeat;
+    background: #fff url('/images/system/ajax-loader.gif') center center no-repeat;
 }
 
 /* Icons */

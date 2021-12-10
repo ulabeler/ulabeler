@@ -168,6 +168,14 @@ hr {
   /* box-shadow: 15px 15px 0px 0 rgb(78, 78, 78); */
   /* border : solid 1px; */
 }
+.img_area4 canvas{
+  /* フィルター選択　画像 */
+  border : solid 1px;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  border-radius: 10px;
+}
 
 .filter{
   padding-top: 0;
