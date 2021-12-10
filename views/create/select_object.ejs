@@ -61,7 +61,8 @@
                         </h3>
                         <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
                         <form action="/create/select_object_sub" method="post">
-                            <button>選択</button>
+                            <input type="hidden" name="category" value="<%=name_category[index]%>">
+                            <button type="submit">選択</button>
                         </form>
                     </section>
                     <% } %>
