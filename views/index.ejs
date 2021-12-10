@@ -1,14 +1,117 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <!-- Expressを利用したfaviconの設定 -->
-    <link rel="shortcut icon" href="/favicon.ico">
+<lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <link href="/stylesheets/top.css" rel="stylesheet" type="text/css"></link>
+    
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/lightcase.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <title>トップページ</title>
+
+
+
+    <header class="header">
+
+      <div class="header_logo">
+        <h1><a href="/"><img src="/images/system/logo.png" alt="ロゴ"></a></h1>
+      </div>
+
+<!-- 検索ボックス -->
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<span class="magnifying_glass"></span>
+    <form method="get" action="#" class="search_container">
+      <input type="text" size="25" placeholder="キーワード検索">
+      <input type="submit" value="&#xf002">
+    </form>
+
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <a href="/create/select_object">Create Core</a>
-  </body>
+    <input type="checkbox" id="nav1">
+    <label for="nav1" class="open"><span></span></label>
+    <label for="nav1" class="close"></label>
+
+
+    <nav class="menu">
+      <h2 href="/">U labelar</h2>
+      <ul>
+        <li><a href="#">マイ作品リスト</a></li>
+        <li><a href="#">お気に入り作品リスト</a></li>
+        <li><a href="#">お気に入り作者リスト</a></li>
+        <li><a href="#">購入履歴</a></li>
+        <li><a href="#">会員情報</a></li>
+        <li><a href="#">メールアドレス変更</a></li>
+        <li><a href="#">パスワード変更</a></li>
+        <li><a href="#">退会</a></li>
+      </ul>
+    </nav>
+
+
+
+
+
+
+<article>
+  <script type="text/javascript" src="/javascripts/slick.min.js"></script>
+
+  <!-- スリック速度js -->
+  <script src="/javascripts/slick.js"></script>
+</div>
+
+</div>
+
+<a href="/create/select_object">Create Core</a>
+
+<div class ="filter_choise_area">
+<div class="filter_box">　
+  　<!-- フィルター1　-->
+  　<div class="filter_image">
+  　　  <img src="*" alt="">
+    </div>
+
+  <div class="filter_box">　
+  　<!-- フィルター2　-->
+  　<div class="filter_image">
+  　　  <img src="*" alt="">
+    </div>
+　</div>
+
+<div class="filter_box">　
+    　<!-- フィルター3　-->
+    　<div class="filter_image">
+    　　  <img src="*" alt="">
+      </div>
+  　</div>
+
+  <div class="filter_box">　
+    　<!-- フィルター4　-->
+    　<div class="filter_image">
+    　　  <img src="*" alt="">
+      </div>
+  　</div>
+
+  <div class="filter_box">　
+    　<!-- フィルター5　-->
+    　<div class="filter_image">
+    　　  <img src="*" alt="">
+      </div>
+    
+  </div>
+  <br>
+</div>
+
+
+</article>
+
+<br><br><br>
+<p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+<br>
+<a href="template.html" id="pagetop">↑</a>
+
+</body>
 </html>
