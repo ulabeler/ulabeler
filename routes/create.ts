@@ -64,6 +64,9 @@ router.post('/select_object_sub', (request: any, response: any) => {
             }
             console.log("#####################################");
 
+            //Cookieの設定
+            response.cookie('category', category);
+
             //categoryをページに表示
             response.render('create/select_object_sub', {
                 category: category,
@@ -92,7 +95,7 @@ router.post('/customize_editing', (request: any, response: any) => {
     });
 });
 
-router.get('/select_image_filter', function(request:any, response:any, next:any) {
+router.get('/select_image_filter', function (request: any, response: any, next: any) {
     const uploaded_picture = "./images/4.jpg"
     response.render('create/select_image_filter', { uploaded_picture: uploaded_picture });
 });
@@ -103,34 +106,34 @@ module.exports = router;
 
 //not for use
 {
-    
-// router.get('/select_object_sub', (request: any, response: any) => {
-//     //GETパラメーターを取得
-//     let category = request.query.category;
-//     console.log(category);
-//     connection.query('select name_subcategory from base_category WHERE name_category = ? ORDER BY name_subcategory',
-//         [category],
-//         (err: any, results: any) => {
-//             console.log(results);
-//             if (err) {
-//                 console.error(err);
-//                 return;
-//             }
-//             // name_subcategoryがひとまとまりになるように取り出す
-//             let name_subcategory: string[] = [];
-//             for (let i = 0; i < results.length; i++) {
-//                 if (name_subcategory.indexOf(results[i].name_subcategory) === -1) {
-//                     name_subcategory.push(results[i].name_subcategory);
-//                 }
-//             }
-//             console.log("#####################################");
 
-//             //categoryをページに表示
-//             response.render('create/select_object_sub', {
-//                 category: category,
-//                 name_subcategory: name_subcategory
-//             });
-//         });
-// });
+    // router.get('/select_object_sub', (request: any, response: any) => {
+    //     //GETパラメーターを取得
+    //     let category = request.query.category;
+    //     console.log(category);
+    //     connection.query('select name_subcategory from base_category WHERE name_category = ? ORDER BY name_subcategory',
+    //         [category],
+    //         (err: any, results: any) => {
+    //             console.log(results);
+    //             if (err) {
+    //                 console.error(err);
+    //                 return;
+    //             }
+    //             // name_subcategoryがひとまとまりになるように取り出す
+    //             let name_subcategory: string[] = [];
+    //             for (let i = 0; i < results.length; i++) {
+    //                 if (name_subcategory.indexOf(results[i].name_subcategory) === -1) {
+    //                     name_subcategory.push(results[i].name_subcategory);
+    //                 }
+    //             }
+    //             console.log("#####################################");
+
+    //             //categoryをページに表示
+    //             response.render('create/select_object_sub', {
+    //                 category: category,
+    //                 name_subcategory: name_subcategory
+    //             });
+    //         });
+    // });
 
 }
