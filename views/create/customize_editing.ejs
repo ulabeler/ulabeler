@@ -1,116 +1,67 @@
-<!-- パンくずリスト -->
-<div class="">
-  <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ 作品設定 ＞ 作品設定確認</h5>
-</div>
-
-<!-- ページ名 -->
-<h2>カスタマイズ</h2>
-
-<!-- フォント設定 -->
-<div class="">
-  <p>テキスト</p>
-  <form action="#" method="post">
-    <select name="font" class="">
-      <option value="1">游ゴシック</option>
-      <option value="2">游明朝</option>
-      <option value="3">ヒラギノ</option>
-      <option value="4">メイリオ</option>
-      <option value="5">源ノ角ゴシック</option>
-      <option value="6">Century</option>
-      <option value="7">Arial</option>
-      <option value="8">Noto</option>
-      <option value="9">sons</option>
-    </select>
-    <div class="">
-      <select name="font_size" class="">
-        <option value="1">8</option>
-        <option value="2">9</option>
-        <option value="3">10</option>
-        <option value="4">11</option>
-        <option value="5">12</option>
-        <option value="6">14</option>
-        <option value="7">16</option>
-        <option value="8">18</option>
-        <option value="9">20</option>
-        <option value="10">22</option>
-        <option value="11">24</option>
-        <option value="12">26</option>
-        <option value="13">28</option>
-        <option value="14">36</option>
-        <option value="15">48</option>
-        <option value="16">72</option>
-      </select>
-      <input type="color" id="" name="" value="#fff" class="" />
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Oswald:wght@200;300;400;500;600;700&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/customize_editing.css">
+    <link rel="shortcut icon" href="#">
+    <title>カスタマイズ</title>
+</head>
+<body>
+    <% if (typeof err != "undefined") { %>
+        <p><%= err %></p>
+        <% err = "" %>
+    <% } %>
+    <div class="wrapper">
+        <div class="div1">
+            <p>テキスト</p>
+            <form method="post" action="">
+                <select name="font_style" id="font_style"><br>
+                    <option id="Arial" value="Arial">Arial</option>
+                    <option id="Noto sons" value="Noto sons">Noto sons</option>
+                    <option id="Century" value="Century">Century</option>
+                    <option id="源ノ角ゴシック" value="源ノ角ゴシック">源ノ角ゴシック</option>
+                    <option id="メイリオ" value="メイリオ">メイリオ</option>
+                    <option id="ヒラギノ" value="ヒラギノ">ヒラギノ</option>
+                    <option id="游明朝" value="游明朝">游明朝</option>
+                    <option id="游ゴシック" value="游ゴシック">游ゴシック</option>
+                    <option id="Roboto" value="Roboto">Roboto</option>
+                    <option id="Lato" value="Lato">Lato</option>
+                    <option id="Montserrat" value="Montserrat">Montserrat</option>
+                </select>
+                <input type="number" id="number" value="16">
+                <input type="color" id="color"><br>
+                <textarea id="message" name="message" cols="25" rows="10"></textarea>
+                <input type="submit" id="formbtn">
+            </form>
+        </div>
+        <div class="div2">
+            <p>スタンプ</p>
+        </div>
+        <div class="div3">
+            <button id="gridbtn">グリッド</button>
+        </div>
+        <div class="div4" id="view">
+            <% if (typeof obj != "undefined") { %>
+                <p id="text1"><%= obj.text[0] %></p>
+                <p id="text2"><%= obj.text[1] %></p>
+                <p id="text3"><%= obj.text[2] %></p>
+            <% } %>
+            <canvas id="canvas">
+            </canvas>
+        </div>
+        <div class="div5">
+            <a href="">素体選択</a>
+            <a href="">完成</a>
+        </div>
     </div>
-    <input type="text" id="" name="" class="" />
-  </form>
-</div>
-
-<!-- ツールバー -->
-<div class="">
-  <!-- 画像 -->
-  <div class="">
-    <a href="#">
-      <img src="" alt="画像" />
-      <p>画像</p>
-    </a>
-  </div>
-  <!-- グリット -->
-  <div class="">
-    <a href="#">
-      <img src="" alt="グリット画像" />
-      <p>グリット</p>
-    </a>
-  </div>
-  <!-- 3Dビュー -->
-  <div class="">
-    <a href="#">
-      <img src="" alt="3Dビュー画像" />
-      <p>3Dビュー</p>
-    </a>
-  </div>
-  <!-- 素体名 -->
-  <div class="">
-    <p>素体名</p>
-    <h3 id="object_name"></h3>
-    <h3 id="selected_color"></h3>
-    <!--可変-->
-  </div>
-</div>
-
-<!-- スタンプ設定 -->
-<div class="">
-  <p>スタンプ</p>
-  <div class=""></div>
-  <p>仮1,2,3</p>
-</div>
-
-<!-- カスタム画面 -->
-<div class=""></div>
-
-<!-- ボタン -->
-<div class="">
-  <div class="">
-    <button type="“button”" onclick="location.href='/create/select_object'">素体選択に戻る</button>
-    <button type="“button”" onclick="location.href='#'">完成</button>
-  </div>
-</div>
-
-<div id="msg"></div>
-
-<script>
-    const object_name = document.querySelector('#object_name');
-  window.onload = function () {
-    const cookie_object = {};
-    const cookie_array = document.cookie.split(";");
-    for (let i = 0; i < cookie_array.length; i++) {
-      const key = cookie_array[i].split("=")[0].trim();
-      const value = cookie_array[i].split("=")[1];
-      cookie_object[key] = value;
-    }
-    object_name.innerHTML = cookie_object.object_name;
-    const selected_color = document.querySelector('#selected_color');
-    selected_color.innerHTML = "Selected=" + cookie_object.color;
-    console.log(cookie_object);
-  };
-</script>
+    <script type="text/javascript" src="/javascripts/index.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+</body>
+</html>

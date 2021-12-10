@@ -29,12 +29,14 @@ const usersRouter = require('./routes/users');
 const createRouter = require('./routes/create');
 const paymentRouter = require('./routes/payment/payment');
 const PayPayRouter = require('./routes/payment/paypay');
+const TestRouter = require('./routes/test');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/create', createRouter);
 app.use('/payment', paymentRouter);
 app.use('/payment/paypay', PayPayRouter);
+app.use('/test', TestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(request:any, response:any, next:any) {
