@@ -100,6 +100,15 @@ router.get('/select_image_filter', function (request: any, response: any, next: 
     response.render('create/select_image_filter', { uploaded_picture: uploaded_picture });
 });
 
+router.post('/work_setting_confirmation', (request: any, response: any) => {
+    //POSTパラメータを取得
+    response.render('create/work_setting_confirmation');
+});
+
+router.get('/work_setting_confirmation', (request: any, response: any) => {
+    //テスト用
+    response.render('create/work_setting_confirmation');
+});
 
 module.exports = router;
 
