@@ -67,12 +67,24 @@
 
             <div class="object3">
                 <div class="object3_name">
-                    <p>iPhone11 pro</p>
-                    <h3>「たんぽぽのiPhone」</h3>
+                    <p id="base"><%= category_sub %></p>
+                    <h3><%= title %></h3>
                     <form action="#" method="post">
-                        <p>＃ペットボトル　＃たんぽぽ　＃お花</p>
+                        <p>
+                            <% for (let i = 0; i < hash_tag.length; i++) { %>
+                            <%# タグの後ろには半角スペースを入れる %>
+                            <%# ただし、最終タグの後ろには半角スペースを入れない %>
+                            <% if (i === hash_tag.length - 1) { %>
+                                                            <%= hash_tag[i] %>
+                            <% } else { %>
+                            <%= hash_tag[i] + ' ' %>
+                            <% } %>
+                            <% } %>
+                        </p>
                     </form>
-                    <p>たんぽぽが大好きなので作りました。</p>
+                    <p id="view-description-wo-tags"><%# descriptionの"\r\n"を改行に変換 %>
+                        <%- description.replace(/\r\n/g, '<br>') %>
+                    </p>
 
                 </div>
 
@@ -97,9 +109,16 @@
                         <button><a href="/create/work_settings">戻る</a></button>
                     </div>
 
-                    <form action="#" method="post">
+                    <!-- <form action="#" method="post">
                         <div class="select">
                             <button><a href="work_setting_confirmation.html" class="select">購入確認</a></button>
+                        </div>
+                    </form> -->
+                    <form action="/create/submit" method="POST">
+                        <div class="select">
+                            <input type="hidden" name="description_wo_tags" value="<%=description%>" id="description_wo_tags">
+                            <input type="hidden" name="raw_hash_tags" value="<%=hash_tag%>">
+                            <button class="select" id="buy">購入確認</button>
                         </div>
                     </form>
                 </section>
@@ -109,7 +128,7 @@
         <br><br><br>
         <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
         <br>
-        <a href="work_setting.html" id="pagetop"><i class="up"></i>↑</a>
+        <a href="#" id="pagetop"><i class="up"></i>↑</a>
 
     </body>
 

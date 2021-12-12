@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <lang="ja">
+  <!-- ReEdit mode!!!!! -->
 <head>
     <meta charset="UTF-8">
     
@@ -71,7 +72,7 @@
   <form action="/create/work_setting_confirmation" method="post">
       <dt style="color:#363636">作品名*</dt>
       <dd>
-        <input type="text"  placeholder="20文字以内" name="title" class="name_input">
+        <input type="text"  placeholder="20文字以内" name="title" class="name_input" value="<%= title %>">
       </dd>
       
       <dl>
@@ -82,7 +83,7 @@
 
 
 
-#ハッシュタグ" class="textarea"></textarea>
+#ハッシュタグ" class="textarea"><%= description %></textarea>
         </dd>
       </dl>
       <input type="submit" value="決定">
