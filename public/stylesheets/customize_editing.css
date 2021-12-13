@@ -30,10 +30,19 @@
     /* background-color: red;  */
     border: 1px solid #000;
 }
+.grid {
+    background-image: linear-gradient(0deg, transparent 31px, #333 32px),linear-gradient(90deg,  transparent 31px, #333 32px);
+    background-color: #ddd;
+    background-size: 32px 32px;
+}
 #view p {
     cursor: pointer;
 }
 
-.p1{
-    text-align: center;
+p {
+    margin: 0;
+}
+
+.txtborder {
+    border: solid 1px #344;
 }
