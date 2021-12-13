@@ -10,14 +10,14 @@
 そのうち書く
 
 # TODO
-- [x] [DB]base_category.name_subcategoryのNullAbleを禁止にする
 - [ ] [決済]PayPayの組み込み
 - [ ] 「画像アップロード」と名前を付けた機能関係の保管先どうする問題
 - [ ] [Webページ]素体選択画面の受け渡しに用いるメソッド関係の整理
 - [ ] [Webページ]ブラウザの戻る機能で戻したときに、GETでアクセスされるので壊れる問題 → ほんとか？
-- [ ] [フィルター]下に出ているサンプルを、すでに効果適用されたものに差し替えておく
 - [ ] https://github.com/na2na-p/ulabeler/issues/1
-- [x] .envを.sample.envとしてgithubへ投げる
 - [ ] work_settingsの受け渡しまわり
-- [x] work_settingsの作品名/作品説明文にidが欲しい
 - [ ] 設定確認画面で、HTMLサニタイジングしてない問題
+- [x] [フィルター]下に出ているサンプルを、すでに効果適用されたものに差し替えておく
+- [x] work_settingsの作品名/作品説明文にidが欲しい
+- [x] .envを.sample.envとしてgithubへ投げる
+- [x] [DB]base_category.name_subcategoryのNullAbleを禁止にする
