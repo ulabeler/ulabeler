@@ -1,96 +1,102 @@
 <!DOCTYPE html>
-<lang="ja">
+<html lang="ja">
 
-    <head>
-        <meta charset="UTF-8">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="none,noindex,nofollow">
+  <meta name="description" content="ハンドメイドショップサイト">
+  <meta name="keywords" content="ECサイト">
+  <title>作品設定</title>
 
-        <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
-        </link>
+  <link rel="stylesheet" href="/stylesheets/jquery.skippr.css">
+  <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
+  </link>
 
-        <title>作品設定</title>
+</head>
+<header class="header">
 
-        <header class="header">
+  <div class="header_logo">
+    <h1><a href="/"><img src="/images/system/logo.png" alt="ロゴ"></a></h1>
+  </div>
 
-            <div class="header_logo">
-                <h1><a href="/"><img src="/images/system/logo.png" alt="ロゴ"></a></h1>
-            </div>
+  <!-- 検索ボックス -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-            <!-- 検索ボックス -->
-            <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-                rel="stylesheet">
+  <span class="magnifying_glass"></span>
+  <form method="get" action="#" class="search_container">
+    <input type="text" size="25" placeholder="キーワード検索">
+    <input type="submit" value="&#xf002">
+  </form>
 
-            <span class="magnifying_glass"></span>
-            <form method="get" action="#" class="search_container">
-                <input type="text" size="25" placeholder="キーワード検索">
-                <input type="submit" value="&#xf002">
-            </form>
-
-    </head>
-
-    <body>
-        <input type="checkbox" id="nav1">
-        <label for="nav1" class="open"><span></span></label>
-        <label for="nav1" class="close"></label>
+  </div>
 
 
-        <nav class="menu">
-            <h2 href="/">U labelar</h2>
-            <ul>
-                <li><a href="#">マイ作品リスト</a></li>
-                <li><a href="#">お気に入り作品リスト</a></li>
-                <li><a href="#">お気に入り作者リスト</a></li>
-                <li><a href="#">購入履歴</a></li>
-                <li><a href="#">会員情報</a></li>
-                <li><a href="#">メールアドレス変更</a></li>
-                <li><a href="#">パスワード変更</a></li>
-                <li><a href="#">退会</a></li>
-            </ul>
-        </nav>
+  <body>
+
+    <input type="checkbox" id="nav1">
+    <label for="nav1" class="open"><span></span></label>
+    <label for="nav1" class="close"></label>
 
 
-        <article>
-            <!-- パンくずリスト -->
-            <div class="pan">
-                <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ 作品設定 ＞作品設定確認</h5>
-            </div>
-            <!-- タイトル -->
-            <div class="h2">
-                <h2>作品設定</h2>
-                <hr>
-            </div>
+    <nav class="menu">
+      <h2 href="template.html">U labelar</h2>
+      <ul>
+        <li><a href="#">マイ作品リスト</a></li>
+        <li><a href="#">お気に入り作品リスト</a></li>
+        <li><a href="#">お気に入り作者リスト</a></li>
+        <li><a href="#">購入履歴</a></li>
+        <li><a href="#">会員情報</a></li>
+        <li><a href="#">メールアドレス変更</a></li>
+        <li><a href="#">パスワード変更</a></li>
+        <li><a href="#">退会</a></li>
+      </ul>
+    </nav>
 
-            <!-- 画像 -->
-            <div class="img_area">
-                <img src="/images/system/color.jpeg" alt="素体画像">
-            </div>
-            <!-- 素体名 -->
+    <article>
+      <!-- パンくずリスト -->
+      <div class="pan">
+        <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ 作品設定 ＞ 作品設定確認</h5>
+      </div>
 
-            <div class="object3">
-                <div class="object3_name">
-                    <p id="base"><%= category_sub %></p>
-                    <h3><%= title %></h3>
-                    <form action="#" method="post">
-                        <p>
-                            <% for (let i = 0; i < hash_tag.length; i++) { %>
-                            <%# タグの後ろには半角スペースを入れる %>
-                            <%# ただし、最終タグの後ろには半角スペースを入れない %>
-                            <% if (i === hash_tag.length - 1) { %>
-                                                            <%= hash_tag[i] %>
-                            <% } else { %>
-                            <%= hash_tag[i] + ' ' %>
+      <!-- ページ名 -->
+      <h2>作品設定</h2>
+      <hr>
+
+      <!-- 画像 -->
+      <div class="img_area">
+        <img src="/images/system/color.jpeg" alt="素体画像">
+      </div>
+      <!-- 素体名 -->
+
+      <div class="object3">
+        <div class="object3_name">
+          <p>
+            <%= category_sub %>
+          </p>
+          <h3>
+            <%= title %>
+          </h3>
+          <form action="#" method="post">
+            <% for (let i=0; i < hash_tag.length; i++) { %>
+              <%# タグの後ろには半角スペースを入れる %>
+                <%# ただし、最終タグの後ろには半角スペースを入れない %>
+                  <% if (i===hash_tag.length - 1) { %>
+                    <%= hash_tag[i] %>
+                      <% } else { %>
+                        <%= hash_tag[i] + ' ' %>
+                          <% } %>
                             <% } %>
-                            <% } %>
-                        </p>
-                    </form>
-                    <p id="view-description-wo-tags"><%# descriptionの"\r\n"を改行に変換 %>
-                        <%- description.replace(/\r\n/g, '<br>') %>
-                    </p>
+          </form>
+          <p id="view-description-wo-tags">
+            <%# descriptionの"\r\n"を改行に変換 %>
+              <%- description.replace(/\r\n/g, '<br>' ) %>
+          </p>
 
-                </div>
+        </div>
 
 
-            </div>
-            <!-- <script>
+      </div>
+      <!-- <script>
     
   let e = document.getElementById("area1");
   let s = 
@@ -100,36 +106,34 @@
   e.placeholder = s;
   </script> -->
 
+
+
+
+
+      <div class=bottom>
+        <section>
+          <div class="back">
+            <button><a href="/create/work_settings">戻る</a></button>
+          </div>
+
+
+          <form action="/create/submit" method="POST">
+            <div class="select">
+                <input type="hidden" name="description_wo_tags" value="<%=description%>" id="description_wo_tags">
+                <input type="hidden" name="raw_hash_tags" value="<%=hash_tag%>">
+                <button class="select" id="buy">決定</button>
             </div>
-            <!-- ボタン -->
+          </form>
 
-            <div class=bottom>
-                <section>
-                    <div class="back">
-                        <button><a href="/create/work_settings">戻る</a></button>
-                    </div>
+        </section>
 
-                    <!-- <form action="#" method="post">
-                        <div class="select">
-                            <button><a href="work_setting_confirmation.html" class="select">購入確認</a></button>
-                        </div>
-                    </form> -->
-                    <form action="/create/submit" method="POST">
-                        <div class="select">
-                            <input type="hidden" name="description_wo_tags" value="<%=description%>" id="description_wo_tags">
-                            <input type="hidden" name="raw_hash_tags" value="<%=hash_tag%>">
-                            <button class="select" id="buy">購入確認</button>
-                        </div>
-                    </form>
-                </section>
-            </div>
-        </article>
+      </div>
+      <br>
+    </article>
+    <br>
+    <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+    <br>
+    <a href="#" id="pagetop"><i class="up"></i>↑</a>
+  </body>
 
-        <br><br><br>
-        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-        <br>
-        <a href="#" id="pagetop"><i class="up"></i>↑</a>
-
-    </body>
-
-    </html>
+</html>
