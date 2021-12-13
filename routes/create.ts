@@ -114,13 +114,24 @@ router.get('/select_image_filter', function (request: any, response: any, next: 
 router.post('/work_settings', (request: any, response: any) => {
     //未完
     let category_sub = request.body.category_sub;
-    response.render('create/work_settings', { category_sub: category_sub });
+    //URIデコード
+    category_sub = decodeURIComponent(category_sub);
+    // let char_num = request.body.keep.length; //α専用
+    // request.body.keepをJSONパース //α専用
+    let keep = JSON.parse(request.body.keep); //α専用
+    //let keep = request.body.keep;
+    let char_num = keep.length; //α専用
+    console.log(char_num); //α専用
+    //char_numをCookieに格納 //α専用
+    response.cookie('char_num', char_num); //α専用
+    response.render('create/work_settings', { category_sub: category_sub , char_num: char_num });
 });
 
 router.get('/work_settings', (request: any, response: any) => {
     //Cookieからtitleとdescriptionを取得
     let title = request.cookies.title;
     console.log(title);
+    let char_num = request.cookies.char_num;
     let description = request.cookies.raw_description;
     console.log(description);
     console.log("#####################################");
@@ -130,7 +141,8 @@ router.get('/work_settings', (request: any, response: any) => {
         , {
             category_sub: category_sub,
             title: title,
-            description: description
+            description: description,
+            char_num: char_num
         });
 });
 
@@ -139,6 +151,8 @@ router.post('/work_setting_confirmation', (request: any, response: any) => {
     //title,descriptionを取得
     let title = request.body.title;
     let description = request.body.description;
+    //char_numを取得
+    let char_num = request.cookies.char_num;
     //Cooikeに格納
     response.cookie('title', title);
     response.cookie('raw_description', description);
@@ -190,7 +204,8 @@ router.post('/work_setting_confirmation', (request: any, response: any) => {
         category_sub: category_sub,
         title: title,
         description: description,
-        hash_tag: hash_tag
+        hash_tag: hash_tag,
+        char_num: char_num
     });
 });
 
@@ -205,6 +220,10 @@ router.post('/submit', (request: any, response: any) => {
     // userID,category_ID,title(nameになってる),テクスチャの保存先,サムネの保存先,公開フラグ(booleanではなく0,1),単価,hash_tag,説明文,画像何枚使ったか,いんさーとした日時
     //Cookieからtitleとdescriptionを取得
     let user_id = "user";
+    //cookieにユーザーidを格納
+        //char_numを取得 //α専用
+        let char_num = request.cookies.char_num; //α専用
+    response.cookie('user_id', user_id);
     //category_idは、MySQLから取得
     connection.query('SELECT id FROM base_category WHERE name_subcategory = ?', request.cookies.category_sub, function (error: any, results: any, fields: any) {
         if (error) throw error;
@@ -215,6 +234,7 @@ router.post('/submit', (request: any, response: any) => {
         let is_public = 1;
 
         let amount = 300; //単価は後で作りこみ
+        amount = amount + 20 * char_num;
 
         //POSTで送られてくるraw_hash_tagsは","で区切られているので、それを","で区切って配列に格納
         let raw_hash_tags = request.body.raw_hash_tags;
@@ -232,8 +252,8 @@ router.post('/submit', (request: any, response: any) => {
         //テスト用
         //uuidを用いてファイル名を生成
         let file_name = uuid.v4();
-        const work_tex_path = `./public/images/works/user/file_name.png`;
-        const thumbnail_path = "./public/images/works/file_name_t.png";
+        const work_tex_path = `./public/images/works/user/${file_name}.png`;
+        const thumbnail_path = `./public/images/works/${file_name}_t.png`;
 
         //insert文を作成
         let insert_sql = "INSERT INTO work (created_by_user_id,base_category_id,name,work_tex_path,thumbnail_path,flag_public,unit_price,hashtag,introduction,num_of_images,create_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -244,7 +264,16 @@ router.post('/submit', (request: any, response: any) => {
         connection.query(insert_sql, insert_values, function (error: any, results: any, fields: any) {
             if (error) throw error;
             console.log("The solution is: ", results);
-            response.redirect('/');
+            //response.redirect('/');
+            //response.redirect('/payment/checkout');
+
+            //以下テスト用ルート
+            //渡すべきものはamount、user_id、title
+            response.render('payment/checkout', {
+                amount: amount,
+                user_id: user_id,
+                title: title,
+            });
         });
         } catch (error) {
             //エラー文responseで返す

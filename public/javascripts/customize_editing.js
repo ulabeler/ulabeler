@@ -12,9 +12,36 @@ const ctx = document.getElementById('canvas').getContext('2d');
 let keep = [];
 
 function finish() {
-  //document.cookie = keep
   //cookieに保存
   document.cookie = "keep=" + keep_json;
+}
+
+function send_value() {
+  console.log(keep);
+  keep_json = JSON.stringify(keep);
+  //Cookieから、"category_sub"というキー名称のCookieを取得する
+  const category_sub = document.cookie.replace(/(?:(?:^|.*;\s*)category_sub\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  // const from_parent = document.getElementById("set_value_hiddenform");
+  //hidden属性のformを2つ用意し、keepとcategory_subをvalueに設定
+  //createElementでhidden属性のformを作成
+  //"/create/work_settings"にPOSTで送信
+
+  //hiddenformをsubmit
+  const form = document.createElement('form');
+  form.method = 'post';
+  form.action = '/create/work_settings';
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'keep';
+  input.value = keep_json;
+  form.appendChild(input);
+  const input2 = document.createElement('input');
+  input2.type = 'hidden';
+  input2.name = 'category_sub';
+  input2.value = category_sub;
+  form.appendChild(input2);
+  document.body.appendChild(form);
+  form.submit();
 }
 
 // リロードさせない

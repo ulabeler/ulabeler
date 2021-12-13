@@ -80,7 +80,9 @@ router.get('/callback' , (request: any, response: any) => {
     //GET送信された値をconsole.logで表示
     console.log(request);
     //GET送信された値をresponse.sendで返す
-    response.send("支払いが完了しました");
+    // response.send("支払いが完了しました");
+    //"/"へリダイレクト
+    response.redirect("/");
 });
 
 module.exports = router;

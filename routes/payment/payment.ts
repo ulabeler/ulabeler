@@ -1,3 +1,5 @@
+import { request } from "http";
+
 //ここからts共通部分
 export { };
 const express = require('express');
@@ -17,6 +19,10 @@ connection = mysql.createConnection({
 
 router.get('/', (request: any, response: any) => {
     response.render('payment/payment_test');
+});
+
+router.get('/checkout', (request: any, response: any) => {
+    response.render('payment/checkout');
 });
 
 module.exports = router;
