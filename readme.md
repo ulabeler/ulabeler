@@ -17,7 +17,7 @@
 - [ ] [Webページ]ブラウザの戻る機能で戻したときに、GETでアクセスされるので壊れる問題 → ほんとか？
 - [ ] [フィルター]下に出ているサンプルを、すでに効果適用されたものに差し替えておく
 - [ ] https://github.com/na2na-p/ulabeler/issues/1
-- [ ] .envを.sample.envとしてgithubへ投げる
+- [x] .envを.sample.envとしてgithubへ投げる
 - [ ] work_settingsの受け渡しまわり
 - [x] work_settingsの作品名/作品説明文にidが欲しい
 - [ ] 設定確認画面で、HTMLサニタイジングしてない問題
