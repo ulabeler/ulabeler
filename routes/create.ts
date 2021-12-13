@@ -16,6 +16,9 @@ connection = mysql.createConnection({
     multipleStatements: true
 });
 
+//uuidを生成する
+const uuid = require('uuid');
+
 
 router.get('/select_object', (request: any, response: any) => {
     connection.query('select name_category from base_category ORDER BY name_category', (err: any, results: any) => {
@@ -227,8 +230,10 @@ router.post('/submit', (request: any, response: any) => {
         console.log("\"" + description_wo_tags + "\"");
 
         //テスト用
-        const work_tex_path = "./public/images/works/001.png";
-        const thumbnail_path = "./public/images/works/001_t.png";
+        //uuidを用いてファイル名を生成
+        let file_name = uuid.v4();
+        const work_tex_path = `./public/images/works/user/file_name.png`;
+        const thumbnail_path = "./public/images/works/file_name_t.png";
 
         //insert文を作成
         let insert_sql = "INSERT INTO work (created_by_user_id,base_category_id,name,work_tex_path,thumbnail_path,flag_public,unit_price,hashtag,introduction,num_of_images,create_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
