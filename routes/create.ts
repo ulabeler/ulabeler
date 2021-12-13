@@ -98,6 +98,11 @@ router.post('/customize_editing', (request: any, response: any) => {
     });
 });
 
+router.get('/customize_editing', (request: any, response: any) => {
+    //直前のページに戻す
+    response.redirect('/create/select_object');
+});
+
 router.get('/select_image_filter', function (request: any, response: any, next: any) {
     const uploaded_picture = "./images/4.jpg"
     response.render('create/select_image_filter', { uploaded_picture: uploaded_picture });
