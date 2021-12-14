@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="none,noindex,nofollow">
+  <meta name="description" content="ハンドメイドショップサイト">
+  <meta name="keywords" content="ECサイト">
+  <title>作品設定</title>
+
+  <link rel="stylesheet" href="css/jquery.skippr.css">
+  <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
+  </link>
+
+</head>
+<header class="header">
+
+  <div class="header_logo">
+    <h1><a href="/"><img src="/images/system/logo.png" alt="ロゴ"></a></h1>
+  </div>
+
+  <!-- 検索ボックス -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <span class="magnifying_glass"></span>
+  <form method="get" action="#" class="search_container">
+    <input type="text" size="25" placeholder="キーワード検索">
+    <input type="submit" value="&#xf002">
+  </form>
+
+  </div>
+
+
+  <body>
+
+    <input type="checkbox" id="nav1">
+    <label for="nav1" class="open"><span></span></label>
+    <label for="nav1" class="close"></label>
+
+
+    <nav class="menu">
+      <h2 href="/">U labelar</h2>
+      <ul>
+        <li><a href="#">マイ作品リスト</a></li>
+        <li><a href="#">お気に入り作品リスト</a></li>
+        <li><a href="#">お気に入り作者リスト</a></li>
+        <li><a href="#">購入履歴</a></li>
+        <li><a href="#">会員情報</a></li>
+        <li><a href="#">メールアドレス変更</a></li>
+        <li><a href="#">パスワード変更</a></li>
+        <li><a href="#">退会</a></li>
+      </ul>
+    </nav>
+
+
+    <article>
+      <!-- パンくずリスト -->
+      <div class="pan">
+        <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ 作品設定 ＞ 作品設定確認</h5>
+      </div>
+
+      <!-- ページ名 -->
+      <h2>作品設定</h2>
+      <hr>
+
+
+
+      <!-- 画像 -->
+      <div class="img_area">
+        <img src="" alt="素体画像" id="result">
+      </div>
+      <!-- 素体名 -->
+
+      <div class="object2">
+        <div class="object2_name">
+          <p><%= category_sub %></p>
+        </div>
+
+
+
+        <!-- 入力 -->
+        <div class="form1">
+          <form action="/create/work_setting_confirmation_alpha_create" method="post">
+            <dt style="color:#363636">作品名*</dt>
+            <dd>
+              <input type="text" placeholder="20文字以内" name="title" class="name_input">
+            </dd>
+
+            <dl>
+              <dt style="color:#363636">作品説明文*</dt>
+              <dd>
+                <textarea name="description" placeholder="150文字以内
+
+
+
+
+#ハッシュタグ" class="textarea"></textarea>
+              </dd>
+            </dl>
+            <input type="hidden" name="img" value="<%=img_base64%>">
+            <input type="submit" value="決定">
+          </form>
+        </div>
+
+
+    </article>
+    <br>
+    <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+    <br>
+    <a href="#" id="pagetop"><i class="up"></i>↑</a>
+    <!-- <div value="<%=img_base64%>"></div> -->
+  </body>
+
+  <script>
+    window.onload = function() {
+      var img = document.getElementById('result');
+      img.src = '<%=img_base64%>';
+    }
+  </script>
+
+
+
+</html>
