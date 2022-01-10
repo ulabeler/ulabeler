@@ -23,5 +23,8 @@
   },
   "devDependencies": {
     "@types/node": "^16.11.10"
+  },
+  "overrides": {
+    "colors@1": "1.4.0"
   }
 }
