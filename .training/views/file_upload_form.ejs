@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train-express</title>
+</head>
+<body>
+    <!--以下実験場-->
+    <a href="/database/select/">MySQL Select</a>
+    <a href="/database/insert/">MySQL Insert</a>
+    <a href="/database/update/">MySQL Update</a>
+    <a href="/database/delete/">MySQL Delete</a>
+    <a href="/session/dev_check_session">Session 確認/生成</a>
+
+
+    <br><br><br>
+    <form action="/api_file/single_upload_static" method="post" enctype="multipart/form-data" id="imgForm"  target="sendPhoto">
+        <p>
+            <label for ="upfile">
+                ファイルを選択してください
+                <input type="file" name="single_image" id="upfile" accept="image/*" capture="camera">
+            </label>
+            <span style="color: #ff0000;" data-mce-style="color: #ff0000;"><div><img id="thumbnail" src=""></div></span>
+        </p>
+        <p>
+            <label for="upload">
+                アップロード
+                <button type="submit" action="" name="save" id="upload" >upload</button>
+            </label>
+        </p>
+        <p id="compUpload"></p>
+    </form>
+
+    <form action="/api_file/single_upload" method="post" enctype="multipart/form-data" id="imgForm"  target="sendPhoto">
+        <p>
+            <label for ="upfile">
+                ファイルを選択してください
+                <input type="file" name="single_image" id="upfile" accept="image/*" capture="camera">
+            </label>
+            <span style="color: #ff0000;" data-mce-style="color: #ff0000;"><div><img id="thumbnail" src=""></div></span>
+        </p>
+        <p>
+            <label for="upload">
+                アップロード
+                <button type="submit" action="" name="save" id="upload" >upload</button>
+            </label>
+        </p>
+        <p id="compUpload"></p>
+    </form>
+    <p id="result"></p>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train-express</title>
+</head>
+<body>
+    <ul>
+        <% for (let index = 0; index < result.length; index++) { %>
+            <p>id:<%= result[index].id %> <br>
+            Name:<%= result[index].name %> <br>
+            DateTime: <%- result[index].DATETIME %></p>
+        <% } %>
+
+
+        </ul>
+
+    <!--以下実験場-->
+    <br>
+<a href="/database/select/">MySQL Select</a>
+<a href="/database/insert/">MySQL Insert</a>
+<a href="/database/update/">MySQL Update</a>
+<a href="/database/delete/">MySQL Delete</a>
+</body>
+</html>
+<!--これはサンプルコード-->

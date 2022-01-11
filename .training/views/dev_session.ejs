@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train-express</title>
+</head>
+<body>
+    <!--以下実験場-->
+    <a href="/database/select/">MySQL Select</a>
+    <a href="/database/insert/">MySQL Insert</a>
+    <a href="/database/update/">MySQL Update</a>
+    <a href="/database/delete/">MySQL Delete</a>
+    <a href="/session/dev_check_session">Session 確認/生成</a>
+
+
+    <br><br><br>
+    <p>current uid:<%= uid %></p>
+    <p>current temp_img_path:<%= temp_img_name %></p>
+    <form action="/session/dev_create_session" method="post">
+        <input type="text" name="uid">
+        <button type="submit" name="button" >send</button>
+    </form>
+    <a href="/">トップに戻る</a>
+</body>
+</html>
+
+<!--これはサンプルコード-->

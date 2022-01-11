@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train-express</title>
+</head>
+<body>
+    <%- include("./item.ejs", items) %>
+    <!--index.ejsに渡されていた、配列の中身をさらに渡すことも可能っぽい。なので、共通の部品は作ってしまうのが良さそう-->
+
+    <!--以下実験場-->
+    <a href="/database/select/">MySQL Select</a><br>
+    <a href="/database/insert/">MySQL Insert</a><br>
+    <a href="/database/update/">MySQL Update</a><br>
+    <a href="/database/delete/">MySQL Delete</a><br>
+    <a href="/session/dev_check_session">Session 確認/生成</a><br>
+    <a href="/file/file_upload">ファイルアップロード(セッションでuid作ってない場合はSession生成にリダイレクト)</a><br>
+
+
+    <br><br><br>
+    <form name="text_response">
+        <input type="text" id="search_text">
+        <button id="select_submit" type="button">送信</button>
+    </form>
+    <p id="result"></p>
+</body>
+</html>
+
+<!--これはサンプルコード-->
+
+<script>
+    let submit_button = document.getElementById("select_submit");
+
+    //送信ボタンを押したときの処理
+    //document.getElementById("search_text").valueをserverへPOSTする
+    //serverから返ってきたデータを表示する
+    submit_button.addEventListener("click", function(){
+        let search_text = document.getElementById("search_text").value;
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/select/", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send("search_text=" + search_text);
+        console.log("search_text=" + search_text);
+        xhr.onload = function(){
+            console.log(xhr.responseText);
+            if(xhr.status == 200){
+                document.getElementById("result").innerHTML = xhr.responseText;
+            }
+        }
+    });
+
+    //search_textの中身を編集するたびに実行される
+        document.getElementById("search_text").addEventListener("input", function(){
+            let search_text = document.getElementById("search_text").value;
+            if(search_text != ""){
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/select/", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.send("search_text=" + search_text);
+                console.log("search_text=" + search_text);
+                xhr.onload = function(){
+                    console.log(xhr.responseText);
+                    if(xhr.status == 200){
+                        document.getElementById("result").innerHTML = xhr.responseText;
+                    }
+                }
+            }
+        });
+</script>

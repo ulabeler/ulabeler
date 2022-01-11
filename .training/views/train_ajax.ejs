@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>title</h1>
+    <div id="weather">
+        <div id="weather_detail"></div>
+    </div>
+</body>
+<script>
+
+    //表示はweatherの中に行う
+    //weatherの中には、天気の詳細を表示する
+    //天気の詳細は、weather_detailの中に行う
+    
+    const weather = document.getElementById('weather');
+    const weather_detail = document.getElementById('weather_detail');
+        //Ajaxを利用して、天気を取得する
+
+        //Ajaxを利用するためのオブジェクトを作成
+        const xhr = new XMLHttpRequest();
+        //東京の天気を取得して、weather_detailに表示する
+        xhr.open('GET', 'http://api.openweathermap.org/data/2.5/weather?q=Tokyo&APPID=e9b9f8f8d8f9f9f9f9f9f9f9f9f9f9f9');
+        xhr.send();
+        //通信が成功したら、weather_detailに表示する
+        xhr.onload = function(){
+            //通信が成功したら、weather_detailに表示する
+            weather_detail.innerHTML = xhr.responseText;
+        }
+        
+
+</script>
+</html>

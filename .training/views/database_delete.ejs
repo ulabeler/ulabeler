@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train-express</title>
+</head>
+<body>
+    <h1>DELETE</h1>
+    <form method="POST" action="/database/delete_commit">
+    id: <select name="id" id="select_id">
+        <% for (let index = 0; index < result.length; index++) { %>
+            <option id="id_selected" value="<%= result[index].id %>" <% if(index == 0){ %> <%= "selected"%> <%}%> ><%= result[index].id %></option>
+        <% } %>
+    </select><br>
+    <input type="submit">
+</form>
+削除前の名前: <div id="name_selected"></div>
+<br>
+<a href="/database/select/">MySQL Select</a>
+<a href="/database/insert/">MySQL Insert</a>
+<a href="/database/update/">MySQL Update</a>
+<a href="/database/delete/">MySQL Delete</a>
+</body>
+
+
+</html>
+
+<!--これはサンプルコード-->
+<script type="text/javascript">
+    let result = JSON.parse( `<%- result_str %>`)
+    console.log(result);
+
+
+    function get_current_index(result, current_id) {
+        for (let index = 0; index < result.length; index++) {
+            if (result[index].id == current_id) {
+                return index;
+            }
+        }
+    }
+    select_id.onchange = () =>{
+        //id"select_id"の中で、選択中の項目を変数に入れる
+        let current_id = document.getElementById("select_id").selectedOptions[0].value
+        let index = get_current_index(result, current_id);
+        document.getElementById("name_selected").innerHTML = result[index].name;
+        console.log(index);
+    }
+
+    window.onload = () =>{
+        //id"select_id"の中で、選択中の項目を変数に入れる
+        let current_id = document.getElementById("select_id").selectedOptions[0].value
+        let index = get_current_index(result, current_id);
+        document.getElementById("name_selected").innerHTML = result[index].name;
+        console.log(index);
+    }
+
+
+
+
+</script>
