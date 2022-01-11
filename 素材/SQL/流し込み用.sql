@@ -43,10 +43,12 @@ INSERT INTO `ulabeler_dev`.`base_category` (`vendor_id`, `name_category`, `name_
 INSERT INTO `ulabeler_dev`.`base_category` (`vendor_id`, `name_category`, `name_subcategory`) VALUES ('1', '靴', '靴');
 INSERT INTO `ulabeler_dev`.`base_category` (`vendor_id`, `name_category`, `name_subcategory`) VALUES ('1', 'チロルチョコ', 'チロルチョコ');
 
--- user追加
+-- user追加;
+
 INSERT INTO `ulabeler_dev`.`user` (`id`, `name`, `password`, `mailaddress`, `self_introduction`, `cardnumber`, `name_card`, `expiration`, `created_at`) VALUES ('user', 'ゆーざー', 'user', 'ulabeler.07@gmail.com', 'よろ', '4485805109814218', 'HAL TARO', '0822', '2021-11-29 17:34');
 
---スタンプ関係
+--スタンプ関係;
+
 INSERT INTO `ulabeler_dev`.`stamp_settings` (`name`, `img_path`, `unit_price`) VALUES ('flower', '/images/stamps/flower.png', '15');
 INSERT INTO `ulabeler_dev`.`stamp_settings` (`name`, `img_path`, `unit_price`) VALUES ('lemon', '/images/stamps/lemon.png', '15');
 INSERT INTO `ulabeler_dev`.`stamp_settings` (`name`, `img_path`, `unit_price`) VALUES ('apple', '/images/stamps/apple.png', '15');
