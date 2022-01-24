@@ -11,4 +11,9 @@ router.get('/train-canvas', function(request:any, response:any, next:any) {
     response.render('testuse/train-canvas');
 });
 
+router.get('/train-threejs', function(request:any, response:any, next:any) {
+    //public/three.htmlを返す
+    response.render('testuse/train-threejs');
+});
+
 module.exports = router;
