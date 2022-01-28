@@ -855,7 +855,7 @@ dt {
 p.new_warning{
     font-size: 13px;
     color: #000;
-	padding-left: 144px;
+	padding-left: 158px;
 }
 
 /*mail確認ページ*/
@@ -878,7 +878,7 @@ p.new_warning{
 .error_message2{
     font-size: 13px;
     color: #fd0000;
-	padding-left: 100px;
+	padding-left: 115px;
 	
 }
 
