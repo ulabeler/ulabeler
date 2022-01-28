@@ -2,7 +2,6 @@ const fse = require('fs-extra');
 
 //もし、builtフォルダがある場合は削除する
 if(fse.existsSync('./built')){
-    //メソッドチェーンを用いる
     fse.removeSync('./built');
     console.log('builtディレクトリを再生成します。');
 }
