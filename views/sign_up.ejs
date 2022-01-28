@@ -199,17 +199,25 @@
       //"/api/user/check_userID"にPOSTする
       //戻り値が"true"なら重複している
       //戻り値が"false"なら重複していない
-      axios.post('/api/user/check_userID', {
+    });
+    input_userID.addEventListener('focusout', function () {
+      if (disable_counter_userID == 0) {
+        axios.post('/api/user/check_userID', {
           userID: input_userID.value
-        }).then(function (response) {
-          if (response.data == true) {
-            error_userID.innerText = 'このユーザーIDは既に使用されています';
-            disable_counter_userID++;
-          } else {
-            error_userID.innerText = '';
-            disable_counter_userID = 0;
-          }
         })
+          .then(function (response) {
+            if (response.data == true) {
+              error_userID.innerText = '登録済みのユーザーIDです';
+              disable_counter_userID++;
+            } else {
+              error_userID.innerText = '';
+              disable_counter_userID = 0;
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     });
 
     //<%#input_emailは、RFC違反メールアドレスは禁止%>
