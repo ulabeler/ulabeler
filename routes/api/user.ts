@@ -1,6 +1,7 @@
 export { };
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 //ここまで共通部分
 const mysql = require('mysql2');
 let connection: any;
@@ -29,6 +30,24 @@ router.post('/check_userID',function(request: { body: { userID: any; }; }, respo
       } else {
         response.send(false);
       }
+    }
+  });
+});
+
+router.post('/sign_up',function(request: { body: { username: string; userID: string; password: string; email: string; }; }, response: { send: (arg0: boolean) => void; }, next: any) {
+  const username = request.body.username;
+  const userID = request.body.userID;
+  const raw_password = request.body.password;
+  const hashed_password = bcrypt.hashSync(raw_password, 10);
+  const email = request.body.email;
+  const created_at = new Date();
+
+  connection.query(`INSERT INTO user (id, name, password, mailaddress, created_at) VALUES (?, ?, ?, ?, ?)`, [userID, username, hashed_password, email, created_at], function(err: any, results: string | any[], fields: any) {
+    if (err) {
+      console.log(err);
+      response.send(false);
+    } else {
+      response.send(true);
     }
   });
 });

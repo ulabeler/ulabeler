@@ -138,11 +138,11 @@
   <script>
     // TODO
     // - [x] 変数定義
-    // - [ ] バリデーション
-    // - [ ] 実際にPOST
+    // - [ ] バリデーション→メール関係が怪しい
+    // - [x] 実際にPOST
     // - [x] 重複判定用API準備
     // - [ ] ユーザー名にMeCab使った形態素解析で不適切な文字をはじくAPIとかどうですかね
-    // - [ ]  エラーメッセージ関係
+    // - [ ]  エラーメッセージ関係→登録失敗時のエラーページどうする
 
     // 入力値関係の変数
     const input_username = document.getElementById('input_username');  //<%# 重複可能なユーザー名 %>
@@ -331,6 +331,25 @@
       let vd_password = check_password_confirm();
       console.log(vd_email);
       console.log(vd_password);
+      if (vd_email && vd_password) {
+        axios.post('/api/user/sign_up', {
+          username : input_username.value,
+          userID : input_userID.value,
+          email : input_email.value,
+          password : input_password.value,
+        })
+          .then(function (response) {
+            if (response.data == true) {
+              //"/"へ遷移
+              window.location.href = '/';
+            } else {
+              alert('登録に失敗しました'); //TODO: エラー時の遷移先
+            }
+          })
+          .catch(function (error) {
+            alert(error); //TODO: エラー時の遷移先
+          });
+      }
     });
 
   </script>
