@@ -1,0 +1,110 @@
+@charset "utf-8";
+
+.box{
+    width: 720px;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 180px;/* ポップアップにいるかわからん */
+    color: #707070;/*フォントカラー */
+    border: 3px solid; /*四角い枠*/
+    border: solid 3px #000000;  /*枠のカラー*/
+    border-radius: 10px;    /*枠の丸み*/
+    /* background-color: #fd0000; */
+}
+
+.box h3{
+    text-align: center;
+    font-size: 24px;
+    padding-bottom: 10px;
+    color: #707070;
+    /* background-color: #ff0088; */
+}
+
+.box h3 hr{
+    height: 1px;/* hrの線の太さ */
+    width: 20%;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    margin-top: -2px;;
+}
+
+/*                input系                    */
+.login_input input[type=text],input[type=password],input[type="email"]{
+    height: 20px;
+    width: 300px;
+    /* border-radius: 6px; */
+}
+
+.input_center{
+    text-align: center;
+    font-size: 16px;
+}
+
+/* ログインのinput-pass */
+.input_pass{
+    padding-left: 222px;
+    font-size: 16px;
+    /* background-color: #ff0088; */
+}
+
+/* 新規登録のinput-mail */
+.new_input_email{
+    padding-left: 110px;
+    font-size: 16px;
+}
+
+
+
+
+
+
+.new_error{
+    line-height: 3px;/*errorの行間　改行時16px　pタグ単体3px*/
+    padding-left: 275px;
+}
+
+.new_error p{
+    font-size: 13px;
+    color: #fd0000;
+}
+
+p.new_warning{
+    font-size: 13px;
+    color: #000;
+}
+
+
+
+/*                ボタン系                    */
+.button{
+    text-align: center;
+    padding-top: 20px;
+    margin-bottom: 30px;
+}
+
+.black_button{
+    font-size: 13px;
+    border-radius: 6px;/* ボタンの角丸 */
+    background-color: #000;/* ボタンの色 */
+    color:#fff;/* ボタンの文字色 */
+    height: 32px;/*ボタンの細さ*/
+    width: 110px;/* ボタンの長さ */
+}
+
+.white_button{
+    font-size: 13px;
+    border-radius: 6px;/* ボタンの角丸 */
+    background-color: #fff;/* ボタンの色 */
+    color:#000;/* ボタンの文字色 */
+    height: 32px;/*ボタンの細さ*/
+    width: 110px;/* ボタンの長さ */
+}
+
+
+
+
+.login_link{
+    font-size: 12px;
+    text-align: right;
+    margin: 30px 20px 10px 0px;
+}

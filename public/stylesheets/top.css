@@ -14,6 +14,7 @@ body {
 	background-attachment: fixed;
 	display: flex;
 	
+	
 }
 
 a {
@@ -28,6 +29,7 @@ a:hover img {
 	/* いつか使うかも */
 	/* display: flex; */
 	align-items: flex-start;
+	
 	
 	/*親要素の高さと同じになってしまった子要素の高さを元に戻す*/
 	justify-content: flex-end;
@@ -451,6 +453,10 @@ section .btn:hover {
 	border-radius: 50%;
 }
 
+.header-contents{
+	display: inline-block;      /* インラインブロック要素にする */
+    padding: 50px;
+}
 .search_container{
     /* 検索エリア */
     position: relative;
@@ -482,6 +488,18 @@ section .btn:hover {
     right:0px;
     top: -5px;
     outline : none;
+}
+/* カートアイコン */
+.cart-icon{
+    /* position: absolute; */
+	position: relative;
+	/* text-align: right; */
+	margin-left: 73%;
+
+}
+.cart-icon img{
+	height: 3.5em;
+	width: 3.5em;
 }
 
 .img_area2 {
@@ -607,13 +625,16 @@ height: 2.3em;
 width: 265px;
 overflow: hidden;
 }
+
 .search_container input[type="text"]{
 border: none;
 height: 2.0em;
 }
+
 .search_container input[type="text"]:focus {
 outline: 0;
 }
+
 .search_container input[type="submit"]{
 	cursor: pointer;
 	font-family: FontAwesome;
@@ -628,17 +649,13 @@ outline: 0;
 	outline : none;
 }
 
-
-
-
-
 /* 作品設定 */
 
 .form1{
-
-padding-left:20% ;
-padding-right: 20%;	
+padding-left:15% ;
+padding-right: 15%;	
 }
+
 h2{
 text-align:center;
 }
@@ -717,17 +734,536 @@ dt {
 }
 
 
+/* 検索エラー */
 
 
-/* 作品設定確認 */
+.error_message_area{
+	border : solid 1px;
+	width: 100%;
+	padding: 0%;
+	margin-top: 5%;
+	height: auto;
+	text-align: center;
+	border-radius: 10px; 
+	border-color: #ff6363;
+}
 
-/* .object2{
-	/* カラー選択 */
-	/* margin: 50px;
-	padding-left: 1%;
-	padding-right: 20%;
-} */
-/* .object2_name p{
+.error_title {
+	text-align: center;
+	color: #ff6363;
+
+}
+
+
+
+
+
+
+.box09{
+    width: 100%;
+    max-width: 900px;
+	min-width: 600px;
+    margin: 0 auto;
+	margin-top: 30px;
+    color: #707070;/*フォントカラー */
+    border: 3px solid; /*四角い枠*/
+    border: solid 3px #000000;  /*枠のカラー*/
+    border-radius: 10px;    /*枠の丸み*/
+    /* background-color: #fd0000; */
+}
+
+.box09 h3{
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 50px;
+    color: #707070;
+    /* background-color: #ff0088; */
+}
+
+.box09 h4{
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 50px;
+    color: #707070;
+    /* background-color: #ff0088; */
+}
+
+.box09 h3 hr{
+    height: 1px;/* hrの線の太さ */
+    width: 20%;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    margin-top: -2px;
+}
+
+.box09 h4 hr{
+    height: 1px;/* hrの線の太さ */
+    width: 30%;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    margin-top: -2px;
+}
+
+
+.login_error_box{
+    width: 70%;
+    margin: 0 auto;
+    color: #fd0000;/*フォントカラー */
+    border: 3px solid; /*四角い枠*/
+    border: solid 3px #fd0000;  /*枠のカラー*/
+}
+.login_error_box p{
+    text-align: center;
+    font-size: 13px;
+}
+
+/*                input系                          */
+.login_input{
+    margin-top: 50px;
+}
+
+.login_input input[type=text],input[type=password],input[type="email"]{
+    height: 20px;
+    width: 300px;
+
+    border-radius: 6px;
+}
+
+
+.login_input2 input[type="number"]{
+	height: 100px;
+    width: 300px;
+	font-size: 100px;
+	text-align: center;
+}
+
+
+
+.input_center{
+    text-align: center;
+    font-size: 16px;
+}
+
+
+
+/*               エラーコード系                       */
+/*新規登録ページ*/
+.new_error{
+    line-height: 3px;/*errorの行間　改行時16px　pタグ単体3px*/
+}
+
+p.new_warning{
+    font-size: 13px;
+    color: #000;
+	padding-left: 144px;
+}
+
+/*mail確認ページ*/
+.mail_error{
+    line-height: 3px;/*errorの行間　改行時16px　pタグ単体3px*/
+    
+}
+
+.password_update_error{
+    line-height: 3px;/*errorの行間　改行時16px　pタグ単体3px*/
+}
+
+.error_message{
+    font-size: 13px;
+    color: #fd0000;
+	padding-left: 133px;
 	
-	float: left;
-} */ 
+}
+
+.error_message2{
+    font-size: 13px;
+    color: #fd0000;
+	padding-left: 100px;
+	
+}
+
+.error_message3{
+    font-size: 13px;
+    color: #fd0000;
+	padding-left: 182px;
+	
+}
+
+.error_message4{
+    font-size: 13px;
+    color: #fd0000;
+	padding-left: 215px;
+	
+}
+/* 確認コードのエラー */
+.error_message5{
+    font-size: 13px;
+    color: #fd0000;
+	/* padding-right: 225px; */
+	
+}
+
+
+/*                ボタン系                         */
+.button{
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.double_button{
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.double_button button:first-of-type{
+    margin-right: 100px;
+}
+
+.black_button{
+    font-size: 13px;
+    border-radius: 6px;/* ボタンの角丸 */
+    background-color: #000;/* ボタンの色 */
+    color:#fff;/* ボタンの文字色 */
+    height: 32px;/*ボタンの細さ*/
+    width: 110px;/* ボタンの長さ */
+}
+
+.white_button{
+    font-size: 13px;
+    border-radius: 6px;/* ボタンの角丸 */
+    background-color: #fff;/* ボタンの色 */
+    color:#000;/* ボタンの文字色 */
+    height: 32px;/*ボタンの細さ*/
+    width: 110px;/* ボタンの長さ */
+}
+
+
+
+
+.login_link{
+    font-size: 12px;
+    text-align: right;
+    margin: 30px 20px 10px 0px;
+}
+
+.report_txt{
+    text-align: center;
+    margin-top: 70px;
+}
+
+.report_txt p{
+    font-size: 20px;
+}
+
+
+/* ポップアップ */
+.popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: .6s;
+}
+
+.popup.is-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-inner {
+	border-radius: 10px ; /*四角い枠*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+    background-color: #fff;
+    z-index: 2;
+}
+
+.popup-inner img {
+    width: 100%;
+}
+
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+.close-btn i {
+    font-size: 20px;
+    color: #333;
+}
+
+.black-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.8);
+    z-index: 1;
+    cursor: pointer;
+}
+
+
+/*                 cartページ                   */
+.h3_center{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 50px;
+    color: #707070;
+}
+
+.h3_center hr{
+    height: 1px;/* hrの線の太さ */
+    width: 130px;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    margin-top: -2px;
+}
+
+.cart_hr{
+    height: 2px;/* hrの線の太さ */
+    width: 75%;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    /* margin-top: -2px; */
+}
+
+.cart_flex{
+    margin: 0% 20%;
+	
+    max-width: 960px;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: #ff0088; */
+}
+
+.cart_flex2{
+    margin: 0% 14%;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: #ff0088; */
+}
+
+.cart_flex3{
+	margin: 0% 16%;
+    padding-left: 40%;
+	padding-right: 0%;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: #ff0088; */
+}
+
+.cart_item_flex{
+    
+    margin: 0% 15%;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: #ff0088; */
+}
+
+.cart_image{
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    /* background-color: #ff0088; */
+}
+
+.cart_image img{
+    
+    width: 20%;
+    height: 70%;
+    margin-top: 2%;
+	border-radius: 10px;
+	border: 1px solid rgb(0, 0, 0);
+}
+
+.cart_item_detail{
+    max-width: 960px;
+    width: 30%;
+    height: 100%;
+    padding-left: 5%;
+}
+
+.cart_item_detail p{
+    font-size: 12px;
+	text-align: left;
+}
+
+.cart_item_kazu{
+    margin-top:  5%;
+    /* background-color: #ff0088; */
+}
+
+.total{
+    margin-top:  15%;
+    margin-left: 25%;
+}
+
+.cart_item_kazu input[type=number]{
+    width: 70px;
+    height: 30px;
+}
+
+.cart_item_kazu p{
+    text-align: center;
+    /* background-color: #ff0088; */
+}
+
+.cart_flex p:nth-of-type(2n){
+    margin-left: 20%;
+}
+
+.cart_flex2 p:nth-of-type(2n){
+    margin-left: 16%;
+}
+
+.cart_flex3 p:nth-of-type(2n){
+    padding-left: 10%;
+}
+
+.purchase_area{
+	padding-right: 5%;
+	padding-left:70%;
+}
+
+.total2{
+	padding-left:5%
+}
+
+.count1{
+	padding-right: 8.5%;
+}
+.h3_center2{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 50px;
+    color: #707070;
+}
+
+.h3_center2 hr{
+    height: 1px;/* hrの線の太さ */
+    width: 230px;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    margin-top: -2px;
+}
+/*                    住所選択                  */
+.h3_address_title{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 50px;
+    color: #707070;
+}
+
+.h3_address_title hr{
+    height: 1px;/* hrの線の太さ */
+    width: 170px;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    margin-top: -2px;
+}
+
+.address_input{
+    width: 550px;
+    /* min-width: ; */
+    margin: 0 auto 30px auto;
+    /* background-color: #ff0088; */
+}
+
+.address_input table{
+    border-spacing: 0;
+}
+.address_input td{
+    padding: 10px;
+    /* background-color: #ff0088; */
+}
+.address_input th{
+    padding: 15px;
+    text-align: left;
+    font-weight: normal;
+    vertical-align: top;
+    width: 8em;
+}
+
+.address_select_center_hr{
+    height: 1px;/* hrの線の太さ */
+    width: 600px;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+}
+
+.address_input input[type=text]{
+    height: 20px;
+    width: 100%;
+    border-radius: 6px;
+}
+
+.mati_select{
+    height: 26px;
+    width: 70%;
+    border-radius: 6px;
+    border: solid 2px;
+}
+
+/* .select_address_area{
+    width: 550px;
+    background-color: #ff0088;
+} */
+
+.address_box{
+    width: 420px;
+    max-width: 900px;
+    /* margin-top: 18px; */
+    color: #707070;/*フォントカラー */
+    border: solid 2px #000000;  /*枠のカラー*/
+    border-radius: 10px;    /*枠の丸み*/
+    /* background-color: #fd0000; */
+}
+
+.address_box table{
+    border-spacing: 0;
+}
+
+.address_box td{
+    padding: 5px;
+}
+
+.address_box th{
+    padding: 5px 20px 5px 10px;
+    text-align: right;
+    font-weight: normal;
+    vertical-align: top;/*ようわからん奴*/
+    /* width: 8em; */
+}
+
+.select_address{
+    width: 500px;
+    margin: 30px auto;
+    /* background-color: #fd0000; */
+}
+
+.address_sub_title{
+    font-size: 16px;
+    /* background-color: #fd0000; */
+    padding-left: 70px;
+}

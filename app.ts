@@ -20,16 +20,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
-//fabiconの設定
+//faviconの設定
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //ルーティング設定
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const createRouter = require('./routes/create');
+const indexRouter = require('./routes/top');
+const usersRouter = require('./routes/alpha/users');
+const createRouter = require('./routes/alpha/create');
 const paymentRouter = require('./routes/payment/payment');
 const PayPayRouter = require('./routes/payment/paypay');
-const TestRouter = require('./routes/test');
+const TestRouter = require('./routes/alpha/test');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
