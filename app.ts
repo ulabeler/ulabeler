@@ -24,11 +24,12 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //ルーティング設定
+const userAPIRouter = require('./routes/api/user');
 const indexRouter = require('./routes/top');
-const usersRouter = require('./routes/alpha/users');
-const createRouter = require('./routes/alpha/create');
 const paymentRouter = require('./routes/payment/payment');
 const PayPayRouter = require('./routes/payment/paypay');
+const usersRouter = require('./routes/alpha/users');
+const createRouter = require('./routes/alpha/create');
 const TestRouter = require('./routes/alpha/test');
 
 app.use('/', indexRouter);
@@ -37,6 +38,8 @@ app.use('/create', createRouter);
 app.use('/payment', paymentRouter);
 app.use('/payment/paypay', PayPayRouter);
 app.use('/test', TestRouter);
+app.use('/api/user', userAPIRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(request:any, response:any, next:any) {
