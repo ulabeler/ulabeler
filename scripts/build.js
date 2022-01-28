@@ -4,7 +4,7 @@ const fse = require('fs-extra');
 if(fse.existsSync('./built')){
     //メソッドチェーンを用いる
     fse.removeSync('./built');
-    console.log('builtを再生成');
+    console.log('builtディレクトリを再生成します。');
 }
 
 cp_dir();

@@ -37,7 +37,7 @@ router.get('/select_object', (request: any, response: any) => {
         console.log("#####################################");
         console.log(name_category);
         //select_objectに渡す
-        response.render('create/select_object', {
+        response.render('train/create/select_object', {
             name_category: name_category,
 
         });
@@ -72,7 +72,7 @@ router.post('/select_object_sub', (request: any, response: any) => {
             response.cookie('category', category);
 
             //categoryをページに表示
-            response.render('create/select_object_sub', {
+            response.render('train/create/select_object_sub', {
                 category: category,
                 name_subcategory: name_subcategory
             });
@@ -84,7 +84,7 @@ router.post('/select_color', (request: any, response: any) => {
     let category = request.body.category_sub;
     //Cookieに格納
     response.cookie('category_sub', category);
-    response.render('create/select_color', {
+    response.render('train/create/select_color', {
         category: category
     });
 });
@@ -95,7 +95,7 @@ router.post('/customize_editing', (request: any, response: any) => {
     let category_sub = request.body.category_sub;
     console.log(color);
     console.log(category_sub);
-    response.render('create/customize_editing', {
+    response.render('train/create/customize_editing', {
         color: color,
         category_sub: category_sub
     });
@@ -108,7 +108,7 @@ router.get('/customize_editing', (request: any, response: any) => {
 
 router.get('/select_image_filter', function (request: any, response: any, next: any) {
     const uploaded_picture = "./images/4.jpg"
-    response.render('create/select_image_filter', { uploaded_picture: uploaded_picture });
+    response.render('train/create/select_image_filter', { uploaded_picture: uploaded_picture });
 });
 
 router.post('/work_settings', (request: any, response: any) => {
@@ -124,7 +124,7 @@ router.post('/work_settings', (request: any, response: any) => {
     console.log(char_num); //α専用
     //char_numをCookieに格納 //α専用
     response.cookie('char_num', char_num); //α専用
-    response.render('create/work_settings', { category_sub: category_sub , char_num: char_num });
+    response.render('train/create/work_settings', { category_sub: category_sub , char_num: char_num });
 });
 
 router.post('/work_settings_alpha_create', (request: any, response: any) => {
@@ -139,7 +139,7 @@ router.post('/work_settings_alpha_create', (request: any, response: any) => {
     // //ファイル名を生成
     // let file_name = uuid.v4();
     // //
-    response.render('create/work_settings_alpha_create', { category_sub: category_sub, img_base64: img_base64 });
+    response.render('train/create/work_settings_alpha_create', { category_sub: category_sub, img_base64: img_base64 });
 });
 
 router.get('/work_settings', (request: any, response: any) => {
@@ -152,7 +152,7 @@ router.get('/work_settings', (request: any, response: any) => {
     console.log("#####################################");
     //Cookieからcategory_subを取得
     let category_sub = request.cookies.category_sub;
-    response.render('create/work_settings_reedit'
+    response.render('train/create/work_settings_reedit'
         , {
             category_sub: category_sub,
             title: title,
@@ -215,7 +215,7 @@ router.post('/work_setting_confirmation', (request: any, response: any) => {
         description = description.slice(0, description.length - 2);
     }
     console.log("hashtag:" + hash_tag);
-    response.render('create/work_setting_confirmation', {
+    response.render('train/create/work_setting_confirmation', {
         category_sub: category_sub,
         title: title,
         description: description,
@@ -276,7 +276,7 @@ router.post('/work_setting_confirmation_alpha_create', (request: any, response: 
         description = description.slice(0, description.length - 2);
     }
     console.log("hashtag:" + hash_tag);
-    response.render('create/work_setting_confirmation_alpha_create', {
+    response.render('train/create/work_setting_confirmation_alpha_create', {
         category_sub: category_sub,
         title: title,
         description: description,
@@ -287,7 +287,7 @@ router.post('/work_setting_confirmation_alpha_create', (request: any, response: 
 
 
 router.get('/work_setting_confirmation', (request: any, response: any) => {
-    response.render('create/work_setting_confirmation')
+    response.render('train/create/work_setting_confirmation')
 });
 
 router.post('/submit', (request: any, response: any) => {
@@ -416,7 +416,7 @@ router.post('/submit_alpha_create', (request: any, response: any) => {
 
             //以下テスト用ルート
             //渡すべきものはamount、user_id、title
-            response.render('payment/checkout_alpha_create', {
+            response.render('train/payment/checkout_alpha_create', {
                 amount: amount,
                 user_id: user_id,
                 title: title,
@@ -433,11 +433,11 @@ router.post('/submit_alpha_create', (request: any, response: any) => {
 });
 
 router.get('/alpha_create', (request: any, response: any) => {
-    response.render('create/alpha_create');
+    response.render('train/create/alpha_create');
 });
 
 router.post('/alpha_create', (request: any, response: any) => {
-    response.render('create/alpha_create');
+    response.render('train/create/alpha_create');
 });
 
 module.exports = router;

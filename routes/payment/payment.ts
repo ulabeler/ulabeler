@@ -18,11 +18,11 @@ connection = mysql.createConnection({
 
 
 router.get('/', (request: any, response: any) => {
-    response.render('payment/payment_test');
+    response.render('train/payment/payment_test');
 });
 
 router.get('/checkout', (request: any, response: any) => {
-    response.render('payment/checkout');
+    response.render('train/payment/checkout');
 });
 
 module.exports = router;

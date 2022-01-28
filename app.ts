@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //ルーティング設定
-const indexRouter = require('./routes/alpha/index');
+const indexRouter = require('./routes/top');
 const usersRouter = require('./routes/alpha/users');
 const createRouter = require('./routes/alpha/create');
 const paymentRouter = require('./routes/payment/payment');

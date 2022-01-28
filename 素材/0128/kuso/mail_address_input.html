@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>U labeler</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="box">
+
+        <!-- 入力フォーム -->
+        <form action="" method="post" id="hoge">
+            <div class="login_input">
+                <div class="input_center">
+                    <p>登録したメールアドレス<font color="red">*</font>　:　<input type="text" name="maill" placeholder="@example.co.jp"></p>
+                </div>
+                <div class="mail_error">
+                    <p id="" class="error_message"></p><!-- やま jsエラーメッセージ -->
+                </div>
+            </div>
+        </form>
+        <!-- ボタン -->
+        <div class="double_button">
+            <button type="submit" class="white_button" onclick="location.href='sign_in.html'">戻る</button>
+            <button type="submit" class="black_button" form="hoge">送信</button>
+        </div>
+
+    </div>
+
+    <noscript>
+        <p>JavaScriptを有効にしてください。</p>
+    </noscript>
+
+</body>
+</html>
