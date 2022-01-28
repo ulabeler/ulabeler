@@ -101,6 +101,7 @@
   "exclude": [
     "node_modules",
     "public/*",
-    "素材/*"
+    "素材/*",
+    "built/*"
   ],
 }
