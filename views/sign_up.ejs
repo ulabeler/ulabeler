@@ -66,7 +66,7 @@
 
           <div class="login_input">
             <div class="input_center">
-              <p>ユーザー名<font color="red">*</font>　　　:　<input type="text" name="" size="30" placeholder="15文字以内"
+              <p>ユーザー名<font color="red">*</font>　　　　　　:　<input type="text" name="" size="30" placeholder="15文字以内"
                   id="input_username"></p>
             </div>
             <div class="new_error">
@@ -75,39 +75,39 @@
 
             <!-- TODO:入力段階で重複判定 -->
             <div class="input_center">
-              <p>ユーザーID<font color="red">*</font>　　　:　<input type="text" name="" size="30" placeholder="半角英数字15文字以内"
+              <p>ユーザーID<font color="red">*</font>　　　　　　:　<input type="text" name="" size="30" placeholder="半角英数字15文字以内"
                   id="input_userID">
               </p>
             </div>
             <div class="new_error">
               <p class="new_warning">※ユーザーIDは登録後の変更は出来ません。</p>
-              <p id="error_userID" class="error_message2"></p><!-- やま jsエラーメッセージ -->
+              <p id="error_userID" class="error_message2"></p>
             </div>
 
             <div class="input_center">
-              <p>メールアドレス<font color="red">*</font>　:　<input type="email" name="" size="40"
+              <p>メールアドレス<font color="red">*</font>　　　　:　<input type="email" name="" size="40"
                   placeholder="ulabeler@example.co.jp" id="input_email">
               </p>
             </div>
             <div class="input_center">
-              <p>メールアドレス(確認用)<font color="red">*</font>:<input type="email" name="" size="40"
-                  placeholder="@example.co.jp"></p>
+              <p>メールアドレス(確認用)<font color="red">*</font>:　<input type="email" name="" size="40"
+                  placeholder="ulabeler@example.co.jp" id="input_email_confirm"></p>
             </div>
             <div class="new_error">
-              <p id="error_email" class="error_message2">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><!-- やま jsエラーメッセージ -->
+              <p id="error_email" class="error_message2"></p>
             </div>
 
             <div class="input_center">
-              <p>パスワード<font color="red">*</font>　　　:　<input type="password" name="" placeholder="半角英数字８文字以上20文字以内"
+              <p>パスワード<font color="red">*</font>　　　　　　:　<input type="password" name="" placeholder="半角英数字８文字以上20文字以内"
                   id="input_password"></p>
             </div>
             <div class="input_center">
-              <p>パスワード(確認用)<font color="red">*</font>　　:<input type="password" name="" placeholder="半角英数字８文字以上20文字以内"
+              <p>パスワード(確認用)<font color="red">*</font>　　:　<input type="password" name="" placeholder="半角英数字８文字以上20文字以内"
                   id="input_password_confirm">
               </p>
             </div>
-            <div class="new_error">ll
-              <p id="error_password" class="error_message2">aaaaaaaaaaaaaaaaaaaaaaaaaaaa</p><!-- やま jsエラーメッセージ -->
+            <div class="new_error">
+              <p id="error_password" class="error_message2"></p>
             </div>
 
           </div>
@@ -148,6 +148,7 @@
     const input_username = document.getElementById('input_username');  //<%# 重複可能なユーザー名 %>
     const input_userID = document.getElementById('input_userID'); //<%# 重複不可なユーザーID %>
     const input_email = document.getElementById('input_email'); //<%# メールアドレス %>
+    const input_email_confirm = document.getElementById('input_email_confirm'); //<%# メールアドレス(確認用) %>
     const input_password = document.getElementById('input_password'); //<%# パスワード %>
     const input_password_confirm = document.getElementById('input_password_confirm'); //<%# パスワード(確認用) %>
 
@@ -168,7 +169,7 @@
     });
 
     //<%#input_userIDは、半角英数字15文字以内%>
-    //<%# "_""-""."も使用可能とする%>
+    //<%# "_""-""."" "も使用可能とする%>
     //<%#入力値を取得して、入力値を検証する%>
     input_userID.addEventListener('keyup', function () {
       if (input_userID.value.length > 15) {
@@ -187,6 +188,39 @@
         error_email.innerText = '正しい形式で入力してください。';
       } else {
         error_email.innerText = '';
+      }
+    });
+
+    //<%#input_email_confirmは、input_passwordと同じ値を入力%>
+    input_email_confirm.addEventListener('keyup', function () {
+      if (input_email_confirm.value != input_email.value) {
+        error_email.innerText = '確認用メールアドレスが一致しません。';
+      } else {
+        error_email.innerText = '';
+      }
+    });
+
+    //<%#input_passwordは、半角英数字8文字以上、20文字以内%>
+    //<%# "_""-""."" "も使用可能とする%>
+    //<%#入力値を取得して、入力値を検証する%>
+    input_password.addEventListener('keyup', function () {
+      if (input_password.value.length < 8) {
+        error_password.innerText = '8文字以上で入力してください';
+      } else if (input_password.value.length > 20) {
+        error_password.innerText = '20文字以内で入力してください';
+      } else if (input_password.value.match(/[^a-zA-Z0-9_\-\.]/)) {
+        error_password.innerText = '使用できる文字は、半角英数字、アンダーバー、ハイフン、ピリオドのみです';
+      } else {
+        error_password.innerText = '';
+      }
+    });
+
+    //<%#input_password_confirmは、input_passwordと同じ値を入力%>
+    input_password_confirm.addEventListener('keyup', function () {
+      if (input_password_confirm.value != input_password.value) {
+        error_password.innerText = '確認用パスワードが一致しません。';
+      } else {
+        error_password.innerText = '';
       }
     });
 
