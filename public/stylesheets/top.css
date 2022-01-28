@@ -1016,3 +1016,250 @@ p.new_warning{
     z-index: 1;
     cursor: pointer;
 }
+/*                 cartページ                   */
+.h3_center{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 50px;
+    color: #707070;
+}
+
+.h3_center hr{
+    height: 1px;/* hrの線の太さ */
+    width: 130px;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    margin-top: -2px;
+}
+
+.cart_hr{
+    height: 2px;/* hrの線の太さ */
+    width: 75%;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    /* margin-top: -2px; */
+}
+
+.cart_flex{
+    margin: 0% 20%;
+	
+    max-width: 960px;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: #ff0088; */
+}
+
+.cart_flex2{
+    margin: 0% 14%;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: #ff0088; */
+}
+
+.cart_flex3{
+	margin: 0% 16%;
+    padding-left: 40%;
+	padding-right: 0%;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: #ff0088; */
+}
+
+.cart_item_flex{
+    
+    margin: 0% 15%;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: #ff0088; */
+}
+
+.cart_image{
+    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    /* background-color: #ff0088; */
+}
+
+.cart_image img{
+    
+    width: 20%;
+    height: 70%;
+    margin-top: 2%;
+	border-radius: 10px;
+	border: 1px solid rgb(0, 0, 0);
+}
+
+.cart_item_detail{
+    max-width: 960px;
+    width: 30%;
+    height: 100%;
+    padding-left: 5%;
+}
+
+.cart_item_detail p{
+    font-size: 12px;
+	text-align: left;
+}
+
+.cart_item_kazu{
+    margin-top:  5%;
+    /* background-color: #ff0088; */
+}
+
+.total{
+    margin-top:  15%;
+    margin-left: 25%;
+}
+
+.cart_item_kazu input[type=number]{
+    width: 70px;
+    height: 30px;
+}
+
+.cart_item_kazu p{
+    text-align: center;
+    /* background-color: #ff0088; */
+}
+
+.cart_flex p:nth-of-type(2n){
+    margin-left: 20%;
+}
+
+.cart_flex2 p:nth-of-type(2n){
+    margin-left: 16%;
+}
+
+.cart_flex3 p:nth-of-type(2n){
+    padding-left: 10%;
+}
+
+.purchase_area{
+	padding-right: 5%;
+	padding-left:70%;
+}
+
+.total2{
+	padding-left:5%
+}
+
+.count1{
+	padding-right: 8.5%;
+}
+.h3_center2{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 50px;
+    color: #707070;
+}
+
+.h3_center2 hr{
+    height: 1px;/* hrの線の太さ */
+    width: 230px;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    margin-top: -2px;
+}
+/*                    住所選択                  */
+.h3_address_title{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 50px;
+    color: #707070;
+}
+
+.h3_address_title hr{
+    height: 1px;/* hrの線の太さ */
+    width: 170px;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+    margin-top: -2px;
+}
+
+.address_input{
+    width: 550px;
+    /* min-width: ; */
+    margin: 0 auto 30px auto;
+    /* background-color: #ff0088; */
+}
+
+.address_input table{
+    border-spacing: 0;
+}
+.address_input td{
+    padding: 10px;
+    /* background-color: #ff0088; */
+}
+.address_input th{
+    padding: 15px;
+    text-align: left;
+    font-weight: normal;
+    vertical-align: top;
+    width: 8em;
+}
+
+.address_select_center_hr{
+    height: 1px;/* hrの線の太さ */
+    width: 600px;/* hrの線の長さ */
+    background-color: #707070;
+    border: none;
+}
+
+.address_input input[type=text]{
+    height: 20px;
+    width: 100%;
+    border-radius: 6px;
+}
+
+.mati_select{
+    height: 26px;
+    width: 70%;
+    border-radius: 6px;
+    border: solid 2px;
+}
+
+/* .select_address_area{
+    width: 550px;
+    background-color: #ff0088;
+} */
+
+.address_box{
+    width: 420px;
+    max-width: 900px;
+    /* margin-top: 18px; */
+    color: #707070;/*フォントカラー */
+    border: solid 2px #000000;  /*枠のカラー*/
+    border-radius: 10px;    /*枠の丸み*/
+    /* background-color: #fd0000; */
+}
+
+.address_box table{
+    border-spacing: 0;
+}
+
+.address_box td{
+    padding: 5px;
+}
+
+.address_box th{
+    padding: 5px 20px 5px 10px;
+    text-align: right;
+    font-weight: normal;
+    vertical-align: top;/*ようわからん奴*/
+    /* width: 8em; */
+}
+
+.select_address{
+    width: 500px;
+    margin: 30px auto;
+    /* background-color: #fd0000; */
+}
+
+.address_sub_title{
+    font-size: 16px;
+    /* background-color: #fd0000; */
+    padding-left: 70px;
+}
