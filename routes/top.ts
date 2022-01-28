@@ -18,4 +18,8 @@ router.get('/', function(request:any, response:any, next:any) {
   response.render('top');
 });
 
+router.get('/sign_up', function(request:any, response:any, next:any) {
+  response.render('sign_up');
+  });
+
 module.exports = router;
