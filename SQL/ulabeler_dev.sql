@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`user` (
   PRIMARY KEY (`id`),
   INDEX `name_idx` (`name` ASC) VISIBLE,
   INDEX `mailaddress_idx` (`mailaddress` ASC) VISIBLE,
-  INDEX `id_idx` (`id` ASC) VISIBLE)
+  INDEX `id_idx` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `mailaddress_UNIQUE` (`mailaddress` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
