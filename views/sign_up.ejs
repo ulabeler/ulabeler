@@ -175,9 +175,36 @@
         disable_counter_username++;
       } else {
         error_username.innerText = '';
-        disable_counter_username = 0;
+        if (input_username.value.length == 0) {
+          disable_counter_username++;
+        } else {
+          disable_counter_username = 0;
+        }
       }
     });
+    input_username.addEventListener('focusout', function () {
+      if (disable_counter_username == 0 && input_username.value.length > 0) {
+        axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
+          text: input_username.value,
+        })
+          .then(function (response) {
+            if (response.data == true) {
+              error_username.innerText = "不適切なワードが含まれています。";
+              disable_counter_username++;
+            } else {
+              error_username.innerText = '';
+              if (input_username.value.length == 0) {
+                disable_counter_username++;
+              } else {
+                disable_counter_username = 0;
+              }
+            }
+          })
+          .catch(function (error) {
+            alert(error); //TODO: エラー時の遷移先
+          });
+      }
+    })
 
     //<%#input_userIDは、半角英数字15文字以内%>
     //<%# "_""-""."" "も使用可能とする%>
@@ -193,7 +220,11 @@
         return;
       } else {
         error_userID.innerText = '';
-        disable_counter_userID = 0;
+        if (input_userID.value.length == 0) {
+          disable_counter_userID++;
+        } else {
+          disable_counter_userID = 0;
+        }
       }
       //axiosを利用して重複判定
       //"/api/user/check_userID"にPOSTする
@@ -211,7 +242,11 @@
               disable_counter_userID++;
             } else {
               error_userID.innerText = '';
-              disable_counter_userID = 0;
+              if (input_userID.value.length == 0) {
+                disable_counter_userID++;
+              } else {
+                disable_counter_userID = 0;
+              }
             }
           })
           .catch(function (error) {
@@ -228,7 +263,11 @@
         disable_counter_email++;
       } else {
         error_email.innerText = '';
-        disable_counter_email = 0;
+        if (input_email.value.length == 0) {
+          disable_counter_email++;
+        } else {
+          disable_counter_email = 0;
+        }
       }
     });
 
@@ -241,6 +280,11 @@
       } else {
         error_email.innerText = '';
         confirm_reject_counter_email = 0;
+        if (input_email_confirm.value.length == 0) {
+          disable_counter_email++;
+        } else {
+          disable_counter_email = 0;
+        }
         return true;
       }
     }
@@ -269,7 +313,11 @@
         disable_counter_password++;
       } else {
         error_password.innerText = '';
-        disable_counter_password = 0;
+        if (input_password.value.length == 0) {
+          disable_counter_password++;
+        } else {
+          disable_counter_password = 0;
+        }
       }
     });
 
@@ -283,6 +331,11 @@
       } else {
         error_password.innerText = '';
         disable_counter_password_confirm = 0;
+        if (input_email.value.length == 0) {
+          disable_counter_password++;
+        } else {
+          disable_counter_password = 0;
+        }
         return true;
       }
     }
@@ -333,10 +386,10 @@
       console.log(vd_password);
       if (vd_email && vd_password) {
         axios.post('/api/user/sign_up', {
-          username : input_username.value,
-          userID : input_userID.value,
-          email : input_email.value,
-          password : input_password.value,
+          username: input_username.value,
+          userID: input_userID.value,
+          email: input_email.value,
+          password: input_password.value,
         })
           .then(function (response) {
             if (response.data == true) {
