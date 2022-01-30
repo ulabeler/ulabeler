@@ -15,23 +15,29 @@ connection = mysql.createConnection({
   multipleStatements: true
 });
 
-router.post('/check_userID', function (request: { body: { userID: any; }; }, response: { send: (arg0: boolean) => void; }, next: any) {
-  //POSTで受け取ったデータをuserIDをキーにして取得
-  let userID = request.body.userID;
-  //SQL文を実行
-  //該当するものがあればtrueを返す
-  connection.query(`SELECT * FROM user WHERE id = ?`, [userID], function (err: any, results: string | any[], fields: any) {
-    if (err) {
-      console.log(err);
-      response.send(false);
-    } else {
-      if (results.length > 0) {
-        response.send(true);
-      } else {
+router.post('/check_userID', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }, next: any) {
+  //キーが足りていなければ400を返す
+  if (!request.body.userID) {
+    response.status(400).send('Bad Request');
+    return;
+  }else{
+    //POSTで受け取ったデータをuserIDをキーにして取得
+    let userID = request.body.userID;
+    //SQL文を実行
+    //該当するものがあればtrueを返す
+    connection.query(`SELECT * FROM user WHERE id = ?`, [userID], function (err: any, results: string | any[], fields: any) {
+      if (err) {
+        console.log(err);
         response.send(false);
+      } else {
+        if (results.length > 0) {
+          response.send(true);
+        } else {
+          response.send(false);
+        }
       }
-    }
-  });
+    });
+  }
 });
 
 router.post('/sign_up', function (request: { body: { username: string; userID: string; password: string; email: string; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }, next: any) {
