@@ -15,10 +15,6 @@ connection = mysql.createConnection({
   multipleStatements: true
 });
 
-import * as kysely from 'kysely';
-
-
-
 router.post('/check_userID', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }, next: any) {
   //キーが足りていなければ400を返す
   if (!request.body.userID) {

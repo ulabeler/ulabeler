@@ -5,19 +5,8 @@ const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const cookieSession = require("cookie-session");
 const favicon = require('serve-favicon');
-const secret = process.env.U_COOKIESESSION_SECRET;
 
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [secret],
-
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  })
-);
 
 
 import { send_discord } from './tools/discord_send_message'; //メッセ送信処理 できればこれで状態監視できるようにしたい
@@ -42,9 +31,6 @@ const PayPayRouter = require('./routes/payment/paypay');
 const usersRouter = require('./routes/alpha/users');
 const createRouter = require('./routes/alpha/create');
 const TestRouter = require('./routes/alpha/test');
-
-// authorization
-require("./.config/passport_config")(app);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
