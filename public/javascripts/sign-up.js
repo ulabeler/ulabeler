@@ -95,7 +95,7 @@ input_userID.addEventListener('keyup', function () {
 });
 input_userID.addEventListener('focusout', function () {
     if (disable_counter_userID == 0) {
-        axios.post('/api/user/check_userID', {
+        axios.post('/api/user/v2/check_userID', {
             userID: input_userID.value
         })
             .then(function (response) {
@@ -247,18 +247,20 @@ send.addEventListener('click', function () {
     console.log(vd_email);
     console.log(vd_password);
     if (vd_email && vd_password) {
-        axios.post('/api/user/sign_up', {
+        axios.post('/api/user/v2/sign_up', {
             username: input_username.value,
             userID: input_userID.value,
             email: input_email.value,
             password: input_password.value,
         })
             .then(function (response) {
-                if (response.data == true) {
-                    //"/"へ遷移
+                //201が返ってきた場合は、ユーザー登録が成功したということ
+                //それ以外は、エラーが発生したということ
+                if (response.status === 201) {
+                    alert('ユーザー登録が完了しました');
                     window.location.href = '/';
                 } else {
-                    alert('登録に失敗しました'); //TODO: エラー時の遷移先
+                    alert('ユーザー登録に失敗しました');
                 }
             })
             .catch(function (error) {

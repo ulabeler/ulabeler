@@ -1,4 +1,8 @@
-export { };
+const environment:any = process.env.U_DB_ENVIRONMENT;
+const knex_config = require('./.config/knexfile')[environment];
+const knex = require('knex')(knex_config);
+export { knex };
+
 const createError = require('http-errors');
 const express = require('express');
 const app = express();
