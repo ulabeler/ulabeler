@@ -102,6 +102,7 @@
     "*.ts",
     ".config/*.ts",
     "**/**/*.ts",
+    "./tools/data/table_types.ts"
   ],
   /*除外設定*/
   "exclude": [
