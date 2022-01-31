@@ -1,7 +1,6 @@
-export { };
-  import express from 'express';
-  import bcrypt from 'bcrypt';
-  const router = express.Router();
+import express from 'express';
+import bcrypt from 'bcrypt';
+const router = express.Router();
 //ここまで共通部分
 import mysql from 'mysql2';
 let connection: any;
@@ -146,7 +145,7 @@ router.post('/dev/force_delete_user', function (request, response) {
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
   } else {
-    const user:userTable = {
+    const user: userTable = {
       id: request.body.userID,
       name: '',
       password: '',

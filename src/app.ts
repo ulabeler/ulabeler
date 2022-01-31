@@ -1,4 +1,4 @@
-const environment:any = process.env.U_DB_ENVIRONMENT;
+const environment = process.env.U_DB_ENVIRONMENT || 'development';
 const knex_config = require('./config/knexfile')[environment];
 const knex = require('knex')(knex_config);
 export { knex };
@@ -9,21 +9,10 @@ const app = express();
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import cookieSession from "cookie-session";
 import favicon from 'serve-favicon';
 
-//secretをstring型で定義
-const secret:string = process.env.SECRET || 'secret';
 
-app.use(
-  cookieSession({
-    name: "session",
-    keys: [secret],
 
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  })
-);
 
 //import { send_discord } from './tools/discord_send_message'; //メッセ送信処理 できればこれで状態監視できるようにしたい
 
@@ -49,7 +38,7 @@ import PayPayRouter from './routes/payment/paypay';
 // const TestRouter = require('./routes/alpha/test');
 
 // authorization
-require("./config/passport_config")(app); //まだ
+require("./config/passport")(app); //まだ
 
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
