@@ -1,47 +1,11 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 const router = express.Router();
-//ここまで共通部分
-import mysql from 'mysql2';
-let connection: any;
-// let result: any;
 import { sendMail } from '../../tools/sendmail';
 import { knex } from '../../app';
 import { userTable } from '../tableType_alias';
-connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  multipleStatements: true
-});
 
 router.post('/check_userID', function (request, response) {
-  //キーが足りていなければ400を返す
-  if (!request.body.userID) {
-    response.status(400).send('Bad Request');
-    return;
-  } else {
-    //POSTで受け取ったデータをuserIDをキーにして取得
-    let userID = request.body.userID;
-    //SQL文を実行
-    //該当するものがあればtrueを返す
-    connection.query(`SELECT * FROM user WHERE id = ?`, [userID], function (err: any, results: string | any[]) {
-      if (err) {
-        console.log(err);
-        response.send(false);
-      } else {
-        if (results.length > 0) {
-          response.send(true);
-        } else {
-          response.send(false);
-        }
-      }
-    });
-  }
-});
-
-router.post('/v2/check_userID', function (request, response) {
   //キーが足りていなければ400を返す
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
@@ -79,30 +43,6 @@ router.post('/v2/check_userID', function (request, response) {
 });
 
 router.post('/sign_up', function (request, response) {
-  //キーが足りていなければ400を返す
-  if (!request.body.username || !request.body.userID || !request.body.password || !request.body.email) {
-    response.status(400).send('Bad Request');
-  } else {
-    const username = request.body.username;
-    const userID = request.body.userID;
-    const raw_password = request.body.password;
-    const hashed_password = bcrypt.hashSync(raw_password, 10);
-    const email = request.body.email;
-    const created_at = new Date();
-
-    connection.query(`INSERT INTO user (id, name, password, mailaddress, created_at) VALUES (?, ?, ?, ?, ?)`, [userID, username, hashed_password, email, created_at], function (err: any) {
-      if (err) {
-        console.log(err);
-        response.send(false);
-      } else {
-        sendMail("sign_up_complete", email);
-        response.send(true);
-      }
-    });
-  }
-});
-
-router.post('/v2/sign_up', function (request, response) {
   //キーが足りていなければ400を返す
   if (!request.body.username || !request.body.userID || !request.body.password || !request.body.email) {
     response.status(400).send('Bad Request');
@@ -158,14 +98,13 @@ router.post('/dev/force_delete_user', function (request, response) {
       created_at: new Date(),
       deleted_at: null
     }
-    connection.query(`DELETE FROM user WHERE id = ?`, [user.id], function (err: any) {
-      if (err) {
-        console.log(err);
-        response.send("failed");
-      } else {
-        response.send("done");
-      }
-    });
+    try{
+      knex('user').where('id', user.id).del().then(function () {
+        response.status(200).send('Delete Success');
+      });
+    }catch{
+      response.status(500).send('Internal Server Error');
+    }
   }
 });
 

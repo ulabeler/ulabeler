@@ -95,7 +95,7 @@ input_userID.addEventListener('keyup', function () {
 });
 input_userID.addEventListener('focusout', function () {
     if (disable_counter_userID == 0) {
-        axios.post('/api/user/v2/check_userID', {
+        axios.post('/api/user/check_userID', {
             userID: input_userID.value
         })
             .then(function (response) {
@@ -247,7 +247,7 @@ send.addEventListener('click', function () {
     console.log(vd_email);
     console.log(vd_password);
     if (vd_email && vd_password) {
-        axios.post('/api/user/v2/sign_up', {
+        axios.post('/api/user/sign_up', {
             username: input_username.value,
             userID: input_userID.value,
             email: input_email.value,
