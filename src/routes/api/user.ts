@@ -8,7 +8,7 @@ let connection: any;
 // let result: any;
 import { sendMail } from '../../tools/sendmail';
 import { knex } from '../../app';
-import { userTable } from '../../tools/data/table_types';
+import { userTable } from '../../@types/table_types';
 connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,

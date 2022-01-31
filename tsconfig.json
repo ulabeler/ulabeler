@@ -9,6 +9,7 @@
     "rootDirs": [
       "./src"
     ],
+    "baseUrl": "./src",
     "outDir": "built",
     "removeComments": true,
     "esModuleInterop": true,
