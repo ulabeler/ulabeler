@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
     "incremental": true,
-    "tsBuildInfoFile": "./config/ts/.tsbuildinfo",
+    "tsBuildInfoFile": "./.tsbuildinfo",
     "target": "es2021",
     "module": "commonjs",
     "moduleResolution": "node",
     "allowJs": false,
+    "rootDirs": [
+      "./src"
+    ],
     "outDir": "built",
     "removeComments": true,
     "esModuleInterop": true,
@@ -26,21 +29,22 @@
     "noImplicitReturns": true
   },
   "include": [
-    "bin/*.ts",
-    "config/*.ts",
-    "routes/*.ts",
-    "routes/*/*.ts",
-    "tools/*.ts",
-    "bin/*.ts",
-    "*.ts",
-    "./tools/data/table_types.ts"
+    "src/bin/*.ts",
+    "src/config/*.ts",
+    "src/routes/*.ts",
+    "src/routes/*/*.ts",
+    "src/tools/*.ts",
+    "src/bin/*.ts",
+    "src/*.ts",
+    "src/tools/data/table_types.ts",
+    "src/app.ts"
   ],
   /*除外設定*/
   "exclude": [
     "node_modules",
-    "public/*",
+    "src/public/*",
     "素材/*",
     "built/*",
-    "routes/alpha/*",
+    "src/routes/alpha/*",
   ]
 }
