@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 //ここまで共通部分
 const mysql = require('mysql2');
 let connection: any;
-let result: any;
+// let result: any;
 import { sendMail } from '../../tools/sendmail';
 import { knex } from '../../app';
 import { userTable } from '../../tools/data/table_types';
@@ -17,7 +17,7 @@ connection = mysql.createConnection({
   multipleStatements: true
 });
 
-router.post('/check_userID', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }, next: any) {
+router.post('/check_userID', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }) {
   //キーが足りていなければ400を返す
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
@@ -27,7 +27,7 @@ router.post('/check_userID', function (request: { body: { userID: any; }; }, res
     let userID = request.body.userID;
     //SQL文を実行
     //該当するものがあればtrueを返す
-    connection.query(`SELECT * FROM user WHERE id = ?`, [userID], function (err: any, results: string | any[], fields: any) {
+    connection.query(`SELECT * FROM user WHERE id = ?`, [userID], function (err: any, results: string | any[]) {
       if (err) {
         console.log(err);
         response.send(false);
@@ -42,7 +42,7 @@ router.post('/check_userID', function (request: { body: { userID: any; }; }, res
   }
 });
 
-router.post('/v2/check_userID', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }, next: any) {
+router.post('/v2/check_userID', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }) {
   //キーが足りていなければ400を返す
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
@@ -79,7 +79,7 @@ router.post('/v2/check_userID', function (request: { body: { userID: any; }; }, 
   }
 });
 
-router.post('/sign_up', function (request: { body: { username: string; userID: string; password: string; email: string; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }, next: any) {
+router.post('/sign_up', function (request: { body: { username: string; userID: string; password: string; email: string; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }) {
   //キーが足りていなければ400を返す
   if (!request.body.username || !request.body.userID || !request.body.password || !request.body.email) {
     response.status(400).send('Bad Request');
@@ -91,7 +91,7 @@ router.post('/sign_up', function (request: { body: { username: string; userID: s
     const email = request.body.email;
     const created_at = new Date();
 
-    connection.query(`INSERT INTO user (id, name, password, mailaddress, created_at) VALUES (?, ?, ?, ?, ?)`, [userID, username, hashed_password, email, created_at], function (err: any, results: string | any[], fields: any) {
+    connection.query(`INSERT INTO user (id, name, password, mailaddress, created_at) VALUES (?, ?, ?, ?, ?)`, [userID, username, hashed_password, email, created_at], function (err: any) {
       if (err) {
         console.log(err);
         response.send(false);
@@ -103,7 +103,7 @@ router.post('/sign_up', function (request: { body: { username: string; userID: s
   }
 });
 
-router.post('/v2/sign_up', function (request: { body: { username: string; userID: string; password: string; email: string; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string | boolean): void; new(): any; }; }; }, next: any) {
+router.post('/v2/sign_up', function (request: { body: { username: string; userID: string; password: string; email: string; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string | boolean): void; new(): any; }; }; }) {
   //キーが足りていなければ400を返す
   if (!request.body.username || !request.body.userID || !request.body.password || !request.body.email) {
     response.status(400).send('Bad Request');
@@ -127,7 +127,7 @@ router.post('/v2/sign_up', function (request: { body: { username: string; userID
       password: userdata.password,
       mailaddress: userdata.mailaddress,
       created_at: userdata.created_at
-    }).then(function (results: any) {
+    }).then(function () {
       sendMail("sign_up_complete", userdata.mailaddress);
       response.status(201).send(true);
     }
@@ -141,7 +141,7 @@ router.post('/v2/sign_up', function (request: { body: { username: string; userID
 
 //CLI専用
 //該当idのユーザーを物理削除
-router.post('/dev/force_delete_user', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: string) => void; }, next: any) {
+router.post('/dev/force_delete_user', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: string) => void; }) {
   //userIDが無ければ400を返す
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
@@ -159,7 +159,7 @@ router.post('/dev/force_delete_user', function (request: { body: { userID: any; 
       created_at: new Date(),
       deleted_at: null
     }
-    connection.query(`DELETE FROM user WHERE id = ?`, [user.id], function (err: any, results: string | any[], fields: any) {
+    connection.query(`DELETE FROM user WHERE id = ?`, [user.id], function (err: any) {
       if (err) {
         console.log(err);
         response.send("failed");

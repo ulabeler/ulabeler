@@ -1,6 +1,6 @@
 export { sendMail };
 const NodeMailer = require('nodemailer');
-const dotenv = require('dotenv');
+// const dotenv = require('dotenv');
 //  dotenv.config(); //単体デバッグ用
 const mail_auth_user = process.env.U_MAIL_AUTH_USER;
 const mail_auth_host = process.env.U_MAIL_AUTH_HOST;
