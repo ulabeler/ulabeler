@@ -1,14 +1,14 @@
 export { };
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 //ここまで共通部分
 const mysql = require('mysql2');
 let connection: any;
 // let result: any;
 import { sendMail } from '../../tools/sendmail';
 import { knex } from '../../app';
-import { userTable } from '../../@types/table_types';
+import { userTable } from '../tableType_alias';
 connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,

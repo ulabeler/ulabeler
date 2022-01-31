@@ -1,4 +1,4 @@
-export interface userTable {
+export type userTable = {
     id: string;
     name: string;
     password: string;
@@ -12,42 +12,42 @@ export interface userTable {
     deleted_at: string | null;
 }
 
-export interface mail_confirmationsTable {
+export type mail_confirmationsTable = {
     user_id: string;
     datetime_issue: string;
     mailaddress_new: string | null;
     token_confirmation: string;
 }
 
-export interface password_resetTable {
+export type password_resetTable = {
     id: string;
     datetime_issue: Date;
     temp_password: string;
 }
 
-export interface favorited_workTable {
+export type favorited_workTable = {
     favorite_from: string;
     favorite_to: string;
     favorited_at: string;
 }
 
-export interface favorited_work_numberTable {
+export type favorited_work_numberTable = {
     favorited_to_id: string;
     number: number; //いいね数
 }
 
-export interface favorited_userTable {
+export type favorited_userTable = {
     favorite_from: string;
     favorite_to: string;
     favorited_at: string;
 }
 
-export interface favorited_user_numberTable {
+export type favorited_user_numberTable = {
     favorited_to_id: string;
     number: number; //いいね数
 }
 
-export interface purchase_historyTable {
+export type purchase_historyTable = {
     id: string;
     user_id: string;
     items: JSON; //TODO:後で書く
@@ -56,7 +56,7 @@ export interface purchase_historyTable {
     payment_method: string;
 }
 
-export interface delivery_addressTable {
+export type delivery_addressTable = {
     user_id: string;
     updated_at: Date;
     zipcode: string;
@@ -67,7 +67,7 @@ export interface delivery_addressTable {
     firstname_furigana: string;
 }
 
-export interface delivery_statusTable {
+export type delivery_statusTable = {
     purchase_record_id: string;
     datetime_schedule: Date | null;
     current_status: string | null;
@@ -81,7 +81,7 @@ export interface delivery_statusTable {
     updated_at: Date | null;
 }
 
-export interface base_settingsTable {
+export type base_settingsTable = {
     id: number;
     object_path: string;
     base_tex_path: string;
@@ -91,38 +91,38 @@ export interface base_settingsTable {
     deleted_at: Date | null;
 }
 
-export interface vendorTable {
+export type vendorTable = {
     id: number;
     name: string;
 }
 
-export interface category_settingsTable {
+export type category_settingsTable = {
     name: string;
     thumbnail_path: string | null;
     created_at: Date | null;
 }
 
-export interface base_categoryTable {
+export type base_categoryTable = {
     id: number;
     vendor_id: number;
     name_category: string;
     name_subcategory: string;
 }
 
-export interface work_used_stampsTable {
+export type work_used_stampsTable = {
     work_id: string;
     stamp_settings_id: number;
     num_used: number | null;
 }
 
-export interface stamp_settingsTable {
+export type stamp_settingsTable = {
     id: number;
     name: string;
     img_path: string;
     unit_price: number;
 }
 
-export interface workTable {
+export type workTable = {
     id: number;
     created_by_user_id: string;
     base_category_id: number;
@@ -137,7 +137,7 @@ export interface workTable {
     create_at: Date;
 }
 
-export interface inquiryTable {
+export type inquiryTable = {
     id: number;
     user_id: string;
     category: number;
@@ -151,12 +151,12 @@ export interface inquiryTable {
     updated_at: Date;
 }
 
-export interface administratorTable {
+export type administratorTable = {
     id: string;
     name: string | null;
 }
 
-export interface reportTable {
+export type reportTable = {
     id: number;
     reported_to_user_id: string;
     reported_from_user_id: string;
@@ -165,7 +165,7 @@ export interface reportTable {
     reported_at: Date;
 }
 
-export interface sample_imagesTable {
+export type sample_imagesTable = {
     id: number;
     sample_images_path: string;
     added_at: Date;

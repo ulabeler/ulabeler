@@ -8,6 +8,8 @@ const mail_auth_port = process.env.U_MAIL_AUTH_PORT;
 const mail_auth_password = process.env.U_MAIL_AUTH_PASSWORD;
 const mailText = require('./data/mailText.json'); //そのうちDBに格納してもいいかもしれない
 
+import { mailData } from '../mailData_alias';
+
 const smtpData = {
     host: mail_auth_host,
     port: mail_auth_port,
@@ -26,7 +28,7 @@ function sendMail(scene: string, send_to: string) {
     // SMTPサーバの情報をまとめる
     const transporter = NodeMailer.createTransport(smtpData)
 
-    const mailData = {
+    const mailData:mailData = {
         from: '"Ulabeler" <' + smtpData.auth.user + '>',
         to: send_to,
         subject: mailText[scene].subject,

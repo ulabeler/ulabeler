@@ -3,14 +3,17 @@
     "incremental": true,
     "tsBuildInfoFile": "./.tsbuildinfo",
     "target": "es2021",
-    "module": "commonjs",
+    "module": "es2022",
     "moduleResolution": "node",
     "allowJs": false,
     "rootDirs": [
-      "./src"
+      "./src",
+      "./src/TypeAlias",
+      "./src/routes"
     ],
     "baseUrl": "./src",
     "outDir": "built",
+    "declaration": false,
     "removeComments": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
