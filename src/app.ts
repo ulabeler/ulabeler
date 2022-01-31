@@ -49,7 +49,7 @@ import PayPayRouter from './routes/payment/paypay';
 // const TestRouter = require('./routes/alpha/test');
 
 // authorization
-//require("./config/passport_config")(app); //まだ
+require("./config/passport_config")(app); //まだ
 
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
