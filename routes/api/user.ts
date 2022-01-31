@@ -21,7 +21,7 @@ router.post('/check_userID', function (request: { body: { userID: any; }; }, res
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
     return;
-  }else{
+  } else {
     //POSTで受け取ったデータをuserIDをキーにして取得
     let userID = request.body.userID;
     //SQL文を実行
@@ -46,7 +46,7 @@ router.post('/v2/check_userID', function (request: { body: { userID: any; }; }, 
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
     return;
-  }else{
+  } else {
     //POSTで受け取ったデータをuserIDをキーにして取得
     let userID = request.body.userID;
     //SQL文を実行
@@ -119,7 +119,7 @@ router.post('/v2/sign_up', function (request: { body: { username: string; userID
   }
 });
 
-//API専用
+//CLI専用
 //該当idのユーザーを物理削除
 router.post('/dev/delete_user', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }, next: any) {
   //userIDが無ければ400を返す
