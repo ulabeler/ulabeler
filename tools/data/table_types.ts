@@ -8,7 +8,7 @@ export interface userTable {
     cardnumber: string | null;
     name_card: string | null;
     expiration: string | null;
-    created_at: string;
+    created_at: Date;
     deleted_at: string | null;
 }
 

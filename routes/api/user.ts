@@ -8,6 +8,7 @@ let connection: any;
 let result: any;
 import { sendMail } from '../../tools/sendmail';
 import { knex } from '../../app';
+import { userTable } from '../../tools/data/table_types';
 connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -48,11 +49,23 @@ router.post('/v2/check_userID', function (request: { body: { userID: any; }; }, 
     return;
   } else {
     //POSTで受け取ったデータをuserIDをキーにして取得
-    let userID = request.body.userID;
+    const user: userTable = {
+      id: request.body.userID,
+      name: '',
+      password: '',
+      mailaddress: '',
+      icon_path: null,
+      self_introduction: null,
+      cardnumber: null,
+      name_card: null,
+      expiration: null,
+      created_at: new Date(),
+      deleted_at: null
+    }
     //SQL文を実行
     //該当するものがあればtrueを返す
     //一致件数を取得
-    knex('user').where('id', userID).count('id as count').then((results: any) => {
+    knex('user').where('id', user.id).count('id as count').then((results: any) => {
       if (results[0].count > 0) {
         response.send(true);
       } else {
@@ -95,20 +108,27 @@ router.post('/v2/sign_up', function (request: { body: { username: string; userID
   if (!request.body.username || !request.body.userID || !request.body.password || !request.body.email) {
     response.status(400).send('Bad Request');
   } else {
-    const username = request.body.username;
-    const userID = request.body.userID;
-    const raw_password = request.body.password;
-    const hashed_password = bcrypt.hashSync(raw_password, 10);
-    const email = request.body.email;
-    const created_at = new Date();
+    const userdata: userTable = {
+      id: request.body.userID,
+      name: request.body.username,
+      password: bcrypt.hashSync(request.body.password, 10),
+      mailaddress: request.body.email,
+      created_at: new Date(),
+      icon_path: null,
+      self_introduction: null,
+      cardnumber: null,
+      name_card: null,
+      expiration: null,
+      deleted_at: null
+    };
     knex('user').insert({
-      id: userID,
-      name: username,
-      password: hashed_password,
-      mailaddress: email,
-      created_at: created_at
+      id: userdata.id,
+      name: userdata.name,
+      password: userdata.password,
+      mailaddress: userdata.mailaddress,
+      created_at: userdata.created_at
     }).then(function (results: any) {
-      sendMail("sign_up_complete", email);
+      sendMail("sign_up_complete", userdata.mailaddress);
       response.status(201).send(true);
     }
     ).catch(function (err: any) {
@@ -121,18 +141,30 @@ router.post('/v2/sign_up', function (request: { body: { username: string; userID
 
 //CLI専用
 //該当idのユーザーを物理削除
-router.post('/dev/delete_user', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }, next: any) {
+router.post('/dev/force_delete_user', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: string) => void; }, next: any) {
   //userIDが無ければ400を返す
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
   } else {
-    let userID = request.body.userID;
-    connection.query(`DELETE FROM user WHERE id = ?`, [userID], function (err: any, results: string | any[], fields: any) {
+    const user:userTable = {
+      id: request.body.userID,
+      name: '',
+      password: '',
+      mailaddress: '',
+      icon_path: null,
+      self_introduction: null,
+      cardnumber: null,
+      name_card: null,
+      expiration: null,
+      created_at: new Date(),
+      deleted_at: null
+    }
+    connection.query(`DELETE FROM user WHERE id = ?`, [user.id], function (err: any, results: string | any[], fields: any) {
       if (err) {
         console.log(err);
-        response.send(false);
+        response.send("failed");
       } else {
-        response.send(true);
+        response.send("done");
       }
     });
   }
