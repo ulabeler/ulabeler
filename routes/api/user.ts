@@ -51,14 +51,14 @@ router.post('/v2/check_userID', function (request: { body: { userID: any; }; }, 
     let userID = request.body.userID;
     //SQL文を実行
     //該当するものがあればtrueを返す
-    knex('user').where('id', userID).select('*').then(function (results: any) {
-      if (results.length > 0) {
+    //一致件数を取得
+    knex('user').where('id', userID).count('id as count').then((results: any) => {
+      if (results[0].count > 0) {
         response.send(true);
       } else {
         response.send(false);
       }
-    }
-    ).catch(function (err: any) {
+    }).catch(function (err: any) {
       console.log(err);
       response.status(500).send('Internal Server Error');
     }
