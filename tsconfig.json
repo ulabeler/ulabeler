@@ -3,7 +3,7 @@
     "incremental": true,
     "tsBuildInfoFile": "./.tsbuildinfo",
     "target": "es2021",
-    "module": "es2022",
+    "module": "commonjs",
     "moduleResolution": "node",
     "allowJs": false,
     "rootDirs": [

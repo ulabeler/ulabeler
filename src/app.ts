@@ -4,14 +4,16 @@ const knex = require('knex')(knex_config);
 export { knex };
 
 //const createError = require('http-errors');
-const express = require('express');
+import express from 'express';
 const app = express();
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const cookieSession = require("cookie-session");
-const favicon = require('serve-favicon');
-const secret = process.env.U_COOKIESESSION_SECRET;
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
+import cookieSession from "cookie-session";
+import favicon from 'serve-favicon';
+
+//secretをstring型で定義
+const secret:string = process.env.SECRET || 'secret';
 
 app.use(
   cookieSession({
@@ -38,10 +40,10 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 //ルーティング設定
-const userAPIRouter = require('./routes/api/user');
-const indexRouter = require('./routes/top');
-const paymentRouter = require('./routes/payment/payment');
-const PayPayRouter = require('./routes/payment/paypay');
+import userAPIRouter from './routes/api/user';
+import indexRouter from './routes/top';
+import paymentRouter from './routes/payment/payment';
+import PayPayRouter from './routes/payment/paypay';
 // const usersRouter = require('./routes/alpha/users');
 // const createRouter = require('./routes/alpha/create');
 // const TestRouter = require('./routes/alpha/test');
@@ -59,7 +61,7 @@ app.use('/api/user', userAPIRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function (request:any, response: any) {
+app.use(function (request, response) {
   //"./public/index.html"を返す
   //response.sendFile(path.join(__dirname, 'public', 'index.html'));
   //404エラーと表示する
@@ -67,7 +69,7 @@ app.use(function (request:any, response: any) {
 });
 
 // error handler
-app.use(function (error: any, request: any, response: any) {
+app.use(function (error: { message: any; status: any; }, request: { app: { get: (arg0: string) => string; }; }, response: { locals: { message: any; error: any; }; status: (arg0: any) => void; render: (arg0: string) => void; }, next: any) {
   // set locals, only providing error in development
   response.locals.message = error.message;
   response.locals.error = request.app.get('env') === 'development' ? error : {};
@@ -77,4 +79,4 @@ app.use(function (error: any, request: any, response: any) {
   response.render('error');
 });
 
-module.exports = app;
+export default app;

@@ -1,27 +1,26 @@
 //ここからts共通部分
-export { };
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 //ここまで共通部分
 
-const PAYPAY = require('@paypayopa/paypayopa-sdk-node');
+import PAYPAY from '@paypayopa/paypayopa-sdk-node';
 const PAYPAY_API_KEY = process.env.PAYPAY_API_KEY;
 const PAYPAY_API_SECRET = process.env.PAYPAY_API_SECRET;
 const PAYPAY_MERCHANT_ID = process.env.PAYPAY_MERCHANT_ID;
 
 PAYPAY.Configure({
-    clientId: PAYPAY_API_KEY,
-    clientSecret: PAYPAY_API_SECRET,
+    clientId: PAYPAY_API_KEY || '',
+    clientSecret: PAYPAY_API_SECRET || '',
     merchantId: PAYPAY_MERCHANT_ID,
     productionMode: false,
 });
 
 //決済番号の生成
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
 
 
 
-router.post('/create_qr_code', (request: any, response: any) => {
+router.post('/create_qr_code', (request, response) => {
     //POST送信された値の取得
     //item_name/item_price/item_count/user_name
     const item_name = request.body.item_name;
@@ -66,7 +65,7 @@ router.post('/create_qr_code', (request: any, response: any) => {
     });
 });
 
-router.get('/callback' , (request: any, response: any) => {
+router.get('/callback' , (request, response) => {
     //GET送信された値をconsole.logで表示
     console.log(request);
     //GET送信された値をresponse.sendで返す
@@ -75,4 +74,4 @@ router.get('/callback' , (request: any, response: any) => {
     response.redirect("/");
 });
 
-module.exports = router;
+export default router;

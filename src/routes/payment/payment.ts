@@ -1,15 +1,13 @@
-//ここからts共通部分
-export { };
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 
-router.get('/', (request:any, response: any) => {
+router.get('/', (request, response) => {
     response.render('train/payment/payment_test');
 });
 
-router.get('/checkout', (request:any, response: any) => {
+router.get('/checkout', (request, response) => {
     response.render('train/payment/checkout');
 });
 
-module.exports = router;
+export default router;

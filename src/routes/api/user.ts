@@ -1,9 +1,9 @@
 export { };
-const express = require('express');
-const router = express.Router();
-import bcrypt from 'bcrypt';
+  import express from 'express';
+  import bcrypt from 'bcrypt';
+  const router = express.Router();
 //ここまで共通部分
-const mysql = require('mysql2');
+import mysql from 'mysql2';
 let connection: any;
 // let result: any;
 import { sendMail } from '../../tools/sendmail';
@@ -17,7 +17,7 @@ connection = mysql.createConnection({
   multipleStatements: true
 });
 
-router.post('/check_userID', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }) {
+router.post('/check_userID', function (request, response) {
   //キーが足りていなければ400を返す
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
@@ -42,7 +42,7 @@ router.post('/check_userID', function (request: { body: { userID: any; }; }, res
   }
 });
 
-router.post('/v2/check_userID', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }) {
+router.post('/v2/check_userID', function (request, response) {
   //キーが足りていなければ400を返す
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
@@ -79,7 +79,7 @@ router.post('/v2/check_userID', function (request: { body: { userID: any; }; }, 
   }
 });
 
-router.post('/sign_up', function (request: { body: { username: string; userID: string; password: string; email: string; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: boolean) => void; }) {
+router.post('/sign_up', function (request, response) {
   //キーが足りていなければ400を返す
   if (!request.body.username || !request.body.userID || !request.body.password || !request.body.email) {
     response.status(400).send('Bad Request');
@@ -103,7 +103,7 @@ router.post('/sign_up', function (request: { body: { username: string; userID: s
   }
 });
 
-router.post('/v2/sign_up', function (request: { body: { username: string; userID: string; password: string; email: string; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string | boolean): void; new(): any; }; }; }) {
+router.post('/v2/sign_up', function (request, response) {
   //キーが足りていなければ400を返す
   if (!request.body.username || !request.body.userID || !request.body.password || !request.body.email) {
     response.status(400).send('Bad Request');
@@ -141,7 +141,7 @@ router.post('/v2/sign_up', function (request: { body: { username: string; userID
 
 //CLI専用
 //該当idのユーザーを物理削除
-router.post('/dev/force_delete_user', function (request: { body: { userID: any; }; }, response: { status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }; }; send: (arg0: string) => void; }) {
+router.post('/dev/force_delete_user', function (request, response) {
   //userIDが無ければ400を返す
   if (!request.body.userID) {
     response.status(400).send('Bad Request');
@@ -170,4 +170,4 @@ router.post('/dev/force_delete_user', function (request: { body: { userID: any; 
   }
 });
 
-module.exports = router;
+export default router;

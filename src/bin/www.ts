@@ -4,11 +4,11 @@
  * Module dependencies.
  */
 
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
-const app = require('../app');
+import app from '../app';
 const debug = require('debug')('ulabeler:server');
-const http = require('http');
+import http from 'http';
 
 /**
  * Get port from environment and store in Express.
@@ -55,7 +55,7 @@ function normalizePort(val: string) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error:any) {
+function onError(error: any) {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -84,9 +84,11 @@ function onError(error:any) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  const addr = server.address();
+  if (addr != null) {
+    const bind = typeof addr === 'string'
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
+    debug('Listening on ' + bind);
+  }
 }
