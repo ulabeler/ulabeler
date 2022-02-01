@@ -23,17 +23,18 @@ const smtpData = {
     }
 }
 
-function sendMail(scene: string, send_to: string) {
-
-    // SMTPサーバの情報をまとめる
+function sendMail(scene: string, send_to: string, html?: string) {
     const transporter = NodeMailer.createTransport(smtpData)
-
     const mailData:mailData = {
         from: '"Ulabeler" <' + smtpData.auth.user + '>',
         to: send_to,
         subject: mailText[scene].subject,
         text: mailText[scene].text,
         html: mailText[scene].html
+    }
+
+    if (html) {
+        mailData.html = html;
     }
 
     // メール送信

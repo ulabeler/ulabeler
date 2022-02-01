@@ -32,7 +32,8 @@
     "nodemailer": "^6.7.2",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "uuidv4": "^6.2.12"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

@@ -7,10 +7,8 @@
   <meta name="description" content="ハンドメイドショップサイト">
   <meta name="keywords" content="ECサイト">
   <title>U labeler</title>
-
   <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
-  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+  </link>
 
 </head>
 <header class="header">
@@ -38,23 +36,31 @@
     <label for="nav1" class="close"></label>
 
 
-    <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
+    <%- include("../components/login.ejs") %>
+    <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
 
-    <article>
+      <article>
+        <div class="box09">
+          <div class="report_txt">
+            <p>入力されたメースアドレスに<br>仮のパスワードを送信しました。</p>
+          </div>
 
-      <%- include("./components/login.ejs") %>
+          <div class="button">
+            <!-- 閉じるボタン（ポップアップ閉じるボタン）jsページ -->
+            <button id="" class="white_button">閉じる</button>
+          </div>
+        </div>
 
-      <button class="js-popup_login">ログイン</button>
-      <p id="show_username">テストユーザーさん</p>
+        <noscript>
+          <p>JavaScriptを有効にしてください。</p>
+        </noscript>
 
 
-    </article>
-    <br>
-    <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-    <br>
-    <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
+      </article>
+      <br>
+      <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+      <br>
+      <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
   </body>
-
-
 
 </html>

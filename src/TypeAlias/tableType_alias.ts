@@ -23,6 +23,7 @@ export type password_resetTable = {
     id: string;
     datetime_issue: Date;
     temp_password: string;
+    token: string
 }
 
 export type favorited_workTable = {

@@ -10,11 +10,15 @@ router.get('/', function (request, response) {
 });
 
 router.get('/sign_up', function (request, response) {
-  response.render('./user/sign_up');
+  response.render('./user/sign_up', {side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`]});
 });
 
-router.get('/mail_address_forgot', function(request, response){
+router.get('/password_forgot', function(request, response){
   response.render('./user/mail_address_input', {side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`]});
+})
+
+router.get('/password_forgot/sent', function(request, response){
+  response.render('./user/outgoing_mail_completion', {side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`]});
 })
 
 export default router;

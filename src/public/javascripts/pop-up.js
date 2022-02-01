@@ -6,7 +6,6 @@
 
   target_button.forEach(function(button) {
     button.addEventListener("click", function() {
-      console.log("click");
       target_block.classList.add('is-show');
 
       closePopUp(blackBg);
@@ -19,7 +18,6 @@
     if(!elem) return;
     elem.addEventListener('click', function() {
       //is-showを無効に
-      console.log("click-close");
       target_block.classList.remove('is-show');
       });
   }
