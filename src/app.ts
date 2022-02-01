@@ -10,6 +10,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import favicon from 'serve-favicon';
+const flash = require("connect-flash");
 
 
 
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(flash());
 //faviconの設定
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
@@ -33,12 +35,16 @@ import userAPIRouter from './routes/api/user';
 import indexRouter from './routes/top';
 import paymentRouter from './routes/payment/payment';
 import PayPayRouter from './routes/payment/paypay';
+import passport from 'passport';
+
 // const usersRouter = require('./routes/alpha/users');
 // const createRouter = require('./routes/alpha/create');
 // const TestRouter = require('./routes/alpha/test');
 
 // authorization
 require("./config/passport")(app); //まだ
+passport.initialize();
+app.use(passport.session());
 
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);

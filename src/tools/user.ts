@@ -22,4 +22,12 @@ async function where(condition: { id: string; }) {
         });
 }
 
-export { findById };
+function get_isAuth(request: any)  {
+    if (Boolean(request.session.userid)) {
+        return true;
+    }else{
+        return false;
+    }
+}
+
+export { findById, get_isAuth };

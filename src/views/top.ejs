@@ -11,6 +11,8 @@
   <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
   </link>
   <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+  <!-- axios -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 
 </head>
 <header class="header">
@@ -56,7 +58,7 @@
 
       <!-- ポップアップの中身 -->
 
-      <div class="popup" id="js-popup">
+      <div class="popup" id="js-popup_login">
         <div class="popup-inner">
           <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
           <div class="box09">
@@ -70,26 +72,25 @@
             <!-- <div class="">×</div> -->
 
             <!-- 入力フォーム -->
-            <form action="" method="post">
+            <!-- <form action=""> -->
               <div class="login_input">
                 <div class="input_center">
-                  <p>メールアドレスまたはユーザーID<font color="red">*　</font>:　<input type="text" name="" size="40"></p>
+                  <p>メールアドレスまたはユーザーID<font color="red">*　</font>:　<input type="text" name="username" size="40" id="username"></p>
                 </div>
                 <div class="input_center">
-                  <p>パスワード<font color="red">*</font>　　　　　　　　　　　:　<input type="password" name="" size="30"
-                      placeholder="半角英数字８文字以上20文字以内"></p>
+                  <p>パスワード<font color="red">*</font>　　　　　　　　　　　:　<input type="password" name="password" size="30"
+                      placeholder="半角英数字８文字以上20文字以内" id="password"></p>
                 </div>
               </div>
 
               <div class="button">
-                <input type="submit" class="black_button" value="ログイン">
+                <input type="submit" class="black_button" value="ログイン" onclick="loginAttempt()">
               </div>
-            </form>
+            <!-- </form> -->
 
             <!-- エラーメッセージ -->
-            <div class="login_error_box" id="">
+            <div class="login_error_box" id="errormessage">
               <!-- やま jsエラーメッセージ -->
-              <p id="">あああああああああああああああああああああああああああああああああああああ</p>
             </div>
 
             <!-- リンク -->
@@ -111,6 +112,7 @@
       </div>
 
       <button id="js-show-popup">ログイン</button>
+      <p id="show_username"></p>
 
       <script src="/javascripts/pop-up.js"></script>
     </article>
@@ -119,5 +121,33 @@
     <br>
     <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
   </body>
+
+  <script>
+    //変数定義
+    const errormessage_area = document.getElementById('errormessage');
+    const password = document.getElementById('password');
+    const username = document.getElementById('username');
+    function loginAttempt(){
+      //axiosを利用して、/api/user/sign_inへPOSTリクエストを送信
+      axios.post('/api/user/v2_sign_in', {
+        username: username.value,
+        password: password.value
+      })
+      //401エラーが返ってきた場合、errormessage_areaにinnerHTMLでエラーメッセージを表示
+      .then(function (response) {
+        if (response.data === false) {
+          errormessage_area.innerHTML = '<p>ログインに失敗しました。</p>';
+        }
+        //200エラーが返ってきた場合、ログインに成功したことを表示
+        else if (response.status === 200) {
+          errormessage_area.innerHTML = '<p>ログインに成功しました。</p>';
+          //ログインに成功した場合、ログインページを閉じる
+          setTimeout(function () {
+            window.location.href = '/';
+          }, 1000);
+        }
+      })
+    }
+  </script>
 
 </html>

@@ -1,5 +1,5 @@
 function popupImage() {
-    var popup = document.getElementById('js-popup');
+    var popup = document.getElementById('js-popup_login');
     if(!popup) return;
   
     var blackBg = document.getElementById('js-black-bg');

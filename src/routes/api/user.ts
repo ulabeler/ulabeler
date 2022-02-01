@@ -4,6 +4,8 @@ const router = express.Router();
 import { sendMail } from '../../tools/sendmail';
 import { knex } from '../../app';
 import { userTable } from '../tableType_alias';
+//import { get_isAuth } from '../tools/user';
+const passport = require('passport');
 
 router.post('/check_userID', function (request, response) {
   //キーが足りていなければ400を返す
@@ -76,6 +78,37 @@ router.post('/sign_up', function (request, response) {
     }
     );
   }
+});
+
+router.post('/sign_in', passport.authenticate('local'), function (request, response) {
+  response.status(200);
+});
+
+router.post('/v2_sign_in', function(request, response) {
+  //キーが足りていなければ400を返す
+  if (!request.body.username || !request.body.password) {
+    response.status(400).send('Bad Request');
+  }
+  //passport.authenticate('local')で認証を行う
+  //認証に失敗した場合、falseを返す
+  //認証に成功した場合、"/"へリダイレクトする
+  passport.authenticate('local', function (err: any, user: Express.User, info: any) {
+    if (err) {
+      console.log(err);
+      response.status(500).send('Internal Server Error');
+    } else if (!user) {
+      response.status(200).send(false);
+    } else {
+      request.logIn(user, function (err) {
+        if (err) {
+          console.log(err);
+          response.status(500).send('Internal Server Error');
+        } else {
+          response.status(200).send(true);
+        }
+      });
+    }
+  })(request, response);
 });
 
 //CLI専用
