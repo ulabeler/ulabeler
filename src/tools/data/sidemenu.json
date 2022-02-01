@@ -1,0 +1,46 @@
+{
+    "true":[
+        {
+            "title": "マイ作品リスト",
+            "link": "#"
+        },
+        {
+            "title": "お気に入り作品リスト",
+            "link": "#"
+        },
+        {
+            "title": "お気に入り作者リスト",
+            "link": "#"
+        },
+        {
+            "title": "購入履歴",
+            "link": "#"
+        },
+        {
+            "title": "会員情報",
+            "link": "#"
+        },
+        {
+            "title": "メールアドレス変更",
+            "link": "mail_address_modification.html"
+        },
+        {
+            "title": "パスワード変更",
+            "link": "member_password_modification.html"
+        },
+        {
+            "title": "退会",
+            "link": "member_withdrawal.html"
+        }
+    ],
+    "false":[
+        {
+            "title": "ログイン",
+            "link": "#"
+        },
+        {
+            "title": "会員登録",
+            "link": "member_registration.html"
+        }
+    ]
+}

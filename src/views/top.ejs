@@ -43,14 +43,13 @@
     <nav class="menu">
       <h2 href="template.html">U labelar</h2>
       <ul>
-        <li><a href="#">マイ作品リスト</a></li>
-        <li><a href="#">お気に入り作品リスト</a></li>
-        <li><a href="#">お気に入り作者リスト</a></li>
-        <li><a href="#">購入履歴</a></li>
-        <li><a href="#">会員情報</a></li>
-        <li><a href="mail_address_modification.html">メールアドレス変更</a></li>
-        <li><a href="member_password_modification.html">パスワード変更</a></li>
-        <li><a href="#">退会</a></li>
+        <% for (let i = 0; i < side_menu.length; i++) { %>
+          <li><a href='<%= side_menu[i].link %>' 
+            <% if(side_menu[i].title == "ログイン") { %>
+              class="<%= "js-popup_login" %>"
+            <% } %> 
+            ><%= side_menu[i].title %></a></li>
+        <% } %>
       </ul>
     </nav>
 
@@ -58,7 +57,7 @@
 
       <!-- ポップアップの中身 -->
 
-      <div class="popup" id="js-popup_login">
+      <div class="popup">
         <div class="popup-inner">
           <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
           <div class="box09">
@@ -67,12 +66,6 @@
             <h3>ログイン
               <hr>
             </h3>
-
-            <!-- pop-up ×ボタン -->
-            <!-- <div class="">×</div> -->
-
-            <!-- 入力フォーム -->
-            <!-- <form action=""> -->
               <div class="login_input">
                 <div class="input_center">
                   <p>メールアドレスまたはユーザーID<font color="red">*　</font>:　<input type="text" name="username" size="40" id="username"></p>
@@ -86,7 +79,6 @@
               <div class="button">
                 <input type="submit" class="black_button" value="ログイン" onclick="loginAttempt()">
               </div>
-            <!-- </form> -->
 
             <!-- エラーメッセージ -->
             <div class="" id="errormessage">
@@ -110,7 +102,7 @@
         <div class="black-background" id="js-black-bg"></div>
       </div>
 
-      <button id="js-show-popup">ログイン</button>
+      <button class="js-popup_login">ログイン</button>
       <p id="show_username"></p>
 
       <script src="/javascripts/pop-up.js"></script>
@@ -137,10 +129,9 @@
         if (response.data === false) {
           //errormessage_areaにclass=login_error_boxを追加
           errormessage_area.classList.add('login_error_box');
-          errormessage_area.innerHTML = '<p>ログインに失敗しました。</p>';
+          errormessage_area.innerHTML = '<p>入力されたユーザーIDまたはパスワードが正しくありません。<br>ユーザーIDとパスワードを確認して、もう一度お試しください。</p>';
         }
-        //200エラーが返ってきた場合、ログインに成功したことを表示
-        else if (response.status === 200) {
+        else if (response.data === true) {
           errormessage_area.innerHTML = '<p>ログインに成功しました。</p>';
           //ログインに成功した場合、ログインページを閉じる
           setTimeout(function () {

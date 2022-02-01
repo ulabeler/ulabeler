@@ -1,42 +1,25 @@
-function popupImage() {
-    var popup = document.getElementById('js-popup_login');
-    if(!popup) return;
-  
-    var blackBg = document.getElementById('js-black-bg');
-    var closeBtn = document.getElementById('js-close-btn');
-    var showBtn = document.getElementById('js-show-popup');
-  
-    closePopUp(blackBg);
-    closePopUp(closeBtn);
-    closePopUp(showBtn);
+  const target_button = document.querySelectorAll(".js-popup_login");
+  const target_block = document.querySelector(".popup");
+  const blackBg = document.getElementById('js-black-bg');
+  const closeBtn = document.getElementById('js-close-btn');
+  const showBtn = document.getElementById('js-show-popup');
 
-    function closePopUp(elem) {
-      if(!elem) return;
-      elem.addEventListener('click', function() {
-        popup.classList.toggle('is-show');
-        });
-    }
+  target_button.forEach(function(button) {
+    button.addEventListener("click", function() {
+      console.log("click");
+      target_block.classList.add('is-show');
+
+      closePopUp(blackBg);
+      closePopUp(closeBtn);
+      closePopUp(showBtn);
+    });
+  });
+
+  function closePopUp(elem,button) {
+    if(!elem) return;
+    elem.addEventListener('click', function() {
+      //is-showを無効に
+      console.log("click-close");
+      target_block.classList.remove('is-show');
+      });
   }
-
-  popupImage();
-
-  // function popupImage() {
-  //   var popup = document.getElementById('js-popup2');
-  //   if(!popup) return;
-  
-  //   var blackBg = document.getElementById('js-black-bg2');
-  //   var closeBtn = document.getElementById('js-close-btn2');
-  //   var showBtn = document.getElementById('js-show-popup2');
-  
-  //   closePopUp(blackBg);
-  //   closePopUp(closeBtn);
-  //   closePopUp(showBtn);
-
-  //   function closePopUp(elem) {
-  //     if(!elem) return;
-  //     elem.addEventListener('click', function() {
-  //       popup.classList.toggle('is-show');
-  //       });
-  //   }
-  // }
-  // popupImage();

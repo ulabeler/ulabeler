@@ -30,4 +30,13 @@ function get_isAuth(request: any)  {
     }
 }
 
-export { findById, get_isAuth };
+// ログイン状態を調べるミドルウェア
+const checkLogin = (request:Express.Request, response:any, next:any) => {
+    if (!request.user) {
+        return response.redirect('/');
+    }
+
+    return next();
+};
+
+export { findById, get_isAuth, checkLogin };
