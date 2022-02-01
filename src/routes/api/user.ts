@@ -3,9 +3,11 @@ import bcrypt from 'bcrypt';
 const router = express.Router();
 import { sendMail } from '../../tools/sendmail';
 import { knex } from '../../app';
-import { userTable } from '../tableType_alias';
+import { userTable, password_resetTable } from '../tableType_alias';
 //import { get_isAuth } from '../tools/user';
 const passport = require('passport');
+//uuid
+import { v4 as uuidv4 } from 'uuid';
 
 router.post('/check_userID', function (request, response) {
   //キーが足りていなければ400を返す
@@ -109,6 +111,46 @@ router.post('/v2_sign_in', function(request, response) {
       });
     }
   })(request, response);
+});
+
+router.post('/reset_password', function(request, response) {
+  //キーが足りていなければ400を返す
+  if (!request.body.mail) {
+    response.status(400).send('Bad Request');
+  } else {
+    const mailaddress:userTable['mailaddress'] = request.body.mail;
+    //該当するメールアドレスがあるかを確認し、あればそのidを取得
+    knex('user').where('mailaddress', mailaddress).select('id').then((results: any) => {
+      if (results.length > 0) {
+        const temp: password_resetTable = {
+          id: results[0].id,
+          datetime_issue: new Date(),
+          temp_password: bcrypt.hashSync(Math.random().toString(36).slice(-8), 10),
+          token: uuidv4().replace(/-/g, '')
+        }
+        //password_resetTableへ登録
+        knex('password_reset').insert({
+          id: temp.id,
+          temp_password: temp.temp_password,
+          datetime_issue: temp.datetime_issue,
+          token: temp.token
+        }).then(function() {
+          //パスワードを変更したので、メールを送る
+          const message = `<p>パスワード再設定のお知らせです。<br>仮のパスワード:${temp.temp_password}<br><a href='https://ulabeler.na2na.website/reset_password/{{token}}'>こちら</a>からパスワードを再設定してください。</p>`
+          sendMail("reset_password", mailaddress, message);
+          response.status(201).send(true);
+        }).catch(function(err: any) {
+          console.log(err);
+          response.status(500).send('Internal Server Error');
+        });
+      } else {
+        response.status(200).send(false);
+      }
+    }).catch(function (err: any) {
+      console.log(err);
+      response.status(500).send('Internal Server Error');
+    });
+  }
 });
 
 //CLI専用

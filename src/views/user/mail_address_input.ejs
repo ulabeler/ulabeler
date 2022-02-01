@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="none,noindex,nofollow">
+  <meta name="description" content="ハンドメイドショップサイト">
+  <meta name="keywords" content="ECサイト">
+  <title>U labeler</title>
+
+  <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+</head>
+<header class="header">
+
+  <div class="header_logo">
+    <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
+  </div>
+
+  <!-- 検索ボックス -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <span class="magnifying_glass"></span>
+  <form method="get" action="#" class="search_container">
+    <input type="text" size="25" placeholder="キーワード検索">
+    <input type="submit" value="&#xf002">
+  </form>
+
+  </div>
+
+
+  <body>
+
+    <input type="checkbox" id="nav1">
+    <label for="nav1" class="open"><span></span></label>
+    <label for="nav1" class="close"></label>
+
+
+    <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+
+      <article>
+        <%- include("../components/login.ejs") %>
+        <div class="box09">
+
+          <!-- 入力フォーム -->
+          <form action="" method="post" id="hoge">
+            <div class="login_input">
+              <div class="input_center">
+                <p>登録したメールアドレス<font color="red">*</font>　:　<input type="text" name="mail" placeholder="@example.co.jp"
+                    id="mailaddress">
+                </p>
+              </div>
+              <div class="error_email">
+                <p id="error_message" class="error_message"></p><!-- やま jsエラーメッセージ -->
+              </div>
+            </div>
+          </form>
+          <!-- ボタン -->
+          <div class="double_button">
+            <!-- ひとつ前のページに戻る -->
+            <button type="submit" class="white_button" onclick="history.back()">戻る</button>
+            <button type="submit" class="black_button" id="send">送信</button>
+          </div>
+
+        </div>
+
+        <noscript>
+          <p>JavaScriptを有効にしてください。</p>
+        </noscript>
+
+
+
+      </article>
+      <br>
+      <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+      <br>
+  </body>
+
+  <script src="/javascripts/util/mail_varidate.js"></script>
+  <script>
+    //メールアドレスのバリデーション
+    const input_email = document.getElementById('mailaddress');
+    const error_message = document.getElementById('error_message');
+    const send = document.getElementById('send');
+    let disable_counter_email = 0;
+
+    input_email.addEventListener('keyup', function () {
+      if (!MailCheck(input_email.value)) {
+        error_message.innerText = '正しい形式で入力してください。';
+        disable_counter_email++;
+      } else {
+        error_message.innerText = '';
+        if (input_email.value.length == 0) {
+          disable_counter_email++;
+        } else {
+          disable_counter_email = 0;
+        }
+      }
+    });
+
+    setInterval(function () {
+      if (disable_counter_email === 0) {
+        send.disabled = false;
+      } else {
+        send.disabled = true;
+      }
+    }, 100);
+
+    //送信ボタンを押したら、axiosで"/api/user/reset_password"にpostする"
+    send.addEventListener('click', function () {
+      axios.post('/api/user/reset_password', {
+        mail: input_email.value
+      }).then(function (response) {
+        console.log(response);
+        if (response.status == 201) {
+          window.location.href = '/password_forgot/sent';
+        } else {
+          alert('メールアドレスが間違っています。');
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    });
+  </script>
+
+</html>

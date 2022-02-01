@@ -8,5 +8,10 @@
         "subject": "登録完了のお知らせ",
         "text": "登録完了のお知らせです。",
         "html": "<p>登録完了しました。<a href='https://ulabeler.na2na.website/'>こちら</a>からログインしてください。</p>"
+    },
+    "reset_password": {
+        "subject": "パスワード再設定のお知らせ",
+        "text": "パスワード再設定のお知らせです。\nHTML対応メールクライアントで確認してください。",
+        "html": ""
     }
 }

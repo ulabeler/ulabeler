@@ -5,17 +5,20 @@ const router = express.Router();
 import side_menu_list from '../tools/data/sidemenu.json';
 
 /* GET home page. */
-router.get('/', function (request: any, response: any) {
-  const isAuth = Boolean(request.user);
-  const side_menu = JSON.parse(JSON.stringify(side_menu_list));
-  console.log(side_menu[`${isAuth}`].length);
-  console.log(side_menu[`${isAuth}`]);
-  //side_menuの件数を取得
-  response.render('top', {side_menu: side_menu[`${isAuth}`]});
+router.get('/', function (request, response) {
+  response.render('top', {side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`]});
 });
 
-router.get('/sign_up', function (request: any, response: any) {
-  response.render('sign_up');
+router.get('/sign_up', function (request, response) {
+  response.render('./user/sign_up', {side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`]});
 });
+
+router.get('/password_forgot', function(request, response){
+  response.render('./user/mail_address_input', {side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`]});
+})
+
+router.get('/password_forgot/sent', function(request, response){
+  response.render('./user/outgoing_mail_completion', {side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`]});
+})
 
 export default router;

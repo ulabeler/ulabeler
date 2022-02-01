@@ -36,21 +36,10 @@
     <label for="nav1" class="close"></label>
 
 
-    <nav class="menu">
-      <h2 href="/">U labelar</h2>
-      <ul>
-        <li><a href="#">マイ作品リスト</a></li>
-        <li><a href="#">お気に入り作品リスト</a></li>
-        <li><a href="#">お気に入り作者リスト</a></li>
-        <li><a href="#">購入履歴</a></li>
-        <li><a href="#">会員情報</a></li>
-        <li><a href="mail_address_modification.html">メールアドレス変更</a></li>
-        <li><a href="member_password_modification.html">パスワード変更</a></li>
-        <li><a href="#">退会</a></li>
-      </ul>
-    </nav>
+    <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
 
     <article>
+      <%- include("../components/login.ejs") %>
       <div class="box09">
 
         <!-- ページ名 -->
@@ -114,7 +103,7 @@
         </form>
 
         <div class="double_button">
-          <button type="submit" class="white_button" onclick="location.href='/'">戻る</button>
+          <button type="submit" class="white_button" onclick="history.back()">戻る</button>
           <input type="submit" class="black_button" form="hoge2" id="send"></input>
         </div>
 
@@ -136,5 +125,6 @@
   </body>
 
 <script src="/javascripts/sign-up.js"></script>
+<script src="/javascripts/util/mail_varidate.js"></script>
 
 </html>
