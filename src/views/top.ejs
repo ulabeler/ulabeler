@@ -9,16 +9,14 @@
   <title>U labeler</title>
 
   <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
-  </link>
   <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-  <!-- axios -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 
 </head>
 <header class="header">
 
   <div class="header_logo">
-    <h1><a href="/"><img src="/images/system/logo.png" alt="ロゴ"></a></h1>
+    <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
   </div>
 
   <!-- 検索ボックス -->
@@ -40,18 +38,7 @@
     <label for="nav1" class="close"></label>
 
 
-    <nav class="menu">
-      <h2 href="template.html">U labelar</h2>
-      <ul>
-        <% for (let i = 0; i < side_menu.length; i++) { %>
-          <li><a href='<%= side_menu[i].link %>' 
-            <% if(side_menu[i].title == "ログイン") { %>
-              class="<%= "js-popup_login" %>"
-            <% } %> 
-            ><%= side_menu[i].title %></a></li>
-        <% } %>
-      </ul>
-    </nav>
+    <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
 
     <article>
 
@@ -87,7 +74,7 @@
             <!-- リンク -->
             <div class="login_link">
               <a href="/sign_up">新規会員登録はこちら</button><br>
-                <a href="mail_address_input.html">パスワードをお忘れの方</a>
+                <a href="/mail_address_forgot">パスワードをお忘れの方</a>
             </div>
 
           </div>
