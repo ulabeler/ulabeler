@@ -120,7 +120,7 @@ input_userID.addEventListener('focusout', function () {
 //<%#input_emailは、RFC違反メールアドレスは禁止%>
 //<%#入力値を取得して、入力値を検証する%>
 input_email.addEventListener('keyup', function () {
-    if (MailCheck(input_email.value)) {
+    if (!MailCheck(input_email.value)) {
         error_email.innerText = '正しい形式で入力してください。';
         disable_counter_email++;
     } else {
@@ -219,33 +219,11 @@ setInterval(function () {
 
 
 
-
-function MailCheck(mail) {
-    const mail_regex1 = new RegExp('(?:[-!#-\'*+/-9=?A-Z^-~]+\.?(?:\.[-!#-\'*+/-9=?A-Z^-~]+)*|"(?:[!#-\[\]-~]|\\\\[\x09 -~])*")@[-!#-\'*+/-9=?A-Z^-~]+(?:\.[-!#-\'*+/-9=?A-Z^-~]+)*');
-    const mail_regex2 = new RegExp('^[^\@]+\@[^\@]+$');
-    //連続ドットを禁止
-    const mail_regex3 = new RegExp('\.\.');
-    //アットマークの前のドットを禁止
-    const mail_regex4 = new RegExp('^\.\@');
-
-    if (mail.match(mail_regex1) && mail.match(mail_regex2) && !mail.match(mail_regex3) && !mail.match(mail_regex4)) {
-        // 全角チェック
-        if (mail.match(/[^a-zA-Z0-9\!\"\#\$\%\&\'\(\)\=\~\|\-\^\\\@\[\;\:\]\,\.\/\\\<\>\?\_\`\{\+\*\} ]/)) { return false; }
-        // 末尾TLDチェック（〜.co,jpなどの末尾ミスチェック用）
-        if (!mail.match(/\.[a-z]+$/)) { return false; }
-        return true;
-    } else {
-        return false;
-    }
-}
-
 //sendを押した際の動作
 //check_password_confirm,check_email_confirmを実行する
 send.addEventListener('click', function () {
     let vd_email = check_email_confirm();
     let vd_password = check_password_confirm();
-    console.log(vd_email);
-    console.log(vd_password);
     if (vd_email && vd_password) {
         axios.post('/api/user/sign_up', {
             username: input_username.value,
