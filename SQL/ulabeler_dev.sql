@@ -289,10 +289,12 @@ CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`password_reset` (
   `id` VARCHAR(15) NOT NULL,
   `datetime_issue` DATETIME NOT NULL,
   `temp_password` VARCHAR(255) NOT NULL,
+  `token` CHAR(32) NOT NULL,
   PRIMARY KEY (`id`, `datetime_issue`),
+  UNIQUE INDEX `token_UNIQUE` (`token` ASC) VISIBLE,
   CONSTRAINT `user_id_pass_reset`
     FOREIGN KEY (`id`)
-    REFERENCES `ulabeler_dev`.`user` (`id`)
+    REFERENCES `ulabeler`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
