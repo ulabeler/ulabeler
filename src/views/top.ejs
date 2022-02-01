@@ -89,8 +89,7 @@
             <!-- </form> -->
 
             <!-- エラーメッセージ -->
-            <div class="login_error_box" id="errormessage">
-              <!-- やま jsエラーメッセージ -->
+            <div class="" id="errormessage">
             </div>
 
             <!-- リンク -->
@@ -136,6 +135,8 @@
       //401エラーが返ってきた場合、errormessage_areaにinnerHTMLでエラーメッセージを表示
       .then(function (response) {
         if (response.data === false) {
+          //errormessage_areaにclass=login_error_boxを追加
+          errormessage_area.classList.add('login_error_box');
           errormessage_area.innerHTML = '<p>ログインに失敗しました。</p>';
         }
         //200エラーが返ってきた場合、ログインに成功したことを表示
