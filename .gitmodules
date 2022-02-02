@@ -1,0 +1,3 @@
+[submodule "training"]
+	path = training
+	url = https://github.com/na2na-p/ulabeler-training.git
