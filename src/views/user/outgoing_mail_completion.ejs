@@ -17,7 +17,7 @@
     <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
   </div>
 
-  <!-- 検索ボックス -->
+  <!-- 検索ボックス
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
   <span class="magnifying_glass"></span>
@@ -26,23 +26,23 @@
     <input type="submit" value="&#xf002">
   </form>
 
-  </div>
+  </div> -->
 
 
   <body>
 
     <input type="checkbox" id="nav1">
-    <label for="nav1" class="open"><span></span></label>
-    <label for="nav1" class="close"></label>
+    <!-- <label for="nav1" class="open"><span></span></label>
+    <label for="nav1" class="close"></label> -->
 
 
-    <%- include("../components/login.ejs") %>
-    <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+    <%#- include("../components/login.ejs") %>
+    <%#- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
 
       <article>
         <div class="box09">
           <div class="report_txt">
-            <p>入力されたメースアドレスに<br>仮のパスワードを送信しました。</p>
+            <p>入力されたメールアドレスに<br>仮のパスワードを送信しました。</p>
           </div>
 
           <div class="button">
@@ -60,7 +60,6 @@
       <br>
       <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
       <br>
-      <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
   </body>
 
 </html>
