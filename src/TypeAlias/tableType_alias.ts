@@ -9,7 +9,7 @@ export type userTable = {
     name_card: string | null;
     expiration: string | null;
     created_at: Date;
-    deleted_at: string | null;
+    deleted_at: Date | null;
 }
 
 export type mail_confirmationsTable = {
