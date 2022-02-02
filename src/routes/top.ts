@@ -24,7 +24,7 @@ router.get('/password_forgot/sent', function (request, response) {
   response.render('./user/outgoing_mail_completion', { side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`] });
 })
 
-router.get('/reset_password', function (request:any, response) {
+router.get('/reset_password', function (request:any, response) { //TODO:期限切れの判定
   //getパラメータにtokenが無ければ400エラー
   if (!request.query.token) {
     response.status(400).send('Bad Request');

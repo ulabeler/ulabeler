@@ -86,7 +86,7 @@ router.post('/sign_in', passport.authenticate('local'), function (request, respo
   response.status(200);
 });
 
-router.post('/v2_sign_in', function(request, response) {
+router.post('/v2_sign_in', function (request, response) {
   //キーが足りていなければ400を返す
   if (!request.body.username || !request.body.password) {
     response.status(400).send('Bad Request');
@@ -113,12 +113,12 @@ router.post('/v2_sign_in', function(request, response) {
   })(request, response);
 });
 
-router.post('/reset_password', function(request, response) {
+router.post('/reset_password', function (request, response) {
   //キーが足りていなければ400を返す
   if (!request.body.mail) {
     response.status(400).send('Bad Request');
   } else {
-    const mailaddress:userTable['mailaddress'] = request.body.mail;
+    const mailaddress: userTable['mailaddress'] = request.body.mail;
     //該当するメールアドレスがあるかを確認し、あればそのidを取得
     knex('user').where('mailaddress', mailaddress).select('id').then((results: any) => {
       if (results.length > 0) {
@@ -134,7 +134,7 @@ router.post('/reset_password', function(request, response) {
           temp_password: bcrypt.hashSync(temp.temp_password, 10),
           datetime_issue: temp.datetime_issue,
           token: temp.token
-        }).then(function() {
+        }).then(function () {
           //パスワードを変更したので、メールを送る
           const env = process.env.U_DB_ENVIRONMENT || 'development';
 
@@ -143,7 +143,7 @@ router.post('/reset_password', function(request, response) {
           const message = `<p>パスワード再設定のお知らせです。<br>仮のパスワードは以下を使用してください。<br>${temp.temp_password}<br><a href='${host}/reset_password?token=${temp.token}'>こちら</a>からパスワードを再設定してください。</p>`
           sendMail("reset_password", mailaddress, message);
           response.status(201).send(true);
-        }).catch(function(err: any) {
+        }).catch(function (err: any) {
           console.log(err);
           response.status(500).send('Internal Server Error');
         });
@@ -156,6 +156,49 @@ router.post('/reset_password', function(request, response) {
     });
   }
 });
+
+router.post('/reset_password_attempt', function (request, response) {
+  //パラメーターが足りなければ400
+  if (!request.body.token || !request.body.password || !request.body.temp_password || !request.body.id) {
+    response.status(400).send('Bad Request');
+  } else {
+    //パラメーターからidを取得
+    const id: userTable['id'] = request.body.id;
+    //パラメーターからtokenを取得
+    const token: password_resetTable['token'] = request.body.token;
+    //パラメーターからパスワードを取得
+    const password: userTable['password'] = bcrypt.hashSync(request.body.password, 10);
+    //パラメーターから仮のパスワードを取得
+    const temp_password: password_resetTable['temp_password'] = bcrypt.hashSync(request.body.temp_password, 10);
+
+    //password_resetでtokenとidが一致するものを取得
+    knex('password_reset').where('token', token).andWhere('id', id).andWhere('temp_password', temp_password).select('id').then((results: any) => {
+      if (results.length > 0) {
+        //パスワードを変更
+        knex('user').where('id', id).update({
+          password: password
+        }).then(function () {
+          //仮のパスワードを削除
+          knex('password_reset').where('id', id).del().then(function () {
+            response.status(200).send(true);
+          }).catch(function (err: any) {
+            console.log(err);
+            response.status(500).send('Internal Server Error');
+          });
+        }).catch(function (err: any) {
+          console.log(err);
+          response.status(500).send('Internal Server Error');
+        });
+      } else {
+        response.status(200).send(false);
+      }
+    }).catch(function (err: any) {
+      console.log(err);
+      response.status(500).send('Internal Server Error');
+    }
+    );
+  }
+})
 
 //CLI専用
 //該当idのユーザーを物理削除
@@ -177,11 +220,11 @@ router.post('/dev/force_delete_user', function (request, response) {
       created_at: new Date(),
       deleted_at: null
     }
-    try{
+    try {
       knex('user').where('id', user.id).del().then(function () {
         response.status(200).send('Delete Success');
       });
-    }catch{
+    } catch {
       response.status(500).send('Internal Server Error');
     }
   }
