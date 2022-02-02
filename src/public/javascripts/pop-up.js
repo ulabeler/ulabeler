@@ -6,6 +6,7 @@
 
   target_button.forEach(function(button) {
     button.addEventListener("click", function() {
+      console.log('click');
       target_block.classList.add('is-show');
 
       closePopUp(blackBg);
