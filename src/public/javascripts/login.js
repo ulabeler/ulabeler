@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // 変数定義
 const errorMessageArea = document.getElementById('login_errormessage');
 const password = document.getElementById('password');

@@ -86,7 +86,7 @@
     let disable_counter_email = 0;
 
     input_email.addEventListener('keyup', function () {
-      if (!MailCheck(input_email.value)) {
+      if (!mailCheck(input_email.value)) {
         error_message.innerText = '正しい形式で入力してください。';
         disable_counter_email++;
       } else {

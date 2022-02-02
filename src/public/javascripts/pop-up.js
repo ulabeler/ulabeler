@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const TargetButton = document.querySelectorAll('.js-popupLogin');
 const TargetButtonGetById = document.getElementById('js-popupLogin');
 const TargetBlock = document.querySelector('.popup');

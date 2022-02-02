@@ -8,7 +8,7 @@
     "allowJs": true,
     "rootDirs": [
       "./src",
-      "./src/TypeAlias",
+      "src/tools/TypeAlias",
       "./src/routes"
     ],
     "typeRoots": ["src/@types", "node_modules/@types"],
@@ -47,7 +47,7 @@
     "src/tools/*.ts",
     "src/bin/*.ts",
     "src/*.ts",
-    "src/tools/data/table_types.ts",
+    "src/tools/TypeAlias/*.ts",
     "src/app.ts"
   ],
   /*除外設定*/
@@ -57,6 +57,6 @@
     "素材/*",
     "built/*",
     "assets/alpha/routes/alpha/*/*",
-    "src/public/javascripts"
+    "src/public/javascripts/**/*"
   ]
 }
