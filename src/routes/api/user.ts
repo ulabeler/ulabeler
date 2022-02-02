@@ -131,12 +131,16 @@ router.post('/reset_password', function(request, response) {
         //password_resetTableへ登録
         knex('password_reset').insert({
           id: temp.id,
-          temp_password: temp.temp_password,
+          temp_password: bcrypt.hashSync(temp.temp_password, 10),
           datetime_issue: temp.datetime_issue,
           token: temp.token
         }).then(function() {
           //パスワードを変更したので、メールを送る
-          const message = `<p>パスワード再設定のお知らせです。<br>仮のパスワード:${temp.temp_password}<br><a href='https://ulabeler.na2na.website/reset_password/{{token}}'>こちら</a>からパスワードを再設定してください。</p>`
+          const env = process.env.U_DB_ENVIRONMENT || 'development';
+
+          const host = env === 'development' ? 'http://localhost:3001' : 'https://ulabeler.na2na.website';
+
+          const message = `<p>パスワード再設定のお知らせです。<br>仮のパスワードは以下を使用してください。<br>${temp.temp_password}<br><a href='${host}/reset_password?token=${temp.token}'>こちら</a>からパスワードを再設定してください。</p>`
           sendMail("reset_password", mailaddress, message);
           response.status(201).send(true);
         }).catch(function(err: any) {
