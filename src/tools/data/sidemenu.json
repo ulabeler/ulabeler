@@ -27,6 +27,9 @@
         {
             "title": "パスワード変更",
             "link": "member_password_modification.html"
+        },{
+            "title": "ログアウト",
+            "link": "/logout"
         },
         {
             "title": "退会",
