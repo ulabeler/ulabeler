@@ -6,6 +6,7 @@ import { knex } from '../../app';
 import { userTable, password_resetTable } from '../tableType_alias';
 //import { get_isAuth } from '../tools/user';
 const passport = require('passport');
+import side_menu_list from '../tools/data/sidemenu.json';
 //uuid
 import { v4 as uuidv4 } from 'uuid';
 
@@ -202,7 +203,8 @@ router.post('/reset_password_attempt', function (request, response) {
             }
           });
         } else {
-          response.status(401).send("Token is wrong");
+          const message: string = "存在しないトークンです。";
+          response.render('./components/message', { side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`], message: message });
         }
       }).catch(function (err: any) {
         console.log(err);
