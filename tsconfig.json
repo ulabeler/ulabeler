@@ -50,6 +50,6 @@
     "src/public/*",
     "素材/*",
     "built/*",
-    "src/routes/alpha/*",
+    "assets/alpha/routes/alpha/*/*",
   ]
 }
