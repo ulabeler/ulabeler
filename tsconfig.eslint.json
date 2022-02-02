@@ -1,0 +1,22 @@
+{
+    "extends": "./tsconfig.json",
+    "include": [
+        "src/bin/*.ts",
+        "src/config/*.ts",
+        "src/routes/*.ts",
+        "src/routes/*/*.ts",
+        "src/tools/*.ts",
+        "src/tools/TypeAlias/*.ts",
+        "src/bin/*.ts",
+        "src/*.ts",
+        "src/app.ts",
+    ],
+    "exclude": [
+        "node_modules",
+        "src/public/*",
+        "素材/*",
+        "built/*",
+        "assets/alpha/routes/alpha/*/*",
+        "src/public/javascripts"
+    ]
+}

@@ -8,6 +8,7 @@
   <meta name="keywords" content="ECサイト">
   <title>U labeler</title>
   <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
   </link>
 
 </head>
@@ -16,13 +17,21 @@
   <div class="header_logo">
     <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
   </div>
+
   <body>
 
     <input type="checkbox" id="nav1">
+    <label for="nav1" class="open"><span></span></label>
+    <label for="nav1" class="close"></label>
+
+
+    <%- include("./login.ejs") %>
+    <%- include("./sidemenu.ejs", {side_menu: side_menu}) %>
+
       <article>
         <div class="box09">
           <div class="report_txt">
-            <p>入力されたメールアドレスに<br>仮のパスワードを送信しました。</p>
+            <p><%= message %> </p>
           </div>
 
           <div class="button">

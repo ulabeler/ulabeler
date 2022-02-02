@@ -1,24 +1,31 @@
-  const target_button = document.querySelectorAll(".js-popup_login");
-  const target_block = document.querySelector(".popup");
-  const blackBg = document.getElementById('js-black-bg');
-  const closeBtn = document.getElementById('js-close-btn');
-  const showBtn = document.getElementById('js-show-popup');
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const TargetButton = document.querySelectorAll('.js-popupLogin');
+const TargetButtonGetById = document.getElementById('js-popupLogin');
+const TargetBlock = document.querySelector('.popup');
+const blackBg = document.getElementById('js-black-bg');
+const closeBtn = document.getElementById('js-close-btn');
+const showBtn = document.getElementById('js-show-popup');
 
-  target_button.forEach(function(button) {
-    button.addEventListener("click", function() {
-      console.log('click');
-      target_block.classList.add('is-show');
+// ボタンが押されたら、ポップアップを表示する
+/**
+ * @return {void}
+ */
+function popupLogin() {
+  TargetBlock.classList.add('is-show');
+  closePopUp(blackBg);
+  closePopUp(closeBtn);
+  closePopUp(showBtn);
+}
 
-      closePopUp(blackBg);
-      closePopUp(closeBtn);
-      closePopUp(showBtn);
-    });
+// ポップアップを閉じる
+/**
+ * @param {*} element
+ * @return {void}
+ */
+function closePopUp(element) {
+  if (!element) return;
+  element.addEventListener('click', function() {
+    // is-showを無効に
+    TargetBlock.classList.remove('is-show');
   });
-
-  function closePopUp(elem,button) {
-    if(!elem) return;
-    elem.addEventListener('click', function() {
-      //is-showを無効に
-      target_block.classList.remove('is-show');
-      });
-  }
+}

@@ -6,7 +6,6 @@
 // Update with your config settings.
 
 module.exports = {
-
   development: {
     client: "mysql2",
     connection: {
@@ -16,7 +15,7 @@ module.exports = {
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
   },
 
@@ -29,7 +28,7 @@ module.exports = {
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
   },
 
@@ -42,8 +41,7 @@ module.exports = {
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
-  }
-
+  },
 };

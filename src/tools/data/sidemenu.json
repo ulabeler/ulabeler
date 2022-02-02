@@ -22,11 +22,14 @@
         },
         {
             "title": "メールアドレス変更",
-            "link": "mail_address_modification.html"
+            "link": "/mail_address_modification"
         },
         {
             "title": "パスワード変更",
             "link": "member_password_modification.html"
+        },{
+            "title": "ログアウト",
+            "link": "/logout"
         },
         {
             "title": "退会",
