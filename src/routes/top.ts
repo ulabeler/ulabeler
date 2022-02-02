@@ -34,7 +34,17 @@ router.get('/reset_password', function (request:any, response) { //TODO:期限�
   knex('password_reset').where('token', request.query.token).then((results: any) => {
     //一致するものがなければ400エラー
     if (results.length === 0) {
-      response.status(400).send('Forbidden');
+      response.status(403).send('UnAuthorized');
+      return;
+    }
+    //発行から1時間以内で無ければ403エラーを返し、該当するものを削除
+    if (new Date().getTime() - results[0].datetime_issue.getTime() > 1000 * 60 * 60) {
+      knex('password_reset').where('token', request.query.token).del().then(() => {
+        response.status(403).send('UnAuthorized');
+      }).catch(function (err: any) {
+        console.log(err);
+        response.status(500).send('Internal Server Error');
+      });
       return;
     }
     //一致するものがあれば、そのidを取得

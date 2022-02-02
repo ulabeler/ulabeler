@@ -188,7 +188,7 @@ router.post('/reset_password_attempt', function (request, response) {
               }).then(function () {
                 //password_resetを削除
                 knex('password_reset').where('id', id).del().then(function () {
-                  response.status(200).send(true);
+                  response.status(201).send(true);
                 }).catch(function (err: any) {
                   console.log(err);
                   response.status(500).send('Internal Server Error');
@@ -198,7 +198,7 @@ router.post('/reset_password_attempt', function (request, response) {
                 response.status(500).send('Internal Server Error');
               });
             } else {
-              response.status(401).send("Temp Password is wrong");
+              response.status(200).send("Temp Password is wrong");
             }
           });
         } else {
