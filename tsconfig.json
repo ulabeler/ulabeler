@@ -5,16 +5,18 @@
     "target": "es2021",
     "module": "commonjs",
     "moduleResolution": "node",
-    "allowJs": false,
+    "allowJs": true,
     "rootDirs": [
       "./src",
       "./src/TypeAlias",
       "./src/routes"
     ],
+    "typeRoots": ["src/@types", "node_modules/@types"],
     "baseUrl": "./src",
     "outDir": "built",
     "declaration": false,
     "removeComments": true,
+    "noEmitOnError": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true /* Enable all strict type-checking options. */,
@@ -29,9 +31,13 @@
     // "noPropertyAccessFromIndexSignature": true,       /* Enforces using indexed accessors for keys declared using an indexed type */
     // "allowUnusedLabels": true,                        /* Disable error reporting for unused labels. */
     // "allowUnreachableCode": true,                     /* Disable error reporting for unreachable code. */
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "noImplicitReturns": true,
     "resolveJsonModule": true,
+    "noLib": false,
+    "sourceMap": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "src/bin/*.ts",
@@ -51,5 +57,6 @@
     "素材/*",
     "built/*",
     "assets/alpha/routes/alpha/*/*",
+    "src/public/javascripts"
   ]
 }

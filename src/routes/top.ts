@@ -62,4 +62,15 @@ router.get('/logout', function (request, response) {
   response.render('./components/message', { side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`], message: message });
 });
 
+router.get('/mail_address_modification', function(request, response) {
+  //passportを利用して、ユーザー情報を取得
+  if (request.user === undefined) {
+    response.status(403).send('UnAuthorized');
+    return;
+  }
+  const mailaddress:userTable['mailaddress'] = request.user.mailaddress;
+
+  response.render('./user/mail_address_modification', { side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`], mailaddress: mailaddress });
+})
+
 export default router;

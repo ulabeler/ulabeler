@@ -1,0 +1,14 @@
+{
+    "extends": "./tsconfig.json",
+    "include": [
+        "src/bin/*.ts",
+        "src/config/*.ts",
+        "src/routes/*.ts",
+        "src/routes/*/*.ts",
+        "src/tools/*.ts",
+        "src/bin/*.ts",
+        "src/*.ts",
+        "src/tools/data/table_types.ts",
+        "src/app.ts"
+    ]
+}

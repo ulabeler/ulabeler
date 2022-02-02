@@ -5,6 +5,7 @@ import { knex } from '../app';
 import { userTable } from '../TypeAlias/tableType_alias';
 import { findById } from "../tools/user";
 import cookieSession from "cookie-session";
+import { MailCheck } from '../tools/mail_varidate';
 const secret: string = process.env.SECRET || 'secret';
 
 module.exports = function (app: any) {
@@ -25,19 +26,35 @@ module.exports = function (app: any) {
         usernameField: "username", //inputのname属性
         passwordField: "password",
     }, function (username: string, password: string, done: any) {
-        knex('user').where('id', username).then((result: userTable[]) => {
-            if (result.length === 0) {
-                return done(null, false, { message: 'ユーザーが存在しません' });
-            } else {
-                bcrypt.compare(password, result[0].password, function (err: any, res: boolean) {
-                    if (res) {
-                        return done(null, result[0]);
-                    } else {
-                        return done(null, false, { message: 'パスワードが違います' });
-                    }
-                });
-            }
-        });
+        if (MailCheck(username)) {
+            knex('user').where('mailaddress', username).then((result: userTable[]) => {
+                if (result.length === 0) {
+                    return done(null, false, { message: 'ユーザーが存在しません' });
+                } else {
+                    bcrypt.compare(password, result[0].password, function (err: any, res: boolean) {
+                        if (res) {
+                            return done(null, result[0]);
+                        } else {
+                            return done(null, false, { message: 'パスワードが違います' });
+                        }
+                    });
+                }
+            });
+        } else {
+            knex('user').where('id', username).then((result: userTable[]) => {
+                if (result.length === 0) {
+                    return done(null, false, { message: 'ユーザーが存在しません' });
+                } else {
+                    bcrypt.compare(password, result[0].password, function (err: any, res: boolean) {
+                        if (res) {
+                            return done(null, result[0]);
+                        } else {
+                            return done(null, false, { message: 'パスワードが違います' });
+                        }
+                    });
+                }
+            });
+        }
     }
     ));
 

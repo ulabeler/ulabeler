@@ -1,4 +1,9 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 /**
  * Module dependencies.
@@ -36,7 +41,7 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val: string) {
-  var port = parseInt(val, 10);
+  const port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe
@@ -55,12 +60,13 @@ function normalizePort(val: string) {
  * Event listener for HTTP server "error" event.
  */
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function onError(error: any) {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
-  var bind = typeof port === 'string'
+  const bind = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port;
 

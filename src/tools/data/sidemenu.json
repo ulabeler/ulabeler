@@ -22,7 +22,7 @@
         },
         {
             "title": "メールアドレス変更",
-            "link": "mail_address_modification.html"
+            "link": "/mail_address_modification"
         },
         {
             "title": "パスワード変更",

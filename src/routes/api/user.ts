@@ -1,14 +1,12 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-const router = express.Router();
 import { sendMail } from '../../tools/sendmail';
 import { knex } from '../../app';
 import { userTable, password_resetTable } from '../tableType_alias';
-//import { get_isAuth } from '../tools/user';
-const passport = require('passport');
-import side_menu_list from '../tools/data/sidemenu.json';
-//uuid
+import side_menu_list from '../../tools/data/sidemenu.json';
 import { v4 as uuidv4 } from 'uuid';
+const router = express.Router();
+const passport = require('passport');
 
 router.post('/check_userID', function (request, response) {
   //キーが足りていなければ400を返す
@@ -132,7 +130,7 @@ router.post('/reset_password', function (request, response) {
         //password_resetTableへ登録
         knex('password_reset').insert({
           id: temp.id,
-          temp_password:  bcrypt.hashSync(temp.temp_password, 10),
+          temp_password: bcrypt.hashSync(temp.temp_password, 10),
           datetime_issue: temp.datetime_issue,
           token: temp.token
         }).then(function () {
@@ -178,40 +176,60 @@ router.post('/reset_password_attempt', function (request, response) {
     console.log(temp_password);
 
 
-      //password_resetでtokenとidが一致するものを取得
-      knex('password_reset').where('token', token).andWhere('id', id).select('*').then((results: any) => {
-        if (results.length > 0) {
-          bcrypt.compare(temp_password, results[0].temp_password, function (err: any, result: boolean) {
-            if (result) {
-              //パスワードを変更
-              knex('user').where('id', id).update({
-                password: bcrypt.hashSync(password, 10)
-              }).then(function () {
-                //password_resetを削除
-                knex('password_reset').where('id', id).del().then(function () {
-                  response.status(201).send(true);
-                }).catch(function (err: any) {
-                  console.log(err);
-                  response.status(500).send('Internal Server Error');
-                });
+    //password_resetでtokenとidが一致するものを取得
+    knex('password_reset').where('token', token).andWhere('id', id).select('*').then((results: any) => {
+      if (results.length > 0) {
+        bcrypt.compare(temp_password, results[0].temp_password, function (err: any, result: boolean) {
+          if (result) {
+            //パスワードを変更
+            knex('user').where('id', id).update({
+              password: bcrypt.hashSync(password, 10)
+            }).then(function () {
+              //password_resetを削除
+              knex('password_reset').where('id', id).del().then(function () {
+                response.status(201).send(true);
               }).catch(function (err: any) {
                 console.log(err);
                 response.status(500).send('Internal Server Error');
               });
-            } else {
-              response.status(200).send("Temp Password is wrong");
-            }
-          });
-        } else {
-          const message: string = "存在しないトークンです。";
-          response.render('./components/message', { side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`], message: message });
-        }
-      }).catch(function (err: any) {
-        console.log(err);
-        response.status(500).send('Internal Server Error');
-      });
+            }).catch(function (err: any) {
+              console.log(err);
+              response.status(500).send('Internal Server Error');
+            });
+          } else {
+            response.status(200).send("Temp Password is wrong");
+          }
+        });
+      } else {
+        const message: string = "存在しないトークンです。";
+        response.render('./components/message', { side_menu: JSON.parse(JSON.stringify(side_menu_list))[`${Boolean(request.user)}`], message: message });
+      }
+    }).catch(function (err: any) {
+      console.log(err);
+      response.status(500).send('Internal Server Error');
+    });
   }
 });
+
+router.post('/check_email', function (request, response) {
+  if (!request.body.email) {
+    response.status(400).send('Bad Request');
+  } else {
+    //userテーブルに、該当するメールアドレスがあるかを確認
+    knex('user').where('mailaddress', request.body.email).select('mailaddress').then((results: any) => {
+      if (results.length > 0) {
+        response.status(200).send(true);
+      }
+      else {
+        response.status(200).send(false);
+      }
+    }).catch(function (err: any) {
+      console.log(err);
+      response.status(500).send('Internal Server Error');
+    });
+  }
+});
+
 
 //CLI専用
 //該当idのユーザーを物理削除
