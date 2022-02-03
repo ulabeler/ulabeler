@@ -83,7 +83,7 @@ function resetPasswordAttempt() {
             if (response.status == 201) {
                 alert('パスワードを変更しました。');
                 location.href = '/';
-                //401かつ、回答がTemp Password is wrong
+                //200かつ、回答がTemp Password is wrong
             } else if (response.status == 200 && response.data == 'Temp Password is wrong') {
                 console.log(response.status);
                 error_temp_password.innerText = '仮のパスワードが違います。';

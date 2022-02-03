@@ -156,17 +156,36 @@ router.get(
 );
 
 router.get("/mail_address_modification/complete", function (request, response) {
-  if (request.headers.referer !== `${host}/mail_address_modification`) {
-    // TODO 後で書き直し
-    response.redirect("/invalidAccess");
-    return;
+  if (request.user) {
+    const userId = request.user.id;
+    console.log(request.headers.referer);
+    console.log(
+      `${host}/mail_address_modification/confirmationCode?id=${crypto
+        .createHash("sha256")
+        .update(userId, "utf8")
+        .digest("hex")}`
+    );
+    if (
+      request.headers.referer !==
+      `${host}/mail_address_modification/confirmationCode?id=${crypto
+        .createHash("sha256")
+        .update(userId, "utf8")
+        .digest("hex")}`
+    ) {
+      // TODO 後で書き直し
+      response.redirect("/invalidAccess?p=0");
+      return;
+    } else {
+      response.render("./components/message", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        message: "メールアドレスが変更されました。",
+      });
+    }
   } else {
-    response.render("./components/message", {
-      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-        `${Boolean(request.user)}`
-      ],
-      message: "メールアドレスが変更されました。",
-    });
+    response.redirect("/invalidAccess?p=1");
+    return;
   }
 });
 
