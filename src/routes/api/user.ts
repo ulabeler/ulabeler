@@ -173,7 +173,7 @@ router.post("/create/temp_password", function (request, response) {
             .then(function () {
               // パスワードを変更したので、メールを送る
 
-              const message = `<p>パスワード再設定のお知らせです。<br>仮のパスワードは以下を使用してください。<br>${temp.temp_password}<br><a href='${host}/reset_password?token=${temp.token}&id=${temp.id}'>こちら</a>からパスワードを再設定してください。</p>`;
+              const message = `<p>パスワード再設定のお知らせです。<br>仮のパスワードは以下を使用してください。<br>${temp.temp_password}<br><a href='${host}/reset_password?token=${temp.token}&id=${temp.id}'>こちら</a>からパスワードを再設定してください。<br>有効期限は、1時間です。</p>`;
               sendMail("reset_password", mailaddress, message);
               response.status(201).send(true);
             })

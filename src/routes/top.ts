@@ -57,7 +57,7 @@ router.get("/password_forgot/sent", function (request, response) {
 router.get("/reset_password", function (request, response) {
   // getパラメータにtokenが無ければ400エラー
   if (!request.query.token) {
-    response.status(400).send("Bad Request");
+    response.redirect("/invalidAccess");
     return;
   }
   // tokenが一致するものを取得
@@ -67,7 +67,7 @@ router.get("/reset_password", function (request, response) {
     .then((results: string | any[]) => {
       // 一致するものがなければ400エラー
       if (results.length === 0) {
-        response.status(403).send("UnAuthorized");
+        response.redirect("/invalidAccess");
         return;
       }
       // 発行から1時間以内で無ければ403エラーを返し、該当するものを削除
@@ -123,7 +123,7 @@ router.get("/logout", function (request, response) {
 router.get("/mail_address_modification", function (request, response) {
   // passportを利用して、ユーザー情報を取得
   if (request.user === undefined) {
-    response.status(403).send("UnAuthorized");
+    response.redirect("/invalidAccess");
     return;
   }
   const mailaddress: userTable["mailaddress"] = request.user.mailaddress;
