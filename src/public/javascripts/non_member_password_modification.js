@@ -69,27 +69,27 @@ function resetPasswordAttempt() {
     console.log(new_password.value);
     console.log(new_password_confirmation.value);
 
-    check_password_confirm()
 
-    axios.post('/api/user/reset_password_attempt', {
-        id: id,
-        token: token,
-        temp_password: temp_password.value,
-        new_password: new_password_confirmation.value
-    })
-        .then(function (response) {
-            console.log(response);
-            //200と、trueが帰ったら
-            if (response.status == 201) {
-                alert('パスワードを変更しました。');
-                location.href = '/';
-                //200かつ、回答がTemp Password is wrong
-            } else if (response.status == 200 && response.data == 'Temp Password is wrong') {
-                console.log(response.status);
-                error_temp_password.innerText = '仮のパスワードが違います。';
-            }
+    if (check_password_confirm()) {
+        axios.post('/api/user/reset_password_attempt', {
+            id: id,
+            token: token,
+            temp_password: temp_password.value,
+            new_password: new_password_confirmation.value
         })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                console.log(response);
+                //200と、trueが帰ったら
+                if (response.status == 201) {
+                    location.href = '/reset_password/complete';
+                    //200かつ、回答がTemp Password is wrong
+                } else if (response.status == 200 && response.data == 'Temp Password is wrong') {
+                    console.log(response.status);
+                    error_temp_password.innerText = '仮のパスワードが違います。';
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
 }

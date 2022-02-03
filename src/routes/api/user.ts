@@ -119,6 +119,7 @@ router.post("/v2_sign_in", function (request, response) {
   // キーが足りていなければ400を返す
   if (!request.body.username || !request.body.password) {
     response.status(400).send("Bad Request");
+    return;
   }
   // passport.authenticate('local')で認証を行う
   // 認証に失敗した場合、falseを返す

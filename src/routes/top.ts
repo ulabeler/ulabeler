@@ -158,13 +158,6 @@ router.get(
 router.get("/mail_address_modification/complete", function (request, response) {
   if (request.user) {
     const userId = request.user.id;
-    console.log(request.headers.referer);
-    console.log(
-      `${host}/mail_address_modification/confirmationCode?id=${crypto
-        .createHash("sha256")
-        .update(userId, "utf8")
-        .digest("hex")}`
-    );
     if (
       request.headers.referer !==
       `${host}/mail_address_modification/confirmationCode?id=${crypto
@@ -173,7 +166,7 @@ router.get("/mail_address_modification/complete", function (request, response) {
         .digest("hex")}`
     ) {
       // TODO 後で書き直し
-      response.redirect("/invalidAccess?p=0");
+      response.redirect("/invalidAccess");
       return;
     } else {
       response.render("./components/message", {
@@ -184,7 +177,7 @@ router.get("/mail_address_modification/complete", function (request, response) {
       });
     }
   } else {
-    response.redirect("/invalidAccess?p=1");
+    response.redirect("/invalidAccess");
     return;
   }
 });
@@ -231,6 +224,26 @@ router.get(
   }
 );
 
+router.get("/reset_password/complete", function (request, response) {
+  if (request.headers.referer) {
+    const rawReferer = request.headers.referer;
+    // refererからgetパラメータを取り除く
+    const referer = rawReferer.split("?")[0];
+    const exists = ["/reset_password", "/password/modification"];
+    // refererとexistsの中にあるものがあれば、完了画面へ
+    if (host + exists[0] == referer || host + exists[1] == referer) {
+      response.render("./components/message", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        message: "パスワードが変更されました。",
+      });
+      return;
+    }
+  }
+  response.redirect("/invalidAccess");
+});
+
 router.get("/invalidAccess", function (request, response) {
   response.render("./components/message", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
@@ -248,6 +261,19 @@ router.get("/notAvailable", function (request, response) {
     message:
       "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
   });
+});
+
+router.get("/password/modification", function (request, response) {
+  if (request.user) {
+    response.render("user/member_password_modification", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+    });
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
 });
 
 export default router;

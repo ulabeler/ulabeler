@@ -13,18 +13,24 @@ function loginAttempt() {
     username: username.value,
     password: password.value,
   })
-  // 401エラーが返ってきた場合、errorMessageAreaにinnerHTMLでエラーメッセージを表示
-      .then(function(response) {
-        if (response.data === false) {
-          // errorMessageAreaにclass=login_error_boxを追加
-          errorMessageArea.classList.add('login_error_box');
-          errorMessageArea.innerHTML = '<p>入力されたユーザーIDまたはパスワードが正しくありません。<br>ユーザーIDとパスワードを確認して、もう一度お試しください。</p>';
-        } else if (response.data === true) {
-          errorMessageArea.innerHTML = '<p>ログインに成功しました。</p>';
-          // ログインに成功した場合、ログインページを閉じる
-          setTimeout(function() {
-            window.location.href = '/';
-          }, 1000);
-        }
-      });
+    // 401エラーが返ってきた場合、errorMessageAreaにinnerHTMLでエラーメッセージを表示
+    .then(function (response) {
+      if (response.data === false) {
+        // errorMessageAreaにclass=login_error_boxを追加
+        errorMessageArea.classList.add('login_error_box');
+        errorMessageArea.innerHTML = '<p>入力されたユーザーIDまたはパスワードが正しくありません。<br>ユーザーIDとパスワードを確認して、もう一度お試しください。</p>';
+      } else if (response.data === true) {
+        errorMessageArea.innerHTML = '<p>ログインに成功しました。</p>';
+        // ログインに成功した場合、ログインページを閉じる
+        setTimeout(function () {
+          window.location.href = '/';
+        }, 1000);
+      }
+    })
+    .catch(function (error) {
+      //400が帰ってきたら、errorMessageAreaにinnerHTMLでエラーメッセージを表示
+      errorMessageArea.classList.add('login_error_box');
+      errorMessageArea.innerHTML = '<p>ユーザID、またはパスワードを入力してください。</p>';
+    }
+    );
 }

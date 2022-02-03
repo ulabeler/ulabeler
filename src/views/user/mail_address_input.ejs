@@ -116,7 +116,7 @@
         if (response.status == 201) {
           window.location.href = '/password_forgot/sent';
         } else {
-          alert('入力されたメールアドレスは、登録されていません。');
+          error_message.innerText = '入力されたメールアドレスは、登録されていません。';
         }
       }).catch(function (error) {
         console.log(error);
