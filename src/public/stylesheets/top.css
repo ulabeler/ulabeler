@@ -899,6 +899,7 @@ p.new_warning{
 .error_message5{
     font-size: 13px;
     color: #fd0000;
+    line-height:20px;
 	/* padding-right: 225px; */
 	
 }

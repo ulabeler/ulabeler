@@ -12,10 +12,10 @@ export type userTable = {
   deleted_at: Date | null;
 };
 
-export type mail_confirmationsTable = {
+export type mail_confirmationTable = {
   user_id: string;
-  datetime_issue: string;
-  mailaddress_new: string | null;
+  datetime_issue: Date;
+  mailaddress_new: string;
   token_confirmation: string;
 };
 

@@ -7,6 +7,13 @@ const router = express.Router();
 // import { checkLogin } from '../tools/user';
 // import { side_menu } from '../TypeAlias/misc_alias';
 import sideMenuList from "../tools/data/sidemenu.json";
+import crypto from "crypto";
+
+const env = process.env.U_DB_ENVIRONMENT || "development";
+const host =
+  env === "development"
+    ? "http://localhost:3001"
+    : "https://ulabeler.na2na.website";
 
 /* GET home page. */
 router.get("/", function (request, response) {
@@ -34,17 +41,24 @@ router.get("/password_forgot", function (request, response) {
 });
 
 router.get("/password_forgot/sent", function (request, response) {
-  response.render("./user/outgoing_mail_completion", {
-    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-      `${Boolean(request.user)}`
-    ],
-  });
+  if (request.headers.referer !== `${host}/password_forgot`) {
+    // TODO 後で書き直し
+    response.redirect("/invalidAccess");
+    return;
+  } else {
+    response.render("./components/message", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      message: "入力されたメールアドレスに<br>仮のパスワードを送信しました。",
+    });
+  }
 });
 
 router.get("/reset_password", function (request, response) {
   // getパラメータにtokenが無ければ400エラー
   if (!request.query.token) {
-    response.status(400).send("Bad Request");
+    response.redirect("/invalidAccess");
     return;
   }
   // tokenが一致するものを取得
@@ -54,7 +68,7 @@ router.get("/reset_password", function (request, response) {
     .then((results: string | any[]) => {
       // 一致するものがなければ400エラー
       if (results.length === 0) {
-        response.status(403).send("UnAuthorized");
+        response.redirect("/invalidAccess");
         return;
       }
       // 発行から1時間以内で無ければ403エラーを返し、該当するものを削除
@@ -67,7 +81,7 @@ router.get("/reset_password", function (request, response) {
           .del()
           .then(() => {
             const message =
-              "リンクの有効期限が切れました。<br>再度仮パスワードの発行を行ってください。。";
+              "リンクの有効期限が切れました。<br>再度仮パスワードの発行を行ってください。";
             response.render("./components/message", {
               side_menu: JSON.parse(JSON.stringify(sideMenuList))[
                 `${Boolean(request.user)}`
@@ -110,7 +124,7 @@ router.get("/logout", function (request, response) {
 router.get("/mail_address_modification", function (request, response) {
   // passportを利用して、ユーザー情報を取得
   if (request.user === undefined) {
-    response.status(403).send("UnAuthorized");
+    response.redirect("/invalidAccess");
     return;
   }
   const mailaddress: userTable["mailaddress"] = request.user.mailaddress;
@@ -121,6 +135,145 @@ router.get("/mail_address_modification", function (request, response) {
     ],
     mailaddress: mailaddress,
   });
+});
+
+router.get(
+  "/mail_address_modification/sent_confirmation_code",
+  function (request, response) {
+    // 遷移元のページが/mail_address_modificationでない場合エラー画面へ
+    if (request.headers.referer !== `${host}/mail_address_modification`) {
+      response.redirect("/invalidAccess");
+      return;
+    } else {
+      response.render("./components/message", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        message: "入力されたメースアドレスに<br>確認コードを送信しました。",
+      });
+    }
+  }
+);
+
+router.get("/mail_address_modification/complete", function (request, response) {
+  if (request.user) {
+    const userId = request.user.id;
+    if (
+      request.headers.referer !==
+      `${host}/mail_address_modification/confirmationCode?id=${crypto
+        .createHash("sha256")
+        .update(userId, "utf8")
+        .digest("hex")}`
+    ) {
+      // TODO 後で書き直し
+      response.redirect("/invalidAccess");
+      return;
+    } else {
+      response.render("./components/message", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        message: "メールアドレスが変更されました。",
+      });
+    }
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
+});
+
+router.get(
+  "/mail_address_modification/confirmationCode",
+  function (request, response) {
+    // getパラメータにidが無ければエラー画面へ
+    if (!request.query.id) {
+      response.redirect("/invalidAccess");
+      return;
+    } else if (!request.user) {
+      response.render("./components/message", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        message:
+          "メールアドレス変更手続きは、<br>ログインした状態で行ってください。。",
+      });
+      return;
+    } else {
+      const idForVerify: userTable["id"] = crypto
+        .createHash("sha256")
+        .update(request.user.id, "utf8")
+        .digest("hex");
+      const idFromQuery: string = request.query.id.toString();
+      // トークン代わりに利用してるブツが一致するか検証
+      if (idFromQuery !== idForVerify) {
+        response.render("./components/message", {
+          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+            `${Boolean(request.user)}`
+          ],
+          message: "URLが正しくありません。",
+        });
+        return;
+      } else {
+        response.render("user/authorization_code_input", {
+          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+            `${Boolean(request.user)}`
+          ],
+        });
+      }
+    }
+  }
+);
+
+router.get("/reset_password/complete", function (request, response) {
+  if (request.headers.referer) {
+    const rawReferer = request.headers.referer;
+    // refererからgetパラメータを取り除く
+    const referer = rawReferer.split("?")[0];
+    const exists = ["/reset_password", "/password/modification"];
+    // refererとexistsの中にあるものがあれば、完了画面へ
+    if (host + exists[0] == referer || host + exists[1] == referer) {
+      response.render("./components/message", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        message: "パスワードが変更されました。",
+      });
+      return;
+    }
+  }
+  response.redirect("/invalidAccess");
+});
+
+router.get("/invalidAccess", function (request, response) {
+  response.render("./components/message", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    message: "不正な画面遷移です。",
+  });
+});
+
+router.get("/notAvailable", function (request, response) {
+  response.render("./components/message", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    message:
+      "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
+  });
+});
+
+router.get("/password/modification", function (request, response) {
+  if (request.user) {
+    response.render("user/member_password_modification", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+    });
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
 });
 
 export default router;

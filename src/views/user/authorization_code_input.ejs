@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="none,noindex,nofollow">
+  <meta name="description" content="ハンドメイドショップサイト">
+  <meta name="keywords" content="ECサイト">
+  <title>U labeler</title>
+
+  <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+</head>
+<header class="header">
+
+  <div class="header_logo">
+    <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
+  </div>
+
+  <!-- 検索ボックス -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <span class="magnifying_glass"></span>
+  <form method="get" action="#" class="search_container">
+    <input type="text" size="25" placeholder="キーワード検索">
+    <input type="submit" value="&#xf002">
+  </form>
+
+  </div>
+
+
+  <body>
+
+    <input type="checkbox" id="nav1">
+    <label for="nav1" class="open"><span></span></label>
+    <label for="nav1" class="close"></label>
+
+
+    <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+
+      <article>
+        <div class="box09">
+          <div class="report_txt">
+
+            <h4>確認コードの入力
+              <hr>
+            </h4>
+            <p>入力されたメールアドレスに<br>確認コードをお知らせする４桁の数字を送信しました。</p>
+            <form action="" method="post" id="hoge">
+              <div class="login_input2">
+                <div class="input_center">
+                  <p><input type="tel" maxlength="1" size="1" id="isFirst"><input type="tel" maxlength="1"
+                      size="1"><input type="tel" maxlength="1" size="1"><input type="tel" maxlength="1" size="1"
+                      id="isLast"></p>
+                </div>
+                <div class="mail_error">
+                  <p id="" class="error_message5"></p>
+                </div>
+              </div>
+            </form>
+
+
+          </div>
+
+          <div class="button">
+            <!-- 閉じるボタン（ポップアップ閉じるボタン）-->
+
+            <button type="submit" class="white_button" onclick="changeEmailAttempt()" id="send">決定</button>
+          </div>
+        </div>
+
+        <noscript>
+          <p>JavaScriptを有効にしてください。</p>
+        </noscript>
+
+      </article>
+      <br>
+      <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+      <br>
+      <a href="/" id="pagetop"><i class="up"></i>↑</a>
+  </body>
+
+  <script>
+    //変数定義
+    const confirmationCode = document.querySelectorAll('input[type="tel"]');
+    const isFirst = document.getElementById('isFirst');
+    const isLast = document.getElementById('isLast');
+    const sendButton = document.querySelector('#send');
+    const error_message5 = document.querySelector('.error_message5');
+    let rejectCount = 0;
+
+    //イベント設定
+    // confirmationCodeへは、0~9のみ入力可能、バックスペースも使用可能
+    for (let i = 0; i < confirmationCode.length; i++) {
+      confirmationCode[i].addEventListener('keyup', function (e) {
+        console.log(e.code);
+        if (e.keyCode === 8 && e.target.value.length === 0) {
+          if (confirmationCode[i] != isFirst) {
+            confirmationCode[i - 1].focus();
+            return;
+          }
+        }
+        if (e.keyCode < 48 || e.keyCode > 57) {
+          if (e.keyCode < 106 && e.keyCode > 95) {
+            confirmationCode[i].value = e.code.slice(6);
+          }
+          if (e.keyCode == 8) {
+            return
+          } else if (e.keyCode == 39 && confirmationCode[i] != isLast) {
+            confirmationCode[i + 1].focus();
+            return
+          } else if (e.keyCode == 37 && confirmationCode[i] != isFirst) {
+            confirmationCode[i - 1].focus();
+            return
+          } //テンキーの数字も許可
+          // if (e.target.value.length > 0) {
+          //   confirmationCode[i].value = e.code.slice(6);
+          // }
+          e.preventDefault();
+        }else{
+          if (e.target.value.length > 0) {
+            confirmationCode[i].value = e.code.slice(5);
+          }
+        }
+        if (confirmationCode[i] != isLast) {
+          if (e.target.value.length === 1) {
+            confirmationCode[i + 1].focus();
+          }
+        }
+      });
+    }
+
+    function changeEmailAttempt() {
+      const RegExp = /^[0-9]{1}$/;
+      const confirmationCodeArrayToStr = Array.from(confirmationCode).map(function (e) {
+        //e.valueに0~9以外が入っていた場合
+        if (!RegExp.test(e.value)) {
+          rejectCount++;
+          error_message5.innerHTML = '4桁の数字を入力してください';
+        }
+        return e.value;
+      }).join('');
+      console.log(confirmationCodeArrayToStr.length);
+      console.log("rejectCount:" + rejectCount);
+      if (rejectCount != 0) {
+        rejectCount = 0;
+        return;
+      }
+      if (rejectCount == 0) {
+        error_message5.innerHTML = '';
+      }
+
+      //axiosを利用して、サーバーにPOSTリクエストを送信
+      axios.post('/api/user/modification_mailaddress_attempt', {
+        confirmationAttemptCode: confirmationCodeArrayToStr
+      }).then(function (response) {
+        console.log(response);
+        if (response.status == 201) {
+          window.location.href = '/mail_address_modification/complete';
+        } else {
+          error_message5.innerHTML = response.data;
+          return;
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+
+  </script>
+
+</html>
