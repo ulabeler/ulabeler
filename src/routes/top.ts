@@ -67,7 +67,7 @@ router.get("/reset_password", function (request, response) {
           .del()
           .then(() => {
             const message =
-              "リンクの有効期限が切れました。<br>再度仮パスワードの発行を行ってください。。";
+              "リンクの有効期限が切れました。<br>再度仮パスワードの発行を行ってください。";
             response.render("./components/message", {
               side_menu: JSON.parse(JSON.stringify(sideMenuList))[
                 `${Boolean(request.user)}`
@@ -123,4 +123,16 @@ router.get("/mail_address_modification", function (request, response) {
   });
 });
 
+router.get(
+  "/mail_address_modification/sent_confirmation_code",
+  function (request, response) {
+    const message = "入力されたメースアドレスに<br>確認コードを送信しました。";
+    response.render("./components/message", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      message: message,
+    });
+  }
+);
 export default router;

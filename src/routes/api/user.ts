@@ -8,12 +8,22 @@ import {
   userTable,
   // eslint-disable-next-line camelcase
   password_resetTable,
+  // eslint-disable-next-line camelcase
+  mail_confirmationTable,
 } from "../../tools/TypeAlias/tableType_alias";
 import sideMenu from "../../tools/data/sidemenu.json";
 import { v4 as uuidv4 } from "uuid";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 import passport from "passport";
+import crypto from "crypto";
+
+const env = process.env.U_DB_ENVIRONMENT || "development";
+
+const host =
+  env === "development"
+    ? "http://localhost:3001"
+    : "https://ulabeler.na2na.website";
 
 router.post("/check_userID", function (request, response) {
   // キーが足りていなければ400を返す
@@ -132,7 +142,7 @@ router.post("/v2_sign_in", function (request, response) {
   })(request, response);
 });
 
-router.post("/reset_password", function (request, response) {
+router.post("/create/temp_password", function (request, response) {
   // キーが足りていなければ400を返す
   if (!request.body.mail) {
     response.status(400).send("Bad Request");
@@ -162,12 +172,6 @@ router.post("/reset_password", function (request, response) {
             })
             .then(function () {
               // パスワードを変更したので、メールを送る
-              const env = process.env.U_DB_ENVIRONMENT || "development";
-
-              const host =
-                env === "development"
-                  ? "http://localhost:3001"
-                  : "https://ulabeler.na2na.website";
 
               const message = `<p>パスワード再設定のお知らせです。<br>仮のパスワードは以下を使用してください。<br>${temp.temp_password}<br><a href='${host}/reset_password?token=${temp.token}&id=${temp.id}'>こちら</a>からパスワードを再設定してください。</p>`;
               sendMail("reset_password", mailaddress, message);
@@ -294,6 +298,100 @@ router.post("/check_email", function (request, response) {
         response.status(500).send("Internal Server Error");
       });
   }
+});
+
+router.post(
+  "/create/modification_mailaddress/confirmationCode",
+  function (request, response) {
+    if (!request.body.mailaddress) {
+      response.status(400).send("Bad Request");
+      return;
+    } else if (!request.user) {
+      response.status(401).send("Unauthorized");
+      return;
+    }
+    // 4桁のランダムな数字の列を作成
+    // 先頭0も許容する
+    const S = "0123456789";
+    const randomCode = Array.from(crypto.randomFillSync(new Uint8Array(4)))
+      .map((n) => S[n % S.length])
+      .join("");
+    // eslint-disable-next-line camelcase
+    const newMailAddress: mail_confirmationTable = {
+      user_id: request.user.id,
+      datetime_issue: new Date(),
+      mailaddress_new: request.body.mailaddress,
+      token_confirmation: randomCode,
+    };
+    // mail_confirmationにすでに同じidが登録されていた場合、削除する
+    knex("mail_confirmation")
+      .where("user_id", request.user.id)
+      .del()
+      .then(function () {
+        knex("mail_confirmation")
+          .insert(newMailAddress)
+          .then(function () {
+            // メール送信
+            const message =
+              "メールアドレスの変更手続きを行います。<br>" +
+              "確認コードは以下のとおりです。<br>" +
+              "確認コード：" +
+              randomCode +
+              `<br><a href=\"${host}/user/modification_mailaddress/confirmationCode?id=${crypto
+                .createHash("sha256")
+                .update(newMailAddress.user_id, "utf8")
+                .digest(
+                  "hex"
+                )}">こちら</a>メールアドレスの変更を完了してください。`;
+
+            sendMail(
+              "modification_mailaddress",
+              newMailAddress.mailaddress_new,
+              message
+            );
+            response.status(201).send(true);
+            return;
+          })
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .catch(function (err: any) {
+            console.log(err);
+            response.status(500).send("Internal Server Error");
+            return;
+          });
+      })
+      .catch(function (err: any) {
+        console.log(err);
+        response.status(500).send("Internal Server Error");
+        return;
+      });
+  }
+);
+
+router.post("/modification_mailaddress_attempt", function (request, response) {
+  if (!request.body.mailaddress) {
+    response.status(400).send("Bad Request");
+    return;
+  } else if (!request.user) {
+    response.status(401).send("Unauthorized");
+    return;
+  }
+  const mailAddress = request.body.mailaddress;
+  const userId = request.user.id;
+  knex("user")
+    .where("id", userId)
+    .update({
+      mailaddress: mailAddress,
+    })
+    .then(
+      function () {
+        response.status(201);
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    )
+    .catch(function (err: any) {
+      console.log(err);
+      response.status(500).send("Internal Server Error");
+    });
 });
 
 // CLI専用
