@@ -433,7 +433,6 @@ router.post("/modification_mailaddress_attempt", function (request, response) {
                 );
             }
           } else {
-            // wawawa
             response
               .status(200)
               .send(
