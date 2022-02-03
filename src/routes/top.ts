@@ -7,6 +7,7 @@ const router = express.Router();
 // import { checkLogin } from '../tools/user';
 // import { side_menu } from '../TypeAlias/misc_alias';
 import sideMenuList from "../tools/data/sidemenu.json";
+import crypto from "crypto";
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
 const host =
@@ -169,6 +170,44 @@ router.get("/mail_address_modification/complete", function (request, response) {
   }
 });
 
+router.get(
+  "/mail_address_modification/confirmationCode",
+  function (request, response) {
+    // getパラメータにidが無ければエラー画面へ
+    if (!request.query.id) {
+      response.redirect("/invalidAccess");
+      return;
+    } else if (!request.user) {
+      response.render("./components/message", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        message:
+          "メールアドレス変更手続きは、<br>ログインした状態で行ってください。。",
+      });
+      return;
+    } else {
+      const idForVerify: userTable["id"] = crypto
+        .createHash("sha256")
+        .update(request.user.id, "utf8")
+        .digest("hex");
+      const idFromQuery: string = request.query.id.toString();
+      // トークン代わりに利用してるブツが一致するか検証
+      if (idFromQuery !== idForVerify) {
+        response.render("./components/message", {
+          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+            `${Boolean(request.user)}`
+          ],
+          message: "URLが正しくありません。",
+        });
+        return;
+      } else {
+        
+      }
+    }
+  }
+);
+
 router.get("/invalidAccess", function (request, response) {
   response.render("./components/message", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
@@ -177,4 +216,15 @@ router.get("/invalidAccess", function (request, response) {
     message: "不正な画面遷移です。",
   });
 });
+
+router.get("/notAvailable", function (request, response) {
+  response.render("./components/message", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    message:
+      "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
+  });
+});
+
 export default router;
