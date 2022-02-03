@@ -11,12 +11,14 @@ import {
   // eslint-disable-next-line camelcase
   mail_confirmationTable,
 } from "../../tools/TypeAlias/tableType_alias";
-import sideMenu from "../../tools/data/sidemenu.json";
+import sideMenuList from "../../tools/data/sidemenu.json";
 import { v4 as uuidv4 } from "uuid";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 import passport from "passport";
 import crypto from "crypto";
+
+// システムエラー/Code:PW-EX1 → L500付近で吐く設定ではあるけどこの条件引くことはまずないと思います。。。
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
 
@@ -265,7 +267,7 @@ router.post("/reset_password_attempt", function (request, response) {
         } else {
           const message = "存在しないトークンです。";
           response.render("./components/message", {
-            side_menu: JSON.parse(JSON.stringify(sideMenu))[
+            side_menu: JSON.parse(JSON.stringify(sideMenuList))[
               `${Boolean(request.user)}`
             ],
             message: message,
@@ -343,7 +345,7 @@ router.post(
                 .update(newMailAddress.user_id, "utf8")
                 .digest(
                   "hex"
-                )}">こちら</a>メールアドレスの変更を完了してください。`;
+                )}">こちら</a>メールアドレスの変更を完了してください。<br>なお、確認コードの有効期限は1時間です。`;
 
             sendMail(
               "modification_mailaddress",
@@ -439,6 +441,60 @@ router.post("/modification_mailaddress_attempt", function (request, response) {
               .send(
                 "メールアドレスを変更したいアカウントでログインしてください。"
               );
+          }
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      )
+      .catch(function (err: any) {
+        console.log(err);
+        response.status(500).send("Internal Server Error");
+      });
+  }
+});
+
+router.post("/password/changeAttempt", function (request, response) {
+  if (!request.body.CurrentPassword && !request.body.NewPassword) {
+    response.status(400).send("Bad Request");
+    return;
+  } else if (!request.user) {
+    response.render("./components/message", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      message: "不正な画面遷移です。",
+    });
+  } else {
+    const CurrentPassword: userTable["password"] = request.body.CurrentPassword;
+    const NewPassword: userTable["password"] = bcrypt.hashSync(
+      request.body.NewPassword,
+      10
+    );
+    const id: userTable["id"] = request.user.id;
+    // bycript.compareを用いて、CurrentPasswordを評価する
+    knex("user")
+      .where("id", id)
+      .select("*")
+      .then(
+        (results: any) => {
+          if (results.length > 0) {
+            if (bcrypt.compareSync(CurrentPassword, results[0].password)) {
+              knex("user")
+                .where("id", id)
+                .update({
+                  password: NewPassword,
+                })
+                .then(function () {
+                  response.status(201).send(true);
+                })
+                .catch(function (err: any) {
+                  console.log(err);
+                  response.status(500).send("Internal Server Error");
+                });
+            } else {
+              response.status(200).send("現在のパスワードが間違っています。");
+            }
+          } else {
+            response.status(200).send("システムエラー/Code:PW-EX1");
           }
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
