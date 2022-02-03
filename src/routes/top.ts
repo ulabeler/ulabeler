@@ -202,11 +202,10 @@ router.get(
         });
         return;
       } else {
-        response.render("components/message", {
+        response.render("user/authorization_code_input", {
           side_menu: JSON.parse(JSON.stringify(sideMenuList))[
             `${Boolean(request.user)}`
           ],
-          message: "よさそう",
         });
       }
     }
