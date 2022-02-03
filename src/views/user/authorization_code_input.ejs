@@ -50,10 +50,12 @@
             <form action="" method="post" id="hoge">
               <div class="login_input2">
                 <div class="input_center">
-                  <p><input type="number" name="" value="" min="1000" max="9999"></p>
+                  <p><input type="tel" maxlength="1" size="1" id="isFirst"><input type="tel" maxlength="1"
+                      size="1"><input type="tel" maxlength="1" size="1"><input type="tel" maxlength="1" size="1"
+                      id="isLast"></p>
                 </div>
                 <div class="mail_error">
-                  <p id="" class="error_message5">aaaaaaa</p><!-- やま jsエラーメッセージ -->
+                  <p id="" class="error_message5"></p>
                 </div>
               </div>
             </form>
@@ -64,7 +66,7 @@
           <div class="button">
             <!-- 閉じるボタン（ポップアップ閉じるボタン）-->
 
-            <button type="submit" class="white_button" onclick="location.href='#'">決定</button>
+            <button type="submit" class="white_button" onclick="changeEmailAttempt()" id="send">決定</button>
           </div>
         </div>
 
@@ -78,5 +80,101 @@
       <br>
       <a href="/" id="pagetop"><i class="up"></i>↑</a>
   </body>
+
+  <script>
+    //変数定義
+    const confirmationCode = document.querySelectorAll('input[type="tel"]');
+    const isFirst = document.getElementById('isFirst');
+    const isLast = document.getElementById('isLast');
+    const sendButton = document.querySelector('#send');
+    const error_message5 = document.querySelector('.error_message5');
+    let rejectCount = 0;
+
+    //イベント設定
+    //最初のフォームに1文字入力されたら次のフォームにフォーカスを移動
+    //forで回して次のフォームにフォーカスを移動
+    for (let i = 0; i <= confirmationCode.length; i++) {
+      //もし、現在のフォーカスがisLastだったらループから抜ける
+      if (confirmationCode[i] === isLast) {
+        break;
+      }
+      confirmationCode[i].addEventListener('keyup', function (e) {
+        if (e.target.value.length === 1) {
+          confirmationCode[i + 1].focus();
+        }
+      });
+    }
+
+    //もし、フォーム内が空の状態でBackSpaceが押されたら、前のフォームにフォーカスを移動
+    //forで回して次のフォームにフォーカスを移動
+    for (let i = 3; i <= confirmationCode.length; i--) {
+      //もし、現在のフォーカスがisFirstだったらループから抜ける
+      if (confirmationCode[i] === isFirst) {
+        break;
+      }
+      confirmationCode[i].addEventListener('keydown', function (e) {
+        //もし、テキストボックス内が空の状態でBackSpaceが押されたら、前のフォームにフォーカスを移動
+        if (e.keyCode === 8 && e.target.value.length === 0) {
+          confirmationCode[i - 1].focus();
+        }
+      });
+    }
+
+    // confirmationCodeへは、0~9のみ入力可能、バックスペースも使用可能
+    for (let i = 0; i < confirmationCode.length; i++) {
+      confirmationCode[i].addEventListener('keydown', function (e) {
+        if (e.keyCode < 48 || e.keyCode > 57) {
+          if (e.keyCode == 8) {
+            return
+          } else if (e.keyCode == 39 && confirmationCode[i] != isLast) {
+            confirmationCode[i + 1].focus();
+          } else if (e.keyCode == 37 && confirmationCode[i] != isFirst) {
+            confirmationCode[i - 1].focus();
+          }
+          e.preventDefault();
+        }
+      });
+    }
+
+    
+    
+    function changeEmailAttempt() {
+      const RegExp = /^[0-9]{1}$/;
+      const confirmationCodeArrayToStr = Array.from(confirmationCode).map(function (e) {
+        //e.valueに0~9以外が入っていた場合
+        if (!RegExp.test(e.value)) {
+          rejectCount++;
+          error_message5.innerHTML = '4桁の数字を入力してください';
+        }
+        return e.value;
+      }).join('');
+      console.log(confirmationCodeArrayToStr.length);
+      console.log("rejectCount:" + rejectCount);
+      if (rejectCount != 0) {
+        rejectCount = 0;
+        return;
+      }
+      if (rejectCount == 0) {
+        error_message5.innerHTML = '';
+      }
+
+      //axiosを利用して、サーバーにPOSTリクエストを送信
+      axios.post('/api/user/modification_mailaddress_attempt', {
+        confirmationAttemptCode: confirmationCodeArrayToStr
+      }).then(function (response) {
+        console.log(response);
+        if (response.status == 201) {
+          alert('メールアドレスの変更が完了しました');
+          window.location.href = '/';
+        } else {
+          error_message5.innerHTML = response.data;
+          return;
+        }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+
+  </script>
 
 </html>

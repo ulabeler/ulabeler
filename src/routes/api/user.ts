@@ -368,30 +368,86 @@ router.post(
 );
 
 router.post("/modification_mailaddress_attempt", function (request, response) {
-  if (!request.body.mailaddress) {
+  if (!request.body.confirmationAttemptCode) {
     response.status(400).send("Bad Request");
     return;
   } else if (!request.user) {
     response.status(401).send("Unauthorized");
     return;
+  } else {
+    // eslint-disable-next-line camelcase
+    const id: userTable["id"] = request.user.id;
+    // eslint-disable-next-line camelcase
+    const confirmationAttemptCode: mail_confirmationTable["token_confirmation"] =
+      request.body.confirmationAttemptCode;
+    // mail_confirmationテーブルに、該当するidがあるかを確認
+    knex("mail_confirmation")
+      .where("user_id", id)
+      .select("*")
+      .then(
+        (results: any) => {
+          if (results.length > 0) {
+            // もし、datetime_issueが1時間以内なら
+            if (
+              new Date(results[0].datetime_issue).getTime() + 1000 * 60 * 60 >
+              new Date().getTime()
+            ) {
+              // eslint-disable-next-line camelcase
+              const tokenConfirmation: mail_confirmationTable["token_confirmation"] =
+                results[0].token_confirmation;
+              if (tokenConfirmation === confirmationAttemptCode) {
+                console.log(results[0]);
+                // メールアドレスを変更
+                knex("user")
+                  .where("id", id)
+                  .update({
+                    mailaddress: results[0].mailaddress_new,
+                  })
+                  .then(function () {
+                    // mail_confirmationを削除
+                    knex("mail_confirmation")
+                      .where("user_id", id)
+                      .del()
+                      .then(function () {
+                        response.status(201).send(true);
+                      })
+                      .catch(function (err: any) {
+                        console.log(err);
+                        response.status(500).send("Internal Server Error");
+                      });
+                  })
+                  .catch(function (err: any) {
+                    console.log(err);
+                    response.status(500).send("Internal Server Error");
+                  });
+              } else {
+                response
+                  .status(200)
+                  .send("入力された認証コードは間違っています。");
+              }
+            } else {
+              response
+                .status(200)
+                .send(
+                  "認証コードの有効期限が切れています。<br>お手数ですが、もう一度最初からお試しください。"
+                );
+            }
+          } else {
+            // wawawa
+            response
+              .status(200)
+              .send(
+                "メールアドレスを変更したいアカウントでログインしてください。"
+              );
+          }
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      )
+      .catch(function (err: any) {
+        console.log(err);
+        response.status(500).send("Internal Server Error");
+      });
   }
-  const mailAddress = request.body.mailaddress;
-  const userId = request.user.id;
-  knex("user")
-    .where("id", userId)
-    .update({
-      mailaddress: mailAddress,
-    })
-    .then(
-      function () {
-        response.status(201);
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    )
-    .catch(function (err: any) {
-      console.log(err);
-      response.status(500).send("Internal Server Error");
-    });
 });
 
 // CLI専用
