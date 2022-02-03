@@ -202,7 +202,12 @@ router.get(
         });
         return;
       } else {
-        
+        response.render("components/message", {
+          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+            `${Boolean(request.user)}`
+          ],
+          message: "よさそう",
+        });
       }
     }
   }

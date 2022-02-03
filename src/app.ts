@@ -60,7 +60,7 @@ app.use(function (request, response) {
   // "./public/index.html"を返す
   // response.sendFile(path.join(__dirname, 'public', 'index.html'));
   // 404エラーと表示する
-  response.status(404).send("404 Not Found");
+  response.redirect("/notAvailable");
 });
 
 // error handler

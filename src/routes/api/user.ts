@@ -337,7 +337,7 @@ router.post(
               "確認コードは以下のとおりです。<br>" +
               "確認コード：" +
               randomCode +
-              `<br><a href=\"${host}/user/modification_mailaddress/confirmationCode?id=${crypto
+              `<br><a href=\"${host}/mail_address_modification/confirmationCode?id=${crypto
                 .createHash("sha256")
                 .update(newMailAddress.user_id, "utf8")
                 .digest(
