@@ -8,6 +8,12 @@ const router = express.Router();
 // import { side_menu } from '../TypeAlias/misc_alias';
 import sideMenuList from "../tools/data/sidemenu.json";
 
+const env = process.env.U_DB_ENVIRONMENT || "development";
+const host =
+  env === "development"
+    ? "http://localhost:3001"
+    : "https://ulabeler.na2na.website";
+
 /* GET home page. */
 router.get("/", function (request, response) {
   response.render("top", {
@@ -34,11 +40,18 @@ router.get("/password_forgot", function (request, response) {
 });
 
 router.get("/password_forgot/sent", function (request, response) {
-  response.render("./user/outgoing_mail_completion", {
-    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-      `${Boolean(request.user)}`
-    ],
-  });
+  if (request.headers.referer !== `${host}/password_forgot`) {
+    // TODO 後で書き直し
+    response.redirect("/invalidAccess");
+    return;
+  } else {
+    response.render("./components/message", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      message: "入力されたメールアドレスに<br>仮のパスワードを送信しました。",
+    });
+  }
 });
 
 router.get("/reset_password", function (request, response) {
@@ -126,13 +139,42 @@ router.get("/mail_address_modification", function (request, response) {
 router.get(
   "/mail_address_modification/sent_confirmation_code",
   function (request, response) {
-    const message = "入力されたメースアドレスに<br>確認コードを送信しました。";
+    // 遷移元のページが/mail_address_modificationでない場合エラー画面へ
+    if (request.headers.referer !== `${host}/mail_address_modification`) {
+      response.redirect("/invalidAccess");
+      return;
+    } else {
+      response.render("./components/message", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        message: "入力されたメースアドレスに<br>確認コードを送信しました。",
+      });
+    }
+  }
+);
+
+router.get("/mail_address_modification/complete", function (request, response) {
+  if (request.headers.referer !== `${host}/mail_address_modification`) {
+    // TODO 後で書き直し
+    response.redirect("/invalidAccess");
+    return;
+  } else {
     response.render("./components/message", {
       side_menu: JSON.parse(JSON.stringify(sideMenuList))[
         `${Boolean(request.user)}`
       ],
-      message: message,
+      message: "メールアドレスが変更されました。",
     });
   }
-);
+});
+
+router.get("/invalidAccess", function (request, response) {
+  response.render("./components/message", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    message: "不正な画面遷移です。",
+  });
+});
 export default router;

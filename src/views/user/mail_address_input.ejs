@@ -109,7 +109,7 @@
 
     //送信ボタンを押したら、axiosで"/api/user/reset_password"にpostする"
     send.addEventListener('click', function () {
-      axios.post('/api/user/reset_password', {
+      axios.post('/api/user/create/temp_password', {
         mail: input_email.value
       }).then(function (response) {
         console.log(response);
