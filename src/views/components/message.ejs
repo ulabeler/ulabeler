@@ -26,28 +26,26 @@
 
 
     <%- include("./login.ejs") %>
-    <%- include("./sidemenu.ejs", {side_menu: side_menu}) %>
+      <%- include("./sidemenu.ejs", {side_menu: side_menu}) %>
 
-      <article>
-        <div class="box09">
-          <div class="report_txt">
-            <p><%- message %> </p>
+        <article>
+          <div class="box09">
+            <div class="report_txt">
+              <p>
+                <%- message %>
+              </p>
+            </div>
           </div>
 
-          <div class="button">
-            <!-- 閉じるボタン（ポップアップ閉じるボタン）jsページ -->
-            <button class="white_button" onclick="window.close();">閉じる</button>
-          </div>
-        </div>
-
-        <noscript>
-          <p>JavaScriptを有効にしてください。</p>
-        </noscript>
+          <noscript>
+            <p>JavaScriptを有効にしてください。</p>
+          </noscript>
 
 
-      </article>
-      <br>
-      <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-      <br>
+        </article>
+        <br>
+        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+        <br>
   </body>
+
 </html>
