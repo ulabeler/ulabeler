@@ -10,6 +10,7 @@
         "src/bin/*.ts",
         "src/*.ts",
         "src/app.ts",
+        "scripts/*.js"
     ],
     "exclude": [
         "node_modules",
