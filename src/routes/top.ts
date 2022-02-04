@@ -165,7 +165,6 @@ router.get("/mail_address_modification/complete", function (request, response) {
         .update(userId, "utf8")
         .digest("hex")}`
     ) {
-      // TODO 後で書き直し
       response.redirect("/invalidAccess");
       return;
     } else {
