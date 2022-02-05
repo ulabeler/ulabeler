@@ -8,6 +8,7 @@ const router = express.Router();
 // import { side_menu } from '../TypeAlias/misc_alias';
 import sideMenuList from "../tools/data/sidemenu.json";
 import crypto from "crypto";
+const maxViewOnPage = 3; // 1ページに表示する最大件数
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
 const host =
@@ -258,7 +259,6 @@ router.get("/password/modification", function (request, response) {
 });
 
 router.get("/my_work", function (request, response) {
-  const maxViewOnPage = 4; // 1ページに表示する最大件数
   let currentPage = 1; // 現在のページ番号
   let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
   if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
@@ -290,35 +290,39 @@ router.get("/my_work", function (request, response) {
             resolve("NoWorks");
             return;
           }
-        workList.forEach((work: workTable) => {
-          knex("base_category")
-            .where("id", work.base_category_id)
-            .then((baseCategory: base_categoryTable[]) => {
-              console.log("cc")
-              baseCategoryList.push(baseCategory[0]);
-              if (baseCategoryList.length === workList.length) {
-                const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
-                console.log("idx:" + idx)
-                console.log("currentPage:" + currentPage)
-                console.log("maxPage:" + maxPage)
-                console.log("maxViewOnPage:" + maxViewOnPage)
-                response.render("list/my_list", {
-                  side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                    `${Boolean(request.user)}`
-                  ],
-                  workList: workList,
-                  baseCategoryList: baseCategoryList,
-                  idx: idx,
-                  maxPage: maxPage,
-                  maxViewOnPage: maxViewOnPage,
-                  currentPage: currentPage,
-                  userInfo: userInfo,
-                });
-                resolve("ok");
-                return;
-              }
-            });
-        });
+          workList.forEach((work: workTable) => {
+            knex("base_category")
+              .where("id", work.base_category_id)
+              .then((baseCategory: base_categoryTable[]) => {
+                baseCategoryList.push(baseCategory[0]);
+                if (baseCategoryList.length === workList.length) {
+                  const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
+                  // console.log("idx:" + idx)
+                  // console.log("currentPage:" + currentPage)
+                  // console.log("maxPage:" + maxPage)
+                  // console.log("maxViewOnPage:" + maxViewOnPage)
+                  const currentPageDescription = {
+                    title: "マイ作品リスト",
+                    "uriPrefix": "/my_work",
+                  };
+                  response.render("list/my_list", {
+                    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                      `${Boolean(request.user)}`
+                    ],
+                    workList: workList,
+                    baseCategoryList: baseCategoryList,
+                    idx: idx,
+                    maxPage: maxPage,
+                    maxViewOnPage: maxViewOnPage,
+                    currentPage: currentPage,
+                    userInfo: userInfo,
+                    currentPageDescription: currentPageDescription,
+                  });
+                  resolve("ok");
+                  return;
+                }
+              });
+          });
         });
       });
   } else {
@@ -327,6 +331,88 @@ router.get("/my_work", function (request, response) {
   }
 });
 
+router.get("/creator_work", function (request, response) {
+  if (request.query.userId) {
+    let currentPage = 1; // 現在のページ番号
+    let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
+    if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
+      idx = (Number(request.query.page) - 1) * maxViewOnPage;
+      currentPage = Number(request.query.page);
+    }
+    // request.query.userIdに対応するユーザーを取得
+    knex("user")
+      .select("id", "name", "icon_path", "self_introduction")
+      .where("id", request.query.userId)
+      .then(async function (userList: userTable[]) {
+        if (userList.length === 0) {
+          response.render('components/message',{
+            side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+              `${Boolean(request.user)}`
+            ],
+            message: "ユーザーが見つかりませんでした。"
+          });
+          return;
+        }
+        // @ts-ignore
+        const userInfo: userTable = {
+          id: userList[0].id,
+          name: userList[0].name,
+          icon_path: userList[0].icon_path,
+        }
+        // workから、userIdと一致するworkを取得
+        knex("work")
+          .where("created_by_user_id", userInfo.id)
+          .orderBy("id", "asc")
+          .then(async function (workList: workTable[]) {
+            // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
+            const baseCategoryList: base_categoryTable[] = [];
+            await new Promise((resolve) => {
+              if (workList.length === 0) {
+                response.render("list/my_list_first", {
+                  side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                    `${Boolean(request.user)}`
+                  ]
+                });
+                resolve("NoWorks");
+                return;
+              }
+              workList.forEach((work: workTable) => {
+                knex("base_category")
+                  .where("id", work.base_category_id)
+                  .then((baseCategory: base_categoryTable[]) => {
+                    baseCategoryList.push(baseCategory[0]);
+                    if (baseCategoryList.length === workList.length) {
+                      const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
+                      const currentPageDescription = {
+                        title: "作品一覧",
+                        "uriPrefix": "/creator_work",
+                      };
+                      response.render("list/creator_work", {
+                        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                          `${Boolean(request.user)}`
+                        ],
+                        workList: workList,
+                        baseCategoryList: baseCategoryList,
+                        idx: idx,
+                        maxPage: maxPage,
+                        maxViewOnPage: maxViewOnPage,
+                        currentPage: currentPage,
+                        userInfo: userInfo,
+                        currentPageDescription: currentPageDescription,
+                      });
+                      resolve("ok");
+                      return;
+                    }
+                  });
+              });
+            });
+          });
+      });
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
+});
 
 router.get("/invalidAccess", function (request, response) {
   response.render("./components/message", {

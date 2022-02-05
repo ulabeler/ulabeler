@@ -40,17 +40,65 @@
                 <br>
                 <br>
 
-                <!-- ページ名 -->
+                <div class="userpage">
 
-                <h3 class="h3_center2"><%- currentPageDescription.title %> 
-                    <hr>
-                </h3>
+                    <div class="user_2">
+                        <form action="" method="post" id="hoge">
+                            <div class="user_box">
+                                <table cellpadding="0" 　class="usertable">
+
+                                    <tr>
+                                        <th rowspan="4">
+                                            <p class=user_img><img src="images/use.png" alt="商品画像"></p>
+                                        </th>
+                                        <td>　　　　　</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p class="username">やまだはなこ</p>
+                                        </td>
+                                        <input type="hidden" name="">
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p class="userid">＠00000000</p>
+                                        </td>
+                                        <input type="hidden" name="">
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="setumei">お花が好きなのでお花の作品が多いです。ちなみにタンポポが好きです。よろしくお願いいたします。
+                                        </td>
+
+                                    </tr>
+
+
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class=userpage>
+                    <div class="td2">
+                        <!-- <p class = "star"><a href=""><font color="orange">★</font></a></p> -->
+                        <!-- お気に入りしいる★-->
+                        <p class="star_1"><a href="">
+                                <font color="orange">☆</font>
+                            </a></p><!-- お気に入りしいない☆-->
+                        <p class="favorite">100</p>
+                    </div>
+                </div>
+
+
+                <p class="senn">
+                    <%- currentPageDescription.title %>
+                        <hr class="hr3">
+                </p>
 
                 <div id="js-show-popup">
                     <div class="box_wrapper_2">
 
                         <%- include("../components/workListOverView.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription, }) %>
-
 
 
                     </div>
@@ -177,7 +225,9 @@
             <div class="pagination">
                 <ul class="example">
                     <% if (currentPage !=1) { %>
-                        <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage - 1 %>">前へ</a></li>
+                        <li><a
+                                href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage - 1 %>&userId=<%= userInfo.id %>">前へ</a>
+                        </li>
                         <% } %>
                             <% for( let index=1; index <=maxPage; index++ ) { %>
                                 <% if (index==currentPage) { %>
@@ -185,13 +235,16 @@
                                         <%- currentPage %>
                                     </li>
                                     <% } else { %>
-                                        <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- index %>">
+                                        <li><a
+                                                href="<%= currentPageDescription.uriPrefix %>?page=<%- index %>&userId=<%= userInfo.id %>">
                                                 <%- index %>
                                             </a></li>
                                         <% } %>
                                             <% } %>
                                                 <% if (currentPage !=maxPage) { %>
-                                                    <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage + 1 %>">次へ</a></li>
+                                                    <li><a
+                                                            href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage + 1 %>&userId=<%= userInfo.id %>">次へ</a>
+                                                    </li>
                                                     <% } %>
                 </ul>
             </div>

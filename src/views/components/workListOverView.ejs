@@ -1,0 +1,32 @@
+<% if (workList.length !=0) { %>
+    <% for( let i=idx; i < (idx + maxViewOnPage); i++ ) { %>
+        <% if (workList[i]) { %>
+            <section class="box_item_2" onclick="showPopUp('listidx-<%-workList[i].id%>')">
+                <br>
+                <p class="date1">
+                    <%# work.create_atをyyyy/mm/ddで表示する %>
+                        <% const create_at=new Date(workList[i].create_at)%>
+                            <%= create_at.getFullYear() + "/" + ('00' +
+                                (create_at.getMonth()+1)).slice(-2) + "/" + ('00' +
+                                create_at.getDate()).slice(-2) %>
+                </p>
+                <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>"
+                        alt="<%- workList[i].name %> " /></div>
+                <form action="select_color.html" method="post">
+                    <p class="explanation">
+                        <%- baseCategoryList[i].name_subcategory %> <br>「<%- workList[i].name %>
+                                」
+                    </p>
+                    <p class="star2_1"><a href="">
+                            <font size="15" color="orange">☆</font>
+                        </a></p><!-- お気に入りしてない☆-->
+                    <div class="favorite3">
+                        <p class="favorite2">
+                            <font size="4">10</font>
+                        </p>
+                    </div>
+                </form>
+            </section>
+            <% } %>
+                <% } %>
+                    <% } %>
