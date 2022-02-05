@@ -46,12 +46,11 @@
                     <hr>
                 </h3>
 
-
                 <div id="js-show-popup">
                     <div class="box_wrapper_2">
 
-                        <% for( let i=idx; i < (idx + maxViewOnPage); i++ ) { %>
-                            <% if (workList[i]) { %>
+                <% for( let i=idx; i < (idx + maxViewOnPage); i++ ) { %>
+                    <% if (workList[i]) { %>
                                 <section class="box_item_2" onclick="showPopUp('listidx-<%-workList[i].id%>')">
                                     <br>
                                     <p class="date1">
@@ -91,7 +90,7 @@
                         <% if (workList[i]) { %>
                             <div class="popup" id="listidx-<%-workList[i].id%>">
                                 <div class="popup-inner">
-                                    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+                                    <div class="close-btn" id="js-close-btn" onclick="closePopUp('listidx-<%-workList[i].id%>')"><i class="fas fa-times"></i></div>
                                     <section class="box_item_3">
                                         <br>
                                         <div class="userpage">
@@ -189,7 +188,7 @@
                                 </form>
                                 </section>
                             </div>
-                            <div class="black-background" id="js-black-bg"></div>
+                            <div class="black-background js-black-bg" id=""  onclick="closePopUp('listidx-<%-workList[i].id%>')"></div>
                             </div>
                             <% } %>
                                 <% } %>
