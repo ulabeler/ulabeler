@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="none,noindex,nofollow">
+    <meta name="description" content="ハンドメイドショップサイト">
+    <meta name="keywords" content="ECサイト">
+    <title>U labeler</title>
+
+    <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+</head>
+<header class="header">
+
+    <div class="header_logo">
+        <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
+    </div>
+
+    <!-- 検索ボックス -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <span class="magnifying_glass"></span>
+    <form method="get" action="#" class="search_container">
+        <input type="text" size="25" placeholder="キーワード検索">
+        <input type="submit" value="&#xf002">
+    </form>
+
+
+    <body>
+
+        <input type="checkbox" id="nav1">
+        <label for="nav1" class="open"><span></span></label>
+        <label for="nav1" class="close"></label>
+
+        <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+
+            <article>
+                <br>
+                <br>
+
+                <!-- ページ名 -->
+
+                <h3 class="h3_center2">マイ作品リスト
+                    <hr>
+                </h3>
+
+
+                <div id="js-show-popup">
+                    <div class="box_wrapper_2">
+
+                        <% for( let i=idx; i < (idx + maxViewOnPage); i++ ) { %>
+                            <% if (workList[i]) { %>
+                                <section class="box_item_2" onclick="showPopUp('listidx-<%-workList[i].id%>')">
+                                    <br>
+                                    <p class="date1">
+                                        <%# work.create_atをyyyy/mm/ddで表示する %>
+                                            <% const create_at=new Date(workList[i].create_at)%>
+                                                <%= create_at.getFullYear() + "/" + ('00' +
+                                                    (create_at.getMonth()+1)).slice(-2) + "/" + ('00' +
+                                                    create_at.getDate()).slice(-2) %>
+                                    </p>
+                                    <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>"
+                                            alt="<%- workList[i].name %> " /></div>
+                                    <form action="select_color.html" method="post">
+                                        <p class="explanation">
+                                            <%- baseCategoryList[i].name_subcategory %> <br>「<%- workList[i].name %> 」
+                                        </p>
+                                        <p class="star2_1"><a href="">
+                                                <font size="15" color="orange">☆</font>
+                                            </a></p><!-- お気に入りしてない☆-->
+                                        <div class="favorite3">
+                                            <p class="favorite2">
+                                                <font size="4">10</font>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </section>
+                                <% } %>
+                                    <% } %>
+
+
+                    </div>
+                </div>
+
+
+                <!-- ポップアップの中身 現状無理っす -->
+                <% for( let i=idx; i < (idx + maxViewOnPage); i++ ) { %>
+                <%# for( let i=idx; i < idx + 1; i++ ) { %>
+                    <% if (workList[i]) { %>
+                        <div class="popup" id="listidx-<%-workList[i].id%>">
+                            <div class="popup-inner">
+                                <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+                                <section class="box_item_3">
+                                    <br>
+                                    <div class="userpage">
+                                        <div class="user_3">
+                                            <form action="" method="post" id="hoge">
+                                                <div class="user_box_1">
+                                                    <a href="">
+                                                        <table cellpadding="0" 　class="usertable">
+
+                                                            <tr>
+                                                                <th rowspan="4">
+                                                                    <p class=user_img2><img src="images/use.png"
+                                                                            alt="商品画像"></p>
+                                                                </th>
+                                                                <td>　　　　　</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <p class="username"><%- workList[i].created_by_user_id %> </p>
+                                                                </td>
+                                                                <input type="hidden" name="">
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="userid2">＠00000000</td>
+                                                                <input type="hidden" name="">
+                                                            </tr>
+
+
+                                                        </table>
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class=userpage>
+                                    </div>
+                                    <p class="date1">
+                                        <% const create_at=new Date(workList[i].create_at)%>
+                                            <%= create_at.getFullYear() + "/" + ('00' +
+                                                (create_at.getMonth()+1)).slice(-2) + "/" + ('00' +
+                                                create_at.getDate()).slice(-2) %>
+                                                <div class="image_wrapper"><img src="images/color.jpeg" alt="" /></div>
+                                                <form action="select_color.html" method="post">
+
+                                                    <table class=tannka_table>
+                                                        <tr>
+                                                            <th class="tannka">
+                                                                <p>単価：500円　</p>
+                                                            </th>
+                                                            <th class="cart_img2">
+                                                                <p class=cart_img><a href=""><img
+                                                                            src="<%= workList[i].thumbnail_path %>" alt="商品画像"></a>
+                                                            </th>
+                                                        </tr>
+                                                    </table>
+
+                                                    <p class="explanation">ペットボトル（500ml）</p>
+                                                    <h3 class="sakuhinnmei">「ひまわりのペットボトル」</h3>
+                                                    <div class="explanation2"><a href="">
+                                                            <font size="2">#ペットボトル　＃やまおねがい　#やまおねがい</font>
+                                                        </a>
+                                    </p>
+                    </div>
+                    <br>
+                    <p class="explanation3">ひまわりが大好きなので作りました。</p>
+                    <div class="okiniiri">
+                        <p class="star2_1"><a href="">
+                                <font size="15" color="orange">☆</font>
+                            </a></p>
+                        <div class="favorite3">
+                            <p class="favorite2">
+                                <font size="4">10</font>
+                            </p>
+                        </div>
+                    </div>
+                    <p class="button6"><button type="submit" class="black_button4"
+                            onclick="location.href=''">編集</button></p>
+                    <br>
+                    </form>
+                    </section>
+                </div>
+                <div class="black-background" id="js-black-bg"></div>
+                </div>
+                    <% } %>
+                        <% } %>
+
+
+
+                            <!-- 作品詳細（自分）👇 -->
+
+
+                            <!-- 作品詳細（自分）ここまで👆 -->
+
+
+
+                <noscript>
+                    <p>JavaScriptを有効にしてください。</p>
+                </noscript>
+            </article>
+            <br>
+
+            <!-- ページネーション やまページネーションだるそう。。。-->
+            <div class="pagination">
+                <ul class="example">
+                    <% if (currentPage !=1) { %>
+                        <li><a href="/my_work?page=<%- currentPage - 1 %>">前へ</a></li>
+                        <% } %>
+                            <% for( let index=1; index <=maxPage; index++ ) { %>
+                                <% if (index==currentPage) { %>
+                                    <li class="pagination_nau"><%- currentPage %></li>
+                                    <% } else { %>
+                                        <li><a href="/my_work?page=<%- index %>">
+                                                <%- index %>
+                                            </a></li>
+                                        <% } %>
+                                            <% } %>
+                                                <% if (currentPage !=maxPage) { %>
+                                                    <li><a href="/my_work?page=<%- currentPage + 1 %>">前へ</a></li>
+                                                    <% } %>
+                </ul>
+            </div>
+
+            <br>
+            <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+            <br>
+            <a href="#" id="pagetop"><i class="up"></i>↑</a>
+    </body>
+
+</html>

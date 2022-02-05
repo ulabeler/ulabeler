@@ -1,7 +1,7 @@
 import express from "express";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
-import { userTable } from "tools/TypeAlias/tableType_alias";
+import { userTable, workTable, base_categoryTable } from "tools/TypeAlias/tableType_alias";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 // import { checkLogin } from '../tools/user';
@@ -243,6 +243,70 @@ router.get("/reset_password/complete", function (request, response) {
   response.redirect("/invalidAccess");
 });
 
+
+router.get("/password/modification", function (request, response) {
+  if (request.user) {
+    response.render("user/member_password_modification", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+    });
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
+});
+
+router.get("/my_work", function (request, response) {
+  const maxViewOnPage = 4; // 1ページに表示する最大件数
+  let currentPage = 1; // 現在のページ番号
+  let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
+  if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
+    idx = (Number(request.query.page) - 1) * maxViewOnPage;
+    currentPage = Number(request.query.page);
+  }
+  if (request.user) {
+    const userId: userTable["id"] = request.user.id;
+    // workから、userIdと一致するworkを取得
+    knex("work")
+      .where("created_by_user_id", userId)
+      .orderBy("id", "asc")
+      .then((workList: workTable[]) => {
+        // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
+        const baseCategoryList: base_categoryTable[] = [];
+        workList.forEach((work: workTable) => {
+          knex("base_category")
+            .where("id", work.base_category_id)
+            .then((baseCategory: base_categoryTable[]) => {
+              baseCategoryList.push(baseCategory[0]);
+              if (baseCategoryList.length === workList.length) {
+                const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
+                console.log("idx:" + idx)
+                console.log("currentPage:" + currentPage)
+                console.log("maxPage:" + maxPage)
+                console.log("maxViewOnPage:" + maxViewOnPage)
+                response.render("list/my_list", {
+                  side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                    `${Boolean(request.user)}`
+                  ],
+                  workList: workList,
+                  baseCategoryList: baseCategoryList,
+                  idx: idx,
+                  maxPage: maxPage,
+                  maxViewOnPage: maxViewOnPage,
+                  currentPage: currentPage,
+                });
+              }
+            });
+        });
+      });
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
+});
+
+
 router.get("/invalidAccess", function (request, response) {
   response.render("./components/message", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
@@ -260,19 +324,6 @@ router.get("/notAvailable", function (request, response) {
     message:
       "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
   });
-});
-
-router.get("/password/modification", function (request, response) {
-  if (request.user) {
-    response.render("user/member_password_modification", {
-      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-        `${Boolean(request.user)}`
-      ],
-    });
-  } else {
-    response.redirect("/invalidAccess");
-    return;
-  }
 });
 
 export default router;
