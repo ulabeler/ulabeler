@@ -372,6 +372,7 @@ router.get("/creator_work", function (request, response) {
           id: userList[0].id,
           name: userList[0].name,
           icon_path: userList[0].icon_path,
+          self_introduction: userList[0].self_introduction,
         }
         // workから、userIdと一致するworkを取得
         knex("work")

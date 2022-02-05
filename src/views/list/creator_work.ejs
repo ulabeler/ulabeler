@@ -49,25 +49,25 @@
 
                                     <tr>
                                         <th rowspan="4">
-                                            <p class=user_img><img src="images/use.png" alt="商品画像"></p>
+                                            <p class=user_img><img src="<%- userInfo.icon_path %>" alt="商品画像"></p>
                                         </th>
                                         <td>　　　　　</td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p class="username">やまだはなこ</p>
+                                            <p class="username"><%- userInfo.name %></p>
                                         </td>
                                         <input type="hidden" name="">
 
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p class="userid">＠00000000</p>
+                                            <p class="userid">＠<%- userInfo.id %></p>
                                         </td>
                                         <input type="hidden" name="">
                                     </tr>
                                     <tr>
-                                        <td colspan="2" class="setumei">お花が好きなのでお花の作品が多いです。ちなみにタンポポが好きです。よろしくお願いいたします。
+                                        <td colspan="2" class="setumei"><%- userInfo.self_introduction %>
                                         </td>
 
                                     </tr>
