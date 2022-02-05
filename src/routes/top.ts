@@ -277,13 +277,24 @@ router.get("/my_work", function (request, response) {
     knex("work")
       .where("created_by_user_id", userId)
       .orderBy("id", "asc")
-      .then((workList: workTable[]) => {
+      .then(async function (workList: workTable[]) {
         // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
         const baseCategoryList: base_categoryTable[] = [];
+        await new Promise((resolve) => {
+          if (workList.length === 0) {
+            response.render("list/my_list_first", {
+              side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                `${Boolean(request.user)}`
+              ]
+            });
+            resolve("NoWorks");
+            return;
+          }
         workList.forEach((work: workTable) => {
           knex("base_category")
             .where("id", work.base_category_id)
             .then((baseCategory: base_categoryTable[]) => {
+              console.log("cc")
               baseCategoryList.push(baseCategory[0]);
               if (baseCategoryList.length === workList.length) {
                 const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
@@ -303,8 +314,11 @@ router.get("/my_work", function (request, response) {
                   currentPage: currentPage,
                   userInfo: userInfo,
                 });
+                resolve("ok");
+                return;
               }
             });
+        });
         });
       });
   } else {
