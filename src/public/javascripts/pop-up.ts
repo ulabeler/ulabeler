@@ -15,9 +15,6 @@ function showPopUp(id: string) {
   const target= document.getElementById(id);
   console.log(target);
     target!.classList.add('is-show');
-    // closePopUp(blackBgClass);
-    // closePopUp(closeBtn);
-    // closePopUp(showBtn);
 }
 
 // ポップアップを閉じる
