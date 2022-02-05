@@ -266,6 +266,12 @@ router.get("/my_work", function (request, response) {
     currentPage = Number(request.query.page);
   }
   if (request.user) {
+    // @ts-ignore
+    const userInfo: userTable = {
+      id: request.user.id,
+      name: request.user.name,
+      icon_path: request.user.icon_path,
+    }
     const userId: userTable["id"] = request.user.id;
     // workから、userIdと一致するworkを取得
     knex("work")
@@ -295,6 +301,7 @@ router.get("/my_work", function (request, response) {
                   maxPage: maxPage,
                   maxViewOnPage: maxViewOnPage,
                   currentPage: currentPage,
+                  userInfo: userInfo,
                 });
               }
             });

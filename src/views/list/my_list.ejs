@@ -103,7 +103,7 @@
 
                                                             <tr>
                                                                 <th rowspan="4">
-                                                                    <p class=user_img2><img src="images/use.png"
+                                                                    <p class=user_img2><img src="<%= userInfo.icon_path %> "
                                                                             alt="商品画像"></p>
                                                                 </th>
                                                                 <td>　　　　　</td>
@@ -116,7 +116,7 @@
 
                                                             </tr>
                                                             <tr>
-                                                                <td class="userid2">＠00000000</td>
+                                                                <td class="userid2">＠<%- userInfo.id %> </td>
                                                                 <input type="hidden" name="">
                                                             </tr>
 
@@ -140,7 +140,7 @@
                                                     <table class=tannka_table>
                                                         <tr>
                                                             <th class="tannka">
-                                                                <p>単価：500円　</p>
+                                                                <p>単価：<%- workList[i].unit_price %>円　</p>
                                                             </th>
                                                             <th class="cart_img2">
                                                                 <p class=cart_img><a href=""><img
@@ -149,15 +149,19 @@
                                                         </tr>
                                                     </table>
 
-                                                    <p class="explanation">ペットボトル（500ml）</p>
-                                                    <h3 class="sakuhinnmei">「ひまわりのペットボトル」</h3>
+                                                    <p class="explanation"><%- baseCategoryList[i].name_subcategory %></p>
+                                                    <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
                                                     <div class="explanation2"><a href="">
-                                                            <font size="2">#ペットボトル　＃やまおねがい　#やまおねがい</font>
+                                                            <font size="2">
+                                                                <% const hashTag = JSON.parse(workList[i].hashtag) %> <% for(let j=0; j < hashTag.length; j++){ %>
+                                                                    <%- hashTag[j] %>
+                                                                    <% } %>
+                                                            </font>
                                                         </a>
                                     </p>
                     </div>
                     <br>
-                    <p class="explanation3">ひまわりが大好きなので作りました。</p>
+                    <p class="explanation3"><%- baseCategoryList[i].introduction %></p>
                     <div class="okiniiri">
                         <p class="star2_1"><a href="">
                                 <font size="15" color="orange">☆</font>
@@ -179,22 +183,12 @@
                     <% } %>
                         <% } %>
 
-
-
-                            <!-- 作品詳細（自分）👇 -->
-
-
-                            <!-- 作品詳細（自分）ここまで👆 -->
-
-
-
                 <noscript>
                     <p>JavaScriptを有効にしてください。</p>
                 </noscript>
             </article>
             <br>
 
-            <!-- ページネーション やまページネーションだるそう。。。-->
             <div class="pagination">
                 <ul class="example">
                     <% if (currentPage !=1) { %>

@@ -35,11 +35,11 @@ function closePopUp(element: any) {
  * @return {void}
  */
 function showPopUp(id: string) {
+  console.log(id);
   const target= document.getElementById(id);
-  const popup = document.getElementById(id);
-  if (!popup) return;
-  popup.addEventListener('click', function () {
-    // is-showを有効に
+  console.log(target);
     target!.classList.add('is-show');
-  });
+    closePopUp(blackBg);
+    closePopUp(closeBtn);
+    closePopUp(showBtn);
 }
