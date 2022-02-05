@@ -317,6 +317,7 @@ router.get("/my_work", function (request, response) {
                     currentPage: currentPage,
                     userInfo: userInfo,
                     currentPageDescription: currentPageDescription,
+                    isMine: true
                   });
                   resolve("ok");
                   return;
@@ -339,6 +340,19 @@ router.get("/creator_work", function (request, response) {
       idx = (Number(request.query.page) - 1) * maxViewOnPage;
       currentPage = Number(request.query.page);
     }
+    // request.query.userIdとrequest.user.idが一致する場合isMineにtrueを設定
+    const isMine = () => {
+      if (request.user) {
+        if (request.query.userId == request.user.id) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+    console.log("isMine:" + isMine);
     // request.query.userIdに対応するユーザーを取得
     knex("user")
       .select("id", "name", "icon_path", "self_introduction")
@@ -399,6 +413,7 @@ router.get("/creator_work", function (request, response) {
                         currentPage: currentPage,
                         userInfo: userInfo,
                         currentPageDescription: currentPageDescription,
+                        isMine: isMine(),
                       });
                       resolve("ok");
                       return;
