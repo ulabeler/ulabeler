@@ -5,13 +5,12 @@ const TargetBlock = document.querySelector('.popup');
 const blackBg = document.getElementById('js-black-bg');
 const closeBtn = document.getElementById('js-close-btn');
 const showBtn = document.getElementById('js-show-popup');
-
 // ボタンが押されたら、ポップアップを表示する
 /**
  * @return {void}
  */
 function popupLogin() {
-  TargetBlock.classList.add('is-show');
+  TargetBlock!.classList.add('is-show');
   closePopUp(blackBg);
   closePopUp(closeBtn);
   closePopUp(showBtn);
@@ -22,10 +21,10 @@ function popupLogin() {
  * @param {*} element
  * @return {void}
  */
-function closePopUp(element) {
+function closePopUp(element: any) {
   if (!element) return;
   element.addEventListener('click', function() {
     // is-showを無効に
-    TargetBlock.classList.remove('is-show');
+    TargetBlock!.classList.remove('is-show');
   });
 }

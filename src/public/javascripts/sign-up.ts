@@ -6,29 +6,31 @@
 // - [x] 重複判定用API準備
 // - [x] ユーザー名にMeCab使った形態素解析で不適切な文字をはじくAPIとかどうですかね
 // - [ ]  エラーメッセージ関係→登録失敗時のエラーページどうする
-
 // 入力値関係の変数
-const InputUserName = document.getElementById('input_username'); // <%# 重複可能なユーザー名 %>
-const InputUserId = document.getElementById('input_userID'); // <%# 重複不可なユーザーID %>
-const InputEmail = document.getElementById('input_email'); // <%# メールアドレス %>
-const InputEmailConfirm = document.getElementById('input_email_confirm'); // <%# メールアドレス(確認用) %>
-const InputPassword = document.getElementById('input_password'); // <%# パスワード %>
-const InputPasswordConfirm = document.getElementById('input_password_confirm'); // <%# パスワード(確認用) %>
+const InputUserName = <HTMLInputElement>document.getElementById('input_username'); // <%# 重複可能なユーザー名 %>
+const InputUserId = <HTMLInputElement>document.getElementById('input_userID'); // <%# 重複不可なユーザーID %>
+const InputEmail = <HTMLInputElement>document.getElementById('input_email'); // <%# メールアドレス %>
+const InputEmailConfirm = <HTMLInputElement>document.getElementById('input_email_confirm'); // <%# メールアドレス(確認用) %>
+const InputPassword = <HTMLInputElement>document.getElementById('input_password'); // <%# パスワード %>
+const InputPasswordConfirm = <HTMLInputElement>document.getElementById('input_password_confirm'); // <%# パスワード(確認用) %>
 
 // ボタン関係の定義
-const send = document.getElementById('send');
+// @ts-ignore
+const send = <HTMLButtonElement>document.getElementById('send');
 let DisableCounterUsername = 0;
 let DisableCounterUserId = 0;
 let DisableCounterEmail = 0;
+// @ts-ignore
 let DisableCounterPassword = 0;
 let ConfirmRejectCounterEmail = 0;
+// @ts-ignore
 let ConfirmRejectCounterPassword = 0;
 
 // エラー関係の表示用変数
-const ErrorUsername = document.getElementById('error_username'); // <%# ユーザー名エラー %>
-const ErrorUserId = document.getElementById('error_userID'); // <%# ユーザーIDエラー %>
-const ErrorEmail = document.getElementById('error_email'); // <%# メールアドレスエラー %>
-const ErrorPassword = document.getElementById('error_password'); // <%# パスワードエラー %>
+const ErrorUsername = <HTMLInputElement>document.getElementById('error_username'); // <%# ユーザー名エラー %>
+const ErrorUserId = <HTMLInputElement>document.getElementById('error_userID'); // <%# ユーザーIDエラー %>
+const ErrorEmail = <HTMLInputElement>document.getElementById('error_email'); // <%# メールアドレスエラー %>
+const ErrorPassword = <HTMLInputElement>document.getElementById('error_password'); // <%# パスワードエラー %>
 
 // <%#input_usernameは、15文字以内%>
 // <%#入力値を取得して、入力値を検証する%>
@@ -47,10 +49,11 @@ InputUserName.addEventListener('keyup', function() {
 });
 InputUserName.addEventListener('focusout', function() {
   if (DisableCounterUsername == 0 && InputUserName.value.length > 0) {
+    // @ts-ignore
     axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
       text: InputUserName.value,
     })
-        .then(function(response) {
+        .then(function(response: { data: boolean; }) {
           if (response.data == true) {
             ErrorUsername.innerText = '不適切なワードが含まれています。';
             DisableCounterUsername++;
@@ -63,7 +66,7 @@ InputUserName.addEventListener('focusout', function() {
             }
           }
         })
-        .catch(function(error) {
+        .catch(function(error: any) {
           alert(error); // TODO: エラー時の遷移先
         });
   }
@@ -96,10 +99,11 @@ InputUserId.addEventListener('keyup', function() {
 });
 InputUserId.addEventListener('focusout', function() {
   if (DisableCounterUserId == 0) {
+    // @ts-ignore
     axios.post('/api/user/check_userID', {
       userID: InputUserId.value,
     })
-        .then(function(response) {
+        .then(function(response: { data: boolean; }) {
           if (response.data == true) {
             ErrorUserId.innerText = '登録済みのユーザーIDです';
             DisableCounterUserId++;
@@ -112,7 +116,7 @@ InputUserId.addEventListener('focusout', function() {
             }
           }
         })
-        .catch(function(error) {
+        .catch(function(error: any) {
           console.log(error);
         });
   }
@@ -121,14 +125,16 @@ InputUserId.addEventListener('focusout', function() {
 // <%#InputEmailは、RFC違反メールアドレスは禁止%>
 // <%#入力値を取得して、入力値を検証する%>
 InputEmail.addEventListener('keyup', function() {
+  // @ts-ignore
   if (!mailCheck(InputEmail.value)) {
     ErrorEmail.innerText = '正しい形式で入力してください。';
     DisableCounterEmail++;
   } else {
+    // @ts-ignore
     axios.post('/api/user/check_email', {
       email: InputEmail.value,
     })
-        .then(function(response) {
+        .then(function(response: { data: any; }) {
           console.log(response);
           if (response.data) {
             DisableCounterEmail++;
@@ -203,6 +209,7 @@ InputPassword.addEventListener('keyup', function() {
 /**
  * @return {boolean} 入力した2つのパスワードが合致していればtrueを返します。
  */
+// @ts-ignore
 function checkPasswordConfirm() {
   if (InputPassword.value !== InputPasswordConfirm.value) {
     ErrorPassword.innerText = 'パスワードが一致しません';
@@ -241,13 +248,14 @@ send.addEventListener('click', function() {
   const ValidateEmail = checkEmailConfirm();
   const ValidatePassword = checkPasswordConfirm();
   if (ValidateEmail && ValidatePassword) {
+    // @ts-ignore
     axios.post('/api/user/sign_up', {
       username: InputUserName.value,
       userID: InputUserId.value,
       email: InputEmail.value,
       password: InputPassword.value,
     })
-        .then(function(response) {
+        .then(function(response: { status: number; }) {
         // 201が返ってきた場合は、ユーザー登録が成功したということ
         // それ以外は、エラーが発生したということ
           if (response.status === 201) {
@@ -257,7 +265,7 @@ send.addEventListener('click', function() {
             alert('ユーザー登録に失敗しました');
           }
         })
-        .catch(function(error) {
+        .catch(function(error: any) {
           alert(error); // TODO: エラー時の遷移先
         });
   }

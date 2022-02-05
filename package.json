@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./built/bin/www",
-    "build": "npm install && node ./scripts/build.js && npx tsc",
-    "test": "npm install && node ./scripts/build.js && npx tsc && echo 'サーバーを起動しました。' && node ./built/bin/www",
+    "build": "npm install && npx tsc && node ./scripts/build.js",
+    "test": "npm install && npx tsc && node ./scripts/build.js && echo 'サーバーを起動しました。' && node ./built/bin/www",
     "lint": "eslint --ext .ts ./src --fix"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "express-session": "^1.17.2",
     "fs": "^0.0.1-security",
     "fs-extra": "^10.0.0",
+    "glob": "^7.2.0",
     "html-webpack-plugin": "^5.5.0",
     "http-errors": "~1.6.3",
     "javascript-obfuscator": "^3.1.0",

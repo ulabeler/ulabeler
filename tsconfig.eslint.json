@@ -10,7 +10,9 @@
         "src/bin/*.ts",
         "src/*.ts",
         "src/app.ts",
-        "scripts/*.js"
+        "scripts/*.js",
+        "src/public/javascripts/*.ts",
+        "src/public/javascripts/*.js",
     ],
     "exclude": [
         "node_modules",
@@ -18,6 +20,5 @@
         "素材/*",
         "built/*",
         "assets/alpha/routes/alpha/*/*",
-        "src/public/javascripts"
     ]
 }

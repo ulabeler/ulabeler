@@ -1,7 +1,9 @@
 //メールアドレスのバリデーション
-const input_email = document.getElementById('mailaddress');
-const error_message = document.getElementById('error_message');
-const send = document.getElementById('send');
+const input_email = <HTMLInputElement>document.getElementById('mailaddress');
+const error_message = <HTMLInputElement>document.getElementById('error_message');
+// @ts-ignore
+const send = <HTMLButtonElement>document.getElementById('send')!;
+// @ts-ignore
 let disable_counter_email = 0;
 
 input_email.addEventListener('keyup', function () {
@@ -28,16 +30,17 @@ setInterval(function () {
 
 //送信ボタンを押したら、axiosで"/api/user/reset_password"にpostする"
 send.addEventListener('click', function () {
+    // @ts-ignore
     axios.post('/api/user/create/temp_password', {
         mail: input_email.value
-    }).then(function (response) {
+    }).then(function (response: { status: number; }) {
         console.log(response);
         if (response.status == 201) {
             window.location.href = '/password_forgot/sent';
         } else {
             error_message.innerText = '入力されたメールアドレスは、登録されていません。';
         }
-    }).catch(function (error) {
+    }).catch(function (error: any) {
         console.log(error);
     });
 });

@@ -1,9 +1,10 @@
+// @ts-nocheck
 //変数定義
 const confirmationCode = document.querySelectorAll('input[type="tel"]');
 const isFirst = document.getElementById('isFirst');
 const isLast = document.getElementById('isLast');
 const sendButton = document.querySelector('#send');
-const error_message5 = document.querySelector('.error_message5');
+const error_message5 = document.querySelector('.error_message5')!;
 let rejectCount = 0;
 
 //イベント設定
@@ -35,12 +36,12 @@ for (let i = 0; i < confirmationCode.length; i++) {
             // }
             e.preventDefault();
         } else {
-            if (e.target.value.length > 0) {
+            if (e.target!.value.length > 0) {
                 confirmationCode[i].value = e.code.slice(5);
             }
         }
         if (confirmationCode[i] != isLast) {
-            if (e.target.value.length === 1) {
+            if (e.target!.value.length === 1) {
                 confirmationCode[i + 1].focus();
             }
         }
@@ -70,7 +71,7 @@ function changeEmailAttempt() {
     //axiosを利用して、サーバーにPOSTリクエストを送信
     axios.post('/api/user/modification_mailaddress_attempt', {
         confirmationAttemptCode: confirmationCodeArrayToStr
-    }).then(function (response) {
+    }).then(function (response: { status: number; data: string; }) {
         console.log(response);
         if (response.status == 201) {
             window.location.href = '/mail_address_modification/complete';
@@ -78,7 +79,7 @@ function changeEmailAttempt() {
             error_message5.innerHTML = response.data;
             return;
         }
-    }).catch(function (error) {
+    }).catch(function (error: any) {
         console.log(error);
     });
 }
