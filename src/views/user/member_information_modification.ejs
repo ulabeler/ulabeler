@@ -67,7 +67,7 @@
                                 <tr>
                                     <th></th>
                                     <th>
-                                        <p class="error_message6" id="errorNewName">※15文字以内で入力してください。</p>
+                                        <p class="error_message6" id="errorNewName"></p>
                                         <!-- やま jsエラーメッセージ -->
                                     </th>
                                 </tr>
@@ -86,7 +86,7 @@
                                 <tr>
                                     <th></th>
                                     <th>
-                                        <p class="error_message6" id="errorNewSelfInt">※150文字以内で入力してください。</p>
+                                        <p class="error_message6" id="errorNewSelfInt"></p>
                                         <!-- やま jsエラーメッセージ -->
                                     </th>
                                 </tr>
@@ -100,7 +100,7 @@
                                         <th><button type="button" class="white_button2"
                                                 onclick="location.href=''">戻る</button></th>
                                         <th style="width: 30%;"></th>
-                                        <th><button type="submit" class="black_button2" form=="hoge"
+                                        <th><button type="button" class="black_button2" id="send"
                                                 onclick="sendNewInformation()">決定</button>
                                         </th>
                                         <th style="width: 20%;"></th>
@@ -136,6 +136,25 @@
         const errorNewName = document.getElementById('errorNewName');
         const errorNewSelfIntroduction = document.getElementById('errorNewSelfInt');
 
+        const send = document.getElementById('send');
+
+        let DisableCounterUsername = 0;
+        let DisableCounterSelfIntroduction = 0;
+
+        newName.addEventListener('keyup', function () {
+            if (newName.value.length > 15) {
+                errorNewName.innerText = '15文字以内で入力してください';
+                DisableCounterUsername++;
+            } else {
+                errorNewName.innerText = '';
+                if (newName.value.length == 0) {
+                    DisableCounterUsername++;
+                } else {
+                    DisableCounterUsername = 0;
+                }
+            }
+        });
+
         newName.addEventListener('focusout', function () {
             if (newName.value.length > 0) {
                 // @ts-ignore
@@ -144,10 +163,10 @@
                 })
                     .then(function (response) {
                         if (response.data == true) {
-                            ErrorUsername.innerText = '不適切なワードが含まれています。';
+                            errorNewName.innerText = '不適切なワードが含まれています。';
                             DisableCounterUsername++;
                         } else {
-                            ErrorUsername.innerText = '';
+                            errorNewName.innerText = '';
                             if (newName.value.length == 0) {
                                 DisableCounterUsername++;
                             } else {
@@ -160,6 +179,53 @@
                     });
             }
         });
+
+        newSelfIntroduction.addEventListener('focusout', function () {
+            if (newSelfIntroduction.value.length > 0) {
+                // @ts-ignore
+                axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
+                    text: newSelfIntroduction.value,
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            errorNewSelfIntroduction.innerText = '不適切なワードが含まれています。';
+                            DisableCounterSelfIntroduction++;
+                        } else {
+                            errorNewSelfIntroduction.innerText = '';
+                            if (newName.value.length == 0) {
+                                DisableCounterSelfIntroduction++;
+                            } else {
+                                DisableCounterSelfIntroduction = 0;
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        alert(error); // TODO: エラー時の遷移先
+                    });
+            }
+        });
+
+        newSelfIntroduction.addEventListener('keyup', function () {
+            if (newSelfIntroduction.value.length > 150) {
+                errorNewSelfIntroduction.innerText = '150文字以内で入力してください。';
+                DisableCounterSelfIntroduction++;
+            } else {
+                errorNewSelfIntroduction.innerText = '';
+                if (newSelfIntroduction.value.length == 0) {
+                    DisableCounterSelfIntroduction++;
+                } else {
+                    DisableCounterSelfIntroduction = 0;
+                }
+            }
+        });
+
+        setInterval(function () {
+            if (DisableCounterUsername == 0 && DisableCounterSelfIntroduction == 0) {
+                send.disabled = false;
+            } else {
+                send.disabled = true;
+            }
+        }, 500);
 
         // 指定エンドポイントにPOSTリクエスト送信
         function sendNewInformation() {
