@@ -109,7 +109,7 @@ router.post("/sign_up", function (request, response) {
   }
 });
 
-router.post(
+router.post( //ログインはこれだけ
   "/sign_in",
   passport.authenticate("local"),
   function (request, response) {
@@ -494,7 +494,7 @@ router.post("/password/changeAttempt", function (request, response) {
               response.status(200).send("現在のパスワードが間違っています。");
             }
           } else {
-            response.status(200).send("システムエラー/Code:PW-EX1");
+            response.status(200).send("システムエラー/Code:PW-EX1"); // ログインユーザーidで引いてるのにユーザーが存在しないってことある？？
           }
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
