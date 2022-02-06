@@ -97,9 +97,18 @@
                         </p>
                     </div>
                 </div>
-                <p class="button6"><button type="submit" class="black_button4"
+                <% if (isMine) { %>
+                    <p class="button6"><button type="submit" class="black_button4"
                         onclick="location.href=''">編集</button></p>
-                <br>
+                        <% } else { %>
+                            <br>
+                    <a href="">
+                        <p class="tuuhou">
+                            <font size="2" color="red">通報する</font>
+                        </p>
+                    </a>
+                    <% } %>
+                    <br>
                 </form>
                 </section>
             </div>
