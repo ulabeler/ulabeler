@@ -52,7 +52,7 @@
                                 <%= create_at.getFullYear() + "/" + ('00' +
                                     (create_at.getMonth()+1)).slice(-2) + "/" + ('00' +
                                     create_at.getDate()).slice(-2) %>
-                                    <div class="image_wrapper"><img src="images/color.jpeg" alt="" />
+                                    <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>" alt="" />
                                     </div>
                                     <form action="select_color.html" method="post">
 
@@ -63,7 +63,7 @@
                                                 </th>
                                                 <th class="cart_img2">
                                                     <p class=cart_img><a href=""><img
-                                                                src="<%= workList[i].thumbnail_path %>"
+                                                                src="/images/system/cart-5.jpg"
                                                                 alt="商品画像"></a>
                                                 </th>
                                             </tr>

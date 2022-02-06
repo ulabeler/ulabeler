@@ -352,7 +352,7 @@ router.get("/creator_work", function (request, response) {
         return false;
       }
     }
-    console.log("isMine:" + isMine);
+    // console.log("isMine:" + isMine);
     // request.query.userIdに対応するユーザーを取得
     knex("user")
       .select("id", "name", "icon_path", "self_introduction")

@@ -1,0 +1,19 @@
+<div class="pagination">
+    <ul class="example">
+        <% if (currentPage !=1) { %>
+            <li><a
+                    href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage - 1 %>&userId=<%= userInfo.id %>">前へ</a>
+            </li>
+            <% } %>
+                <% for( let index=1; index <=maxPage; index++ ) { %>
+                    <% if (index==currentPage) { %>
+                        <li class="pagination_nau"><%- currentPage %></li>
+                        <% } else { %>
+                            <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- index %>&userId=<%= userInfo.id %>"><%= index %></a></li>
+                            <% } %>
+                                <% } %>
+                                    <% if (currentPage !=maxPage) { %>
+                                        <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage + 1 %>&userId=<%= userInfo.id %>">次へ</a></li>
+                                        <% } %>
+    </ul>
+</div>
