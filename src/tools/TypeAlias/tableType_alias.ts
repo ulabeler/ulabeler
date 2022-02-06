@@ -123,21 +123,7 @@ export type stamp_settingsTable = {
   unit_price: number;
 };
 
-export type workTable = {
-  id: number;
-  created_by_user_id: string;
-  base_category_id: number;
-  name: string;
-  work_tex_path: string;
-  thumbnail_path: string;
-  flag_public: boolean;
-  unit_price: number;
-  hashtag: JSON | null;
-  introduction: string | null;
-  num_of_images: number;
-  create_at: Date;
-  // ext_name_subcategory: null | string;
-};
+4
 
 export type inquiryTable = {
   id: number;
