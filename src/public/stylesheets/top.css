@@ -2232,3 +2232,52 @@ th {
     width: 110px;/* ボタンの長さ */
 }
 
+/*            通報画面                  */
+
+.teport_box{
+    width: 80%;
+    max-width: 620px;
+    margin: 100px auto;
+    border-radius: 10px;    /*枠の丸み*/
+}
+
+.teport_text{
+    text-align: center;
+    margin-top: 30px;
+    /* background-color: #9efb07; */
+}
+
+.teport_subtext{
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.teporttext_box_area{
+    text-align: center;
+}
+
+.teporttext_box_area input[type=text]{
+    width: 60%;
+    height: 160px;
+    border-radius: 10px;    /*枠の丸み*/
+}
+
+.teporttext_box{
+    width: 60%;
+    height: 160px;
+    padding: 10px;
+    vertical-align: top; /* アスタリスクを上に持ってくる */ 
+    border-radius: 10px;    /*枠の丸み*/
+}
+
+.teport_error{
+    width: 60%;
+    margin: -10px auto;
+	text-align: left;
+    /* background-color: #9efb07; */
+}
+
+.teport_error p{
+    font-size: 14px;
+    color: #fd0000;
+}
