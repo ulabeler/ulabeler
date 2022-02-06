@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "incremental": false,
-    // "tsBuildInfoFile": "./.tsbuildinfo",
     "target": "es2021",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -9,24 +8,16 @@
     "rootDirs": ["./src", "src/tools/TypeAlias", "./src/routes"],
     "typeRoots": ["src/@types", "node_modules/@types"],
     "baseUrl": "./src",
-    "outDir": "built",
+    "outDir": "./built",
     "declaration": false,
     "removeComments": true,
     "noEmitOnError": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true /* Enable all strict type-checking options. */,
-    // "noImplicitThis": true,                           /* Enable error reporting when `this` is given the type `any`. */
-    // "useUnknownInCatchVariables": true,               /* Type catch clause variables as 'unknown' instead of 'any'. */
-    "noUnusedLocals": true /* Enable error reporting when a local variables aren't read. */,
-    "noUnusedParameters": false /* Raise an error when a function parameter isn't read */,
-    // "exactOptionalPropertyTypes": true,               /* Interpret optional property types as written, rather than adding 'undefined'. */
-    "noFallthroughCasesInSwitch": true /* Enable error reporting for fallthrough cases in switch statements. */,
-    // "noUncheckedIndexedAccess": true,                 /* Include 'undefined' in index signature results */
-    // "noImplicitOverride": true,                       /* Ensure overriding members in derived classes are marked with an override modifier. */
-    // "noPropertyAccessFromIndexSignature": true,       /* Enforces using indexed accessors for keys declared using an indexed type */
-    // "allowUnusedLabels": true,                        /* Disable error reporting for unused labels. */
-    // "allowUnreachableCode": true,                     /* Disable error reporting for unreachable code. */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "noImplicitReturns": true,
     "resolveJsonModule": true,
@@ -47,7 +38,6 @@
     "src/app.ts",
     "src/public/javascripts/**/*.ts"
 , "src/public/javascripts/sign-up.js"  ],
-  /*除外設定*/
   "exclude": [
     "node_modules",
     "素材/*",

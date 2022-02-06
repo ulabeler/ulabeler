@@ -28,12 +28,12 @@ export type password_resetTable = {
 
 export type favorited_workTable = {
   favorite_from: string;
-  favorite_to: string;
+  favorite_to: number;
   favorited_at: string;
 };
 
 export type favorited_work_numberTable = {
-  favorited_to_id: string;
+  favorited_to_id: number;
   number: number; // いいね数
 };
 

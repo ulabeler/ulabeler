@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fse = require("fs-extra");
 const glob = require('glob');
+const distDir = require("../tsconfig.json").compilerOptions.outDir;
 
-const distDir = "./built";
+// const distDir = "./built";
 cpDir(distDir);
 
 // srcにある、コンパイルしないタイプのファイルをbuiltにコピーする
@@ -21,6 +22,9 @@ function cpDir(distDir) {
   );
 
   glob('./src/public/javascripts/**/*.js', (err, files) => {
+    if (files.length === 0) {
+      return;
+    }
     console.log("Things that are not TypeScript")
     console.log(files);
     files.forEach(file => {

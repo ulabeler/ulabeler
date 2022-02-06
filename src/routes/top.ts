@@ -18,10 +18,12 @@ const host =
 
 /* GET home page. */
 router.get("/", function (request, response) {
+  const userInfo = request.user ? request.user : null;
   response.render("top", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
+    userInfo: userInfo,
   });
 });
 
@@ -135,6 +137,7 @@ router.get("/mail_address_modification", function (request, response) {
       `${Boolean(request.user)}`
     ],
     mailaddress: mailaddress,
+    userInfo: request.user,
   });
 });
 
@@ -151,6 +154,7 @@ router.get(
           `${Boolean(request.user)}`
         ],
         message: "入力されたメースアドレスに<br>確認コードを送信しました。",
+        userInfo: request.user,
       });
     }
   }
@@ -174,6 +178,7 @@ router.get("/mail_address_modification/complete", function (request, response) {
           `${Boolean(request.user)}`
         ],
         message: "メールアドレスが変更されました。",
+        userInfo: request.user,
       });
     }
   } else {
@@ -211,6 +216,7 @@ router.get(
             `${Boolean(request.user)}`
           ],
           message: "URLが正しくありません。",
+          userInfo: request.user,
         });
         return;
       } else {
@@ -218,6 +224,7 @@ router.get(
           side_menu: JSON.parse(JSON.stringify(sideMenuList))[
             `${Boolean(request.user)}`
           ],
+          userInfo: request.user,
         });
       }
     }
@@ -237,6 +244,7 @@ router.get("/reset_password/complete", function (request, response) {
           `${Boolean(request.user)}`
         ],
         message: "パスワードが変更されました。",
+        userInfo: request.user,
       });
       return;
     }
@@ -285,7 +293,8 @@ router.get("/my_work", function (request, response) {
             response.render("list/my_list_first", {
               side_menu: JSON.parse(JSON.stringify(sideMenuList))[
                 `${Boolean(request.user)}`
-              ]
+              ],
+              userInfo: userInfo,
             });
             resolve("NoWorks");
             return;
@@ -317,7 +326,7 @@ router.get("/my_work", function (request, response) {
                     currentPage: currentPage,
                     userInfo: userInfo,
                     currentPageDescription: currentPageDescription,
-                    isMine: true
+                    isMine: true,
                   });
                   resolve("ok");
                   return;
@@ -332,8 +341,8 @@ router.get("/my_work", function (request, response) {
   }
 });
 
-router.get("/creator_work", function (request, response) {
-  if (request.query.userId) {
+router.get("/creator_work/:userId", function (request, response) {
+  if (request.params.userId) {
     let currentPage = 1; // 現在のページ番号
     let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
     if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
@@ -343,7 +352,7 @@ router.get("/creator_work", function (request, response) {
     // request.query.userIdとrequest.user.idが一致する場合isMineにtrueを設定
     const isMine = () => {
       if (request.user) {
-        if (request.query.userId == request.user.id) {
+        if (request.params.userId == request.user.id) {
           return true;
         } else {
           return false;
@@ -356,14 +365,15 @@ router.get("/creator_work", function (request, response) {
     // request.query.userIdに対応するユーザーを取得
     knex("user")
       .select("id", "name", "icon_path", "self_introduction")
-      .where("id", request.query.userId)
+      .where("id", request.params.userId)
       .then(async function (userList: userTable[]) {
         if (userList.length === 0) {
           response.render('components/message',{
             side_menu: JSON.parse(JSON.stringify(sideMenuList))[
               `${Boolean(request.user)}`
             ],
-            message: "ユーザーが見つかりませんでした。"
+            message: "ユーザーが見つかりませんでした。",
+            userInfo: request.user,
           });
           return;
         }
@@ -386,7 +396,8 @@ router.get("/creator_work", function (request, response) {
                 response.render("list/my_list_first", {
                   side_menu: JSON.parse(JSON.stringify(sideMenuList))[
                     `${Boolean(request.user)}`
-                  ]
+                  ],
+                  userInfo: request.user,
                 });
                 resolve("NoWorks");
                 return;
@@ -430,22 +441,43 @@ router.get("/creator_work", function (request, response) {
   }
 });
 
+router.get("/:userid/settings/profile", (request, response) => {
+  if (request.user) {
+    if (request.params.userid === request.user.id) {
+      response.render("user/member_information_modification", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        userInfo: request.user,
+      });
+    } else {
+      response.redirect("/invalidAccess");
+    }
+  } else {
+    response.redirect("/invalidAccess");
+  }
+});
+
 router.get("/invalidAccess", function (request, response) {
+  const userInfo = request.user ? request.user : null;
   response.render("./components/message", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
     message: "不正な画面遷移です。",
+    userInfo: userInfo,
   });
 });
 
 router.get("/notAvailable", function (request, response) {
+  const userInfo = request.user ? request.user : null;
   response.render("./components/message", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
     message:
       "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
+    userInfo: userInfo,
   });
 });
 
