@@ -2154,3 +2154,21 @@ th {
 	padding: 0;
 	opacity: 0.5;
 }
+
+.visa{
+	text-align: left;
+}
+
+.select_payment{
+	text-align: left;
+}
+
+/* 支払方法選択 */
+.choise_card img{
+	width: 60%;
+
+}
+.check4{
+	padding-left: 60%;
+
+}
