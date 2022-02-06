@@ -2221,3 +2221,14 @@ th {
 .double_button5 button:first-of-type{
     margin-right: 20%;
 }
+
+
+.red_button2{
+    font-size: 13px;
+    border-radius: 6px;/* ボタンの角丸 */
+    background-color: rgb(255, 90, 90);/* ボタンの色 */
+    color:#fff;/* ボタンの文字色 */
+    height: 32px;/*ボタンの細さ*/
+    width: 110px;/* ボタンの長さ */
+}
+
