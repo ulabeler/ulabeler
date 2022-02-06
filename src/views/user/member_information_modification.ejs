@@ -59,21 +59,26 @@
 
                                 <tr>
                                     <th>ユーザー名 <font color="red">*</font>：</th>
-                                    <th><input type=”text” id="newName" class="tekisuto" style=" height: 30px; width: 400px;"
-                                            name=”name” placeholder="" value="<%= userInfo.name %>"></th>
+                                    <th><input type=”text” id="newName" class="tekisuto"
+                                            style=" height: 30px; width: 400px;" name=”name” placeholder=""
+                                            value="<%= userInfo.name %>"></th>
 
                                 </tr>
                                 <tr>
                                     <th></th>
                                     <th>
-                                        <p class="error_message6" id="errorNewName">※15文字以内で入力してください。</p><!-- やま jsエラーメッセージ -->
+                                        <p class="error_message6" id="errorNewName">※15文字以内で入力してください。</p>
+                                        <!-- やま jsエラーメッセージ -->
                                     </th>
                                 </tr>
 
                                 <tr>
                                     <th>自己紹介文 <font color="red">*</font>：</th>
                                     <th>
-                                        <font color="#85858"><textarea class="tekisuto3" name="example2" cols="47" rows="8" wrap="soft" placeholder="150文字以内で、あなたについて教えてください！" id="newSelfIntroduction"><%- userInfo.self_introduction %></textarea></font>
+                                        <font color="#85858"><textarea class="tekisuto3" name="example2" cols="47"
+                                                rows="8" wrap="soft" placeholder="150文字以内で、あなたについて教えてください！"
+                                                id="newSelfIntroduction"><%- userInfo.self_introduction %></textarea>
+                                        </font>
                                         </p>
                                     </th><!-- インデント気持ち悪いけど変えないで… placeholdeきかない…-->
                                 </tr>
@@ -81,7 +86,8 @@
                                 <tr>
                                     <th></th>
                                     <th>
-                                        <p class="error_message6" id="errorNewSelfInt">※150文字以内で入力してください。</p><!-- やま jsエラーメッセージ -->
+                                        <p class="error_message6" id="errorNewSelfInt">※150文字以内で入力してください。</p>
+                                        <!-- やま jsエラーメッセージ -->
                                     </th>
                                 </tr>
 
@@ -95,7 +101,7 @@
                                                 onclick="location.href=''">戻る</button></th>
                                         <th style="width: 30%;"></th>
                                         <th><button type="submit" class="black_button2" form=="hoge"
-                                                onclick="location.href='work_detail_setting_confirmation.html'">決定</button>
+                                                onclick="sendNewInformation()">決定</button>
                                         </th>
                                         <th style="width: 20%;"></th>
                                     </tr>
@@ -119,7 +125,7 @@
             <br>
             <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
             <br>
-            <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
+            <a href="#" id="pagetop"><i class="up"></i>↑</a>
     </body>
 
     <script>
@@ -129,6 +135,37 @@
 
         const errorNewName = document.getElementById('errorNewName');
         const errorNewSelfIntroduction = document.getElementById('errorNewSelfInt');
+
+        newName.addEventListener('focusout', function () {
+            if (newName.value.length > 0) {
+                // @ts-ignore
+                axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
+                    text: newName.value,
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            ErrorUsername.innerText = '不適切なワードが含まれています。';
+                            DisableCounterUsername++;
+                        } else {
+                            ErrorUsername.innerText = '';
+                            if (newName.value.length == 0) {
+                                DisableCounterUsername++;
+                            } else {
+                                DisableCounterUsername = 0;
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        alert(error); // TODO: エラー時の遷移先
+                    });
+            }
+        });
+
+        // 指定エンドポイントにPOSTリクエスト送信
+        function sendNewInformation() {
+            console.log(newName.value);
+            console.log(newSelfIntroduction.value);
+        }
     </script>
 
 </html>
