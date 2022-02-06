@@ -55,7 +55,7 @@ app.use("/", indexRouter);
 app.use("/payment", paymentRouter);
 app.use("/payment/paypay", PayPayRouter);
 app.use("/api/user", userAPIRouter);
-app.use("/api/related", workAPIRouter);
+app.use("/api/workrelated", workAPIRouter);
 
 // catch 404 and forward to error handler
 app.use(function (request, response) {
