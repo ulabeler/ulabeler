@@ -61,12 +61,12 @@
                             </div>
                             <br>
                             <div class="teport_error">
-                                <p id="descriptionErrorMessage" class="teport_error_message">※200文字以内で入力してください。</p><!-- やま jsエラーメッセージ -->
+                                <p id="descriptionErrorMessage" class="teport_error_message"></p><!-- やま jsエラーメッセージ -->
                             </div>
                         </form>
 
                         <div class="double_button">
-                            <button type="button" class="white_button" onclick="showIsSelected()">通報する</button>
+                            <button type="button" class="white_button" onclick="showIsSelected()" id="send">通報する</button>
                             <button type="button" class="red_button2" onclick="location.href=''">戻る</button>
                             <!-- 購入確認画面へ -->
 
@@ -96,7 +96,11 @@
         const description = document.getElementById('description');
         const descriptionErrorMessage = document.getElementById('descriptionErrorMessage');
         let len = radio.length;
+        let DisableCounterDescription = 0;
+        let tooMany = false;
+        const send = document.getElementById('send');
         radio[0].checked = true;
+
         // 選択されたラジオボタンのvalue値を取得
         function showIsSelected() {
             var value = '';
@@ -119,14 +123,18 @@
                     .then(function (response) {
                         if (response.data == true) {
                             descriptionErrorMessage.innerText = '不適切なワードが含まれています。';
-                            // DisableCounterUsername++;
+                            DisableCounterDescription++;
                         } else {
+                            if (tooMany) {
+                                return;
+                            }else{
                             descriptionErrorMessage.innerText = '';
                             if (description.value.length == 0) {
-                                // DisableCounterUsername++;
+                                DisableCounterDescription++;
                             } else {
-                                // DisableCounterUsername = 0;
+                                DisableCounterDescription = 0;
                             }
+                        }
                         }
                     })
                     .catch(function (error) {
@@ -134,6 +142,34 @@
                     });
             }
         });
+
+        description.addEventListener("keydown", () =>{
+            //150文字を超えた場合に警告
+            if(description.value.length > 150){
+                descriptionErrorMessage.innerText = '200文字以内で入力してください。';
+                tooMany = true;
+                DisableCounterDescription++;
+            }else{
+                descriptionErrorMessage.innerText = '';
+                if (description.value.length == 0) {
+                    DisableCounterDescription++;
+                    tooMany = false;
+                } else {
+                    DisableCounterDescription = 0;
+                    tooMany = false;
+                }
+            }
+        });
+
+        //0.2秒ごとに監視して、DisableCounterDescriptionが0以上なら送信ボタンを無効化
+        setInterval(() => {
+            if (DisableCounterDescription > 0) {
+                send.disabled = true;
+            } else {
+                send.disabled = false;
+            }
+        }, 200);
+
     </script>
 
 </html>
