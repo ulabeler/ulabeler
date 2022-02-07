@@ -11,6 +11,11 @@ const router = express.Router();
 // import passport from "passport";
 // import crypto from "crypto";
 
+const env = process.env.U_DB_ENVIRONMENT || "development";
+const host =
+    env === "development"
+        ? "http://localhost:3001"
+        : "https://ulabeler.na2na.website";
 
 // 無理無理無理無理無理無理無理無理無理無理後回し
 //作品に対するいいねの状態を操作するもの。
@@ -58,6 +63,8 @@ router.get("/:workId/edit", function (request, response) {
                             .where("id", work[0].base_category_id)
                             .then(function (base_category: base_categoryTable[]) {
                                 if (base_category.length > 0) {
+                                    // sessionにwork[0]を保存
+                                    request.session!.work = work[0];
                                     response.render("work/work_detail_setting", {
                                         baseCategory: base_category[0],
                                         work: work[0],
@@ -67,8 +74,47 @@ router.get("/:workId/edit", function (request, response) {
                                 }
                             }
                             )
+                    } else {
+                        response.render("components/message", {
+                            message: "作品が見つかりませんでした。",
+                            side_menu: JSON.parse(JSON.stringify(sideMenuList))[`${Boolean(request.user)}`],
+                            userInfo: request.user,
+                            });
                     }
                 })
+                .catch(function (error: any) {
+                    console.log(error);
+                }
+                )
+        }
+    }
+})
+
+router.post("/:workId/edit/confirm", function (request, response) {
+    if (!request.user) {
+        response.status(401).send("UnAuthorized");
+    } else {
+        // workIdのスペースを取り除く
+        const workId = request.params.workId.replace(/\s+/g, "");
+        console.log(`${host}/work/${workId}/edit`)
+        console.log(request.headers.referer)
+        if (request.headers.referer !== `${host}/work/${workId}/edit`) {
+            response.redirect("/invalidAccess");
+            return;
+        }else{
+            if (!request.body.workName && !request.body.workIntroduction && !request.body.isPublic) {
+                response.redirect("/invalidAccess");
+            }else{
+                // TODO : ハッシュタグ抽出
+                response.render("work/work_detail_setting_confirmation", {
+                    side_menu: JSON.parse(JSON.stringify(sideMenuList))[`${Boolean(request.user)}`],
+                    userInfo: request.user,
+                    work: request.session!.work,
+                    newName: request.body.workName,
+                    newIntroduction: request.body.workIntroduction,
+                    newIsPublic: request.body.isPublic,
+                });
+            }
         }
     }
 })

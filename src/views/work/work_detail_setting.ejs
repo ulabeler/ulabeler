@@ -98,7 +98,7 @@
 
                         <br>
                         <table class="setumeitable3" 　　>
-                            <tr>
+                            <tr><input type="hidden" id="workId" value="<%- work.id %> ">
                                 <th>作品名　　<font color="red">*</font>：</th>
                                 <th><input type=”text” class="tekisuto" style=" height: 30px; width: 400px;" name=”name”
                                         placeholder="20文字以内" value="<%- work.name %>" id="workName"></p>
@@ -137,8 +137,8 @@
                             <table class="button_table">
                                 <tr>
                                     <th style="width: 20%;"></th>
-                                    <th><button type="button" class="white_button2"
-                                            onclick="history.back()">戻る</button></th>
+                                    <th><button type="button" class="white_button2" onclick="history.back()">戻る</button>
+                                    </th>
                                     <th style="width: 30%;"></th>
                                     <th><button type="button" class="black_button2" id="send"
                                             onclick="update()">決定</button>
@@ -172,6 +172,7 @@
         const workIntroduction = document.getElementById('workIntroduction');
         const isPublic = document.getElementById('isPublic');
         const send = document.getElementById('send');
+        const workId = document.getElementById('workId').value;
 
         const errorWorkName = document.getElementById('errorWorkName');
         const errorWorkIntroduction = document.getElementById('errorWorkIntroduction');
@@ -180,34 +181,34 @@
         let errorCountWorkIntroduction = 0;
         let tooMany = false;
 
-        workName.addEventListener("keyup",()=>{
-            if(workName.value.length > 20){
+        workName.addEventListener("keyup", () => {
+            if (workName.value.length > 20) {
                 errorWorkName.innerHTML = "20文字以内で入力してください";
                 errorCountWorkName++;
-            }else if(workName.value.length == 0){
+            } else if (workName.value.length == 0) {
                 errorWorkName.innerHTML = "この項目は必須です。";
                 errorCountWorkName++;
-            }else{
+            } else {
                 errorWorkName.innerHTML = "";
                 errorCountWorkName = 0;
             }
         });
 
-        workIntroduction.addEventListener("keyup",()=>{
-            if(workIntroduction.value.length > 150){
+        workIntroduction.addEventListener("keyup", () => {
+            if (workIntroduction.value.length > 150) {
                 tooMany = true;
                 errorWorkIntroduction.innerHTML = "150文字以内で入力してください";
                 errorCountWorkIntroduction++;
-            }else if(workIntroduction.value.length == 0){
-                errorWorkIntroduction.innerHTML =  "20文字以内で入力してください";
+            } else if (workIntroduction.value.length == 0) {
+                errorWorkIntroduction.innerHTML = "20文字以内で入力してください";
                 errorCountWorkIntroduction++;
-            }else{
+            } else {
                 errorWorkIntroduction.innerHTML = "";
                 errorCountWorkIntroduction = 0;
             }
         });
 
-        workName.addEventListener("focusout", ()=>{
+        workName.addEventListener("focusout", () => {
             if (workName.value.length > 0) {
                 // @ts-ignore
                 axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
@@ -220,14 +221,14 @@
                         } else {
                             if (tooMany) {
                                 return;
-                            }else{
-                                errorWorkName.innerText = '';
-                            if (workName.value.length == 0) {
-                                errorCountWorkName++;
                             } else {
-                                errorCountWorkName = 0;
+                                errorWorkName.innerText = '';
+                                if (workName.value.length == 0) {
+                                    errorCountWorkName++;
+                                } else {
+                                    errorCountWorkName = 0;
+                                }
                             }
-                        }
                         }
                     })
                     .catch(function (error) {
@@ -236,7 +237,7 @@
             }
         });
 
-        workIntroduction.addEventListener("focusout", ()=>{
+        workIntroduction.addEventListener("focusout", () => {
             if (workIntroduction.value.length > 0) {
                 // @ts-ignore
                 axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
@@ -249,14 +250,14 @@
                         } else {
                             if (tooMany) {
                                 return;
-                            }else{
-                                errorWorkIntroduction.innerText = '';
-                            if (workIntroduction.value.length == 0) {
-                                errorCountWorkIntroduction++;
                             } else {
-                                errorCountWorkIntroduction = 0;
+                                errorWorkIntroduction.innerText = '';
+                                if (workIntroduction.value.length == 0) {
+                                    errorCountWorkIntroduction++;
+                                } else {
+                                    errorCountWorkIntroduction = 0;
+                                }
                             }
-                        }
                         }
                     })
                     .catch(function (error) {
@@ -266,18 +267,19 @@
         });
 
         //0.2秒ごとに監視して、errorCountWorkIntroductionとerrorCountWorkNameが0以上なら送信ボタンを無効化する
-        setInterval(()=>{
-            if(errorCountWorkName >= 1 || errorCountWorkIntroduction >= 1){
+        setInterval(() => {
+            if (errorCountWorkName >= 1 || errorCountWorkIntroduction >= 1) {
                 send.disabled = true;
-            }else{
+            } else {
                 send.disabled = false;
             }
-        },200);
+        }, 200);
 
         function update() {
             console.log(workName.value);
             console.log(workIntroduction.value);
             console.log(isPublic.checked);
+            console.log(workId);
             // 文字が入力されているかを確認
             if (workName.value.length == 0) {
                 errorWorkName.innerHTML = "この項目は必須です。";
@@ -289,8 +291,39 @@
                 errorCountWorkIntroduction++;
                 return
             }
-            // @ts-ignore
-            
+
+            if (isPublic.checked) {
+                isPublic.value = "checked";
+            } else {
+                isPublic.value = "unchecked";
+            }
+
+            // workName: workName.value,
+            // workIntroduction: workIntroduction.value,
+            // isPublic: isPublic.checked,
+            // これらを、/work/${workId}/edit/confirmへPOST
+            // formを新たに作って送信する
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/work/${workId}/edit/confirm`;
+            form.style.display = 'none';
+            const inputWorkName = document.createElement('input');
+            inputWorkName.type = 'hidden';
+            inputWorkName.name = 'workName';
+            inputWorkName.value = workName.value;
+            form.appendChild(inputWorkName);
+            const inputWorkIntroduction = document.createElement('input');
+            inputWorkIntroduction.type = 'hidden';
+            inputWorkIntroduction.name = 'workIntroduction';
+            inputWorkIntroduction.value = workIntroduction.value;
+            form.appendChild(inputWorkIntroduction);
+            const inputIsPublic = document.createElement('input');
+            inputIsPublic.type = 'hidden';
+            inputIsPublic.name = 'isPublic';
+            inputIsPublic.value = isPublic.value;
+            form.appendChild(inputIsPublic);
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 
