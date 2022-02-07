@@ -242,7 +242,7 @@ ENGINE = InnoDB;
 -- Table `ulabeler_dev`.`report`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`report` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT AUTO_INCREMENT,
   `reported_to_user_id` VARCHAR(15) NOT NULL,
   `reported_from_user_id` VARCHAR(15) NOT NULL,
   `category_id` TINYINT NOT NULL,
