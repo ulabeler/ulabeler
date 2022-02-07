@@ -294,6 +294,7 @@ router.get("/my_work", function (request, response) {
               side_menu: JSON.parse(JSON.stringify(sideMenuList))[
                 `${Boolean(request.user)}`
               ],
+              title: "マイ作品リスト",
               userInfo: userInfo,
             });
             resolve("NoWorks");
@@ -393,10 +394,11 @@ router.get("/creator_work/:userId", function (request, response) {
             const baseCategoryList: base_categoryTable[] = [];
             await new Promise((resolve) => {
               if (workList.length === 0) {
-                response.render("list/my_list_first", {
+                response.render("list/creator_work_first", {
                   side_menu: JSON.parse(JSON.stringify(sideMenuList))[
                     `${Boolean(request.user)}`
                   ],
+                  title: "作品一覧",
                   userInfo: request.user,
                 });
                 resolve("NoWorks");

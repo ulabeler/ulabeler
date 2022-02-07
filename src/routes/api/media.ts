@@ -90,17 +90,4 @@ router.post("/posticon", multer({dest: path.join(UpImgDirBase, "/icons"), limits
     }
 })
 
-router.post("/changeiconCLI", async function(request, response) {
-    const rawImageName = "ico_v2.jpg";
-    if (request.user){
-        const filename = uuidv4();
-        response.status(200).send(path.join(UpImgDirBase, filename));
-    }else{
-        // rawImageNameの拡張子を取得する
-        const ext = rawImageName.split('.').pop();
-        const filename = uuidv4();
-        response.status(200).send(path.join(UpImgDirBase, filename) + '.' + ext);
-    }
-})
-
 export default router;
