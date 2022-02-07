@@ -159,11 +159,11 @@ export type administratorTable = {
 };
 
 export type reportTable = {
-  id: number;
+  id: number | null;
   reported_to_user_id: string;
   reported_from_user_id: string;
   category_id: number;
-  reporterd_description: string;
+  reported_description: string;
   reported_at: Date;
 };
 

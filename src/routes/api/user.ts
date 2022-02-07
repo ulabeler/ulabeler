@@ -10,6 +10,7 @@ import {
   password_resetTable,
   // eslint-disable-next-line camelcase
   mail_confirmationTable,
+  reportTable,
 } from "../../tools/TypeAlias/tableType_alias";
 import sideMenuList from "../../tools/data/sidemenu.json";
 import { v4 as uuidv4 } from "uuid";
@@ -538,6 +539,51 @@ router.post("/modification_userinfo_attempt", function (request, response) {
     response.status(200).send("ログインしていません。"); // まあまず出ないはず
   }
 });
+
+router.post("/report/create", function (request, response) {
+  if(request.user){
+    if (!request.body.reportId && !request.body.reportDescription && !request.body.reportToWorkId ) {
+      response.status(400).send("Bad Request");
+    }else{
+      //request.body.reportToWorkIdに該当するworkを取得
+      knex("work")
+        .where("id", request.body.reportToWorkId)
+        .select("*")
+        .then(
+          (results: any) => {
+            if(results.length > 0){
+              //reportを作成
+              const report: reportTable = {
+                id: null,
+                reported_to_user_id: results[0].created_by_user_id,
+                reported_from_user_id: request.user!.id,
+                category_id: request.body.reportId,
+                reported_description: request.body.reportDescription,
+                reported_at: new Date(),
+              };
+              knex("report")
+                .insert(report)
+                .then(function () {
+                  response.status(201).send(true);
+                })
+                .catch(function (err: any) {
+                  console.log(err);
+                  response.status(500).send("Internal Server Error");
+                });
+            }else{
+              response.status(200).send("指定されたworkは存在しません。");
+            }
+          }
+        )
+        .catch(function (err: any) {
+          console.log(err);
+          response.status(500).send("Internal Server Error");
+        });
+    }
+  } else{
+    response.status(401).send("UnAuthorized");
+  }
+})
 
 // CLI専用
 // 該当idのユーザーを物理削除
