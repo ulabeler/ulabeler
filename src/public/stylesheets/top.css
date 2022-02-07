@@ -85,15 +85,13 @@ a:hover img {
 } */
 .box_wrapper {
 	
-	margin: 0 auto;
-	display: flex;
+	/* margin: 0 auto; */
+	/* display: flex; */
 	flex-wrap: wrap;
-	/* justify-content: center; */
+	justify-content: center;
 	display: -webkit-flex;
-    display: flex;
     -webkit-justify-content: space-around;
     justify-content: space-around;
-	
 	border-radius: 20px;
 
 }
@@ -102,14 +100,25 @@ a:hover img {
 	width: 20%;
 	margin: 20px;
 	/* position: relative; */
-	border: 1px solid #4e4e4e;
+	min-width: 250px;
 	border-radius: 20px;
 	/* margin: 0; */
 	padding: 1%;
 	box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .2); 
-	/* box-shadow: 15px 15px 0px 0 rgb(78, 78, 78); */
+	background-color: #ffffff;
+	border: none;
+	margin: o auto;
+	transition: all 0.6s ease 0s;
+}
 
-	/* padding-right: 5%; */
+.box_item:hover{
+	cursor: pointer;
+	transform: translateY(-15px);
+}
+
+.aitem1{
+	border: none;
+	background-color: #ffffff;
 }
 .box_item h3 {
 
@@ -133,7 +142,7 @@ a:hover img {
 	/* 素体選択、カラー選択画像 */
 	width: 100%;
 	border-radius: 20px;
-	border: 1px solid #4e4e4e;
+	
 }
 
 .image_wrapper1 img{
@@ -2280,4 +2289,19 @@ th {
 .teport_error p{
     font-size: 14px;
     color: #fd0000;
+}
+
+.error_message7{
+	text-align: left;
+	color: #fd0000;
+	line-height: 20px;
+	
+}
+.gyoukann{
+	line-height: 10px;
+}
+
+.setumeitable3{
+	margin: 0 auto;
+	line-height: 40px;
 }
