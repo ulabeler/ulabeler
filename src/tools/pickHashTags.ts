@@ -21,6 +21,14 @@ function pickHashTags(text:string){
             }
         }
     }
+
+    // hashTagの末尾にある"\r\n"を除去
+    for (let i = 0; i < hashTag.length; i++) {
+        if (hashTag[i].indexOf("\r\n") !== -1) {
+            hashTag[i] = hashTag[i].slice(0, hashTag[i].indexOf("\r\n"));
+        }
+    }
+
     //descriptionの先頭に、\r\nがあれば除去する
     if (text.startsWith("\r\n")) {
         text = text.slice(2);
@@ -28,6 +36,11 @@ function pickHashTags(text:string){
     // //descriptionの末尾に、\r\nがあれば除去する
     if (text.endsWith("\r\n")) {
         text = text.slice(0, text.length - 2);
+    }
+
+    // textの末尾に" "や"　"があれば、それも除去する
+    while (text.endsWith(" ") || text.endsWith("　")) {
+        text = text.slice(0, text.length - 1);
     }
 
     const result = {

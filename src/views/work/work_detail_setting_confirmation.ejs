@@ -97,12 +97,20 @@
                     </p>
                     <div class="image_wrapper"><img src="<%= work.thumbnail_path %>" alt="<%- newName %>" /></div>
                     <form action="select_color.html" method="post">
-
+                        <input type="hidden" id="workId" value="<%- work.id %>">
                         <p class="tannka">単価：<%- work.unit_price %> 円　</p>
-                        <p class="explanation">ペットボトル（500ml）</p>
-                        <h3 class="sakuhinnmei">「<%- newName %> 」</h3>
+                        <p class="explanation"><%- baseCategory.name_subcategory %></p>
+                        <h3 class="sakuhinnmei" id="newName">「<%-newName%>」</h3>
                         <div class="explanation2"><a href="">
-                                <font size="2">#TODO:タグ抽出</font>
+                                <font size="2">
+                                    <%# hashTagを表示する。それぞれの間には" "を入れる" %>
+                                    <% for( let index = 0; index < hashTag.length; index++ ) { %>
+                                        <%= hashTag[index] %>
+                                        <% if( index < hashTag.length - 1 ) { %>
+                                            <%= " " %>
+                                            <% } %>
+                                            <% } %>
+                                </font>
                             </a></p>
                         </div>
                         <br>
@@ -110,7 +118,7 @@
                         <br>
 
                         <div class="check">
-                            <input type="checkbox" class="check1" name="check" <%- newIsPublic %> >公開
+                            <input id="newIsPublic" type="checkbox" class="check1" name="check" <%- newIsPublic %> disabled>公開
                         </div>
                         <div class="double_button4">
                             <table class="button_table">
@@ -119,7 +127,7 @@
                                     <th><button type="button" class="white_button2"
                                             onclick="history.back()">戻る</button></th>
                                     <th style="width: 30%;"></th>
-                                    <th><button type="button" class="black_button2">保存</button></th>
+                                    <th><button type="button" class="black_button2" onclick="change()">保存</button></th>
                                     <th style="width: 20%;"></th>
                                 </tr>
                             </table>
@@ -144,4 +152,30 @@
             <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
     </body>
 
+    <script>
+        const newIsPublic = document.getElementById("newIsPublic");
+        const workId = document.getElementById("workId").value;
+        const rawNewName = document.getElementById("newName");
+
+        //rawnewNameから"「"を削除し、"」"を削除する
+        let newName = rawNewName.innerText.replace(/「/g, '').replace(/」/g, '');
+
+        function change(){
+            console.log(newIsPublic.checked);
+            axios.post(`/work/${workId}/edit/submit`, {
+                newIsPublic: newIsPublic.checked,
+                newName: newName
+            })
+            .then(function(response){
+                if (response.status == 200 && response.data) {
+                    alert("保存しました");
+                    location.href = "/my_work";
+                }
+            })
+            .catch(function(error){
+                console.log(error);
+                alert("保存に失敗しました");
+            });
+        }
+    </script>
 </html>
