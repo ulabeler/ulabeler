@@ -100,8 +100,8 @@
                     </div>
                 </div>
                 <% if (isMine) { %>
-                    <p class="button6"><button type="submit" class="black_button4"
-                        onclick="location.href=''">編集</button></p>
+                    <p class="button6"><button type="button" class="black_button4"
+                        onclick="location.href='/work/<%- workList[i].id %>/edit'">編集</button></p>
                         <% } else { %>
                             <br>
                     <a href="/work/<%- workList[i].id %>/report">
