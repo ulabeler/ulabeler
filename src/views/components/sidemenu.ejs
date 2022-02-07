@@ -2,11 +2,11 @@
   <h2 href="/">U labelar</h2>
   <ul>
     <% for (let i=0; i < side_menu.length; i++) { %>
-      <li><a href='<%= side_menu[i].link %>' <% if(side_menu[i].title=="ログイン" ) { %>
-          class="js-popup_login" onclick="popupLogin()"
-          <% } %>
-            ><%= side_menu[i].title %>
+      <li><a href='<%= side_menu[i].link %>' <% if(side_menu[i].title=="ログイン" ) { %>class="js-popup_login"
+          onclick="showPopUp('showLogin')"<% } %> ><%= side_menu[i].title %>
         </a></li>
       <% } %>
   </ul>
 </nav>
+<script src="/javascripts/pop-up.js"></script>
+<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">

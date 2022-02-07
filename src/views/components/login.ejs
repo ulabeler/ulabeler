@@ -1,6 +1,6 @@
-<div class="popup">
+<div class="popup" id="showLogin">
     <div class="popup-inner">
-        <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+        <div class="close-btn" id="js-close-btn" onclick="closePopUp('showLogin')"><i class="fas fa-times"></i></div>
         <div class="box09">
 
             <!-- ページ名 -->
@@ -41,8 +41,6 @@
 
         <!-- <button id="js-show-popup">Show Popup</button> -->
     </div>
-    <div class="black-background" id="js-black-bg"></div>
+    <div class="black-background" id="js-black-bg" onclick="closePopUp('showLogin')"></div>
 </div>
-<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
 <script src="/javascripts/login.js"></script>
-<script src="/javascripts/pop-up.js"></script>

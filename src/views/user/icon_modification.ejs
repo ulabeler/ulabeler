@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="none,noindex,nofollow">
+    <meta name="description" content="ハンドメイドショップサイト">
+    <meta name="keywords" content="ECサイト">
+    <title>U labeler</title>
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
+
+</head>
+<header class="header">
+
+    <div class="header_logo">
+        <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
+    </div>
+
+    <!-- 検索ボックス -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <span class="magnifying_glass"></span>
+    <form method="get" action="#" class="search_container">
+        <input type="text" size="25" placeholder="キーワード検索">
+        <input type="submit" value="&#xf002">
+    </form>
+
+    <body>
+
+        <input type="checkbox" id="nav1">
+        <label for="nav1" class="open"><span></span></label>
+        <label for="nav1" class="close"></label>
+        <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+            <article>
+                <br>
+                <br>
+                <!-- ページタイトル -->
+                <h3 class="icon_setting_title">アイコン画像変更
+                    <hr>
+                </h3>
+
+
+                <!-- 画像ドロップ -->
+                <!-- やま 会員情報変更画面へ遷移 -->
+                <section class="box_item_4">
+                    <br>
+                    <br>
+                    <form action="" method="post" id="hoge">
+
+                        <div class="boxarea">
+
+                            <!-- ドラドロエリア(円状) -->
+                            <div id="dragDropArea">
+                                <!-- 円内のフォントと画像 -->
+                                <div class="icon_txtimg" id="previewArea">
+                                    <img src="<%- userInfo.icon_path %> " class="defo_image" alt="画像をドラッグ＆ドロップしてください"
+                                        id="previewIconImage">
+                                    <!-- <p class="">ここに画像を<br>ドロップしてください。</p> -->
+                                </div>
+                            </div>
+                            <br>
+                            <div class="file_button">
+                                <input id="fileInput" type="file" accept="image/*" name="icon"
+                                    onChange="photoPreview(event)">
+                            </div>
+
+                        </div>
+                    </form>
+                    <!-- ボタン -->
+                    <div class="double_button">
+                        <!-- やま 会員情報変更画面へ遷移 -->
+                        <button type="button" class="white_button"
+                            onclick="location.href='/settings/profile/edit'">戻る</button>
+                        <button tyoe="button" class="black_button" onclick="location.href='/settings/profile/edit'">決定</button>
+
+                    </div>
+                    <br>
+                </section>
+
+
+                <script src="/javascripts/drag_drop.js"></script>
+
+
+                <noscript>
+                    <p>JavaScriptを有効にしてください。</p>
+                </noscript>
+            </article>
+            <br>
+            <br>
+            <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+            <br>
+            <a href="#" id="pagetop"><i class="up"></i>↑</a>
+    </body>
+
+    <script>
+        function sendDraftIcon() {
+            // fileInputが空ならreturn
+            if (document.getElementById("fileInput").files.length == 0) {
+                return;
+            }else{
+                const params = new FormData();
+                params.append('file', document.getElementById('fileInput').files[0]);
+                axios.post(
+                    '/api/media/posticon',
+                    params,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                .then((result) => {
+                    console.log(result);
+                    if (result.status == 201) {
+                        // alert('アイコン画像を変更しました。');
+                        // responseはJSONで帰ってくる
+                        // アイコン画像のパスを取得
+                        // const icon_path = result.data.icon_url;
+                        // console.log(icon_path);
+                        // location.href = '/settings/profile/edit';
+                    } else {
+                        alert('アイコン画像のアップロードに失敗しました。');
+                    }
+                })
+            }
+        }
+    </script>
+
+</html>

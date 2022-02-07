@@ -2,7 +2,7 @@
     "true":[
         {
             "title": "マイ作品リスト",
-            "link": "#"
+            "link": "/my_work"
         },
         {
             "title": "お気に入り作品リスト",
@@ -18,7 +18,7 @@
         },
         {
             "title": "会員情報",
-            "link": "#"
+            "link": "/settings/profile"
         },
         {
             "title": "メールアドレス変更",

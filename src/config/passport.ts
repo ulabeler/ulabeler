@@ -34,6 +34,7 @@ module.exports = function (app: any) {
         if (mailCheck(username)) {
           knex("user")
             .where("mailaddress", username)
+            .whereNull("deleted_at")
             .then((result: userTable[]) => {
               if (result.length === 0) {
                 return done(null, false, { message: "ユーザーが存在しません" });
@@ -56,6 +57,7 @@ module.exports = function (app: any) {
         } else {
           knex("user")
             .where("id", username)
+            .whereNull("deleted_at")
             .then((result: userTable[]) => {
               if (result.length === 0) {
                 return done(null, false, { message: "ユーザーが存在しません" });

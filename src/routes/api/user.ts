@@ -10,6 +10,7 @@ import {
   password_resetTable,
   // eslint-disable-next-line camelcase
   mail_confirmationTable,
+  reportTable,
 } from "../../tools/TypeAlias/tableType_alias";
 import sideMenuList from "../../tools/data/sidemenu.json";
 import { v4 as uuidv4 } from "uuid";
@@ -17,6 +18,9 @@ import { v4 as uuidv4 } from "uuid";
 const router = express.Router();
 import passport from "passport";
 import crypto from "crypto";
+// import multer from 'multer';
+// import path from "path";
+// import fse from 'fs-extra';
 
 // システムエラー/Code:PW-EX1 → L500付近で吐く設定ではあるけどこの条件引くことはまずないと思います。。。
 
@@ -83,7 +87,7 @@ router.post("/sign_up", function (request, response) {
       password: bcrypt.hashSync(request.body.password, 10),
       mailaddress: request.body.email,
       created_at: new Date(),
-      icon_path: null,
+      icon_path: "/images/system/user.png",
       self_introduction: null,
       cardnumber: null,
       name_card: null,
@@ -97,6 +101,7 @@ router.post("/sign_up", function (request, response) {
         password: userdata.password,
         mailaddress: userdata.mailaddress,
         created_at: userdata.created_at,
+        icon_path: userdata.icon_path,
       })
       .then(function () {
         sendMail("sign_up_complete", userdata.mailaddress);
@@ -109,7 +114,7 @@ router.post("/sign_up", function (request, response) {
   }
 });
 
-router.post(
+router.post( //ログインはこれだけ
   "/sign_in",
   passport.authenticate("local"),
   function (request, response) {
@@ -494,7 +499,7 @@ router.post("/password/changeAttempt", function (request, response) {
               response.status(200).send("現在のパスワードが間違っています。");
             }
           } else {
-            response.status(200).send("システムエラー/Code:PW-EX1");
+            response.status(200).send("システムエラー/Code:PW-EX1"); // ログインユーザーidで引いてるのにユーザーが存在しないってことある？？
           }
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -505,6 +510,80 @@ router.post("/password/changeAttempt", function (request, response) {
       });
   }
 });
+
+router.post("/modification_userinfo_attempt", function (request, response) {
+  if (request.user) {
+    if (!request.body.name && !request.body.self_introduction) {
+      response.status(400).send("Bad Request");
+      return;
+    } else {
+      const id: userTable["id"] = request.user.id;
+      const newName: userTable["name"] = request.body.name;
+      const newSelfIntroduction: userTable["self_introduction"] =
+        request.body.self_introduction;
+      knex("user")
+        .where("id", id)
+        .update({
+          name: newName,
+          self_introduction: newSelfIntroduction,
+        })
+        .then(function () {
+          response.status(201).send(true);
+        })
+        .catch(function (err: any) {
+          console.log(err);
+          response.status(500).send("Internal Server Error");
+        });
+    }
+  } else {
+    response.status(200).send("ログインしていません。"); // まあまず出ないはず
+  }
+});
+
+router.post("/report/create", function (request, response) {
+  if(request.user){
+    if (!request.body.reportId && !request.body.reportDescription && !request.body.reportToWorkId ) {
+      response.status(400).send("Bad Request");
+    }else{
+      //request.body.reportToWorkIdに該当するworkを取得
+      knex("work")
+        .where("id", request.body.reportToWorkId)
+        .select("*")
+        .then(
+          (results: any) => {
+            if(results.length > 0){
+              //reportを作成
+              const report: reportTable = {
+                id: null,
+                reported_to_user_id: results[0].created_by_user_id,
+                reported_from_user_id: request.user!.id,
+                category_id: request.body.reportId,
+                reported_description: request.body.reportDescription,
+                reported_at: new Date(),
+              };
+              knex("report")
+                .insert(report)
+                .then(function () {
+                  response.status(201).send(true);
+                })
+                .catch(function (err: any) {
+                  console.log(err);
+                  response.status(500).send("Internal Server Error");
+                });
+            }else{
+              response.status(200).send("指定されたworkは存在しません。");
+            }
+          }
+        )
+        .catch(function (err: any) {
+          console.log(err);
+          response.status(500).send("Internal Server Error");
+        });
+    }
+  } else{
+    response.status(401).send("UnAuthorized");
+  }
+})
 
 // CLI専用
 // 該当idのユーザーを物理削除

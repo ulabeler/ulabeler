@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="none,noindex,nofollow">
+    <meta name="description" content="ハンドメイドショップサイト">
+    <meta name="keywords" content="ECサイト">
+    <title>U labeler</title>
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
+
+</head>
+<header class="header">
+
+    <div class="header_logo">
+        <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
+    </div>
+
+    <!-- 検索ボックス -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <span class="magnifying_glass"></span>
+    <form method="get" action="#" class="search_container">
+        <input type="text" size="25" placeholder="キーワード検索">
+        <input type="submit" value="&#xf002">
+    </form>
+
+    <body>
+
+        <input type="checkbox" id="nav1">
+        <label for="nav1" class="open"><span></span></label>
+        <label for="nav1" class="close"></label>
+        <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+            <article>
+                <br>
+                <br>
+
+                <!-- ページ名 -->
+                <h3 class="h3_center2">会員情報変更
+                    <hr>
+                </h3>
+
+                <section class="box_item_4">
+
+                    <div class=userpage>
+                        <form action="select_color.html" method="post">
+
+                            <br>
+
+                            <a href="/settings/profile/edit/icon">
+                                <div class="image_wrapper7"><img src="<%= userInfo.icon_path %>" alt="" /></div>
+                                <div class="image_wrapper6"><img src="/images/system/photo.png" alt="" /></div>
+                            </a>
+                            <br>
+                            <table class="setumeitable2">
+
+
+                                <tr>
+                                    <th>ユーザー名 <font color="red">*</font>：</th>
+                                    <th><input type=”text” id="newName" class="tekisuto"
+                                            style=" height: 30px; width: 400px;" name=”name” placeholder=""
+                                            value="<%= userInfo.name %>"></th>
+
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <p class="error_message6" id="errorNewName"></p>
+                                        <!-- やま jsエラーメッセージ -->
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th>自己紹介文 <font color="red">*</font>：</th>
+                                    <th>
+                                        <font color="#85858"><textarea class="tekisuto3" name="example2" cols="47"
+                                                rows="8" wrap="soft" placeholder="150文字以内で、あなたについて教えてください！"
+                                                id="newSelfIntroduction"><%- userInfo.self_introduction %></textarea>
+                                        </font>
+                                        </p>
+                                    </th><!-- インデント気持ち悪いけど変えないで… placeholdeきかない…-->
+                                </tr>
+
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <p class="error_message6" id="errorNewSelfInt"></p>
+                                        <!-- やま jsエラーメッセージ -->
+                                    </th>
+                                </tr>
+
+                            </table>
+                            <div class="double_button4">
+                                <br>
+                                <table class="button_table">
+                                    <tr>
+                                        <th style="width: 20%;"></th>
+                                        <th><button type="button" class="white_button2"
+                                                onclick="location.href='/settings/profile'">戻る</button></th>
+                                        <th style="width: 30%;"></th>
+                                        <th><button type="button" class="black_button2" id="send"
+                                                onclick="sendNewInformation()">決定</button>
+                                        </th>
+                                        <th style="width: 20%;"></th>
+                                    </tr>
+                                </table>
+                                <br>
+
+                            </div>
+                            <br>
+                        </form>
+                </section>
+
+                </div>
+
+                </div>
+
+                <noscript>
+                    <p>JavaScriptを有効にしてください。</p>
+                </noscript>
+            </article>
+            <br>
+            <br>
+            <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+            <br>
+            <a href="#" id="pagetop"><i class="up"></i>↑</a>
+    </body>
+
+    <script>
+        // 変数定義
+        const newName = document.getElementById('newName');
+        const newSelfIntroduction = document.getElementById('newSelfIntroduction');
+
+        const errorNewName = document.getElementById('errorNewName');
+        const errorNewSelfIntroduction = document.getElementById('errorNewSelfInt');
+
+        const send = document.getElementById('send');
+
+        let DisableCounterUsername = 0;
+        let DisableCounterSelfIntroduction = 0;
+
+        newName.addEventListener('keyup', function () {
+            if (newName.value.length > 15) {
+                errorNewName.innerText = '15文字以内で入力してください';
+                DisableCounterUsername++;
+            } else {
+                errorNewName.innerText = '';
+                if (newName.value.length == 0) {
+                    DisableCounterUsername++;
+                } else {
+                    DisableCounterUsername = 0;
+                }
+            }
+        });
+
+        newName.addEventListener('focusout', function () {
+            if (newName.value.length > 0) {
+                // @ts-ignore
+                console.log("newName.value.length > 0");
+                axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
+                    text: newName.value,
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            errorNewName.innerText = '不適切なワードが含まれています。';
+                            DisableCounterUsername++;
+                        } else {
+                            errorNewName.innerText = '';
+                            if (newName.value.length == 0) {
+                                DisableCounterUsername++;
+                            } else {
+                                DisableCounterUsername = 0;
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        alert(error); // TODO: エラー時の遷移先
+                    });
+            }
+        });
+
+        newSelfIntroduction.addEventListener('focusout', function () {
+            if (newSelfIntroduction.value.length > 0) {
+                // @ts-ignore
+                axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
+                    text: newSelfIntroduction.value,
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            errorNewSelfIntroduction.innerText = '不適切なワードが含まれています。';
+                            DisableCounterSelfIntroduction++;
+                        } else {
+                            errorNewSelfIntroduction.innerText = '';
+                            if (newName.value.length == 0) {
+                                DisableCounterSelfIntroduction++;
+                            } else {
+                                DisableCounterSelfIntroduction = 0;
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        alert(error); // TODO: エラー時の遷移先
+                    });
+            }
+        });
+
+        newSelfIntroduction.addEventListener('keyup', function () {
+            if (newSelfIntroduction.value.length > 150) {
+                errorNewSelfIntroduction.innerText = '150文字以内で入力してください。';
+                DisableCounterSelfIntroduction++;
+            } else {
+                errorNewSelfIntroduction.innerText = '';
+                if (newSelfIntroduction.value.length == 0) {
+                    DisableCounterSelfIntroduction++;
+                } else {
+                    DisableCounterSelfIntroduction = 0;
+                }
+            }
+        });
+
+        setInterval(function () {
+            if (DisableCounterUsername == 0 && DisableCounterSelfIntroduction == 0) {
+                send.disabled = false;
+            } else {
+                send.disabled = true;
+            }
+        }, 500);
+
+        // 指定エンドポイントにPOSTリクエスト送信
+        function sendNewInformation() {
+            console.log(newName.value);
+            console.log(newSelfIntroduction.value);
+            //上記二つがnullで無いかを確認
+            if (newName.value != null && newName.value != "" && newSelfIntroduction.value != null && newSelfIntroduction.value != "") {
+                axios.post('/api/user/modification_userinfo_attempt', {
+                name: newName.value,
+                self_introduction: newSelfIntroduction.value,
+            })
+                .then(function (response) {
+                    if (response.data == true) {
+                        alert('変更が完了しました。');
+                        location.href = '/settings/profile';
+                    } else {
+                        alert('変更に失敗しました。');
+                        location.href = '/settings/profile';
+                    }
+                })
+                .catch(function (error) {
+                    alert(error); // TODO: エラー時の遷移先
+                });
+            } else {
+                alert('入力されていない項目があります');
+            }
+        }
+    </script>
+
+</html>

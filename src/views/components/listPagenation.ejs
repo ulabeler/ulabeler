@@ -1,0 +1,33 @@
+<div class="pagination">
+    <ul class="example">
+        <% if (currentPage !=1) { %>
+            <li>
+                <% if (isCreatorView) { %>
+                    <a href="/creator_work/<%= userInfo.id %>?page=<%- currentPage - 1 %>">前へ</a>
+                <% } else { %>
+                    <a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage - 1 %>&userId=<%= userInfo.id %>">前へ</a>
+                <% } %>
+            </li>
+            <% } %>
+            <% for( let index=1; index <=maxPage; index++ ) { %>
+                <% if (index==currentPage) { %>
+                    <li class="pagination_nau"><%- currentPage %></li>
+                <% } else { %>
+                    <% if (isCreatorView) { %>
+                        <li><a href="/creator_work/<%= userInfo.id %>?page=<%- index %>"><%- index %></a></li>
+                    <% } else { %>
+                        <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- index %>&userId=<%= userInfo.id %>"><%= index %></a></li>
+                    <% } %>
+                <% } %>
+            <% } %>
+            <% if (currentPage !=maxPage) { %>
+                <% if (isCreatorView) { %>
+                    <li>
+                        <a href="/creator_work/<%= userInfo.id %>?page=<%- currentPage + 1 %>">次へ</a>
+                    </li>
+                <% } else { %>
+                <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage + 1 %>&userId=<%= userInfo.id %>">次へ</a></li>
+                <% } %>
+            <% } %>
+    </ul>
+</div>

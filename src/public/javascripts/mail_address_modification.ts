@@ -1,10 +1,12 @@
 const current_mailaddress = {
     "value": "<%- mailaddress %>"
 };
-const new_mailaddress = document.querySelector('input[name="new_mailaddress"]');
-const new_mailaddress_confirmation = document.querySelector('input[name="new_mailaddress_confirmation"]');
-const send = document.getElementById('send');
-const message = document.getElementById('message');
+const new_mailaddress = <HTMLInputElement>document.querySelector('input[name="new_mailaddress"]');
+const new_mailaddress_confirmation = <HTMLInputElement>document.querySelector('input[name="new_mailaddress_confirmation"]');
+// @ts-ignore
+const send = <HTMLButtonElement>document.getElementById('send');
+const message = document.getElementById('message')!;
+// @ts-ignore
 let disable_counter_email = 0;
 let confirm_reject_counter_email = 0;
 
@@ -17,10 +19,11 @@ new_mailaddress.addEventListener('focusout', function () {
         disable_counter_email++;
         message.innerText = '現在のメールアドレスと同じものを入力しています。';
     } else {
+        // @ts-ignore
         axios.post('/api/user/check_email', {
             email: new_mailaddress.value
         })
-            .then(function (response) {
+            .then(function (response: { data: any; }) {
                 console.log(response);
                 if (response.data) {
                     disable_counter_email++;
@@ -65,10 +68,11 @@ setInterval(function () {
 
 function modificationMailaddressAttempt() {
     if (check_email_confirm()) {
+        // @ts-ignore
         axios.post('/api/user/create/modification_mailaddress/confirmationCode', {
             mailaddress: new_mailaddress.value
         })
-            .then(function (response) {
+            .then(function (response: { data: any; }) {
                 console.log(response);
                 if (response.data) {
                     location.href = '/mail_address_modification/sent_confirmation_code';

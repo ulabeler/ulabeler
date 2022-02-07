@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="none,noindex,nofollow">
+    <meta name="description" content="ハンドメイドショップサイト">
+    <meta name="keywords" content="ECサイト">
+    <title>U labeler</title>
+
+    <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+
+</head>
+<header class="header">
+
+    <div class="header_logo">
+        <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
+    </div>
+
+    <!-- 検索ボックス -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <span class="magnifying_glass"></span>
+    <form method="get" action="#" class="search_container">
+        <input type="text" size="25" placeholder="キーワード検索">
+        <input type="submit" value="&#xf002">
+    </form>
+
+    <body>
+
+        <input type="checkbox" id="nav1">
+        <label for="nav1" class="open"><span></span></label>
+        <label for="nav1" class="close"></label>
+
+        <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+
+            <article>
+                <br>
+                <br>
+
+                <!-- ページ名 -->
+
+                <section class="box_item_4">
+                    <div class="teport_box">
+                        <form action="" method="post" id="hoge">
+                            <br>
+
+                            <h2>作品名:「<%- work.name %> 」</h2>
+                            <input type="hidden" id="reportToWorkId" value="<%- work.id %>">
+                            <div class="teport_text">
+                                <p class="teport_subtext">以下の項目を選択してください。<font color="red">*</font>
+                                </p>
+                                <br>
+                            </div>
+                            <p><input id="" type="radio" name="categoryId" value="1">不番な内容またはスパムである　　　　　</p>
+                            <p><input id="" type="radio" name="categoryId" value="2">不適切または攻撃的な内容を含んでいる　</p>
+                            <br>
+                            <div class="teporttext_box_area">
+                                <textarea id="description" class="teporttext_box" placeholder="内容を入力"></textarea>
+                                <font color="red">*</font>
+                            </div>
+                            <br>
+                            <div class="teport_error">
+                                <p id="descriptionErrorMessage" class="teport_error_message"></p><!-- やま jsエラーメッセージ -->
+                            </div>
+                        </form>
+
+                        <div class="double_button">
+                            <button type="button" class="white_button" onclick="showIsSelected()" id="send">通報する</button>
+                            <button type="button" class="red_button2" onclick="goBack()">戻る</button>
+                            <!-- 購入確認画面へ -->
+
+                        </div>
+                        <br>
+                    </div>
+                </section>
+
+                </div>
+
+                </div>
+
+                <noscript>
+                    <p>JavaScriptを有効にしてください。</p>
+                </noscript>
+            </article>
+            <br>
+            <br>
+            <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+            <br>
+            <a href="#" id="pagetop"><i class="up"></i>↑</a>
+    </body>
+
+    <script>
+        //戻るボタン
+        const referrer = document.referrer;
+        function goBack() {
+            //リファラ元へ戻る
+            location.href = referrer;
+        }
+
+        // radioボタンのチェック状態を取得
+        const radio = document.getElementsByName('categoryId');
+        const description = document.getElementById('description');
+        const descriptionErrorMessage = document.getElementById('descriptionErrorMessage');
+        const reportToWorkId = document.getElementById('reportToWorkId').value;
+        let len = radio.length;
+        let DisableCounterDescription = 0;
+        let tooMany = false;
+        const send = document.getElementById('send');
+        radio[0].checked = true;
+
+        // 選択されたラジオボタンのvalue値を取得
+        function showIsSelected() {
+            let reportId = '';
+            for (var i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    reportId = radio[i].value;
+                }
+            }
+            // value値を表示
+            console.log(reportId);
+            console.log(description.value);
+            console.log(reportToWorkId);
+            // axiosで/api/report/createにPOST
+            axios.post('/api/user/report/create', {
+                reportId: reportId,
+                reportDescription: description.value,
+                reportToWorkId: reportToWorkId
+            })
+                .then(function (response) {
+                    console.log(response);
+                    if (response.status === 201) {
+                        alert('通報しました。');
+                        location.href = '/';
+                    } else {
+                        alert(response.data);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+
+        description.addEventListener('focusout', function () {
+            if (description.value.length > 0) {
+                // @ts-ignore
+                axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
+                    text: description.value,
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            descriptionErrorMessage.innerText = '不適切なワードが含まれています。';
+                            DisableCounterDescription++;
+                        } else {
+                            if (tooMany) {
+                                return;
+                            }else{
+                            descriptionErrorMessage.innerText = '';
+                            if (description.value.length == 0) {
+                                DisableCounterDescription++;
+                            } else {
+                                DisableCounterDescription = 0;
+                            }
+                        }
+                        }
+                    })
+                    .catch(function (error) {
+                        alert(error); // TODO: エラー時の遷移先
+                    });
+            }
+        });
+
+        description.addEventListener("keydown", () =>{
+            //150文字を超えた場合に警告
+            if(description.value.length > 150){
+                descriptionErrorMessage.innerText = '200文字以内で入力してください。';
+                tooMany = true;
+                DisableCounterDescription++;
+            }else{
+                descriptionErrorMessage.innerText = '';
+                if (description.value.length == 0) {
+                    DisableCounterDescription++;
+                    tooMany = false;
+                } else {
+                    DisableCounterDescription = 0;
+                    tooMany = false;
+                }
+            }
+        });
+
+        //0.2秒ごとに監視して、DisableCounterDescriptionが0以上なら送信ボタンを無効化
+        setInterval(() => {
+            if (DisableCounterDescription > 0) {
+                send.disabled = true;
+            } else {
+                send.disabled = false;
+            }
+        }, 200);
+
+    </script>
+
+</html>

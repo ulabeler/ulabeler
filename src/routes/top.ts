@@ -1,13 +1,14 @@
 import express from "express";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
-import { userTable } from "tools/TypeAlias/tableType_alias";
+import { userTable, workTable, base_categoryTable } from "tools/TypeAlias/tableType_alias";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 // import { checkLogin } from '../tools/user';
 // import { side_menu } from '../TypeAlias/misc_alias';
 import sideMenuList from "../tools/data/sidemenu.json";
 import crypto from "crypto";
+const maxViewOnPage = 3; // 1ページに表示する最大件数
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
 const host =
@@ -17,10 +18,12 @@ const host =
 
 /* GET home page. */
 router.get("/", function (request, response) {
+  const userInfo = request.user ? request.user : null;
   response.render("top", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
+    userInfo: userInfo,
   });
 });
 
@@ -134,6 +137,7 @@ router.get("/mail_address_modification", function (request, response) {
       `${Boolean(request.user)}`
     ],
     mailaddress: mailaddress,
+    userInfo: request.user,
   });
 });
 
@@ -150,6 +154,7 @@ router.get(
           `${Boolean(request.user)}`
         ],
         message: "入力されたメースアドレスに<br>確認コードを送信しました。",
+        userInfo: request.user,
       });
     }
   }
@@ -165,7 +170,6 @@ router.get("/mail_address_modification/complete", function (request, response) {
         .update(userId, "utf8")
         .digest("hex")}`
     ) {
-      // TODO 後で書き直し
       response.redirect("/invalidAccess");
       return;
     } else {
@@ -174,6 +178,7 @@ router.get("/mail_address_modification/complete", function (request, response) {
           `${Boolean(request.user)}`
         ],
         message: "メールアドレスが変更されました。",
+        userInfo: request.user,
       });
     }
   } else {
@@ -211,6 +216,7 @@ router.get(
             `${Boolean(request.user)}`
           ],
           message: "URLが正しくありません。",
+          userInfo: request.user,
         });
         return;
       } else {
@@ -218,6 +224,7 @@ router.get(
           side_menu: JSON.parse(JSON.stringify(sideMenuList))[
             `${Boolean(request.user)}`
           ],
+          userInfo: request.user,
         });
       }
     }
@@ -237,6 +244,7 @@ router.get("/reset_password/complete", function (request, response) {
           `${Boolean(request.user)}`
         ],
         message: "パスワードが変更されました。",
+        userInfo: request.user,
       });
       return;
     }
@@ -244,24 +252,6 @@ router.get("/reset_password/complete", function (request, response) {
   response.redirect("/invalidAccess");
 });
 
-router.get("/invalidAccess", function (request, response) {
-  response.render("./components/message", {
-    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-      `${Boolean(request.user)}`
-    ],
-    message: "不正な画面遷移です。",
-  });
-});
-
-router.get("/notAvailable", function (request, response) {
-  response.render("./components/message", {
-    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-      `${Boolean(request.user)}`
-    ],
-    message:
-      "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
-  });
-});
 
 router.get("/password/modification", function (request, response) {
   if (request.user) {
@@ -274,6 +264,247 @@ router.get("/password/modification", function (request, response) {
     response.redirect("/invalidAccess");
     return;
   }
+});
+
+router.get("/my_work", function (request, response) {
+  let currentPage = 1; // 現在のページ番号
+  let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
+  if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
+    idx = (Number(request.query.page) - 1) * maxViewOnPage;
+    currentPage = Number(request.query.page);
+  }
+  if (request.user) {
+    // @ts-ignore
+    const userInfo: userTable = {
+      id: request.user.id,
+      name: request.user.name,
+      icon_path: request.user.icon_path,
+    }
+    const userId: userTable["id"] = request.user.id;
+    // workから、userIdと一致するworkを取得
+    knex("work")
+      .where("created_by_user_id", userId)
+      .orderBy("create_at", "asc")
+      .then(async function (workList: workTable[]) {
+        // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
+        const baseCategoryList: base_categoryTable[] = [];
+        await new Promise((resolve) => {
+          if (workList.length === 0) {
+            response.render("list/my_list_first", {
+              side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                `${Boolean(request.user)}`
+              ],
+              title: "マイ作品リスト",
+              userInfo: userInfo,
+            });
+            resolve("NoWorks");
+            return;
+          }
+          workList.forEach((work: workTable) => {
+            knex("base_category")
+              .where("id", work.base_category_id)
+              .then((baseCategory: base_categoryTable[]) => {
+                baseCategoryList.push(baseCategory[0]);
+                if (baseCategoryList.length === workList.length) {
+                  const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
+                  // console.log("idx:" + idx)
+                  // console.log("currentPage:" + currentPage)
+                  // console.log("maxPage:" + maxPage)
+                  // console.log("maxViewOnPage:" + maxViewOnPage)
+                  const currentPageDescription = {
+                    title: "マイ作品リスト",
+                    "uriPrefix": "/my_work",
+                  };
+                  response.render("list/my_list", {
+                    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                      `${Boolean(request.user)}`
+                    ],
+                    workList: workList,
+                    baseCategoryList: baseCategoryList,
+                    idx: idx,
+                    maxPage: maxPage,
+                    maxViewOnPage: maxViewOnPage,
+                    currentPage: currentPage,
+                    userInfo: userInfo,
+                    currentPageDescription: currentPageDescription,
+                    isMine: true,
+                    isCreatorView: false,
+                  });
+                  resolve("ok");
+                  return;
+                }
+              });
+          });
+        });
+      });
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
+});
+
+router.get("/creator_work/:userId", function (request, response) {
+  if (request.params.userId) {
+    let currentPage = 1; // 現在のページ番号
+    let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
+    if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
+      idx = (Number(request.query.page) - 1) * maxViewOnPage;
+      currentPage = Number(request.query.page);
+    }
+    // request.query.userIdとrequest.user.idが一致する場合isMineにtrueを設定
+    const isMine = () => {
+      if (request.user) {
+        if (request.params.userId == request.user.id) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+    // console.log("isMine:" + isMine);
+    // request.query.userIdに対応するユーザーを取得
+    knex("user")
+      .select("id", "name", "icon_path", "self_introduction")
+      .where("id", request.params.userId)
+      .then(async function (userList: userTable[]) {
+        if (userList.length === 0) {
+          response.render('components/message', {
+            side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+              `${Boolean(request.user)}`
+            ],
+            message: "ユーザーが見つかりませんでした。",
+            userInfo: request.user,
+          });
+          return;
+        }
+        // @ts-ignore
+        const userInfo: userTable = {
+          id: userList[0].id,
+          name: userList[0].name,
+          icon_path: userList[0].icon_path,
+          self_introduction: userList[0].self_introduction,
+        }
+        // workから、userIdと一致するworkを取得
+        knex("work")
+          .where("created_by_user_id", userInfo.id)
+          .orderBy("create_at", "asc")
+          .then(async function (workList: workTable[]) {
+            // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
+            const baseCategoryList: base_categoryTable[] = [];
+            await new Promise((resolve) => {
+              if (workList.length === 0) {
+                response.render("list/creator_work_first", {
+                  side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                    `${Boolean(request.user)}`
+                  ],
+                  title: "作品一覧",
+                  userInfo: request.user,
+                });
+                resolve("NoWorks");
+                return;
+              }
+              workList.forEach((work: workTable) => {
+                knex("base_category")
+                  .where("id", work.base_category_id)
+                  .then((baseCategory: base_categoryTable[]) => {
+                    baseCategoryList.push(baseCategory[0]);
+                    if (baseCategoryList.length === workList.length) {
+                      const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
+                      const currentPageDescription = {
+                        title: "作品一覧",
+                        "uriPrefix": "/creator_work",
+                      };
+                      response.render("list/creator_work", {
+                        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                          `${Boolean(request.user)}`
+                        ],
+                        workList: workList,
+                        baseCategoryList: baseCategoryList,
+                        idx: idx,
+                        maxPage: maxPage,
+                        maxViewOnPage: maxViewOnPage,
+                        currentPage: currentPage,
+                        userInfo: userInfo,
+                        currentPageDescription: currentPageDescription,
+                        isMine: isMine(),
+                        isCreatorView: true,
+                      });
+                      resolve("ok");
+                      return;
+                    }
+                  });
+              });
+            });
+          });
+      });
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
+});
+
+router.get("/settings/profile", (request, response) => {
+  if (request.user) {
+    response.render("user/member_information_confirmation", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      userInfo: request.user,
+    });
+  } else {
+    response.redirect("/invalidAccess");
+  }
+});
+
+router.get("/settings/profile/edit", (request, response) => {
+  if (request.user) {
+    response.render("user/member_information_modification", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      userInfo: request.user,
+    });
+  } else {
+    response.redirect("/invalidAccess");
+  }
+});
+
+router.get("/settings/profile/edit/icon", (request, response) => {
+  if (request.user) {
+    response.render("user/icon_modification", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      userInfo: request.user,
+    });
+  } else {
+    response.redirect("/invalidAccess");
+  }
+});
+
+router.get("/invalidAccess", function (request, response) {
+  const userInfo = request.user ? request.user : null;
+  response.render("./components/message", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    message: "不正な画面遷移です。",
+    userInfo: userInfo,
+  });
+});
+
+router.get("/notAvailable", function (request, response) {
+  const userInfo = request.user ? request.user : null;
+  response.render("./components/message", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    message:
+      "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
+    userInfo: userInfo,
+  });
 });
 
 export default router;

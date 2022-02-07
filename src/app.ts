@@ -6,6 +6,7 @@ const knexConfig = require("./config/knexfile")[environment];
 const knex = require("knex")(knexConfig);
 export { knex };
 
+
 // const createError = require('http-errors');
 import express from "express";
 const app = express();
@@ -14,6 +15,14 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import favicon from "serve-favicon";
 import flash from "connect-flash";
+
+import bodyParser from 'body-parser';
+app.use(bodyParser.urlencoded({extended:true, limit: '10mb'}));
+app.use(bodyParser.raw({limit: '10mb'}));
+app.use(bodyParser.json({limit: '10mb'}));
+// できるだけlimitを大きくしておく
+
+export const UpImgDirBase = path.join(__dirname, 'public/images/');
 
 // import { send_discord } from './tools/discord_send_message'; //メッセ送信処理 できればこれで状態監視できるようにしたい
 
@@ -32,14 +41,20 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 // ルーティング設定
 import userAPIRouter from "./routes/api/user";
+import mediaAPIRouter from "./routes/api/media";
 import indexRouter from "./routes/top";
 import paymentRouter from "./routes/payment/payment";
 import PayPayRouter from "./routes/payment/paypay";
+import workRouter from "./routes/work";
 import passport from "passport";
+
+
 
 // const usersRouter = require('./routes/alpha/users');
 // const createRouter = require('./routes/alpha/create');
 // const TestRouter = require('./routes/alpha/test');
+
+
 
 // authorization
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -54,6 +69,8 @@ app.use("/", indexRouter);
 app.use("/payment", paymentRouter);
 app.use("/payment/paypay", PayPayRouter);
 app.use("/api/user", userAPIRouter);
+app.use("/api/media", mediaAPIRouter);
+app.use("/work", workRouter);
 
 // catch 404 and forward to error handler
 app.use(function (request, response) {

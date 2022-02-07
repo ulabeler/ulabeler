@@ -28,12 +28,12 @@ export type password_resetTable = {
 
 export type favorited_workTable = {
   favorite_from: string;
-  favorite_to: string;
+  favorite_to: number;
   favorited_at: string;
 };
 
 export type favorited_work_numberTable = {
-  favorited_to_id: string;
+  favorited_to_id: number;
   number: number; // いいね数
 };
 
@@ -124,7 +124,7 @@ export type stamp_settingsTable = {
 };
 
 export type workTable = {
-  id: number;
+  id: string;
   created_by_user_id: string;
   base_category_id: number;
   name: string;
@@ -136,6 +136,7 @@ export type workTable = {
   introduction: string | null;
   num_of_images: number;
   create_at: Date;
+  // ext_name_subcategory: null | string;
 };
 
 export type inquiryTable = {
@@ -158,11 +159,11 @@ export type administratorTable = {
 };
 
 export type reportTable = {
-  id: number;
+  id: number | null;
   reported_to_user_id: string;
   reported_from_user_id: string;
   category_id: number;
-  reporterd_description: string;
+  reported_description: string;
   reported_at: Date;
 };
 

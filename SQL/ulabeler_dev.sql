@@ -108,7 +108,7 @@ ENGINE = InnoDB;
 -- Table `ulabeler_dev`.`work`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`work` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` CHAR(12) NOT NULL,
   `created_by_user_id` VARCHAR(15) NOT NULL,
   `base_category_id` INT NOT NULL,
   `name` VARCHAR(40) NOT NULL,
@@ -164,7 +164,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`favorited_work` (
   `favorite_from` VARCHAR(15) NOT NULL,
-  `favorite_to` INT NOT NULL,
+  `favorite_to` CHAR(12) NOT NULL,
   `favorited_at` DATETIME NOT NULL,
   PRIMARY KEY (`favorite_from`, `favorite_to`),
   INDEX `F_work_ID_idx` (`favorite_to` ASC) VISIBLE,
@@ -242,7 +242,7 @@ ENGINE = InnoDB;
 -- Table `ulabeler_dev`.`report`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`report` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT AUTO_INCREMENT,
   `reported_to_user_id` VARCHAR(15) NOT NULL,
   `reported_from_user_id` VARCHAR(15) NOT NULL,
   `category_id` TINYINT NOT NULL,
@@ -304,7 +304,7 @@ ENGINE = InnoDB;
 -- Table `ulabeler_dev`.`work_used_stamps`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`work_used_stamps` (
-  `work_id` INT NOT NULL,
+  `work_id` CHAR(12) NOT NULL,
   `stamp_settings_id` INT NOT NULL,
   `num_used` INT NULL,
   PRIMARY KEY (`work_id`, `stamp_settings_id`),
@@ -417,7 +417,7 @@ ENGINE = InnoDB;
 -- Table `ulabeler_dev`.`favorited_work_number`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`favorited_work_number` (
-  `favorited_to_id` INT NOT NULL,
+  `favorited_to_id` CHAR(12) NOT NULL,
   `number` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`favorited_to_id`),
   CONSTRAINT `favorited_to_id`
