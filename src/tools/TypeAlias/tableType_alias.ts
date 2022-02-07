@@ -124,7 +124,7 @@ export type stamp_settingsTable = {
 };
 
 export type workTable = {
-  id: number;
+  id: string;
   created_by_user_id: string;
   base_category_id: number;
   name: string;
