@@ -37,10 +37,24 @@ function photoPreview(event, f = null) {
   }
 
   reader.onload = function (event) {
-    var img = document.createElement("img");
-    img.setAttribute("src", reader.result);
-    img.setAttribute("id", "previewIconImage");
-    preview.appendChild(img);
+    if(true){
+      var img = document.createElement("img");
+      img.setAttribute("src", reader.result);
+      img.setAttribute("id", "previewIconImage");
+      preview.appendChild(img);
+      // multipart/form-dataを扱う
+      axios.post('/api/media/posticon', {
+        file: reader.result
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }else{
+      alert("うんち");
+    }
   };
 
   reader.readAsDataURL(file);
