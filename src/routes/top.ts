@@ -467,6 +467,19 @@ router.get("/settings/profile/edit", (request, response) => {
   }
 });
 
+router.get("/settings/profile/edit/icon", (request, response) => {
+  if (request.user) {
+    response.render("user/icon_modification", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      userInfo: request.user,
+    });
+  } else {
+    response.redirect("/invalidAccess");
+  }
+});
+
 router.get("/invalidAccess", function (request, response) {
   const userInfo = request.user ? request.user : null;
   response.render("./components/message", {
