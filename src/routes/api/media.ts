@@ -67,7 +67,7 @@ router.post("/posticon", multer({dest: path.join(UpImgDirBase, "/icons"), limits
                                 const oldIconPath = currentIconPath;
                                 if (oldIconPath) {
                                     fse.removeSync(oldIconPath);
-                                    response.send(200).send("アイコンを更新しました");
+                                    response.status(200).send("アイコンを更新しました");
                                 } else {
                                     response.status(200).send("画像の保存に成功しました");
                                 }
