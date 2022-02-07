@@ -328,6 +328,7 @@ router.get("/my_work", function (request, response) {
                     userInfo: userInfo,
                     currentPageDescription: currentPageDescription,
                     isMine: true,
+                    isCreatorView: false,
                   });
                   resolve("ok");
                   return;
@@ -428,6 +429,7 @@ router.get("/creator_work/:userId", function (request, response) {
                         userInfo: userInfo,
                         currentPageDescription: currentPageDescription,
                         isMine: isMine(),
+                        isCreatorView: true,
                       });
                       resolve("ok");
                       return;
