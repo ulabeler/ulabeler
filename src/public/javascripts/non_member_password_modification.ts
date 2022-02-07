@@ -24,7 +24,7 @@ new_password.addEventListener('keyup', function () {
         error_password.innerText = '使用できる文字は、半角英数字、アンダーバー、ハイフン、ピリオドのみです';
         disable_counter_password++;
     } else if (new_password.value.match(/[a-z]/)) {
-        error_password.innerText = '大文字小文字を最低41つ以上含めてください';
+        error_password.innerText = '大文字小文字を最低1つ以上含めてください';
         disable_counter_password++;
     } else if (new_password.value.match(/[A-Z]/)) {
         error_password.innerText = '大文字小文字を最低1つ以上含めてください';
