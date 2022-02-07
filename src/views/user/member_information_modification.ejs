@@ -50,7 +50,7 @@
                             <br>
 
                             <a href="icon_modification.html">
-                                <div class="image_wrapper7"><img src="<%= userInfo.icon_path %> " alt="" /></div>
+                                <div class="image_wrapper7"><img src="<%= userInfo.icon_path %>" alt="" /></div>
                                 <div class="image_wrapper6"><img src="/images/system/photo.png" alt="" /></div>
                             </a>
                             <br>
@@ -98,7 +98,7 @@
                                     <tr>
                                         <th style="width: 20%;"></th>
                                         <th><button type="button" class="white_button2"
-                                                onclick="location.href=''">戻る</button></th>
+                                                onclick="location.href='/settings/profile'">戻る</button></th>
                                         <th style="width: 30%;"></th>
                                         <th><button type="button" class="black_button2" id="send"
                                                 onclick="sendNewInformation()">決定</button>
@@ -231,6 +231,27 @@
         function sendNewInformation() {
             console.log(newName.value);
             console.log(newSelfIntroduction.value);
+            //上記二つがnullで無いかを確認
+            if (newName.value != null && newName.value != "" && newSelfIntroduction.value != null && newSelfIntroduction.value != "") {
+                axios.post('/api/user/modification_userinfo_attempt', {
+                name: newName.value,
+                self_introduction: newSelfIntroduction.value,
+            })
+                .then(function (response) {
+                    if (response.data == true) {
+                        alert('変更が完了しました。');
+                        location.href = '/settings/profile';
+                    } else {
+                        alert('変更に失敗しました。');
+                        location.href = '/settings/profile';
+                    }
+                })
+                .catch(function (error) {
+                    alert(error); // TODO: エラー時の遷移先
+                });
+            } else {
+                alert('入力されていない項目があります');
+            }
         }
     </script>
 

@@ -507,9 +507,31 @@ router.post("/password/changeAttempt", function (request, response) {
 });
 
 router.post("/modification_userinfo_attempt", function (request, response) {
-  if (!request.body.confirmationAttemptCode) {
-    response.status(400).send("Bad Request");
-    return;
+  if (request.user) {
+    if (!request.body.name && !request.body.self_introduction) {
+      response.status(400).send("Bad Request");
+      return;
+    } else {
+      const id: userTable["id"] = request.user.id;
+      const newName: userTable["name"] = request.body.name;
+      const newSelfIntroduction: userTable["self_introduction"] =
+        request.body.self_introduction;
+      knex("user")
+        .where("id", id)
+        .update({
+          name: newName,
+          self_introduction: newSelfIntroduction,
+        })
+        .then(function () {
+          response.status(201).send(true);
+        })
+        .catch(function (err: any) {
+          console.log(err);
+          response.status(500).send("Internal Server Error");
+        });
+    }
+  } else {
+    response.status(200).send("ログインしていません。"); // まあまず出ないはず
   }
 });
 

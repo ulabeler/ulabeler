@@ -368,7 +368,7 @@ router.get("/creator_work/:userId", function (request, response) {
       .where("id", request.params.userId)
       .then(async function (userList: userTable[]) {
         if (userList.length === 0) {
-          response.render('components/message',{
+          response.render('components/message', {
             side_menu: JSON.parse(JSON.stringify(sideMenuList))[
               `${Boolean(request.user)}`
             ],
@@ -441,18 +441,27 @@ router.get("/creator_work/:userId", function (request, response) {
   }
 });
 
-router.get("/:userid/settings/profile", (request, response) => {
+router.get("/settings/profile", (request, response) => {
   if (request.user) {
-    if (request.params.userid === request.user.id) {
-      response.render("user/member_information_modification", {
-        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-          `${Boolean(request.user)}`
-        ],
-        userInfo: request.user,
-      });
-    } else {
-      response.redirect("/invalidAccess");
-    }
+    response.render("user/member_information_confirmation", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      userInfo: request.user,
+    });
+  } else {
+    response.redirect("/invalidAccess");
+  }
+});
+
+router.get("/settings/profile/edit", (request, response) => {
+  if (request.user) {
+    response.render("user/member_information_modification", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      userInfo: request.user,
+    });
   } else {
     response.redirect("/invalidAccess");
   }

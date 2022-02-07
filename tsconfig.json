@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "incremental": false,
+    "incremental": true,
+    "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
     "target": "es2021",
     "module": "commonjs",
     "moduleResolution": "node",

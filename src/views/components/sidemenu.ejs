@@ -2,7 +2,7 @@
   <h2 href="/">U labelar</h2>
   <ul>
     <% for (let i=0; i < side_menu.length; i++) { %>
-      <li><a href='<% if (side_menu[i].title=="会員情報") { %>/<%= userInfo.id %><% } %><%= side_menu[i].link %>' <% if(side_menu[i].title=="ログイン" ) { %>class="js-popup_login"
+      <li><a href='<%= side_menu[i].link %>' <% if(side_menu[i].title=="ログイン" ) { %>class="js-popup_login"
           onclick="showPopUp('showLogin')"<% } %> ><%= side_menu[i].title %>
         </a></li>
       <% } %>

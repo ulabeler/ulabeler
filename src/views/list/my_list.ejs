@@ -72,19 +72,12 @@
                         <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage - 1 %>">前へ</a></li>
                         <% } %>
                             <% for( let index=1; index <=maxPage; index++ ) { %>
-                                <% if (index==currentPage) { %>
-                                    <li class="pagination_nau">
-                                        <%- currentPage %>
-                                    </li>
+                                <% if (index==currentPage) { %><li class="pagination_nau"><%- currentPage %></li>
                                     <% } else { %>
-                                        <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- index %>">
-                                                <%- index %>
-                                            </a></li>
+                                        <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- index %>"><%- index %></a></li>
                                         <% } %>
                                             <% } %>
-                                                <% if (currentPage !=maxPage) { %>
-                                                    <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage + 1 %>">次へ</a></li>
-                                                    <% } %>
+                                            <% if (currentPage !=maxPage) { %><li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage + 1 %>">次へ</a></li><% } %>
                 </ul>
             </div>
 
