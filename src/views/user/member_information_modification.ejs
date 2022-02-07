@@ -158,6 +158,7 @@
         newName.addEventListener('focusout', function () {
             if (newName.value.length > 0) {
                 // @ts-ignore
+                console.log("newName.value.length > 0");
                 axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
                     text: newName.value,
                 })

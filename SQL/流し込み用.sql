@@ -45,7 +45,7 @@ INSERT INTO `ulabeler_dev`.`base_category` (`vendor_id`, `name_category`, `name_
 
 -- user追加;
 
-INSERT INTO `ulabeler_dev`.`user` (`id`, `name`, `password`, `mailaddress`, `self_introduction`, `cardnumber`, `name_card`, `expiration`, `created_at`) VALUES ('ulabeler', 'ゆーざー', 'u', 'ulabeler.07@gmail.com', 'よろ', '4485805109814218', 'HAL TARO', '0822', '2021-11-29 17:34');
+INSERT INTO `ulabeler_dev`.`user` (`id`, `name`, `password`, `mailaddress`, `self_introduction`, `cardnumber`, `name_card`, `expiration`, `created_at`) VALUES ('ulabeler', 'ゆーざー', '$2b$10$uquoNVSt/zHP9gUh5pCjCOMVytrjGRX1pBLj6OIUSRvHPs2U7ITXC', 'develop@na2na.dev', 'よろ', '4485805109814218', 'HAL TARO', '0822', '2021-11-29 17:34');
 
 -- スタンプ関係;
 

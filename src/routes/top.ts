@@ -284,7 +284,7 @@ router.get("/my_work", function (request, response) {
     // workから、userIdと一致するworkを取得
     knex("work")
       .where("created_by_user_id", userId)
-      .orderBy("id", "asc")
+      .orderBy("create_at", "asc")
       .then(async function (workList: workTable[]) {
         // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
         const baseCategoryList: base_categoryTable[] = [];
@@ -388,7 +388,7 @@ router.get("/creator_work/:userId", function (request, response) {
         // workから、userIdと一致するworkを取得
         knex("work")
           .where("created_by_user_id", userInfo.id)
-          .orderBy("id", "asc")
+          .orderBy("create_at", "asc")
           .then(async function (workList: workTable[]) {
             // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
             const baseCategoryList: base_categoryTable[] = [];
