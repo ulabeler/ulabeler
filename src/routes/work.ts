@@ -4,7 +4,7 @@ import express from "express";
 import { knex } from "../app";
 // eslint-disable-next-line camelcase
 import { workTable } from "../tools/TypeAlias/tableType_alias";
-// import sideMenuList from "../../tools/data/sidemenu.json";
+import sideMenuList from "../tools/data/sidemenu.json";
 // import { v4 as uuidv4 } from "uuid";
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -21,22 +21,27 @@ const router = express.Router();
  */
 router.get("/:workId/report", function (request, response) {
     if (request.user) {
+        console.log(request.params.workId);
         if (request.params.workId) {
-            const workId = request.query.workId;
+            const workId = request.params.workId;
             // workテーブルに対象の作品が存在するか
             knex("work")
                 .where("id", workId)
                 .then(function (work: workTable[]) {
                     if (work.length > 0) {
-                        response.render("work/report", { "work": work[0] });
+                        response.render("work/report", {
+                            "work": work[0], side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                                `${Boolean(request.user)}`
+                            ],
+                        });
                     }
                 })
         } else {
             // console.log(request.params)
-            response.redirect("/invalidAccess");
+            response.send("hogehoge");
         }
     } else {
-        response.redirect("/invalidAccess");
+        response.send("fugafuga");
     }
 })
 

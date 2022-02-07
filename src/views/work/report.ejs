@@ -51,23 +51,22 @@
                                 <p class="teport_subtext">以下の項目を選択してください。<font color="red">*</font>
                                 </p>
                                 <br>
-                                <p><input type="checkbox" name="" value="">不番な内容またはスパムである　　　　　</p>
-                                <p><input type="checkbox" name="" value="">不適切または攻撃的な内容を含んでいる　</p>
-                                <p><input type="checkbox" name="" value="">性的な意図が含まれている。または、自殺の意思をほのめかしている</p>
                             </div>
+                            <p><input id="" type="radio" name="categoryId" value="1">不番な内容またはスパムである　　　　　</p>
+                            <p><input id="" type="radio" name="categoryId" value="2">不適切または攻撃的な内容を含んでいる　</p>
                             <br>
                             <div class="teporttext_box_area">
-                                <textarea name="" class="teporttext_box" placeholder="内容を入力"></textarea>
+                                <textarea id="description" class="teporttext_box" placeholder="内容を入力"></textarea>
                                 <font color="red">*</font>
                             </div>
                             <br>
                             <div class="teport_error">
-                                <p id="" class="teport_error_message">※200文字以内で入力してください。</p><!-- やま jsエラーメッセージ -->
+                                <p id="descriptionErrorMessage" class="teport_error_message">※200文字以内で入力してください。</p><!-- やま jsエラーメッセージ -->
                             </div>
                         </form>
 
                         <div class="double_button">
-                            <button type="submit" class="white_button" form="hoge">通報する</button>
+                            <button type="button" class="white_button" onclick="showIsSelected()">通報する</button>
                             <button type="button" class="red_button2" onclick="location.href=''">戻る</button>
                             <!-- 購入確認画面へ -->
 
@@ -88,7 +87,53 @@
             <br>
             <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
             <br>
-            <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
+            <a href="#" id="pagetop"><i class="up"></i>↑</a>
     </body>
+
+    <script>
+        // radioボタンのチェック状態を取得
+        const radio = document.getElementsByName('categoryId');
+        const description = document.getElementById('description');
+        const descriptionErrorMessage = document.getElementById('descriptionErrorMessage');
+        let len = radio.length;
+        radio[0].checked = true;
+        // 選択されたラジオボタンのvalue値を取得
+        function showIsSelected() {
+            var value = '';
+            for (var i = 0; i < radio.length; i++) {
+                if (radio[i].checked) {
+                    value = radio[i].value;
+                }
+            }
+            // value値を表示
+            console.log(value);
+        }
+
+
+        description.addEventListener('focusout', function () {
+            if (description.value.length > 0) {
+                // @ts-ignore
+                axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
+                    text: description.value,
+                })
+                    .then(function (response) {
+                        if (response.data == true) {
+                            descriptionErrorMessage.innerText = '不適切なワードが含まれています。';
+                            // DisableCounterUsername++;
+                        } else {
+                            descriptionErrorMessage.innerText = '';
+                            if (description.value.length == 0) {
+                                // DisableCounterUsername++;
+                            } else {
+                                // DisableCounterUsername = 0;
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        alert(error); // TODO: エラー時の遷移先
+                    });
+            }
+        });
+    </script>
 
 </html>
