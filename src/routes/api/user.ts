@@ -83,7 +83,7 @@ router.post("/sign_up", function (request, response) {
       password: bcrypt.hashSync(request.body.password, 10),
       mailaddress: request.body.email,
       created_at: new Date(),
-      icon_path: null,
+      icon_path: "/images/system/user.png",
       self_introduction: null,
       cardnumber: null,
       name_card: null,
