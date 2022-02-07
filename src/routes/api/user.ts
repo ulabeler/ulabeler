@@ -506,6 +506,13 @@ router.post("/password/changeAttempt", function (request, response) {
   }
 });
 
+router.post("/modification_userinfo_attempt", function (request, response) {
+  if (!request.body.confirmationAttemptCode) {
+    response.status(400).send("Bad Request");
+    return;
+  }
+});
+
 // CLI専用
 // 該当idのユーザーを物理削除
 router.post("/dev/force_delete_user", function (request, response) {
