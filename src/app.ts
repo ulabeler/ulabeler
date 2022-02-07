@@ -45,6 +45,7 @@ import mediaAPIRouter from "./routes/api/media";
 import indexRouter from "./routes/top";
 import paymentRouter from "./routes/payment/payment";
 import PayPayRouter from "./routes/payment/paypay";
+import workRouter from "./routes/work";
 import passport from "passport";
 
 
@@ -69,6 +70,7 @@ app.use("/payment", paymentRouter);
 app.use("/payment/paypay", PayPayRouter);
 app.use("/api/user", userAPIRouter);
 app.use("/api/media", mediaAPIRouter);
+app.use("/work", workRouter);
 
 // catch 404 and forward to error handler
 app.use(function (request, response) {
