@@ -100,6 +100,7 @@ router.post("/sign_up", function (request, response) {
         password: userdata.password,
         mailaddress: userdata.mailaddress,
         created_at: userdata.created_at,
+        icon_path: userdata.icon_path,
       })
       .then(function () {
         sendMail("sign_up_complete", userdata.mailaddress);
