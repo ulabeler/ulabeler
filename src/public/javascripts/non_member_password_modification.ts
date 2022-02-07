@@ -23,10 +23,7 @@ new_password.addEventListener('keyup', function () {
     } else if (new_password.value.match(/[^a-zA-Z0-9_\-\.]/)) {
         error_password.innerText = '使用できる文字は、半角英数字、アンダーバー、ハイフン、ピリオドのみです';
         disable_counter_password++;
-    } else if (new_password.value.match(/[a-z]/)) {
-        error_password.innerText = '大文字小文字を最低1つ以上含めてください';
-        disable_counter_password++;
-    } else if (new_password.value.match(/[A-Z]/)) {
+    } else if (myXOR(new_password.value.match(/[A-Z]/), new_password.value.match(/[a-z]/))) {
         error_password.innerText = '大文字小文字を最低1つ以上含めてください';
         disable_counter_password++;
     } else {
@@ -38,6 +35,10 @@ new_password.addEventListener('keyup', function () {
         }
     }
 });
+
+function myXOR(a:any,b:any):boolean {
+    return ( a || b ) && !( a && b );
+  }
 
 setInterval(function () {
     if (disable_counter_password === 0) {
