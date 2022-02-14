@@ -16,7 +16,7 @@
                         <%- baseCategoryList[i].name_subcategory %> <br>「<%- workList[i].name %>
                                 」
                     </p>
-                    <p class="star2_1"><button type="button" style="background: transparent;outline: none;border: none;" onclick="selectFavorite('favidx<%-workList[i].id%>')">
+                    <p class="star2_1"><button type="button" style="background: transparent;outline: none;border: none;" onclick="event.stopPropagation(); selectFavorite('favidx<%-workList[i].id%>')">
                             <font size="15" color="orange">☆</font>
                         </button></p><!-- お気に入りしてない☆-->
                     <div class="favorite3">
@@ -32,6 +32,8 @@
                     <script>
                         function selectFavorite(id){
                             alert(id);
+                            this.stopPropagation();
+                            console.log(this)
                             this.preventDefault();
                             return;
                         }
