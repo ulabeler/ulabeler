@@ -42,6 +42,7 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 // ルーティング設定
 import userAPIRouter from "./routes/api/user";
 import mediaAPIRouter from "./routes/api/media";
+import workAPIRouter from "./routes/api/work";
 import indexRouter from "./routes/top";
 import paymentRouter from "./routes/payment/payment";
 import PayPayRouter from "./routes/payment/paypay";
@@ -70,6 +71,7 @@ app.use("/payment", paymentRouter);
 app.use("/payment/paypay", PayPayRouter);
 app.use("/api/user", userAPIRouter);
 app.use("/api/media", mediaAPIRouter);
+app.use("/api/work", workAPIRouter);
 app.use("/work", workRouter);
 
 // catch 404 and forward to error handler
