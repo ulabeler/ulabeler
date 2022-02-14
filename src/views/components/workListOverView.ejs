@@ -12,12 +12,11 @@
                 </p>
                 <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>"
                         alt="<%- workList[i].name %>" /></div>
-                <form action="#" method="post">
                     <p class="explanation">
                         <%- baseCategoryList[i].name_subcategory %> <br>「<%- workList[i].name %>
                                 」
                     </p>
-                    <p class="star2_1"><button type="button" style="background: transparent;outline: none;border: none;">
+                    <p class="star2_1"><button type="button" style="background: transparent;outline: none;border: none;" onclick="selectFavorite('favidx<%-workList[i].id%>')">
                             <font size="15" color="orange">☆</font>
                         </button></p><!-- お気に入りしてない☆-->
                     <div class="favorite3">
@@ -25,8 +24,15 @@
                             <font size="4">10</font>
                         </p>
                     </div>
-                </form>
             </section>
             <% } %>
                 <% } %>
                     <% } %>
+
+                    <script>
+                        function selectFavorite(id){
+                            alert(id);
+                            this.preventDefault();
+                            return;
+                        }
+                    </script>

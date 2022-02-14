@@ -4,13 +4,13 @@ const glob = require('glob');
 const distDir = require("../tsconfig.json").compilerOptions.outDir;
 
 // const distDir = "./built";
-cpDir(distDir);
+cpPublicDir(distDir);
 
 // srcにある、コンパイルしないタイプのファイルをbuiltにコピーする
 /**
  * @param {string} distDir
  */
-function cpDir(distDir) {
+function cpPublicDir(distDir) {
   fse.copySync("./src/public/images", `${distDir}/public/images`);
   fse.copySync("./src/public/stylesheets", `${distDir}/public/stylesheets`);
   fse.copySync("./src/public/favicon.ico", `${distDir}/public/favicon.ico`);
