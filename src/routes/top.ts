@@ -418,9 +418,8 @@ router.get("/creator_work/:userId", function (request, response) {
                         knex("favorited_work_number")
                           .where("favorited_to_id", work.id)
                           .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
-                            favoritedWorkNumberList.push(favoritedWorkNumber.length);
+                            favoritedWorkNumberList.push(favoritedWorkNumber[0].number);
                             if (favoritedWorkNumberList.length === workList.length) {
-                              console.log(favoritedWorkNumberList);
                               // workList.idそれぞれについて、favorited_workからいいねしているかどうかを取得。
                               // 該当レコードがなければfalse、あればtrueを配列に格納する
                                 if (request.user) {
@@ -473,6 +472,7 @@ router.get("/creator_work/:userId", function (request, response) {
                                     isMine: isMine(),
                                     isCreatorView: true,
                                     favoritedWorkNumberList: favoritedWorkNumberList,
+                                    favoritedWorkList: false,
                                   });
                                   resolve("ok");
                                   return;
