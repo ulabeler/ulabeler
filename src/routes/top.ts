@@ -1,7 +1,7 @@
 import express from "express";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
-import { userTable, workTable, base_categoryTable } from "tools/TypeAlias/tableType_alias";
+import { userTable, workTable, base_categoryTable, favorited_work_numberTable, favorited_workTable } from "tools/TypeAlias/tableType_alias";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 // import { checkLogin } from '../tools/user';
@@ -307,10 +307,6 @@ router.get("/my_work", function (request, response) {
                 baseCategoryList.push(baseCategory[0]);
                 if (baseCategoryList.length === workList.length) {
                   const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
-                  // console.log("idx:" + idx)
-                  // console.log("currentPage:" + currentPage)
-                  // console.log("maxPage:" + maxPage)
-                  // console.log("maxViewOnPage:" + maxViewOnPage)
                   const currentPageDescription = {
                     title: "マイ作品リスト",
                     "uriPrefix": "/my_work",
@@ -416,23 +412,74 @@ router.get("/creator_work/:userId", function (request, response) {
                         title: "作品一覧",
                         "uriPrefix": "/creator_work",
                       };
-                      response.render("list/creator_work", {
-                        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                          `${Boolean(request.user)}`
-                        ],
-                        workList: workList,
-                        baseCategoryList: baseCategoryList,
-                        idx: idx,
-                        maxPage: maxPage,
-                        maxViewOnPage: maxViewOnPage,
-                        currentPage: currentPage,
-                        userInfo: userInfo,
-                        currentPageDescription: currentPageDescription,
-                        isMine: isMine(),
-                        isCreatorView: true,
+                      // workList.idそれぞれについて、favorited_work_numberから、いいね数を取得
+                      const favoritedWorkNumberList: number[] = [];
+                      workList.forEach((work: workTable) => {
+                        knex("favorited_work_number")
+                          .where("favorited_to_id", work.id)
+                          .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
+                            favoritedWorkNumberList.push(favoritedWorkNumber[0].number);
+                            if (favoritedWorkNumberList.length === workList.length) {
+                              // workList.idそれぞれについて、favorited_workからいいねしているかどうかを取得。
+                              // 該当レコードがなければfalse、あればtrueを配列に格納する
+                                if (request.user) {
+                                  const favFrom = request.user.id;
+                                  const favoritedWorkList: boolean[] = [];
+                                  workList.forEach((work: workTable) => {
+                                    knex("favorited_work")
+                                      .where("favorite_to", work.id)
+                                      .andWhere("favorite_from", favFrom)
+                                      .then((favoritedWork: favorited_workTable[]) => {
+                                        favoritedWorkList.push(favoritedWork.length > 0);
+                                        if (favoritedWorkList.length === workList.length) {
+                                          response.render("list/creator_work", {
+                                            side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                                              `${Boolean(request.user)}`
+                                            ],
+                                            workList: workList,
+                                            baseCategoryList: baseCategoryList,
+                                            idx: idx,
+                                            maxPage: maxPage,
+                                            maxViewOnPage: maxViewOnPage,
+                                            currentPage: currentPage,
+                                            userInfo: userInfo,
+                                            currentPageDescription: currentPageDescription,
+                                            isMine: isMine(),
+                                            isCreatorView: true,
+                                            favoritedWorkNumberList: favoritedWorkNumberList,
+                                            favoritedWorkList: favoritedWorkList,
+                                          });
+                                          resolve("ok");
+                                          return;
+                                        }
+                                      }
+                                      );
+                                  }
+                                  );
+                                } else {
+                                  response.render("list/creator_work", {
+                                    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                                      `${Boolean(request.user)}`
+                                    ],
+                                    workList: workList,
+                                    baseCategoryList: baseCategoryList,
+                                    idx: idx,
+                                    maxPage: maxPage,
+                                    maxViewOnPage: maxViewOnPage,
+                                    currentPage: currentPage,
+                                    userInfo: userInfo,
+                                    currentPageDescription: currentPageDescription,
+                                    isMine: isMine(),
+                                    isCreatorView: true,
+                                    favoritedWorkNumberList: favoritedWorkNumberList,
+                                    favoritedWorkList: false,
+                                  });
+                                  resolve("ok");
+                                  return;
+                                }
+                            }
+                          });
                       });
-                      resolve("ok");
-                      return;
                     }
                   });
               });
