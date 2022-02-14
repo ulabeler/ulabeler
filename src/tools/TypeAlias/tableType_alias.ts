@@ -33,7 +33,7 @@ export type favorited_workTable = {
 };
 
 export type favorited_work_numberTable = {
-  favorited_to_id: number;
+  favorited_to_id: string;
   number: number; // いいね数
 };
 
