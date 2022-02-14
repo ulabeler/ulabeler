@@ -1,7 +1,7 @@
 import express from "express";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
-import { userTable, workTable, base_categoryTable, favorited_work_numberTable } from "tools/TypeAlias/tableType_alias";
+import { userTable, workTable, base_categoryTable, favorited_work_numberTable, favorited_workTable } from "tools/TypeAlias/tableType_alias";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 // import { checkLogin } from '../tools/user';
@@ -420,24 +420,58 @@ router.get("/creator_work/:userId", function (request, response) {
                           .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
                             favoritedWorkNumberList.push(favoritedWorkNumber.length);
                             if (favoritedWorkNumberList.length === workList.length) {
-                              response.render("list/creator_work", {
-                                side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                                  `${Boolean(request.user)}`
-                                ],
-                                workList: workList,
-                                baseCategoryList: baseCategoryList,
-                                idx: idx,
-                                maxPage: maxPage,
-                                maxViewOnPage: maxViewOnPage,
-                                currentPage: currentPage,
-                                userInfo: userInfo,
-                                currentPageDescription: currentPageDescription,
-                                isMine: isMine(),
-                                isCreatorView: true,
-                                favoritedWorkNumberList: favoritedWorkNumberList,
-                              });
-                              resolve("ok");
-                              return;
+                              // workList.idそれぞれについて、favorited_workからいいねしているかどうかを取得。
+                              // 該当レコードがなければfalse、あればtrueを配列に格納する
+                              const favoritedWorkList: boolean[] = [];
+                              workList.forEach((work: workTable) => {
+                                knex("favorited_work")
+                                  .where("favorite_to", work.id)
+                                  .andWhere("favorite_from", request.user!.id)
+                                  .then((favoritedWork: favorited_workTable[]) => {
+                                    favoritedWorkList.push(favoritedWork.length > 0);
+                                    if (favoritedWorkList.length === workList.length) {
+                                      response.render("list/creator_work", {
+                                        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                                          `${Boolean(request.user)}`
+                                        ],
+                                        workList: workList,
+                                        baseCategoryList: baseCategoryList,
+                                        idx: idx,
+                                        maxPage: maxPage,
+                                        maxViewOnPage: maxViewOnPage,
+                                        currentPage: currentPage,
+                                        userInfo: userInfo,
+                                        currentPageDescription: currentPageDescription,
+                                        isMine: isMine(),
+                                        isCreatorView: true,
+                                        favoritedWorkNumberList: favoritedWorkNumberList,
+                                        favoritedWorkList: favoritedWorkList,
+                                      });
+                                      resolve("ok");
+                                      return;
+                                    }
+                                  }
+                                  );
+                                // response.render("list/creator_work", {
+                                //   side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                                //     `${Boolean(request.user)}`
+                                //   ],
+                                //   workList: workList,
+                                //   baseCategoryList: baseCategoryList,
+                                //   idx: idx,
+                                //   maxPage: maxPage,
+                                //   maxViewOnPage: maxViewOnPage,
+                                //   currentPage: currentPage,
+                                //   userInfo: userInfo,
+                                //   currentPageDescription: currentPageDescription,
+                                //   isMine: isMine(),
+                                //   isCreatorView: true,
+                                //   favoritedWorkNumberList: favoritedWorkNumberList,
+                                // });
+                                // resolve("ok");
+                                // return;
+                              }
+                              );
                             }
                           });
                       });
