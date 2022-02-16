@@ -986,8 +986,8 @@ p.new_warning{
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    width:60%;
-    max-width: 600px;
+    width:50%;
+    max-width: 500px;
     padding: 0px;
     background-color: #fff;
     z-index: 2;
@@ -1572,6 +1572,7 @@ p.new_warning{
 	padding: 1%;
 	box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .2); 
 	transition: all 0.6s ease 0s;
+	background-color: #fff;
 }
 
 .box_item_2:hover{
@@ -1671,6 +1672,7 @@ p.new_warning{
 	border-radius: 20px;
 	padding-right: 5%;
 	padding-left: 5%;
+	background-color: #fff;
 	/* box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .2);  */
 
 }
@@ -1757,7 +1759,8 @@ p.new_warning{
 
 .tannka_table{
 	text-align: right;
-	padding-left: 62%;
+	margin: 0 0 0 auto;
+
 }
 
 .black_button4{
@@ -2356,17 +2359,16 @@ th {
 .privacy_box{
     width: 80%;
     max-width: 700px;
-    margin: 100px auto;
-    color: #707070;/*フォントカラー */
-    border: 3px solid; /*四角い枠*/
-    border: solid 3px #707070;  /*枠のカラー*/
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
     border-radius: 10px;    /*枠の丸み*/
+	background-color: #fff;
+	padding: 20px;
+	text-align: left;
+	margin: 0 auto;
 }
 
 .privacy_box p{
     font-size: 17px;
-    margin: 30px 0;
-    padding: 0 20px;
 }
 
 
@@ -2437,5 +2439,4 @@ th {
 table{
     border-collapse: collapse;
 }
-
 
