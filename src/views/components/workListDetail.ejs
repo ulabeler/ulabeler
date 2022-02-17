@@ -95,18 +95,20 @@
                             </button></p><!-- お気に入りしてない☆-->
                         <% } else { %>
                             <% if (favoritedWorkList[i]) { %>
-                                <p class="star2_1"><button type="button"
-                                        style="background: transparent;outline: none;border: none;"
+                                <p class="star2_1">
+                                    <button type="button" style="background: transparent;outline: none;border: none;"
                                         onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',true)">
                                         <font size="15" color="orange">★</font>
-                                    </button></p>
-                                <% } else { %>
-                                    <p class="star2"><button type="button"
-                                            style="background: transparent;outline: none;border: none;"
+                                    </button>
+                                </p>
+                            <% } else { %>
+                                <p class="star2">
+                                    <button type="button" style="background: transparent;outline: none;border: none;"
                                             onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
                                             <font size="15" color="orange">☆</font>
-                                        </button></p><!-- お気に入りしてない☆-->
-                                    <% } %>
+                                    </button>
+                                </p><!-- お気に入りしてない☆-->
+                            <% } %>
                                         <% } %>
                                             <div class="favorite3">
                                                 <p class="favorite2">
