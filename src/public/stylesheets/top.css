@@ -987,9 +987,24 @@ p.new_warning{
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    width: 100%;
-    max-width: 900px;
-    padding: 20px;
+    width:60%;
+	height: auto;
+    max-width: 500px;
+    padding: 0px;
+    background-color: #fff;
+    z-index: 2;
+}
+
+.popup-inner2 {
+	border-radius: 10px ; /*四角い枠*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width:60%;
+	height: auto;
+    max-width: 500px;
+    padding: 0px;
     background-color: #fff;
     z-index: 2;
 }
