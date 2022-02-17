@@ -13,7 +13,6 @@
 
 </head>
 <header class="header">
-
     <div class="header_logo">
         <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
     </div>
@@ -33,6 +32,7 @@
         <input type="checkbox" id="nav1">
         <label for="nav1" class="open"><span></span></label>
         <label for="nav1" class="close"></label>
+        <%- include("../components/login.ejs") %>
 
         <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
 
@@ -43,7 +43,6 @@
                 <div class="userpage">
 
                     <div class="user_2">
-                        <form action="" method="post" id="hoge">
                             <div class="user_box">
                                 <table cellpadding="0" 　class="usertable">
 
@@ -75,7 +74,6 @@
 
                                 </table>
                             </div>
-                        </form>
                     </div>
                 </div>
                 <div class=userpage>

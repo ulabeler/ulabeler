@@ -11,6 +11,7 @@ import {
   // eslint-disable-next-line camelcase
   mail_confirmationTable,
   reportTable,
+  // favorited_user_numberTable,
 } from "../../tools/TypeAlias/tableType_alias";
 import sideMenuList from "../../tools/data/sidemenu.json";
 import { v4 as uuidv4 } from "uuid";
@@ -104,8 +105,16 @@ router.post("/sign_up", function (request, response) {
         icon_path: userdata.icon_path,
       })
       .then(function () {
-        sendMail("sign_up_complete", userdata.mailaddress);
-        response.status(201).send(true);
+        // favorited_user_numberテーブルにデータを追加
+        knex("favorited_user_number")
+          .insert({
+            user_id: userdata.id,
+            favorited_user_number: 0,
+          })
+          .then(function () {
+            sendMail("sign_up_complete", userdata.mailaddress);
+            response.status(201).send(true);
+          })
       })
       .catch(function (err: any) {
         console.log(err);
@@ -180,7 +189,6 @@ router.post("/create/temp_password", function (request, response) {
             })
             .then(function () {
               // パスワードを変更したので、メールを送る
-
               const message = `<p>パスワード再設定のお知らせです。<br>仮のパスワードは以下を使用してください。<br>${temp.temp_password}<br><a href='${host}/reset_password?token=${temp.token}&id=${temp.id}'>こちら</a>からパスワードを再設定してください。<br>有効期限は、1時間です。</p>`;
               sendMail("reset_password", mailaddress, message);
               response.status(201).send(true);
