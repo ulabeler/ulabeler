@@ -6,27 +6,67 @@
                 <p class="date1">
                     <%# work.create_atをyyyy/mm/ddで表示する %>
                         <% const create_at=new Date(workList[i].create_at)%>
-                            <%= create_at.getFullYear() + "/" + ('00' +
-                                (create_at.getMonth()+1)).slice(-2) + "/" + ('00' +
-                                create_at.getDate()).slice(-2) %>
+                            <%= create_at.getFullYear() + "/" + ('00' + (create_at.getMonth()+1)).slice(-2) + "/" +
+                                ('00' + create_at.getDate()).slice(-2) %>
                 </p>
-                <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>"
-                        alt="<%- workList[i].name %>" /></div>
-                <form action="#" method="post">
-                    <p class="explanation">
-                        <%- baseCategoryList[i].name_subcategory %> <br>「<%- workList[i].name %>
-                                」
-                    </p>
-                    <p class="star2_1"><a href="">
+                <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>" alt="<%- workList[i].name %>" />
+                </div>
+                <p class="explanation">
+                    <%- baseCategoryList[i].name_subcategory %> <br>「<%- workList[i].name %>
+                            」
+                </p>
+                <% if (!favoritedWorkList) { %>
+                    <p class="star2"><button type="button" style="background: transparent;outline: none;border: none;"
+                            onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
                             <font size="15" color="orange">☆</font>
-                        </a></p><!-- お気に入りしてない☆-->
-                    <div class="favorite3">
-                        <p class="favorite2">
-                            <font size="4">10</font>
-                        </p>
-                    </div>
-                </form>
+                        </button></p><!-- お気に入りしてない☆-->
+                    <% } else { %>
+                        <% if (favoritedWorkList[i]) { %>
+                            <p class="star2_1"><button type="button"
+                                    style="background: transparent;outline: none;border: none;"
+                                    onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',true)">
+                                    <font size="15" color="orange">★</font>
+                                </button></p>
+                            <% } else { %>
+                                <p class="star2"><button type="button"
+                                        style="background: transparent;outline: none;border: none;"
+                                        onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
+                                        <font size="15" color="orange">☆</font>
+                                    </button></p><!-- お気に入りしてない☆-->
+                                <% } %>
+                                    <% } %>
+
+                                        <div class="favorite3">
+                                            <p class="favorite2" id="favNumIdx-<%-workList[i].id%>">
+                                                <font size="4">
+                                                    <%= favoritedWorkNumberList[i]%>
+                                                </font>
+                                            </p>
+                                        </div>
             </section>
             <% } %>
                 <% } %>
                     <% } %>
+
+                        <script>
+                            function selectFavorite(id, isFavorited) {
+                                axios.post(
+                                    `/api/work/favorite/${id}`,
+                                    {
+                                        isFavorited: isFavorited
+                                    }
+                                )
+                                    .then(function (response) {
+                                        console.log(response);
+                                        location.reload();
+                                    })
+                                    .catch(function (error) {
+                                        // httpStatusCodeを取得
+                                        console.log(error.response.status);
+                                        if (error.response.status == 403) {
+                                            alert("お気に入りに追加するには、ログインしてください。");
+                                        }
+                                    });
+                                return;
+                            }
+                        </script>

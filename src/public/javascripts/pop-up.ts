@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const TargetBlock = document.querySelector('.popup');
-const blackBg = document.getElementById('js-black-bg');
-const blackBgClass = document.querySelectorAll('.js-black-bg');
-const closeBtn = document.getElementById('js-close-btn');
-const showBtn = document.getElementById('js-show-popup');
+// const TargetBlock = document.querySelector('.popup');
+// const blackBg = document.getElementById('js-black-bg');
+// const blackBgClass = document.querySelectorAll('.js-black-bg');
+// const closeBtn = document.getElementById('js-close-btn');
+// const showBtn = document.getElementById('js-show-popup');
 
 // ポップアップを開く
 /**
