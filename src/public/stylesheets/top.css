@@ -25,18 +25,18 @@ a:hover img {
 }
 .header {
 	width: 100%;
-	height: 100px;
+	height: 150px;
 	/* いつか使うかも */
 	/* display: flex; */
 	align-items: flex-start;
-	
+	background: rgba(240, 240, 240, 0.6);
 	
 	/*親要素の高さと同じになってしまった子要素の高さを元に戻す*/
 	justify-content: flex-end;
 }
 .header_logo {
-	width: 15%;
-	height: 15%;
+	width: 20%;
+	height: 20%;
 	text-align: left;
 	margin-right: auto;
 
@@ -182,6 +182,10 @@ hr {
 #nav1 {
 	display: none;
 }
+
+
+
+
 label {
 	cursor: pointer;
 	position: fixed;
@@ -297,6 +301,7 @@ header,
 footer {
 	box-sizing: border-box;
 	text-align: center;
+	background: rgba(240, 240, 240, 0.6);
 }
 header .logo,
 footer .copyright {
@@ -312,7 +317,7 @@ header {
 	margin-bottom: 40px;
 }
 footer {
-	background: rgba(255,255,255,.6);
+	background: rgba(240, 240, 240, 0.6);
 }
 footer small {
 	font-size: 1em;
@@ -326,6 +331,7 @@ article {
 	padding: 0 15%;
 	max-width: 100%;
 	box-sizing: border-box; 
+	margin-top: 70px;
 
 }
 article h5{
@@ -475,7 +481,7 @@ section .btn:hover {
     height: 2.3em;
     width: 265px;
     overflow: hidden;
-	margin-left: 70%;
+	margin: 0 13% 0 auto;
 }
 .search_container input[type="text"]{
 	color: #0000;
@@ -776,8 +782,9 @@ dt {
 	box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .2); 
 	padding: 20px;
 
+
     border-radius: 10px;    /*枠の丸み*/
-    /* background-color: #fd0000; */
+    background-color: #fff;
 }
 
 .box09 h3{
@@ -2034,7 +2041,7 @@ p.new_warning{
 .box_item_4 {
 	width: 45%;
 	min-width: 600px;
-	
+	background-color: #fff;
 	margin: 0 auto;
 	margin-top: 5%;
 	margin-bottom: 5%;
@@ -2330,15 +2337,6 @@ th {
 	text-align: left;
 }
 
-.footer_text{
-	text-align: right;	
-	margin: 0 0 0 auto;
-	padding-right: 10%;
-}
-
-.footer_text{
-	text-align: right;
-}
 
 /*                  プライバシーポリシー                    */
 .privacy_title{
@@ -2421,13 +2419,14 @@ th {
 
 .footer_text{
 	text-align: right;	
-	margin: 0 10% 0 auto;
+	margin: 0 0 0 auto;
 
 
 }
 
-.footer_text{
+.footer_text1{
 	text-align: right;
+	margin: 0 10% 0 auto;
 }
 
 .button8{
@@ -2440,3 +2439,51 @@ table{
     border-collapse: collapse;
 }
 
+
+.carticon15{
+    width: 45px;
+	margin: 0 80px 0 auto;
+	opacity: 0.7;
+	transition: all 0.6s ease 0s;
+	margin-bottom: 30px;
+}
+
+.carticon15:hover {
+cursor: pointer;
+transform: translateY(-5px);
+/* transform: scale(1.1,1.1); */
+
+}
+
+.cartsuuji{
+	margin: 0 65px 0 auto;
+	text-align: right;
+	margin-top: -40px;
+
+}
+
+.carticon15 img{
+    width: 100%;
+}
+
+.toptable{
+	margin: 0 310px 0 auto;
+	text-align: left;
+	margin-top: -80px;
+}
+
+.headernakami{
+	
+	margin-right: 10px;
+}
+
+.cart_flex7{
+	max-width: 1000px;
+	margin: 0 auto;
+	text-emphasis:center;
+}
+
+.colorsenntaku{
+	text-align: right;
+	margin-top: -20px;
+}
