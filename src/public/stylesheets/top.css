@@ -864,6 +864,7 @@ p.new_warning{
     color:#000;/* ボタンの文字色 */
     height: 32px;/*ボタンの細さ*/
     width: 110px;/* ボタンの長さ */
+	border: solid 1px;
 }
 
 .login_link{
@@ -977,6 +978,7 @@ p.new_warning{
     color:#000;/* ボタンの文字色 */
     height: 32px;/*ボタンの細さ*/
     width: 150px;/* ボタンの長さ */
+	border: solid 1px;
 }
 
 .button5{
@@ -1308,6 +1310,7 @@ p.new_warning{
     color:#000;/* ボタンの文字色 */
     height: 32px;/*ボタンの細さ*/
     width: 110px;/* ボタンの長さ */
+	border: solid 1px;
 }
 
 .double_button2 button:first-of-type{
