@@ -2,15 +2,8 @@
 <html lang="ja">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="robots" content="none,noindex,nofollow">
-    <meta name="description" content="ハンドメイドショップサイト">
-    <meta name="keywords" content="ECサイト">
+    <%- include("../components/lib.ejs") %>
     <title>U labeler</title>
-
-    <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-
 </head>
 <header class="header">
 
@@ -67,12 +60,7 @@
             <br>
 
             <%- include("../components/listPagenation.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isCreatorView: isCreatorView }) %>
-
-
-            <br>
-            <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-            <br>
-            <a href="#" id="pagetop"><i class="up"></i>↑</a>
+            <%- include("../components/footer.ejs") %>
     </body>
 
 </html>
