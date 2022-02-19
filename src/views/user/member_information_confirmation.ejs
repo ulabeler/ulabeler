@@ -2,15 +2,8 @@
 <html lang="ja">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="robots" content="none,noindex,nofollow">
-    <meta name="description" content="ハンドメイドショップサイト">
-    <meta name="keywords" content="ECサイト">
+    <%- include("../components/lib.ejs") %> 
     <title>U labeler</title>
-    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-    <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
-
 </head>
 <header class="header">
 
@@ -33,63 +26,104 @@
         <label for="nav1" class="open"><span></span></label>
         <label for="nav1" class="close"></label>
         <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
-        <article>
-            <br>
-            <br>
+            <article>
+                <br>
+                <br>
 
-            <!-- ページ名 -->
-            <h3 class="h3_center2">会員情報確認
-                <hr>
-            </h3>
+                <!-- ページ名 -->
+                <h3 class="h3_center2">会員情報確認
+                    <hr>
+                </h3>
 
-            <section class="box_item_4">
+                <section class="box_item_4">
 
-                <div class=userpage>
+                    <div class=userpage>
 
-                    <form action="select_color.html" method="post">
-                        <br>
-                        <div class="image_wrapper5"><img src="<%= userInfo.icon_path %>" alt="" /></div>
-                        <p>@<%= userInfo.id %></p>
-                        <br>
-                        <table class="setumeitable2" cellpadding="3">
-                            <tr>
-                                <th>ユーザー名 ：</th>
-                                <!--空白いじらないで -->
-                                <th>
-                                    <p><%= userInfo.name %></p>
-                                </th>
+                        <form action="select_color.html" method="post">
+                            <br>
+                            <div class="image_wrapper5"><img src="<%= userInfo.icon_path %>" alt="" /></div>
+                            <p>@<%= userInfo.id %>
+                            </p>
+                            <br>
+                            <table class="setumeitable2" cellpadding="3">
+                                <tr>
+                                    <th>ユーザー名 ：</th>
+                                    <!--空白いじらないで -->
+                                    <th>
+                                        <p>
+                                            <%= userInfo.name %>
+                                        </p>
+                                    </th>
 
-                            </tr>
+                                </tr>
 
-                            <tr>
-                                <th>自己紹介文 ：</th>
-                                <th>
-                                    <p><%- userInfo.self_introduction %></p>
-                                </th>
+                                <tr>
+                                    <th>自己紹介文 ：</th>
+                                    <th>
+                                        <p>
+                                            <%- userInfo.self_introduction %>
+                                        </p>
+                                    </th>
 
-                            </tr>
+                                </tr>
 
-                        </table>
-                        <br>
-                        <p class="button6"><button type="button" class="black_button4"
-                                onclick="location.href='/settings/profile/edit'">編集</button></p>
-                        <br>
-                    </form>
-            </section>
+                            </table>
+                            <br>
+                            <p class="button6"><button type="button" class="black_button4"
+                                    onclick="location.href='/settings/profile/edit'">編集</button></p>
+                            <br>
+                            <div id="js-show-popup" onclick="showPopUp('showWithdrawal')">
+                                <p class="taikai">
+                                    <font color="red">退会する</font>
+                                </p>
+                            </div>
 
-            </div>
+                            <br>
+                        </form>
+                </section>
 
-            </div>
+                </div>
 
-            <noscript>
-                <p>JavaScriptを有効にしてください。</p>
-            </noscript>
-        </article>
-        <br>
-        <br>
-        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-        <br>
-        <a href="#" id="pagetop"><i class="up"></i>↑</a>
+                </div>
+
+                <div class="popup" id="showWithdrawal">
+                    <div class="popup-inner">
+                        <div class="close-btn" id="js-close-btn" onclick="closePopUp('showWithdrawal')"><i class="fas fa-times"></i></div>
+                        <section class="box_item_3">
+                            <br>
+                            <h3>本当に<font color="red">退会</font>しますか？</h3>
+                            <h4>
+                                <font color="red">退会</font>するとユーザー情報が<font color="red">削除</font>されます。
+                            </h4>
+
+                            <p>アカウントが完全に削除される前であれば、アカウントは、退会手続きから30日後にシステムから完全に削除されます。アカウントが完全に削除される前であれば、ログインすることで<font
+                                    color="red">復会</font>できます。</p>
+                            <br>
+
+                            <div class="double_button4">
+                                <table class="button_table">
+                                    <tr>
+                                        <th style="width: 20%;"></th>
+                                        <th><button type="button" class="white_button2"
+                                                onclick="location.href=''">はい</button></th>
+                                        <th style="width: 30%;"></th>
+                                        <th><button type="button" class="red_button2" form=="hoge"
+                                            onclick="closePopUp('showWithdrawal')">いいえ</button></th>
+                                        <th style="width: 20%;"></th>
+                                    </tr>
+                                </table>
+                                <br>
+
+                            </div>
+                        </section>
+                    </div>
+                    <div class="black-background" id="js-black-bg" onclick="closePopUp('showWithdrawal')"></div>
+                </div>
+                <noscript>
+                    <p>JavaScriptを有効にしてください。</p>
+                </noscript>
+            </article>
+            <%- include("../components/footer.ejs") %>
     </body>
 
 </html>
