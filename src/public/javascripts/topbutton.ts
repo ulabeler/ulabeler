@@ -3,6 +3,7 @@ $(function() {
     topBtn.hide();
     //スクロールが100に達したらボタン表示
     $(window).scroll(function () {
+        // @ts-ignore
         if ($(this).scrollTop() > 300) {
             topBtn.fadeIn();
         } else {
