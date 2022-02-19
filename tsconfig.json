@@ -38,7 +38,7 @@
     "src/tools/TypeAlias/*.ts",
     "src/app.ts",
     "src/public/javascripts/**/*.ts"
-, "src/public/javascripts/sign-up.js"  ],
+, "src/public/javascripts/sign-up.js", "src/public/javascripts/drag_drop.js"  ],
   "exclude": [
     "node_modules",
     "素材/*",

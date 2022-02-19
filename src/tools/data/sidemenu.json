@@ -30,10 +30,6 @@
         },{
             "title": "ログアウト",
             "link": "/logout"
-        },
-        {
-            "title": "退会",
-            "link": "member_withdrawal.html"
         }
     ],
     "false":[

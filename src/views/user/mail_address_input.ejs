@@ -2,41 +2,14 @@
 <html lang="ja">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="robots" content="none,noindex,nofollow">
-  <meta name="description" content="ハンドメイドショップサイト">
-  <meta name="keywords" content="ECサイト">
+  <%- include("../components/lib.ejs") %>
   <title>U labeler</title>
-
-  <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-
 </head>
 <header class="header">
 
   <div class="header_logo">
-    <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
-  </div>
-
-  <!-- 検索ボックス -->
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-  <span class="magnifying_glass"></span>
-  <form method="get" action="#" class="search_container">
-    <input type="text" size="25" placeholder="キーワード検索">
-    <input type="submit" value="&#xf002">
-  </form>
-
-  </div>
-
-
+    <%- include("../components/header.ejs") %>
   <body>
-
-    <input type="checkbox" id="nav1">
-    <label for="nav1" class="open"><span></span></label>
-    <label for="nav1" class="close"></label>
-
-
     <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
 
       <article>
@@ -65,16 +38,10 @@
 
         </div>
 
-        <noscript>
-          <p>JavaScriptを有効にしてください。</p>
-        </noscript>
-
 
 
       </article>
-      <br>
-      <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-      <br>
+      <%- include("../components/footer.ejs") %>
   </body>
 
   <script src="/javascripts/util/mail_varidate.js"></script>

@@ -12,10 +12,9 @@
                 <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>" alt="<%- workList[i].name %>" />
                 </div>
                 <p class="explanation">
-                    <%- baseCategoryList[i].name_subcategory %> <br>「<%- workList[i].name %>
-                            」
+                    <%- baseCategoryList[i].name_subcategory %> <br>「<%- workList[i].name %>」
                 </p>
-                <% if (!favoritedWorkList) { %>
+                <% if (typeof(favoritedWorkList) == "undefined") { %>
                     <p class="star2"><button type="button" style="background: transparent;outline: none;border: none;"
                             onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
                             <font size="15" color="orange">☆</font>

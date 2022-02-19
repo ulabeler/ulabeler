@@ -4,10 +4,7 @@ import { knex } from "../app";
 import { userTable, workTable, base_categoryTable, favorited_work_numberTable, favorited_workTable } from "tools/TypeAlias/tableType_alias";
 // eslint-disable-next-line new-cap
 const router = express.Router();
-// import { checkLogin } from '../tools/user';
-// import { side_menu } from '../TypeAlias/misc_alias';
 import sideMenuList from "../tools/data/sidemenu.json";
-import crypto from "crypto";
 const maxViewOnPage = 3; // 1ページに表示する最大件数
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
@@ -124,112 +121,6 @@ router.get("/logout", function (request, response) {
   });
 });
 
-router.get("/mail_address_modification", function (request, response) {
-  // passportを利用して、ユーザー情報を取得
-  if (request.user === undefined) {
-    response.redirect("/invalidAccess");
-    return;
-  }
-  const mailaddress: userTable["mailaddress"] = request.user.mailaddress;
-
-  response.render("./user/mail_address_modification", {
-    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-      `${Boolean(request.user)}`
-    ],
-    mailaddress: mailaddress,
-    userInfo: request.user,
-  });
-});
-
-router.get(
-  "/mail_address_modification/sent_confirmation_code",
-  function (request, response) {
-    // 遷移元のページが/mail_address_modificationでない場合エラー画面へ
-    if (request.headers.referer !== `${host}/mail_address_modification`) {
-      response.redirect("/invalidAccess");
-      return;
-    } else {
-      response.render("./components/message", {
-        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-          `${Boolean(request.user)}`
-        ],
-        message: "入力されたメースアドレスに<br>確認コードを送信しました。",
-        userInfo: request.user,
-      });
-    }
-  }
-);
-
-router.get("/mail_address_modification/complete", function (request, response) {
-  if (request.user) {
-    const userId = request.user.id;
-    if (
-      request.headers.referer !==
-      `${host}/mail_address_modification/confirmationCode?id=${crypto
-        .createHash("sha256")
-        .update(userId, "utf8")
-        .digest("hex")}`
-    ) {
-      response.redirect("/invalidAccess");
-      return;
-    } else {
-      response.render("./components/message", {
-        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-          `${Boolean(request.user)}`
-        ],
-        message: "メールアドレスが変更されました。",
-        userInfo: request.user,
-      });
-    }
-  } else {
-    response.redirect("/invalidAccess");
-    return;
-  }
-});
-
-router.get(
-  "/mail_address_modification/confirmationCode",
-  function (request, response) {
-    // getパラメータにidが無ければエラー画面へ
-    if (!request.query.id) {
-      response.redirect("/invalidAccess");
-      return;
-    } else if (!request.user) {
-      response.render("./components/message", {
-        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-          `${Boolean(request.user)}`
-        ],
-        message:
-          "メールアドレス変更手続きは、<br>ログインした状態で行ってください。。",
-      });
-      return;
-    } else {
-      const idForVerify: userTable["id"] = crypto
-        .createHash("sha256")
-        .update(request.user.id, "utf8")
-        .digest("hex");
-      const idFromQuery: string = request.query.id.toString();
-      // トークン代わりに利用してるブツが一致するか検証
-      if (idFromQuery !== idForVerify) {
-        response.render("./components/message", {
-          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-            `${Boolean(request.user)}`
-          ],
-          message: "URLが正しくありません。",
-          userInfo: request.user,
-        });
-        return;
-      } else {
-        response.render("user/authorization_code_input", {
-          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-            `${Boolean(request.user)}`
-          ],
-          userInfo: request.user,
-        });
-      }
-    }
-  }
-);
 
 router.get("/reset_password/complete", function (request, response) {
   if (request.headers.referer) {
@@ -251,7 +142,6 @@ router.get("/reset_password/complete", function (request, response) {
   }
   response.redirect("/invalidAccess");
 });
-
 
 router.get("/password/modification", function (request, response) {
   if (request.user) {
@@ -530,6 +420,26 @@ router.get("/settings/profile/edit/icon", (request, response) => {
     response.redirect("/invalidAccess");
   }
 });
+
+router.get("/sitepolicy", (request, response) => {
+  const userInfo = request.user ? request.user : null;
+  response.render("sitePolicy", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    userInfo: userInfo,
+  });
+})
+
+router.get("/privacypolicy", (request, response) => {
+  const userInfo = request.user ? request.user : null;
+  response.render("privacyPolicy", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    userInfo: userInfo,
+  });
+})
 
 router.get("/invalidAccess", function (request, response) {
   const userInfo = request.user ? request.user : null;
