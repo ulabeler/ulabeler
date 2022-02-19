@@ -25,7 +25,7 @@ function cpPublicDir(distDir) {
     if (files.length === 0) {
       return;
     }
-    console.log("Things that are not TypeScript")
+    console.log("Public: Things that are not TypeScript")
     console.log(files);
     files.forEach(file => {
       // fileの末尾が.jsならばコピーする

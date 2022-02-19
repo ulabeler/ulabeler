@@ -44,6 +44,7 @@ import userAPIRouter from "./routes/api/user";
 import mediaAPIRouter from "./routes/api/media";
 import workAPIRouter from "./routes/api/work";
 import indexRouter from "./routes/top";
+import mailModRouter from "./routes/mailMod";
 import paymentRouter from "./routes/payment/payment";
 import PayPayRouter from "./routes/payment/paypay";
 import workRouter from "./routes/work";
@@ -73,6 +74,7 @@ app.use("/api/user", userAPIRouter);
 app.use("/api/media", mediaAPIRouter);
 app.use("/api/work", workAPIRouter);
 app.use("/work", workRouter);
+app.use("/mail_address_modification", mailModRouter);
 
 // catch 404 and forward to error handler
 app.use(function (request, response) {

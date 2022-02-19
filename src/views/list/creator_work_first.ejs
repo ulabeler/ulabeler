@@ -2,15 +2,8 @@
 <html lang="ja">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="robots" content="none,noindex,nofollow">
-    <meta name="description" content="ハンドメイドショップサイト">
-    <meta name="keywords" content="ECサイト">
-    <title>U labeler</title>
-
-    <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-
+    <%- include("../components/lib.ejs") %>
+        <title>U labeler</title>
 </head>
 <header class="header">
 
@@ -28,95 +21,78 @@
     </form>
 
 
-    <body>
 
-        <input type="checkbox" id="nav1">
-        <label for="nav1" class="open"><span></span></label>
-        <label for="nav1" class="close"></label>
+    <body>
+        <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
         <%- include("../components/login.ejs") %>
 
-
-        <body>
-
-            <input type="checkbox" id="nav1">
-            <label for="nav1" class="open"><span></span></label>
-            <label for="nav1" class="close"></label>
-
-            <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
-
-                <article>
-                    <br>
-                    <br>
-
-                    <div class="userpage">
-
-                        <div class="user_2">
-                            <form action="" method="post" id="hoge">
-                                <div class="user_box">
-                                    <table cellpadding="0" 　class="usertable">
-
-                                        <tr>
-                                            <th rowspan="4">
-                                                <p class=user_img><img src="<%- userInfo.icon_path %>" alt="商品画像"></p>
-                                            </th>
-                                            <td>　　　　　</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <p class="username">
-                                                    <%- userInfo.name %>
-                                                </p>
-                                            </td>
-                                            <input type="hidden" name="">
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <p class="userid">＠<%- userInfo.id %>
-                                                </p>
-                                            </td>
-                                            <input type="hidden" name="">
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" class="setumei">
-                                                <%- userInfo.self_introduction %>
-                                            </td>
-
-                                        </tr>
-
-
-
-                                    </table>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class=userpage>
-                        <div class="td2">
-                            <!-- <p class = "star"><a href=""><font color="orange">★</font></a></p> -->
-                            <!-- お気に入りしいる★-->
-                            <p class="star_1"><a href="">
-                                    <font color="orange">☆</font>
-                                </a></p><!-- お気に入りしいない☆-->
-                            <p class="favorite">100</p>
-                        </div>
-                    </div>
-                    <br>
-                    <p class="senn">作品一覧
-                        <hr crass="hr3">
-                    </p>
-                    <br>
-
-                    <h3>このユーザーは作品を投稿していません。</h3>
-                    <noscript>
-                        <p>JavaScriptを有効にしてください。</p>
-                    </noscript>
-
-                </article>
+            <article>
                 <br>
-                <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
                 <br>
-                <a href="#" id="pagetop"><i class="up"></i>↑</a>
-        </body>
+
+                <div class="userpage">
+
+                    <div class="user_2">
+                        <form action="" method="post" id="hoge">
+                            <div class="user_box">
+                                <table cellpadding="0" 　class="usertable">
+
+                                    <tr>
+                                        <th rowspan="4">
+                                            <p class=user_img><img src="<%- userInfo.icon_path %>" alt="商品画像"></p>
+                                        </th>
+                                        <td>　　　　　</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p class="username">
+                                                <%- userInfo.name %>
+                                            </p>
+                                        </td>
+                                        <input type="hidden" name="">
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p class="userid">＠<%- userInfo.id %>
+                                            </p>
+                                        </td>
+                                        <input type="hidden" name="">
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="setumei">
+                                            <%- userInfo.self_introduction %>
+                                        </td>
+
+                                    </tr>
+
+
+
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class=userpage>
+                    <div class="td2">
+                        <!-- <p class = "star"><a href=""><font color="orange">★</font></a></p> -->
+                        <!-- お気に入りしいる★-->
+                        <p class="star_1"><a href="">
+                                <font color="orange">☆</font>
+                            </a></p><!-- お気に入りしいない☆-->
+                        <p class="favorite">100</p>
+                    </div>
+                </div>
+                <br>
+                <p class="senn">作品一覧
+                    <hr crass="hr3">
+                </p>
+                <br>
+
+                <h3>このユーザーは作品を投稿していません。</h3>
+
+            </article>
+            <%- include("../components/footer.ejs") %>
+    </body>
 
 </html>

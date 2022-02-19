@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("./components/lib.ejs") %>
+        <title>U labeler</title>
+        <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
+</head>
+<header class="header">
+    <%- include("./components/header.ejs") %>
+    <body>
+        <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
+
+            <article>
+                <br><br>
+                <!-- ページ名 -->
+                <h3 class="faq_title">サイトポリシー
+                    <hr>
+                </h3>
+                <p>U-labeler(以下、当社といいます。)が提供するwebサイト(url)<br>を
+                    ご利用いただく方は、以下の内容を十分にお読みください。</p>
+
+                <small>※サイトポリシーおよび関連する規定は、変更させていただく場合が
+                    ございますので予めご了承ください。</small>
+
+                <div class="faq_content">
+
+                    <h4>・免責事項</h4>
+                    <p>当社は、細心の注意を払い当社ウェブサイトに
+                        商品を掲載しておりますが、その完全性を保証するものではありません。
+                        なお、当社はお客様同士のトラブルで直接、間接的に生じた損失に対し、
+                        一切の責任を負うものではありません。</p>
+                    <h4>・著作権</h4>
+                    <p>当社ウェブサイトにて掲載されている写真、イラスト、ロゴ、文章その他
+                        すべての著作物はすべて著作権法に準じ、当社または第三者が著作権を有しています。
+                    <h4>・個人情報</h4>
+                    <p>当社は、情報セキュリティに関する法令、規則等を
+                        「プライバシーポリシー（個人情報保護）」の遵守と合わせ、
+                        これに従うことを宣言します。</p>
+                </div>
+
+                <%- include("./components/login.ejs") %>
+            </article>
+            <%- include("./components/footer.ejs") %>
+    </body>
+
+</html>
