@@ -431,6 +431,16 @@ router.get("/sitepolicy", (request, response) => {
   });
 })
 
+router.get("/privacypolicy", (request, response) => {
+  const userInfo = request.user ? request.user : null;
+  response.render("privacyPolicy", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    userInfo: userInfo,
+  });
+})
+
 router.get("/invalidAccess", function (request, response) {
   const userInfo = request.user ? request.user : null;
   response.render("./components/message", {
