@@ -43,22 +43,14 @@
                     <div class="box_wrapper_2">
 
                         <%- include("../components/workListOverView.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription, }) %>
-
-
-
                     </div>
                 </div>
-
-
                 <%- include("../components/workListDetail.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isMine: isMine}) %>
-
-
                                     <noscript>
                                         <p>JavaScriptを有効にしてください。</p>
                                     </noscript>
             </article>
             <br>
-
             <%- include("../components/listPagenation.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isCreatorView: isCreatorView }) %>
             <%- include("../components/footer.ejs") %>
     </body>
