@@ -122,13 +122,6 @@ router.get("/logout", function (request, response) {
 });
 
 
-
-
-
-
-
-
-
 router.get("/reset_password/complete", function (request, response) {
   if (request.headers.referer) {
     const rawReferer = request.headers.referer;
@@ -149,7 +142,6 @@ router.get("/reset_password/complete", function (request, response) {
   }
   response.redirect("/invalidAccess");
 });
-
 
 router.get("/password/modification", function (request, response) {
   if (request.user) {
@@ -428,6 +420,16 @@ router.get("/settings/profile/edit/icon", (request, response) => {
     response.redirect("/invalidAccess");
   }
 });
+
+router.get("/sitepolicy", (request, response) => {
+  const userInfo = request.user ? request.user : null;
+  response.render("sitePolicy", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    userInfo: userInfo,
+  });
+})
 
 router.get("/invalidAccess", function (request, response) {
   const userInfo = request.user ? request.user : null;
