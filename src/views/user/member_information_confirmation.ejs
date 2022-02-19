@@ -3,127 +3,109 @@
 
 <head>
     <%- include("../components/lib.ejs") %>
-    <title>U labeler</title>
+        <title>U labeler</title>
 </head>
 <header class="header">
+    <%- include("../components/header.ejs") %>
 
-    <div class="header_logo">
-        <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
-    </div>
+        <body>
+            <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+                <article>
+                    <br>
+                    <br>
 
-    <!-- 検索ボックス -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+                    <!-- ページ名 -->
+                    <h3 class="h3_center2">会員情報確認
+                        <hr>
+                    </h3>
 
-    <span class="magnifying_glass"></span>
-    <form method="get" action="#" class="search_container">
-        <input type="text" size="25" placeholder="キーワード検索">
-        <input type="submit" value="&#xf002">
-    </form>
+                    <section class="box_item_4">
 
-    <body>
+                        <div class=userpage>
 
-        <input type="checkbox" id="nav1">
-        <label for="nav1" class="open"><span></span></label>
-        <label for="nav1" class="close"></label>
-        <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
-            <article>
-                <br>
-                <br>
-
-                <!-- ページ名 -->
-                <h3 class="h3_center2">会員情報確認
-                    <hr>
-                </h3>
-
-                <section class="box_item_4">
-
-                    <div class=userpage>
-
-                        <form action="select_color.html" method="post">
-                            <br>
-                            <div class="image_wrapper5"><img src="<%= userInfo.icon_path %>" alt="" /></div>
-                            <p>@<%= userInfo.id %>
-                            </p>
-                            <br>
-                            <table class="setumeitable2" cellpadding="3">
-                                <tr>
-                                    <th>ユーザー名 ：</th>
-                                    <!--空白いじらないで -->
-                                    <th>
-                                        <p>
-                                            <%= userInfo.name %>
-                                        </p>
-                                    </th>
-
-                                </tr>
-
-                                <tr>
-                                    <th>自己紹介文 ：</th>
-                                    <th>
-                                        <p>
-                                            <%- userInfo.self_introduction %>
-                                        </p>
-                                    </th>
-
-                                </tr>
-
-                            </table>
-                            <br>
-                            <p class="button6"><button type="button" class="black_button4"
-                                    onclick="location.href='/settings/profile/edit'">編集</button></p>
-                            <br>
-                            <div id="js-show-popup" onclick="showPopUp('showWithdrawal')">
-                                <p class="taikai">
-                                    <font color="red">退会する</font>
+                            <form action="select_color.html" method="post">
+                                <br>
+                                <div class="image_wrapper5"><img src="<%= userInfo.icon_path %>" alt="" /></div>
+                                <p>@<%= userInfo.id %>
                                 </p>
-                            </div>
-
-                            <br>
-                        </form>
-                </section>
-
-                </div>
-
-                </div>
-
-                <div class="popup" id="showWithdrawal">
-                    <div class="popup-inner">
-                        <div class="close-btn" id="js-close-btn" onclick="closePopUp('showWithdrawal')"><i class="fas fa-times"></i></div>
-                        <section class="box_item_3">
-                            <br>
-                            <h3>本当に<font color="red">退会</font>しますか？</h3>
-                            <h4>
-                                <font color="red">退会</font>するとユーザー情報が<font color="red">削除</font>されます。
-                            </h4>
-
-                            <p>アカウントが完全に削除される前であれば、アカウントは、退会手続きから30日後にシステムから完全に削除されます。アカウントが完全に削除される前であれば、ログインすることで<font
-                                    color="red">復会</font>できます。</p>
-                            <br>
-
-                            <div class="double_button4">
-                                <table class="button_table">
+                                <br>
+                                <table class="setumeitable2" cellpadding="3">
                                     <tr>
-                                        <th style="width: 20%;"></th>
-                                        <th><button type="button" class="white_button2"
-                                                onclick="location.href=''">はい</button></th>
-                                        <th style="width: 30%;"></th>
-                                        <th><button type="button" class="red_button2" form=="hoge"
-                                            onclick="closePopUp('showWithdrawal')">いいえ</button></th>
-                                        <th style="width: 20%;"></th>
+                                        <th>ユーザー名 ：</th>
+                                        <!--空白いじらないで -->
+                                        <th>
+                                            <p>
+                                                <%= userInfo.name %>
+                                            </p>
+                                        </th>
+
                                     </tr>
+
+                                    <tr>
+                                        <th>自己紹介文 ：</th>
+                                        <th>
+                                            <p>
+                                                <%- userInfo.self_introduction %>
+                                            </p>
+                                        </th>
+
+                                    </tr>
+
                                 </table>
                                 <br>
+                                <p class="button6"><button type="button" class="black_button4"
+                                        onclick="location.href='/settings/profile/edit'">編集</button></p>
+                                <br>
+                                <div id="js-show-popup" onclick="showPopUp('showWithdrawal')">
+                                    <p class="taikai">
+                                        <font color="red">退会する</font>
+                                    </p>
+                                </div>
 
-                            </div>
-                        </section>
+                                <br>
+                            </form>
+                    </section>
+
                     </div>
-                    <div class="black-background" id="js-black-bg" onclick="closePopUp('showWithdrawal')"></div>
-                </div>
-                <noscript>
-                    <p>JavaScriptを有効にしてください。</p>
-                </noscript>
-            </article>
-            <%- include("../components/footer.ejs") %>
-    </body>
+
+                    </div>
+
+                    <div class="popup" id="showWithdrawal">
+                        <div class="popup-inner">
+                            <div class="close-btn" id="js-close-btn" onclick="closePopUp('showWithdrawal')"><i
+                                    class="fas fa-times"></i></div>
+                            <section class="box_item_3">
+                                <br>
+                                <h3>本当に<font color="red">退会</font>しますか？</h3>
+                                <h4>
+                                    <font color="red">退会</font>するとユーザー情報が<font color="red">削除</font>されます。
+                                </h4>
+
+                                <p>アカウントが完全に削除される前であれば、アカウントは、退会手続きから30日後にシステムから完全に削除されます。アカウントが完全に削除される前であれば、ログインすることで
+                                    <font color="red">復会</font>できます。</p>
+                                <br>
+
+                                <div class="double_button4">
+                                    <table class="button_table">
+                                        <tr>
+                                            <th style="width: 20%;"></th>
+                                            <th><button type="button" class="white_button2"
+                                                    onclick="location.href=''">はい</button></th>
+                                            <th style="width: 30%;"></th>
+                                            <th><button type="button" class="red_button2" form=="hoge"
+                                                    onclick="closePopUp('showWithdrawal')">いいえ</button></th>
+                                            <th style="width: 20%;"></th>
+                                        </tr>
+                                    </table>
+                                    <br>
+
+                                </div>
+                            </section>
+                        </div>
+                        <div class="black-background" id="js-black-bg" onclick="closePopUp('showWithdrawal')"></div>
+                    </div>
+                </article>
+                <%- include("../components/footer.ejs") %>
+        </body>
 
 </html>
