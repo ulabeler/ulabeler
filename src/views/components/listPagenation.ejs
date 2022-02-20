@@ -2,10 +2,12 @@
     <ul class="example">
         <% if (currentPage !=1) { %>
             <li>
-                <% if (isCreatorView) { %>
+                <% if (isCreatorView == true) { %>
                     <a href="/creator_work/<%= userInfo.id %>?page=<%- currentPage - 1 %>">前へ</a>
-                <% } else { %>
+                    <% } else if (isCreatorView == false) { %>
                     <a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage - 1 %>&userId=<%= userInfo.id %>">前へ</a>
+                <% } else if (isCreatorView == "myFavWorkList") { %>
+                    <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage - 1 %>">前へ</a></li>
                 <% } %>
             </li>
             <% } %>
@@ -23,12 +25,14 @@
                 <% } %>
             <% } %>
             <% if (currentPage !=maxPage) { %>
-                <% if (isCreatorView) { %>
+                <% if (isCreatorView == true) { %>
                     <li>
                         <a href="/creator_work/<%= userInfo.id %>?page=<%- currentPage + 1 %>">次へ</a>
                     </li>
-                <% } else { %>
-                <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage + 1 %>&userId=<%= userInfo.id %>">次へ</a></li>
+                <% } else if (isCreatorView == false) { %>
+                <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage + 1 %>">次へ</a></li>
+                <% } else if (isCreatorView == "myFavWorkList") { %>
+                    <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- currentPage + 1 %>">次へ</a></li>
                 <% } %>
             <% } %>
     </ul>
