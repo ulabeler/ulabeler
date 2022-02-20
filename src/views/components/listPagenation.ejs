@@ -13,10 +13,12 @@
                 <% if (index==currentPage) { %>
                     <li class="pagination_nau"><%- currentPage %></li>
                 <% } else { %>
-                    <% if (isCreatorView) { %>
+                    <% if (isCreatorView == true) { %>
                         <li><a href="/creator_work/<%= userInfo.id %>?page=<%- index %>"><%- index %></a></li>
-                    <% } else { %>
-                        <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- index %>&userId=<%= userInfo.id %>"><%= index %></a></li>
+                    <% } else if (isCreatorView == false) { %>
+                        <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- index %>"><%= index %></a></li>
+                    <% } else if (isCreatorView == "myFavWorkList") { %>
+                        <li><a href="<%= currentPageDescription.uriPrefix %>?page=<%- index %>"><%= index %></a></li>
                     <% } %>
                 <% } %>
             <% } %>
