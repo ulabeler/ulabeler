@@ -484,86 +484,96 @@ router.get("/favorite/work", (request, response) => {
       idx = (Number(request.query.page) - 1) * maxViewOnPage;
       currentPage = Number(request.query.page);
     }
+    const currentPageDescription = {
+      title: "お気に入り作品リスト",
+      "uriPrefix": `/favorite/work`,
+    };
     const userId = request.user.id;
     // favorited_workTableから、favorite_fromがuserIdのレコードを取得
     knex("favorited_work")
       .where("favorite_from", userId)
       .orderBy(orderBy)
       .then((favoritedWork: favorited_workTable[]) => {
-        const maxPage = ~~(favoritedWork.length / maxViewOnPage) + 1;
-        const currentPageDescription = {
-          title: "お気に入り作品リスト",
-          "uriPrefix": `/favorite/work`,
-        };
-        // それぞれのレコードのfavorite_toを取得し、workTableからそれぞれのレコードを取得
-        const favoritedWorkIdList: string[] = [];
-        const favoritedWorkList: boolean[] = [];
-        favoritedWork.forEach((favoritedWork: favorited_workTable) => {
-          favoritedWorkIdList.push(favoritedWork.favorite_to);
-          favoritedWorkList.push(true);
-        });
-        knex("work")
-          .whereIn("id", favoritedWorkIdList)
-          .then((workList: workTable[]) => {
-            // workTableから、user_idがuserIdのレコードを取得
-            knex("user")
-              .where("id", userId)
-              .then((user: userTable[]) => {
-                const userFlagisMine: boolean[] = [];
-                // user.idとwork.user_idが一致するかどうかを判定し、一致する場合はtrueを返す
-                workList.forEach((work: workTable) => {
-                  userFlagisMine.push(work.created_by_user_id === userId);
-                });
-                // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
-                const baseCategoryList: base_categoryTable[] = [];
-                workList.forEach((work: workTable) => {
-                  knex("base_category")
-                    .where("id", work.base_category_id)
-                    .then((baseCategory: base_categoryTable[]) => {
-                      baseCategoryList.push(baseCategory[0]);
-                      // workList.idそれぞれについて、favorited_work_numberから、いいね数を取得
-                      if (baseCategoryList.length === workList.length) {
-                        const favoritedWorkNumberList: number[] = [];
-                        favoritedWorkIdList.forEach((favoritedWorkId: string) => {
-                          knex("favorited_work")
-                            .where("favorite_to", favoritedWorkId)
-                            .then((favoritedWorkNumber: favorited_workTable[]) => {
-                              favoritedWorkNumberList.push(favoritedWorkNumber.length);
-                              if (favoritedWorkNumberList.length === workList.length) {
-                                response.render("list/my_favorite_work_list", {
-                                  side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                                    `${Boolean(request.user)}`
-                                  ],
-                                  workList: workList,
-                                  baseCategoryList: baseCategoryList,
-                                  idx: idx,
-                                  maxPage: maxPage,
-                                  maxViewOnPage: maxViewOnPage,
-                                  currentPage: currentPage,
-                                  userInfo: user,
-                                  currentPageDescription: currentPageDescription,
-                                  isMine: userFlagisMine,
-                                  favoritedWorkList: favoritedWorkList,
-                                  isCreatorView: "myFavWorkList",
-                                  favoritedWorkNumberList: favoritedWorkNumberList, // お気に入り数
-                                })
-                              }
-                            })
-                            .catch((error: Error) => {
-                              console.log(error);
-                            })
-                        });
-                      }
-                    })
-                    .catch((error: Error) => {
-                      console.log("bbbbb");
-                    })
-                });
-              })
-              .catch((error: Error) => {
-                console.log("ccccc");
-              })
+        if (favoritedWork.length == 0) {
+          response.render("list/my_favorite_work_list", {
+            side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+              `${Boolean(request.user)}`
+            ],
+            currentPageDescription: currentPageDescription,
+            workList: null
           });
+        } else {
+          const maxPage = ~~(favoritedWork.length / maxViewOnPage) + 1;
+          // それぞれのレコードのfavorite_toを取得し、workTableからそれぞれのレコードを取得
+          const favoritedWorkIdList: string[] = [];
+          const favoritedWorkList: boolean[] = [];
+          favoritedWork.forEach((favoritedWork: favorited_workTable) => {
+            favoritedWorkIdList.push(favoritedWork.favorite_to);
+            favoritedWorkList.push(true);
+          });
+          knex("work")
+            .whereIn("id", favoritedWorkIdList)
+            .then((workList: workTable[]) => {
+              // workTableから、user_idがuserIdのレコードを取得
+              knex("user")
+                .where("id", userId)
+                .then((user: userTable[]) => {
+                  const userFlagisMine: boolean[] = [];
+                  // user.idとwork.user_idが一致するかどうかを判定し、一致する場合はtrueを返す
+                  workList.forEach((work: workTable) => {
+                    userFlagisMine.push(work.created_by_user_id === userId);
+                  });
+                  // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
+                  const baseCategoryList: base_categoryTable[] = [];
+                  workList.forEach((work: workTable) => {
+                    knex("base_category")
+                      .where("id", work.base_category_id)
+                      .then((baseCategory: base_categoryTable[]) => {
+                        baseCategoryList.push(baseCategory[0]);
+                        // workList.idそれぞれについて、favorited_work_numberから、いいね数を取得
+                        if (baseCategoryList.length === workList.length) {
+                          const favoritedWorkNumberList: number[] = [];
+                          favoritedWorkIdList.forEach((favoritedWorkId: string) => {
+                            knex("favorited_work")
+                              .where("favorite_to", favoritedWorkId)
+                              .then((favoritedWorkNumber: favorited_workTable[]) => {
+                                favoritedWorkNumberList.push(favoritedWorkNumber.length);
+                                if (favoritedWorkNumberList.length === workList.length) {
+                                  response.render("list/my_favorite_work_list", {
+                                    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                                      `${Boolean(request.user)}`
+                                    ],
+                                    workList: workList,
+                                    baseCategoryList: baseCategoryList,
+                                    idx: idx,
+                                    maxPage: maxPage,
+                                    maxViewOnPage: maxViewOnPage,
+                                    currentPage: currentPage,
+                                    userInfo: user,
+                                    currentPageDescription: currentPageDescription,
+                                    isMine: userFlagisMine,
+                                    favoritedWorkList: favoritedWorkList,
+                                    isCreatorView: "myFavWorkList",
+                                    favoritedWorkNumberList: favoritedWorkNumberList, // お気に入り数
+                                  })
+                                }
+                              })
+                              .catch((error: Error) => {
+                                console.log(error);
+                              })
+                          });
+                        }
+                      })
+                      .catch((error: Error) => {
+                        console.log("bbbbb");
+                      })
+                  });
+                })
+                .catch((error: Error) => {
+                  console.log("ccccc");
+                })
+            });
+        }
       })
       .catch((error: Error) => {
         console.log("ddddd");
