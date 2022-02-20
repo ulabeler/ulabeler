@@ -16,20 +16,20 @@
                 </p>
                 <% if (typeof(favoritedWorkList) == "undefined") { %>
                     <p class="star2"><button type="button" style="background: transparent;outline: none;border: none;"
-                            onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
+                            onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>')">
                             <font size="15" color="orange">☆</font>
                         </button></p><!-- お気に入りしてない☆-->
                     <% } else { %>
                         <% if (favoritedWorkList[i]) { %>
                             <p class="star2_1"><button type="button"
                                     style="background: transparent;outline: none;border: none;"
-                                    onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',true)">
+                                    onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>')">
                                     <font size="15" color="orange">★</font>
                                 </button></p>
                             <% } else { %>
                                 <p class="star2"><button type="button"
                                         style="background: transparent;outline: none;border: none;"
-                                        onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
+                                        onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>')">
                                         <font size="15" color="orange">☆</font>
                                     </button></p><!-- お気に入りしてない☆-->
                                 <% } %>
@@ -48,12 +48,9 @@
                     <% } %>
 
                         <script>
-                            function selectFavorite(id, isFavorited) {
+                            function selectFavorite(id) {
                                 axios.post(
                                     `/api/work/favorite/${id}`,
-                                    {
-                                        isFavorited: isFavorited
-                                    }
                                 )
                                     .then(function (response) {
                                         console.log(response);

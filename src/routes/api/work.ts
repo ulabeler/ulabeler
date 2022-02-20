@@ -5,7 +5,7 @@ const router = express.Router();
 // import { sendMail } from "../../tools/sendmail";
 import { knex } from "../../app";
 // eslint-disable-next-line camelcase
-import {} from "../../tools/TypeAlias/tableType_alias";
+import { favorited_work_numberTable, favorited_workTable } from "../../tools/TypeAlias/tableType_alias";
 // import sideMenuList from "../../tools/data/sidemenu.json";
 // import { v4 as uuidv4 } from "uuid"; //uuidv4()
 // eslint-disable-next-line new-cap
@@ -17,10 +17,10 @@ import {} from "../../tools/TypeAlias/tableType_alias";
 
 // import { UpImgDirBase } from "../../app"
 
-router.post('/favorite/:workId', (request,response) => {
-    if (!request.user){
+router.post('/old/favorite/:workId', (request, response) => {
+    if (!request.user) {
         response.status(403).send("unAuthorized");
-    }else{
+    } else {
         const userId = request.user.id;
         const workId = request.params.workId;
         // const favorited_at = new Date();
@@ -31,52 +31,151 @@ router.post('/favorite/:workId', (request,response) => {
         // }
         if (request.body.isFavorited != undefined && request.body.isFavorited) { //登録済み→登録解除用
             knex("favorited_work")
-            .where({
-                favorite_from: userId,
-                favorite_to: workId
-            })
-            .del()
-            .then(() => {
-                knex("favorited_work_number")
                 .where({
-                    favorited_to_id: workId
+                    favorite_from: userId,
+                    favorite_to: workId
                 })
-                .decrement("number", 1)
+                .del()
                 .then(() => {
-                    response.status(201).send("Removed");
+                    knex("favorited_work_number")
+                        .where({
+                            favorited_to_id: workId
+                        })
+                        .decrement("number", 1)
+                        .then(() => {
+                            response.status(201).send("Removed");
+                        })
+                        .catch((err: any) => {
+                            console.log(err);
+                            response.status(500).send("error");
+                        })
                 })
-                .catch((err:any) => {
-                    console.log(err);
-                    response.status(500).send("error");
-                })
-            })
-        }else if (request.body.isFavorited == false){ // 未登録→登録用
+        } else if (request.body.isFavorited == false) { // 未登録→登録用
             const userId = request.user.id;
             const workId = request.params.workId;
             const favorited_at = new Date();
             knex("favorited_work")
-            .insert({
-                favorite_from: userId,
-                favorite_to: workId,
-                favorited_at: favorited_at
-            })
-            .then(() => {
-                knex("favorited_work_number")
-                .where({
-                    favorited_to_id: workId
+                .insert({
+                    favorite_from: userId,
+                    favorite_to: workId,
+                    favorited_at: favorited_at
                 })
-                .increment("number", 1)
                 .then(() => {
-                    response.status(201).send("Added");
+                    knex("favorited_work_number")
+                        .where({
+                            favorited_to_id: workId
+                        })
+                        .increment("number", 1)
+                        .then(() => {
+                            response.status(201).send("Added");
+                        })
+                        .catch((err: any) => {
+                            console.log(err);
+                            response.status(500).send("error");
+                        })
                 })
-                .catch((err:any) => {
-                    console.log(err);
-                    response.status(500).send("error");
-                })
-            })
-        }else{
+        } else {
             response.status(400).send("Bad Request");
         }
+    }
+})
+
+router.post('/favorite/:workId', (request, response) => {
+    if (!request.user) {
+        response.status(403).send("unAuthorized");
+    } else {
+        const favorited_at = new Date();
+        const targetFavoriteItem: favorited_workTable = {
+            favorite_from: request.user.id,
+            favorite_to: request.params.workId,
+            favorited_at: favorited_at
+        }
+        // favorited_workに該当idがあるか確認
+        knex("favorited_work")
+            .where({
+                favorite_from: request.user.id,
+                favorite_to: request.params.workId
+            })
+            .then((rows: favorited_workTable[]) => {
+                // rowsが空だったらinsert
+                if (rows.length == 0) {
+                    knex("favorited_work")
+                        .insert(targetFavoriteItem)
+                        .then(() => {
+                            knex("favorited_work_number")
+                                .where({
+                                    favorited_to_id:targetFavoriteItem.favorite_to
+                                })
+                                .increment("number", 1)
+                                .then(() => {
+                                    response.status(201).send("Added");
+                                })
+                                .catch((err: any) => {
+                                    console.log(err);
+                                    response.status(500).send("error");
+                                })
+                        })
+                        .catch((err: any) => {
+                            console.log(err);
+                            response.status(500).send("error");
+                        })
+                } else {
+                    // rowsが空でなかったら削除
+                    knex("favorited_work")
+                        .where({
+                            favorite_from: targetFavoriteItem.favorite_from,
+                            favorite_to: targetFavoriteItem.favorite_to
+                        })
+                        .del()
+                        .then(() => {
+                            knex("favorited_work_number")
+                                .where({
+                                    favorited_to_id: request.params.workId
+                                })
+                                .decrement("number", 1)
+                                .then(() => {
+                                    response.status(201).send("Removed");
+                                })
+                                .catch((err: any) => {
+                                    console.log(err);
+                                    response.status(500).send("error");
+                                })
+                        })
+                        .catch((err: any) => {
+                            console.log(err);
+                            response.status(500).send("error");
+                        })
+                }
+            })
+    }
+})
+
+router.post('/getworkfavnum', (request, response) => {
+    console.log(request.body);
+    if (!request.body.id) {
+        response.status(400).send("Bad Request");
+    } else {
+        const workId = request.body.id;
+        // 現在のお気に入り数を返す
+        knex("favorited_work_number")
+            .select("number")
+            .where({
+                favorited_to_id: workId
+            })
+            .then((result: favorited_work_numberTable[]) => {
+                console.log(result);
+                if (result.length == 0) {
+                    response.status(404).send("Not Found");
+                } else {
+                    const responseResult: string = result[0].number.toString();
+                    response.status(200).send(responseResult); //number型のまま渡すとレスポンスコードと取り違えられてエラー吐くので文字列型に
+                }
+            }
+            )
+            .catch((err: any) => {
+                console.log(err);
+                response.status(500).send("error");
+            })
     }
 })
 
