@@ -36,7 +36,7 @@
                                     <% } %>
 
                                         <div class="favorite3">
-                                            <p class="favorite2" id="favNumIdx-<%-workList[i].id%>">
+                                            <p class="favorite2 favNumIdx-<%-workList[i].id%>" id="favNumIdx-<%-workList[i].id%>">
                                                 <font size="4">
                                                     <%= favoritedWorkNumberList[i]%>
                                                 </font>
@@ -49,12 +49,33 @@
 
                         <script>
                             function selectFavorite(id) {
+                                const favViewNum = document.querySelectorAll(`.favNumIdx-${id}`);
                                 axios.post(
                                     `/api/work/favorite/${id}`,
                                 )
                                     .then(function (response) {
                                         console.log(response);
-                                        location.reload();
+                                        // /api/work/getworkfavnumにPOSTし、返却値をalertで表示
+                                        axios.post(
+                                            `/api/work/getworkfavnum/`,
+                                            {
+                                                id: id
+                                            }
+                                        )
+                                            .then(function (response) {
+                                                console.log(response);
+                                                // お気に入り数を表示
+                                                // favViewNumの要素数分ループ
+                                                for (let i = 0; i < favViewNum.length; i++) {
+                                                    favViewNum[i].innerHTML = response.data;
+                                                }
+                                                // favViewNum.innerHTML = `<font size="4">${response.data}</font>`;
+                                                // alert(response.data);
+                                            })
+                                            .catch(function (error) {
+                                                console.log(error);
+                                            });
+                                        // location.reload();
                                     })
                                     .catch(function (error) {
                                         // httpStatusCodeを取得
