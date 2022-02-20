@@ -491,13 +491,15 @@ router.get("/favorite/work", (request, response) => {
       .then((favoritedWork: favorited_workTable[]) => {
         const maxPage = ~~(favoritedWork.length / maxViewOnPage) + 1;
         const currentPageDescription = {
-          title: "作品一覧",
-          "uriPrefix": `/${userId}/favorite/work`,
+          title: "お気に入り作品リスト",
+          "uriPrefix": `/favorite/work`,
         };
         // それぞれのレコードのfavorite_toを取得し、workTableからそれぞれのレコードを取得
         const favoritedWorkIdList: string[] = [];
+        const favoritedWorkList: boolean[] = [];
         favoritedWork.forEach((favoritedWork: favorited_workTable) => {
           favoritedWorkIdList.push(favoritedWork.favorite_to);
+          favoritedWorkList.push(true);
         });
         knex("work")
           .whereIn("id", favoritedWorkIdList)
@@ -519,32 +521,38 @@ router.get("/favorite/work", (request, response) => {
                     .then((baseCategory: base_categoryTable[]) => {
                       baseCategoryList.push(baseCategory[0]);
                       // workList.idそれぞれについて、favorited_work_numberから、いいね数を取得
-                      const favoritedWorkNumberList: number[] = [];
-                      favoritedWorkIdList.forEach((favoritedWorkId: string) => {
-                        knex("favorited_work")
-                          .where("favorite_to", favoritedWorkId)
-                          .then((favoritedWorkNumber: favorited_workTable[]) => {
-                            favoritedWorkNumberList.push(favoritedWorkNumber.length);
-                            response.render("list/my_favorite_work_list", {
-                              side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                                `${Boolean(request.user)}`
-                              ],
-                              workList: workList,
-                              baseCategoryList: baseCategoryList,
-                              idx: idx,
-                              maxPage: maxPage,
-                              maxViewOnPage: maxViewOnPage,
-                              currentPage: currentPage,
-                              userInfo: user,
-                              currentPageDescription: currentPageDescription,
-                              isMine: userFlagisMine,
-                              favoritedWorkNumberList: favoritedWorkNumberList, // お気に入り数
+                      if (baseCategoryList.length === workList.length) {
+                        const favoritedWorkNumberList: number[] = [];
+                        favoritedWorkIdList.forEach((favoritedWorkId: string) => {
+                          knex("favorited_work")
+                            .where("favorite_to", favoritedWorkId)
+                            .then((favoritedWorkNumber: favorited_workTable[]) => {
+                              favoritedWorkNumberList.push(favoritedWorkNumber.length);
+                              if (favoritedWorkNumberList.length === workList.length) {
+                                response.render("list/my_favorite_work_list", {
+                                  side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                                    `${Boolean(request.user)}`
+                                  ],
+                                  workList: workList,
+                                  baseCategoryList: baseCategoryList,
+                                  idx: idx,
+                                  maxPage: maxPage,
+                                  maxViewOnPage: maxViewOnPage,
+                                  currentPage: currentPage,
+                                  userInfo: user,
+                                  currentPageDescription: currentPageDescription,
+                                  isMine: userFlagisMine,
+                                  favoritedWorkList: favoritedWorkList,
+                                  isCreatorView: "myFavWorkList",
+                                  favoritedWorkNumberList: favoritedWorkNumberList, // お気に入り数
+                                })
+                              }
                             })
-                          })
-                          .catch((error: Error) => {
-                            console.log("aaaaa");
-                          })
-                      });
+                            .catch((error: Error) => {
+                              console.log(error);
+                            })
+                        });
+                      }
                     })
                     .catch((error: Error) => {
                       console.log("bbbbb");
