@@ -222,6 +222,7 @@ router.get("/my_work", function (request, response) {
                                 .then((favoritedWork: favorited_workTable[]) => {
                                   favoritedWorkList.push(favoritedWork.length > 0);
                                   if (favoritedWorkList.length === workList.length) {
+                                    // console.log(favoritedWorkList);
                                     response.render("list/my_list", {
                                       side_menu: JSON.parse(JSON.stringify(sideMenuList))[
                                         `${Boolean(request.user)}`
@@ -237,7 +238,7 @@ router.get("/my_work", function (request, response) {
                                       isMine: true,
                                       isCreatorView: false,
                                       favoritedWorkNumberList: favoritedWorkNumberList,
-                                      favoritedWorkList: false,
+                                      favoritedWorkList: favoritedWorkList,
                                     });
                                     resolve("ok");
                                     return;
