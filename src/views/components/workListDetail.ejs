@@ -1,4 +1,5 @@
 <% for( let i=idx; i < (idx + maxViewOnPage); i++ ) { %>
+    <%# console.log(favoritedWorkList[i]) %> 
     <%# for( let i=idx; i < idx + 1; i++ ) { %>
         <% if (workList[i]) { %>
             <div class="popup" id="listidx-<%-workList[i].id%>">
@@ -111,7 +112,7 @@
                             <% } %>
                                         <% } %>
                                             <div class="favorite3">
-                                                <p class="favorite2">
+                                                <p class="favorite2 favNumIdx-<%-workList[i].id%>"  id="favNumIdx-<%-workList[i].id%>">
                                                     <font size="4">
                                                         <%= favoritedWorkNumberList[i]%>
                                                     </font>

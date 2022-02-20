@@ -8,6 +8,7 @@
         "familyname",
         "firstname",
         "furigana",
+        "getworkfavnum",
         "javascripts",
         "kenx",
         "knexfile",

@@ -6,6 +6,8 @@ const knexConfig = require("./config/knexfile")[environment];
 const knex = require("knex")(knexConfig);
 export { knex };
 
+import sideMenuList from "./tools/data/sidemenu.json";
+
 
 // const createError = require('http-errors');
 import express from "express";
@@ -78,10 +80,15 @@ app.use("/mail_address_modification", mailModRouter);
 
 // catch 404 and forward to error handler
 app.use(function (request, response) {
-  // "./public/index.html"を返す
-  // response.sendFile(path.join(__dirname, 'public', 'index.html'));
-  // 404エラーと表示する
-  response.redirect("/notAvailable");
+  const userInfo = request.user ? request.user : null;
+  response.render("./components/message", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    message:
+      "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
+    userInfo: userInfo,
+  });
 });
 
 // error handler
