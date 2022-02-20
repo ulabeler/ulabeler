@@ -5,7 +5,8 @@ import { userTable, workTable, base_categoryTable, favorited_work_numberTable, f
 // eslint-disable-next-line new-cap
 const router = express.Router();
 import sideMenuList from "../tools/data/sidemenu.json";
-const maxViewOnPage = 3; // 1ページに表示する最大件数
+import config from "../config/config.json";
+const maxViewOnPage = config.maxViewOnPage || 8; // 1ページに表示する最大件数
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
 const host =
@@ -468,6 +469,97 @@ router.get("/privacypolicy", (request, response) => {
     ],
     userInfo: userInfo,
   });
+})
+
+router.get("/favorite/work", (request, response) => {
+  const orderBy = request.query.orderBy ? request.query.orderBy : "favorited_at"; // 後で変更するかは要検討。UI見るに可変ではなさそうな気はする。
+  if (!request.user) {
+    response.redirect("/invalidAccess");
+    return;
+  } else {
+    let currentPage = 1; // 現在のページ番号
+    let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
+    if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
+      idx = (Number(request.query.page) - 1) * maxViewOnPage;
+      currentPage = Number(request.query.page);
+    }
+    const userId = request.user.id;
+    // favorited_workTableから、favorite_fromがuserIdのレコードを取得
+    knex("favorited_work")
+      .where("favorite_from", userId)
+      .orderBy(orderBy)
+      .then((favoritedWork: favorited_workTable[]) => {
+        const maxPage = ~~(favoritedWork.length / maxViewOnPage) + 1;
+        const currentPageDescription = {
+          title: "作品一覧",
+          "uriPrefix": `/${userId}/favorite/work`,
+        };
+        // それぞれのレコードのfavorite_toを取得し、workTableからそれぞれのレコードを取得
+        const favoritedWorkIdList: string[] = [];
+        favoritedWork.forEach((favoritedWork: favorited_workTable) => {
+          favoritedWorkIdList.push(favoritedWork.favorite_to);
+        });
+        knex("work")
+          .whereIn("id", favoritedWorkIdList)
+          .then((workList: workTable[]) => {
+            // workTableから、user_idがuserIdのレコードを取得
+            knex("user")
+              .where("id", userId)
+              .then((user: userTable[]) => {
+                const userFlagisMine: boolean[] = [];
+                // user.idとwork.user_idが一致するかどうかを判定し、一致する場合はtrueを返す
+                workList.forEach((work: workTable) => {
+                  userFlagisMine.push(work.created_by_user_id === userId);
+                });
+                // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
+                const baseCategoryList: base_categoryTable[] = [];
+                workList.forEach((work: workTable) => {
+                  knex("base_category")
+                    .where("id", work.base_category_id)
+                    .then((baseCategory: base_categoryTable[]) => {
+                      baseCategoryList.push(baseCategory[0]);
+                      // workList.idそれぞれについて、favorited_work_numberから、いいね数を取得
+                      const favoritedWorkNumberList: number[] = [];
+                      favoritedWorkIdList.forEach((favoritedWorkId: string) => {
+                        knex("favorited_work")
+                          .where("favorite_to", favoritedWorkId)
+                          .then((favoritedWorkNumber: favorited_workTable[]) => {
+                            favoritedWorkNumberList.push(favoritedWorkNumber.length);
+                            response.render("list/my_favorite_work_list", {
+                              side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                                `${Boolean(request.user)}`
+                              ],
+                              workList: workList,
+                              baseCategoryList: baseCategoryList,
+                              idx: idx,
+                              maxPage: maxPage,
+                              maxViewOnPage: maxViewOnPage,
+                              currentPage: currentPage,
+                              userInfo: user,
+                              currentPageDescription: currentPageDescription,
+                              isMine: userFlagisMine,
+                              favoritedWorkNumberList: favoritedWorkNumberList, // お気に入り数
+                            })
+                          })
+                          .catch((error: Error) => {
+                            console.log("aaaaa");
+                          })
+                      });
+                    })
+                    .catch((error: Error) => {
+                      console.log("bbbbb");
+                    })
+                });
+              })
+              .catch((error: Error) => {
+                console.log("ccccc");
+              })
+          });
+      })
+      .catch((error: Error) => {
+        console.log("ddddd");
+      });
+  }
 })
 
 router.get("/invalidAccess", function (request, response) {
