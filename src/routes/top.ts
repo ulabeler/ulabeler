@@ -197,7 +197,10 @@ router.get("/my_work", function (request, response) {
               .then((baseCategory: base_categoryTable[]) => {
                 baseCategoryList.push(baseCategory[0]);
                 if (baseCategoryList.length === workList.length) {
-                  const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
+                  let maxPage = ~~(baseCategoryList.length / maxViewOnPage);
+                  if (baseCategoryList.length % maxViewOnPage !== 0) {
+                    maxPage++;
+                  }
                   const currentPageDescription = {
                     title: "マイ作品リスト",
                     "uriPrefix": "/my_work",
@@ -328,7 +331,10 @@ router.get("/creator_work/:userId", function (request, response) {
                   .then((baseCategory: base_categoryTable[]) => {
                     baseCategoryList.push(baseCategory[0]);
                     if (baseCategoryList.length === workList.length) {
-                      const maxPage = ~~(baseCategoryList.length / maxViewOnPage) + 1;
+                      let maxPage = ~~(baseCategoryList.length / maxViewOnPage);
+                      if (baseCategoryList.length % maxViewOnPage !== 0) {
+                        maxPage++;
+                      }
                       const currentPageDescription = {
                         title: "作品一覧",
                         "uriPrefix": "/creator_work",
@@ -503,7 +509,12 @@ router.get("/favorite/work", (request, response) => {
             workList: null
           });
         } else {
-          const maxPage = ~~(favoritedWork.length / maxViewOnPage) + 1;
+          let maxPage = ~~(favoritedWork.length / maxViewOnPage);
+          if (favoritedWork.length % maxViewOnPage !== 0) {
+            maxPage++;
+          }
+          console.log(maxPage);
+          console.log(favoritedWork.length);
           // それぞれのレコードのfavorite_toを取得し、workTableからそれぞれのレコードを取得
           const favoritedWorkIdList: string[] = [];
           const favoritedWorkList: boolean[] = [];
