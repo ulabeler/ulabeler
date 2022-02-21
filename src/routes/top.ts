@@ -606,10 +606,10 @@ router.get("/favorite/work", (request, response) => {
               knex("user")
                 .where("id", userId)
                 .then((user: userTable[]) => {
-                  const userFlagisMine: boolean[] = [];
+                  const userFlagIsMine: boolean[] = [];
                   // user.idとwork.user_idが一致するかどうかを判定し、一致する場合はtrueを返す
                   workList.forEach((work: workTable) => {
-                    userFlagisMine.push(work.created_by_user_id === userId);
+                    userFlagIsMine.push(work.created_by_user_id === userId);
                   });
                   // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
                   // eslint-disable-next-line camelcase
@@ -654,7 +654,7 @@ router.get("/favorite/work", (request, response) => {
                                           userInfo: user,
                                           currentPageDescription:
                                             currentPageDescription,
-                                          isMine: userFlagisMine,
+                                          isMine: userFlagIsMine,
                                           favoritedWorkList: favoritedWorkList,
                                           isCreatorView: "myFavWorkList",
                                           favoritedWorkNumberList:

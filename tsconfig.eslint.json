@@ -13,7 +13,7 @@
         "scripts/*.js",
         "scripts/**/*.ts",
         "src/public/javascripts/*.ts",
-        "src/public/javascripts/*.js",
+        "src/public/javascripts/util/*.ts",
     ],
     "exclude": [
         "node_modules",

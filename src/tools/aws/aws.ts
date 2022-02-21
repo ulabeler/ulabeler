@@ -28,7 +28,7 @@ const s3 = new S3Client({
  * @param {string} Key オブジェクト名
  * @param {any} Body 追加するオブジェクト。base64エンコードされた画像データをいい感じにして格納します。src/routes/api/media.tsに例があります。
  */
-async function putObject(Key: string, Body: any) {
+async function putObject(Key: string, Body: Buffer) {
   // Bodyに画像データを指定
   try {
     const output = await s3.send(
