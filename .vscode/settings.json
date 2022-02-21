@@ -3,6 +3,7 @@
         "AWSACCESSKEYID",
         "AWSBUCKETNAME",
         "AWSSECRETKEY",
+        "bycript",
         "camelcase",
         "cardnumber",
         "changeicon",
