@@ -71,7 +71,7 @@
                 const params = new FormData();
                 params.append('file', document.getElementById('fileInput').files[0]);
                 axios.post(
-                    '/api/media/posticon',
+                    '/api/media/v2/posticon',
                     params,
                     {
                         headers: {

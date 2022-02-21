@@ -8,15 +8,12 @@ import {
 } from "@aws-sdk/client-s3";
 
 // dotenv
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 
 const accessKeyId = process.env.AWSACCESSKEYID || "";
 const secretAccessKey = process.env.AWSSECRETKEY || "";
 const bucketName = process.env.AWSBUCKETNAME || "";
-
-import { v4 as uuidv4 } from "uuid"; // uuidv4()
-listObjects(bucketName);
 
 const s3 = new S3Client({
   region: "ap-northeast-1",
@@ -42,8 +39,10 @@ async function putObject(Key: string, Body: any) {
       })
     );
     console.log("SUCCESS - Object added:", output);
+    return true;
   } catch (err) {
     console.error("ERROR:", err);
+    return false;
   }
 }
 

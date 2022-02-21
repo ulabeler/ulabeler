@@ -17,10 +17,13 @@ import {
 import { v4 as uuidv4 } from "uuid"; // uuidv4()
 // eslint-disable-next-line new-cap
 // import passport from "passport";
-// import crypto from "crypto";
+import { putObject } from "../../tools/aws/aws";
 import multer from "multer";
 import path from "path";
 import fse from "fs-extra";
+// const bucketName = process.env.AWSBUCKETNAME || "";
+// const S3Prefix = process.env.S3PREFIX || "";
+const mediaProxyPrefix = process.env.MEDIAPROXYPREFIX || "";
 
 import { UpImgDirBase } from "../../app";
 
@@ -111,4 +114,56 @@ router.post(
   }
 );
 
+router.post(
+  "/v2/posticon",
+  multer({
+    dest: path.join(UpImgDirBase, "/icons"),
+    limits: { fieldSize: 50 },
+  }).single("file"),
+  function (request, response) {
+    // console.log(request)
+    if (request.body.file) {
+      if (request.user) {
+        // const userId = request.user.id;
+        // 画像のタイプをBase64から取得
+        // ;base64の前までを取得
+        const imgExt = request.body.file.split("/")[1].split(";")[0];
+        // 画像はBase64で送られてくるので、デコードしてから画像を保存する
+        const imgData = Buffer.from(
+          request.body.file.replace(/^data:image\/\w+;base64,/, ""),
+          "base64"
+        );
+        // console.log(imgExt);
+        // console.log(imgData);
+        if (imgData) {
+          // 拡張子を取得
+          // const ext = temp_path.split(".").pop();
+          const fileName = uuidv4() + "." + imgExt;
+          // console.log(fileName);
+          // console.log("dest:", dest);
+          // 画像を保存
+          const distUri = `${mediaProxyPrefix}/media/icon/${fileName}`;
+          putObject(`media/icon/${fileName}`, imgData)
+            .then(() => {
+              console.log("画像の保存に成功しました");
+              console.log("dist->");
+              console.log(distUri);
+              response.status(200).send("画像の保存に成功しました");
+            })
+            .catch((err: any) => {
+              console.log(err);
+              response.status(200).send(distUri);
+            });
+        } else {
+          response.status(200).send("ここまではきた");
+        }
+      } else {
+        // ここにかく
+        response.status(401).send("UnAuthorized");
+      }
+    } else {
+      response.status(400).send("No file uploaded");
+    }
+  }
+);
 export default router;

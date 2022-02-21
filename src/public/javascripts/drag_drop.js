@@ -43,7 +43,7 @@ function photoPreview(event, f = null) {
       img.setAttribute("id", "previewIconImage");
       preview.appendChild(img);
       // multipart/form-dataを扱う
-      axios.post('/api/media/posticon', {
+      axios.post('/api/media/v2/posticon', {
         file: reader.result
       })
       .then(function (response) {
