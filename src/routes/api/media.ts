@@ -135,39 +135,42 @@ router.post(
           "base64"
         );
         // 256x256にリサイズし、putObjectでS3に保存
-        const bufferImg = sharp(imgData).resize(512).toBuffer();
-
-        // console.log(imgExt);
-        // console.log(imgData);
-        if (imgData) {
-          // 拡張子を取得
-          // const ext = temp_path.split(".").pop();
-          const fileName = "media/icon/" + uuidv4() + "." + imgExt;
-          // console.log(fileName);
-          // console.log("dest:", dest);
-          // 画像を保存
-          const distUri = `${mediaProxyPrefix}${fileName}`;
-          putObject(`${fileName}`, bufferImg)
-            .then(() => {
-              console.log("dist->");
-              console.log(distUri);
-              // userテーブルのicon_pathを更新
-              knex("user")
-                .where("id", userId)
-                .update({
-                  icon_path: distUri,
-                })
+        sharp(imgData)
+          .resize(512)
+          .toBuffer()
+          .then((imgBuffer) => {
+            // console.log(imgExt);
+            // console.log(imgData);
+            if (imgData) {
+              // 拡張子を取得
+              // const ext = temp_path.split(".").pop();
+              const fileName = "media/icon/" + uuidv4() + "." + imgExt;
+              // console.log(fileName);
+              // console.log("dest:", dest);
+              // 画像を保存
+              const distUri = `${mediaProxyPrefix}${fileName}`;
+              putObject(`${fileName}`, imgBuffer)
                 .then(() => {
-                  response.status(200).send("画像の保存に成功しました");
+                  console.log("dist->");
+                  console.log(distUri);
+                  // userテーブルのicon_pathを更新
+                  knex("user")
+                    .where("id", userId)
+                    .update({
+                      icon_path: distUri,
+                    })
+                    .then(() => {
+                      response.status(200).send("画像の保存に成功しました");
+                    });
+                })
+                .catch((err: any) => {
+                  console.log(err);
+                  response.status(200).send(distUri);
                 });
-            })
-            .catch((err: any) => {
-              console.log(err);
-              response.status(200).send(distUri);
-            });
-        } else {
-          response.status(200).send("ここまではきた");
-        }
+            } else {
+              response.status(200).send("ここまではきた");
+            }
+          });
       } else {
         // ここにかく
         response.status(401).send("UnAuthorized");
