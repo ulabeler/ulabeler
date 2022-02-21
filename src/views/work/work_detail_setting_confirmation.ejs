@@ -12,7 +12,6 @@
             <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
 
                 <article>
-                    <div class="footerFixed">
                     <br>
                     <br>
 
@@ -125,45 +124,6 @@
                     </div>
                 </article>
                 <%- include("../components/footer.ejs") %>
-                <footer>
-                    <br>
-                    <br>
-                    <div class="footer_text1">
-                        <table class="footer_text">
-                            <tr>
-                                <td>
-                                    <p><a href="faq.html">よくある質問　</a></p>
-                                </td>
-                                <td>
-                                    <p><a href="/privacypolicy">プライバシーポリシー　</a></p>
-                                </td>
-                                <td>
-                                    <p><a href="/sitepolicy">サイトポリシー</a></p>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <br>
-                    <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-                
-                    <br>
-                    <p id="page-top"><a href="">↑</a></p>
-                </footer>
-                </div>
-                
-                <script>
-                    bubbly({
-                        blur: 5,
-                        bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.3})`,
-                        canvas: document.querySelector("#back"),
-                        colorStart: '#fff',
-                        colorStop: '#fff',
-                        compose: 'source-over',
-                        shadowColor: '#ffffef',
-                        velocityFunc: () => Math.random() * 1.4,
-                        radiusFunc: () => 3 + Math.random() * 20,
-                    });
-                </script>
         </body>
 
         <script>
