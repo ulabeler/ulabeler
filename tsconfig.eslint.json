@@ -5,7 +5,7 @@
         "src/config/*.ts",
         "src/routes/*.ts",
         "src/routes/**/*.ts",
-        "src/tools/*.ts",
+        "src/tools/**/*.ts",
         "src/tools/TypeAlias/*.ts",
         "src/bin/*.ts",
         "src/*.ts",
