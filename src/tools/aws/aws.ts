@@ -64,6 +64,7 @@ async function listObjects(bucketName: string) {
     }
   } catch (err) {
     console.error("ERROR:", err);
+    return err;
   }
 }
 

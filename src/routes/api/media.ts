@@ -24,6 +24,7 @@ import fse from "fs-extra";
 // const bucketName = process.env.AWSBUCKETNAME || "";
 // const S3Prefix = process.env.S3PREFIX || "";
 const mediaProxyPrefix = process.env.MEDIAPROXYPREFIX || "";
+import sharp from "sharp";
 
 import { UpImgDirBase } from "../../app";
 
@@ -133,6 +134,9 @@ router.post(
           request.body.file.replace(/^data:image\/\w+;base64,/, ""),
           "base64"
         );
+        // 256x256にリサイズし、putObjectでS3に保存
+        const bufferImg = sharp(imgData).resize(512).toBuffer();
+
         // console.log(imgExt);
         // console.log(imgData);
         if (imgData) {
@@ -143,7 +147,7 @@ router.post(
           // console.log("dest:", dest);
           // 画像を保存
           const distUri = `${mediaProxyPrefix}${fileName}`;
-          putObject(`${fileName}`, imgData)
+          putObject(`${fileName}`, bufferImg)
             .then(() => {
               console.log("dist->");
               console.log(distUri);
