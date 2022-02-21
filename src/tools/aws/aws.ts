@@ -38,7 +38,7 @@ async function putObject(Key: string, Body: any) {
         Body: Body,
       })
     );
-    console.log("SUCCESS - Object added:", output);
+    // console.log("SUCCESS - Object added:", output);
     return true;
   } catch (err) {
     console.error("ERROR:", err);
@@ -49,6 +49,7 @@ async function putObject(Key: string, Body: any) {
 // S3 バケット内のオブジェクトの一覧を取得する
 /**
  * @param {string} bucketName バケット名
+ * @return {any} obj 一覧を返す
  */
 async function listObjects(bucketName: string) {
   try {
@@ -59,7 +60,7 @@ async function listObjects(bucketName: string) {
       })
     );
     for (const obj of output.Contents || []) {
-      console.log(obj);
+      return obj;
     }
   } catch (err) {
     console.error("ERROR:", err);

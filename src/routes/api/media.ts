@@ -145,7 +145,6 @@ router.post(
           const distUri = `${mediaProxyPrefix}${fileName}`;
           putObject(`${fileName}`, imgData)
             .then(() => {
-              console.log("画像の保存に成功しました");
               console.log("dist->");
               console.log(distUri);
               // userテーブルのicon_pathを更新
