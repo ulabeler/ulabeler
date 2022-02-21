@@ -38,7 +38,7 @@ async function putObject(Key: string, Body: any) {
         Body: Body,
       })
     );
-    // console.log("SUCCESS - Object added:", output);
+    console.log("SUCCESS - Object added:", output.$metadata.httpStatusCode);
     return true;
   } catch (err) {
     console.error("ERROR:", err);
