@@ -31,12 +31,13 @@
     "src/config/*.ts",
     "src/routes/*.ts",
     "src/routes/*/*.ts",
-    "src/tools/*.ts",
+    "src/tools/**/*.ts",
     "src/bin/*.ts",
     "src/*.ts",
     "src/tools/TypeAlias/*.ts",
     "src/app.ts",
-    "src/public/javascripts/**/*.ts"
+    "src/public/javascripts/**/*.ts",
+    "scripts/**/*.ts"
   ],
   "exclude": [
     "node_modules",

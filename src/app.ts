@@ -8,7 +8,6 @@ export { knex };
 
 import sideMenuList from "./tools/data/sidemenu.json";
 
-
 // const createError = require('http-errors');
 import express from "express";
 const app = express();
@@ -18,13 +17,13 @@ import logger from "morgan";
 import favicon from "serve-favicon";
 import flash from "connect-flash";
 
-import bodyParser from 'body-parser';
-app.use(bodyParser.urlencoded({extended:true, limit: '10mb'}));
-app.use(bodyParser.raw({limit: '10mb'}));
-app.use(bodyParser.json({limit: '10mb'}));
+import bodyParser from "body-parser";
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
+app.use(bodyParser.raw({ limit: "10mb" }));
+app.use(bodyParser.json({ limit: "10mb" }));
 // できるだけlimitを大きくしておく
 
-export const UpImgDirBase = path.join(__dirname, 'public/images/');
+export const UpImgDirBase = path.join(__dirname, "public/images/");
 
 // import { send_discord } from './tools/discord_send_message'; //メッセ送信処理 できればこれで状態監視できるようにしたい
 
@@ -52,13 +51,9 @@ import PayPayRouter from "./routes/payment/paypay";
 import workRouter from "./routes/work";
 import passport from "passport";
 
-
-
 // const usersRouter = require('./routes/alpha/users');
 // const createRouter = require('./routes/alpha/create');
 // const TestRouter = require('./routes/alpha/test');
-
-
 
 // authorization
 // eslint-disable-next-line @typescript-eslint/no-var-requires
