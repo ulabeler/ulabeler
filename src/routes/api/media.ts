@@ -28,7 +28,7 @@ const mediaProxyPrefix = process.env.MEDIAPROXYPREFIX || "";
 import { UpImgDirBase } from "../../app";
 
 router.post(
-  "/posticon",
+  "/v1/posticon",
   multer({
     dest: path.join(UpImgDirBase, "/icons"),
     limits: { fieldSize: 50 },
@@ -115,7 +115,7 @@ router.post(
 );
 
 router.post(
-  "/v2/posticon",
+  "/posticon",
   multer({
     dest: path.join(UpImgDirBase, "/icons"),
     limits: { fieldSize: 50 },
@@ -124,7 +124,7 @@ router.post(
     // console.log(request)
     if (request.body.file) {
       if (request.user) {
-        // const userId = request.user.id;
+        const userId = request.user.id;
         // 画像のタイプをBase64から取得
         // ;base64の前までを取得
         const imgExt = request.body.file.split("/")[1].split(";")[0];
@@ -138,17 +138,25 @@ router.post(
         if (imgData) {
           // 拡張子を取得
           // const ext = temp_path.split(".").pop();
-          const fileName = uuidv4() + "." + imgExt;
+          const fileName = "media/icon/" + uuidv4() + "." + imgExt;
           // console.log(fileName);
           // console.log("dest:", dest);
           // 画像を保存
-          const distUri = `${mediaProxyPrefix}/media/icon/${fileName}`;
-          putObject(`media/icon/${fileName}`, imgData)
+          const distUri = `${mediaProxyPrefix}${fileName}`;
+          putObject(`${fileName}`, imgData)
             .then(() => {
               console.log("画像の保存に成功しました");
               console.log("dist->");
               console.log(distUri);
-              response.status(200).send("画像の保存に成功しました");
+              // userテーブルのicon_pathを更新
+              knex("user")
+                .where("id", userId)
+                .update({
+                  icon_path: distUri,
+                })
+                .then(() => {
+                  response.status(200).send("画像の保存に成功しました");
+                });
             })
             .catch((err: any) => {
               console.log(err);
