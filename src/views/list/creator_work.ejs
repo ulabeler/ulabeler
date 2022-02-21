@@ -12,76 +12,116 @@
         <%- include("../components/login.ejs") %>
 
             <article>
-                <br>
-                <br>
+                <div class="footerFixed">
+                    <br>
+                    <br>
 
-                <div class="userpage">
+                    <div class="userpage">
 
-                    <div class="user_2">
-                            <div class="user_box">
-                                <table cellpadding="0" 　class="usertable">
+                        <div class="user_2">
+                                <div class="user_box">
+                                    <table cellpadding="0" 　class="usertable">
 
-                                    <tr>
-                                        <th rowspan="4">
-                                            <p class=user_img><img src="<%- userInfo.icon_path %>" alt="ユーザーアイコン"></p>
-                                        </th>
-                                        <td>　　　　　</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="username"><%- userInfo.name %></p>
-                                        </td>
-                                        <input type="hidden" name="">
+                                        <tr>
+                                            <th rowspan="4">
+                                                <p class=user_img><img src="<%- userInfo.icon_path %>" alt="ユーザーアイコン"></p>
+                                            </th>
+                                            <td>　　　　　</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="username"><%- userInfo.name %></p>
+                                            </td>
+                                            <input type="hidden" name="">
 
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="userid">＠<%- userInfo.id %></p>
-                                        </td>
-                                        <input type="hidden" name="">
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="setumei"><%- userInfo.self_introduction %>
-                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="userid">＠<%- userInfo.id %></p>
+                                            </td>
+                                            <input type="hidden" name="">
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="setumei"><%- userInfo.self_introduction %>
+                                            </td>
 
-                                    </tr>
+                                        </tr>
 
 
-                                </table>
-                            </div>
+                                    </table>
+                                </div>
+                        </div>
                     </div>
-                </div>
-                <div class=userpage>
-                    <div class="td2">
-                        <!-- <p class = "star"><a href=""><font color="orange">★</font></a></p> -->
-                        <!-- お気に入りしいる★-->
-                        <p class="star_1"><a href="">
-                                <font color="orange">☆</font>
-                            </a></p><!-- お気に入りしいない☆-->
-                        <p class="favorite">100</p>
+                    <div class=userpage>
+                        <div class="td2">
+                            <!-- <p class = "star"><a href=""><font color="orange">★</font></a></p> -->
+                            <!-- お気に入りしいる★-->
+                            <p class="star_1"><a href="">
+                                    <font color="orange">☆</font>
+                                </a></p><!-- お気に入りしいない☆-->
+                            <p class="favorite">100</p>
+                        </div>
                     </div>
-                </div>
 
 
-                <p class="senn">
-                    <%- currentPageDescription.title %>
-                        <hr class="hr3">
-                </p>
+                    <p class="senn">
+                        <%- currentPageDescription.title %>
+                            <hr class="hr3">
+                    </p>
 
-                <div id="js-show-popup">
-                    <div class="box_wrapper_2">
+                    <div id="js-show-popup">
+                        <div class="box_wrapper_2">
 
-                        <%- include("../components/workListOverView.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription, }) %>
+                            <%- include("../components/workListOverView.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription, }) %>
 
 
+                        </div>
                     </div>
-                </div>
 
 
                 <%- include("../components/workListDetail.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isMine: isMine }) %>
 
             </article>
             <br>
+            <footer>
+                <br>
+                <br>
+                <div class="footer_text1">
+                    <table class="footer_text">
+                        <tr>
+                            <td>
+                                <p><a href="faq.html">よくある質問　</a></p>
+                            </td>
+                            <td>
+                                <p><a href="/privacypolicy">プライバシーポリシー　</a></p>
+                            </td>
+                            <td>
+                                <p><a href="/sitepolicy">サイトポリシー</a></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+            
+                <br>
+                <p id="page-top"><a href="">↑</a></p>
+            </footer>
+            </div>
+            
+            <script>
+                bubbly({
+                    blur: 5,
+                    bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.3})`,
+                    canvas: document.querySelector("#back"),
+                    colorStart: '#fff',
+                    colorStop: '#fff',
+                    compose: 'source-over',
+                    shadowColor: '#ffffef',
+                    velocityFunc: () => Math.random() * 1.4,
+                    radiusFunc: () => 3 + Math.random() * 20,
+                });
+            </script>
 
             <%- include("../components/listPagenation.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isCreatorView: isCreatorView }) %>
             <%- include("../components/footer.ejs") %>
