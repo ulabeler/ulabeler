@@ -67,7 +67,7 @@
                                                 // お気に入り数を表示
                                                 // favViewNumの要素数分ループ
                                                 for (let i = 0; i < favViewNum.length; i++) {
-                                                    favViewNum[i].innerHTML = response.data;
+                                                    favViewNum[i].innerHTML = response.data.number;
                                                 }
                                                 // favViewNum.innerHTML = `<font size="4">${response.data}</font>`;
                                                 // alert(response.data);
@@ -85,5 +85,33 @@
                                         }
                                     });
                                 return;
+                            }
+
+                            function getFavStatus(){
+                                const favViewNum = document.querySelectorAll(`.favNumIdx-${id}`);
+                                axios.post(
+                                    `/api/work/getworkfavnum/`,
+                                    {
+                                        id: id
+                                    }
+                                )
+                                    .then(function (response) {
+                                        console.log(response);
+                                        // お気に入り数を表示
+                                        // favViewNumの要素数分ループ
+                                        for (let i = 0; i < favViewNum.length; i++) {
+                                            favViewNum[i].innerHTML = response.data.number;
+                                        }
+                                        // favViewNum.innerHTML = `<font size="4">${response.data}</font>`;
+                                        // alert(response.data);
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                    });
+                                return;
+                            }
+
+                            window.onload = function () {
+                                getFavStatus();
                             }
                         </script>
