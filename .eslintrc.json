@@ -20,6 +20,6 @@
   "rules": {
     "max-len": "off",
     "no-unused-vars": "off",
-    "import/no-unresolved": "on"
+    "import/no-unresolved": 0
   }
 }

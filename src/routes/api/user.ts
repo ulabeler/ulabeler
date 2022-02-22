@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import express from "express";
 import bcrypt from "bcrypt";
@@ -6,11 +7,10 @@ import { knex } from "../../app";
 // eslint-disable-next-line camelcase
 import {
   userTable,
-  // eslint-disable-next-line camelcase
   password_resetTable,
-  // eslint-disable-next-line camelcase
   mail_confirmationTable,
   reportTable,
+  favorited_userTable,
   // favorited_user_numberTable,
 } from "../../tools/TypeAlias/tableType_alias";
 import sideMenuList from "../../tools/data/sidemenu.json";
@@ -114,7 +114,7 @@ router.post("/sign_up", function (request, response) {
           .then(function () {
             sendMail("sign_up_complete", userdata.mailaddress);
             response.status(201).send(true);
-          })
+          });
       })
       .catch(function (err: any) {
         console.log(err);
@@ -123,7 +123,8 @@ router.post("/sign_up", function (request, response) {
   }
 });
 
-router.post( //ログインはこれだけ
+router.post(
+  // ログインはこれだけ
   "/sign_in",
   passport.authenticate("local"),
   function (request, response) {
@@ -549,49 +550,118 @@ router.post("/modification_userinfo_attempt", function (request, response) {
 });
 
 router.post("/report/create", function (request, response) {
-  if(request.user){
-    if (!request.body.reportId && !request.body.reportDescription && !request.body.reportToWorkId ) {
+  if (request.user) {
+    if (
+      !request.body.reportId &&
+      !request.body.reportDescription &&
+      !request.body.reportToWorkId
+    ) {
       response.status(400).send("Bad Request");
-    }else{
-      //request.body.reportToWorkIdに該当するworkを取得
+    } else {
+      const userId = request.user.id;
+      // request.body.reportToWorkIdに該当するworkを取得
       knex("work")
         .where("id", request.body.reportToWorkId)
         .select("*")
-        .then(
-          (results: any) => {
-            if(results.length > 0){
-              //reportを作成
-              const report: reportTable = {
-                id: null,
-                reported_to_user_id: results[0].created_by_user_id,
-                reported_from_user_id: request.user!.id,
-                category_id: request.body.reportId,
-                reported_description: request.body.reportDescription,
-                reported_at: new Date(),
-              };
-              knex("report")
-                .insert(report)
-                .then(function () {
-                  response.status(201).send(true);
-                })
-                .catch(function (err: any) {
-                  console.log(err);
-                  response.status(500).send("Internal Server Error");
-                });
-            }else{
-              response.status(200).send("指定されたworkは存在しません。");
-            }
+        .then((results: any) => {
+          if (results.length > 0) {
+            // reportを作成
+            const report: reportTable = {
+              id: null,
+              reported_to_user_id: results[0].created_by_user_id,
+              reported_from_user_id: userId,
+              category_id: request.body.reportId,
+              reported_description: request.body.reportDescription,
+              reported_at: new Date(),
+            };
+            knex("report")
+              .insert(report)
+              .then(function () {
+                response.status(201).send(true);
+              })
+              .catch(function (err: any) {
+                console.log(err);
+                response.status(500).send("Internal Server Error");
+              });
+          } else {
+            response.status(200).send("指定されたworkは存在しません。");
           }
-        )
+        })
         .catch(function (err: any) {
           console.log(err);
           response.status(500).send("Internal Server Error");
         });
     }
-  } else{
+  } else {
     response.status(401).send("UnAuthorized");
   }
-})
+});
+
+router.post("/favorite/:userId", (request, response) => {
+  if (!request.user) {
+    response.status(401).send("Forbidden");
+  } else {
+    const targetFavorite: favorited_userTable = {
+      favorite_from: request.user.id,
+      favorite_to: request.params.userId,
+      favorited_at: new Date(),
+    };
+    // すでにお気に入りしているか確認
+    knex("favorited_user")
+      .where({
+        favorite_from: targetFavorite.favorite_from,
+        favorite_to: targetFavorite.favorite_to,
+      })
+      .then((row: favorited_userTable[]) => {
+        if (row.length == 0) {
+          knex("favorited_user")
+            .insert(targetFavorite)
+            .then(() => {
+              // favorited_user_numberTableを更新
+              knex("favorited_user_number")
+                .where("favorited_to_id", request.params.userId)
+                .increment("number", 1)
+                .then(() => {
+                  response.status(201).send("Added");
+                })
+                .catch((err: any) => {
+                  console.log(err);
+                  response.status(500).send("Internal Server Error");
+                });
+            })
+            .catch((err: any) => {
+              console.log(err);
+              response.status(500).send("Internal Server Error");
+            });
+        } else {
+          // 削除
+          knex("favorited_user")
+            .where({
+              favorite_from: targetFavorite.favorite_from,
+              favorite_to: targetFavorite.favorite_to,
+            })
+            .del()
+            .then(() => {
+              // favorited_user_numberTableを更新
+              knex("favorited_user_number")
+                .where("favorited_to_id", request.params.userId)
+                .decrement("number", 1)
+                .then(() => {
+                  response.status(201).send("Removed");
+                })
+                .catch((err: any) => {
+                  console.log(err);
+                  response.status(500).send("Internal Server Error");
+                });
+            })
+            .catch((err: any) => {
+              console.log(err);
+              response.status(500).send("Internal Server Error");
+            });
+        }
+      });
+  }
+});
 
 // CLI専用
 // 該当idのユーザーを物理削除

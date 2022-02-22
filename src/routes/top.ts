@@ -1,7 +1,16 @@
 import express from "express";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
-import { userTable, workTable, base_categoryTable, favorited_work_numberTable, favorited_workTable } from "tools/TypeAlias/tableType_alias";
+import {
+  userTable,
+  workTable,
+  // eslint-disable-next-line camelcase
+  base_categoryTable,
+  // eslint-disable-next-line camelcase
+  favorited_work_numberTable,
+  // eslint-disable-next-line camelcase
+  favorited_workTable,
+} from "tools/TypeAlias/tableType_alias";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 import sideMenuList from "../tools/data/sidemenu.json";
@@ -122,7 +131,6 @@ router.get("/logout", function (request, response) {
   });
 });
 
-
 router.get("/reset_password/complete", function (request, response) {
   if (request.headers.referer) {
     const rawReferer = request.headers.referer;
@@ -160,17 +168,23 @@ router.get("/password/modification", function (request, response) {
 router.get("/my_work", function (request, response) {
   let currentPage = 1; // 現在のページ番号
   let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
-  if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
+  if (
+    request.query.page !== undefined &&
+    request.query.page !== "" &&
+    request.query.page !== null &&
+    request.query.page !== "1"
+  ) {
     idx = (Number(request.query.page) - 1) * maxViewOnPage;
     currentPage = Number(request.query.page);
   }
   if (request.user) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const userInfo: userTable = {
       id: request.user.id,
       name: request.user.name,
       icon_path: request.user.icon_path,
-    }
+    };
     const userId: userTable["id"] = request.user.id;
     // workから、userIdと一致するworkを取得
     knex("work")
@@ -178,6 +192,7 @@ router.get("/my_work", function (request, response) {
       .orderBy("create_at", "asc")
       .then(async function (workList: workTable[]) {
         // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
+        // eslint-disable-next-line camelcase
         const baseCategoryList: base_categoryTable[] = [];
         await new Promise((resolve) => {
           if (workList.length === 0) {
@@ -194,6 +209,7 @@ router.get("/my_work", function (request, response) {
           workList.forEach((work: workTable) => {
             knex("base_category")
               .where("id", work.base_category_id)
+              // eslint-disable-next-line camelcase
               .then((baseCategory: base_categoryTable[]) => {
                 baseCategoryList.push(baseCategory[0]);
                 if (baseCategoryList.length === workList.length) {
@@ -203,55 +219,72 @@ router.get("/my_work", function (request, response) {
                   }
                   const currentPageDescription = {
                     title: "マイ作品リスト",
-                    "uriPrefix": "/my_work",
+                    uriPrefix: "/my_work",
                   };
                   // workList.idそれぞれについて、favorited_work_numberから、いいね数を取得
                   const favoritedWorkNumberList: number[] = [];
                   workList.forEach((work: workTable) => {
                     knex("favorited_work_number")
                       .where("favorited_to_id", work.id)
-                      .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
-                        favoritedWorkNumberList.push(favoritedWorkNumber[0].number);
-                        if (favoritedWorkNumberList.length === workList.length) {
-                          // workList.idそれぞれについて、favorited_workからいいねしているかどうかを取得。
-                          // 該当レコードがなければfalse、あればtrueを配列に格納する
-                          if (request.user) {
-                            const favFrom = request.user.id;
-                            const favoritedWorkList: boolean[] = [];
-                            workList.forEach((work: workTable) => {
-                              knex("favorited_work")
-                                .where("favorite_to", work.id)
-                                .andWhere("favorite_from", favFrom)
-                                .then((favoritedWork: favorited_workTable[]) => {
-                                  favoritedWorkList.push(favoritedWork.length > 0);
-                                  if (favoritedWorkList.length === workList.length) {
-                                    // console.log(favoritedWorkList);
-                                    response.render("list/my_list", {
-                                      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                                        `${Boolean(request.user)}`
-                                      ],
-                                      workList: workList,
-                                      baseCategoryList: baseCategoryList,
-                                      idx: idx,
-                                      maxPage: maxPage,
-                                      maxViewOnPage: maxViewOnPage,
-                                      currentPage: currentPage,
-                                      userInfo: userInfo,
-                                      currentPageDescription: currentPageDescription,
-                                      isMine: true,
-                                      isCreatorView: false,
-                                      favoritedWorkNumberList: favoritedWorkNumberList,
-                                      favoritedWorkList: favoritedWorkList,
-                                    });
-                                    resolve("ok");
-                                    return;
-                                  }
-                                });
-                            });
+                      .then(
+                        // eslint-disable-next-line camelcase
+                        (favoritedWorkNumber: favorited_work_numberTable[]) => {
+                          favoritedWorkNumberList.push(
+                            favoritedWorkNumber[0].number
+                          );
+                          if (
+                            favoritedWorkNumberList.length === workList.length
+                          ) {
+                            // workList.idそれぞれについて、favorited_workからいいねしているかどうかを取得。
+                            // 該当レコードがなければfalse、あればtrueを配列に格納する
+                            if (request.user) {
+                              const favFrom = request.user.id;
+                              const favoritedWorkList: boolean[] = [];
+                              workList.forEach((work: workTable) => {
+                                knex("favorited_work")
+                                  .where("favorite_to", work.id)
+                                  .andWhere("favorite_from", favFrom)
+                                  .then(
+                                    // eslint-disable-next-line camelcase
+                                    (favoritedWork: favorited_workTable[]) => {
+                                      favoritedWorkList.push(
+                                        favoritedWork.length > 0
+                                      );
+                                      if (
+                                        favoritedWorkList.length ===
+                                        workList.length
+                                      ) {
+                                        // console.log(favoritedWorkList);
+                                        response.render("list/my_list", {
+                                          side_menu: JSON.parse(
+                                            JSON.stringify(sideMenuList)
+                                          )[`${Boolean(request.user)}`],
+                                          workList: workList,
+                                          baseCategoryList: baseCategoryList,
+                                          idx: idx,
+                                          maxPage: maxPage,
+                                          maxViewOnPage: maxViewOnPage,
+                                          currentPage: currentPage,
+                                          userInfo: userInfo,
+                                          currentPageDescription:
+                                            currentPageDescription,
+                                          isMine: true,
+                                          isCreatorView: false,
+                                          favoritedWorkNumberList:
+                                            favoritedWorkNumberList,
+                                          favoritedWorkList: favoritedWorkList,
+                                        });
+                                        resolve("ok");
+                                        return;
+                                      }
+                                    }
+                                  );
+                              });
+                            }
                           }
                         }
-                      });
-                  })
+                      );
+                  });
                 }
               });
           });
@@ -267,7 +300,12 @@ router.get("/creator_work/:userId", function (request, response) {
   if (request.params.userId) {
     let currentPage = 1; // 現在のページ番号
     let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
-    if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
+    if (
+      request.query.page !== undefined &&
+      request.query.page !== "" &&
+      request.query.page !== null &&
+      request.query.page !== "1"
+    ) {
       idx = (Number(request.query.page) - 1) * maxViewOnPage;
       currentPage = Number(request.query.page);
     }
@@ -282,7 +320,7 @@ router.get("/creator_work/:userId", function (request, response) {
       } else {
         return false;
       }
-    }
+    };
     // console.log("isMine:" + isMine);
     // request.query.userIdに対応するユーザーを取得
     knex("user")
@@ -290,7 +328,7 @@ router.get("/creator_work/:userId", function (request, response) {
       .where("id", request.params.userId)
       .then(async function (userList: userTable[]) {
         if (userList.length === 0) {
-          response.render('components/message', {
+          response.render("components/message", {
             side_menu: JSON.parse(JSON.stringify(sideMenuList))[
               `${Boolean(request.user)}`
             ],
@@ -299,19 +337,21 @@ router.get("/creator_work/:userId", function (request, response) {
           });
           return;
         }
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         const userInfo: userTable = {
           id: userList[0].id,
           name: userList[0].name,
           icon_path: userList[0].icon_path,
           self_introduction: userList[0].self_introduction,
-        }
+        };
         // workから、userIdと一致するworkを取得
         knex("work")
           .where("created_by_user_id", userInfo.id)
           .orderBy("create_at", "asc")
           .then(async function (workList: workTable[]) {
             // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
+            // eslint-disable-next-line camelcase
             const baseCategoryList: base_categoryTable[] = [];
             await new Promise((resolve) => {
               if (workList.length === 0) {
@@ -328,6 +368,7 @@ router.get("/creator_work/:userId", function (request, response) {
               workList.forEach((work: workTable) => {
                 knex("base_category")
                   .where("id", work.base_category_id)
+                  // eslint-disable-next-line camelcase
                   .then((baseCategory: base_categoryTable[]) => {
                     baseCategoryList.push(baseCategory[0]);
                     if (baseCategoryList.length === workList.length) {
@@ -337,75 +378,102 @@ router.get("/creator_work/:userId", function (request, response) {
                       }
                       const currentPageDescription = {
                         title: "作品一覧",
-                        "uriPrefix": "/creator_work",
+                        uriPrefix: "/creator_work",
                       };
                       // workList.idそれぞれについて、favorited_work_numberから、いいね数を取得
                       const favoritedWorkNumberList: number[] = [];
                       workList.forEach((work: workTable) => {
                         knex("favorited_work_number")
                           .where("favorited_to_id", work.id)
-                          .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
-                            favoritedWorkNumberList.push(favoritedWorkNumber[0].number);
-                            if (favoritedWorkNumberList.length === workList.length) {
-                              // workList.idそれぞれについて、favorited_workからいいねしているかどうかを取得。
-                              // 該当レコードがなければfalse、あればtrueを配列に格納する
-                              if (request.user) {
-                                const favFrom = request.user.id;
-                                const favoritedWorkList: boolean[] = [];
-                                workList.forEach((work: workTable) => {
-                                  knex("favorited_work")
-                                    .where("favorite_to", work.id)
-                                    .andWhere("favorite_from", favFrom)
-                                    .then((favoritedWork: favorited_workTable[]) => {
-                                      favoritedWorkList.push(favoritedWork.length > 0);
-                                      if (favoritedWorkList.length === workList.length) {
-                                        response.render("list/creator_work", {
-                                          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                                            `${Boolean(request.user)}`
-                                          ],
-                                          workList: workList,
-                                          baseCategoryList: baseCategoryList,
-                                          idx: idx,
-                                          maxPage: maxPage,
-                                          maxViewOnPage: maxViewOnPage,
-                                          currentPage: currentPage,
-                                          userInfo: userInfo,
-                                          currentPageDescription: currentPageDescription,
-                                          isMine: isMine(),
-                                          isCreatorView: true,
-                                          favoritedWorkNumberList: favoritedWorkNumberList,
-                                          favoritedWorkList: favoritedWorkList,
-                                        });
-                                        resolve("ok");
-                                        return;
-                                      }
-                                    }
-                                    );
+                          .then(
+                            (
+                              // eslint-disable-next-line camelcase
+                              favoritedWorkNumber: favorited_work_numberTable[]
+                            ) => {
+                              favoritedWorkNumberList.push(
+                                favoritedWorkNumber[0].number
+                              );
+                              if (
+                                favoritedWorkNumberList.length ===
+                                workList.length
+                              ) {
+                                // workList.idそれぞれについて、favorited_workからいいねしているかどうかを取得。
+                                // 該当レコードがなければfalse、あればtrueを配列に格納する
+                                if (request.user) {
+                                  const favFrom = request.user.id;
+                                  const favoritedWorkList: boolean[] = [];
+                                  workList.forEach((work: workTable) => {
+                                    knex("favorited_work")
+                                      .where("favorite_to", work.id)
+                                      .andWhere("favorite_from", favFrom)
+                                      .then(
+                                        (
+                                          // eslint-disable-next-line camelcase
+                                          favoritedWork: favorited_workTable[]
+                                        ) => {
+                                          favoritedWorkList.push(
+                                            favoritedWork.length > 0
+                                          );
+                                          if (
+                                            favoritedWorkList.length ===
+                                            workList.length
+                                          ) {
+                                            response.render(
+                                              "list/creator_work",
+                                              {
+                                                side_menu: JSON.parse(
+                                                  JSON.stringify(sideMenuList)
+                                                )[`${Boolean(request.user)}`],
+                                                workList: workList,
+                                                baseCategoryList:
+                                                  baseCategoryList,
+                                                idx: idx,
+                                                maxPage: maxPage,
+                                                maxViewOnPage: maxViewOnPage,
+                                                currentPage: currentPage,
+                                                userInfo: userInfo,
+                                                currentPageDescription:
+                                                  currentPageDescription,
+                                                isMine: isMine(),
+                                                isCreatorView: true,
+                                                favoritedWorkNumberList:
+                                                  favoritedWorkNumberList,
+                                                favoritedWorkList:
+                                                  favoritedWorkList,
+                                              }
+                                            );
+                                            resolve("ok");
+                                            return;
+                                          }
+                                        }
+                                      );
+                                  });
+                                } else {
+                                  response.render("list/creator_work", {
+                                    side_menu: JSON.parse(
+                                      JSON.stringify(sideMenuList)
+                                    )[`${Boolean(request.user)}`],
+                                    workList: workList,
+                                    baseCategoryList: baseCategoryList,
+                                    idx: idx,
+                                    maxPage: maxPage,
+                                    maxViewOnPage: maxViewOnPage,
+                                    currentPage: currentPage,
+                                    userInfo: userInfo,
+                                    currentPageDescription:
+                                      currentPageDescription,
+                                    isMine: isMine(),
+                                    isCreatorView: true,
+                                    favoritedWorkNumberList:
+                                      favoritedWorkNumberList,
+                                    favoritedWorkList: false,
+                                  });
+                                  resolve("ok");
+                                  return;
                                 }
-                                );
-                              } else {
-                                response.render("list/creator_work", {
-                                  side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                                    `${Boolean(request.user)}`
-                                  ],
-                                  workList: workList,
-                                  baseCategoryList: baseCategoryList,
-                                  idx: idx,
-                                  maxPage: maxPage,
-                                  maxViewOnPage: maxViewOnPage,
-                                  currentPage: currentPage,
-                                  userInfo: userInfo,
-                                  currentPageDescription: currentPageDescription,
-                                  isMine: isMine(),
-                                  isCreatorView: true,
-                                  favoritedWorkNumberList: favoritedWorkNumberList,
-                                  favoritedWorkList: false,
-                                });
-                                resolve("ok");
-                                return;
                               }
                             }
-                          });
+                          );
                       });
                     }
                   });
@@ -466,7 +534,7 @@ router.get("/sitepolicy", (request, response) => {
     ],
     userInfo: userInfo,
   });
-})
+});
 
 router.get("/privacypolicy", (request, response) => {
   const userInfo = request.user ? request.user : null;
@@ -476,29 +544,37 @@ router.get("/privacypolicy", (request, response) => {
     ],
     userInfo: userInfo,
   });
-})
+});
 
 router.get("/favorite/work", (request, response) => {
-  const orderBy = request.query.orderBy ? request.query.orderBy : "favorited_at"; // 後で変更するかは要検討。UI見るに可変ではなさそうな気はする。
+  const orderBy = request.query.orderBy
+    ? request.query.orderBy
+    : "favorited_at"; // 後で変更するかは要検討。UI見るに可変ではなさそうな気はする。
   if (!request.user) {
     response.redirect("/invalidAccess");
     return;
   } else {
     let currentPage = 1; // 現在のページ番号
     let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
-    if (request.query.page !== undefined && request.query.page !== "" && request.query.page !== null && request.query.page !== "1") {
+    if (
+      request.query.page !== undefined &&
+      request.query.page !== "" &&
+      request.query.page !== null &&
+      request.query.page !== "1"
+    ) {
       idx = (Number(request.query.page) - 1) * maxViewOnPage;
       currentPage = Number(request.query.page);
     }
     const currentPageDescription = {
       title: "お気に入り作品リスト",
-      "uriPrefix": `/favorite/work`,
+      uriPrefix: `/favorite/work`,
     };
     const userId = request.user.id;
     // favorited_workTableから、favorite_fromがuserIdのレコードを取得
     knex("favorited_work")
       .where("favorite_from", userId)
       .orderBy(orderBy)
+      // eslint-disable-next-line camelcase
       .then((favoritedWork: favorited_workTable[]) => {
         if (favoritedWork.length == 0) {
           response.render("list/my_favorite_work_list", {
@@ -506,7 +582,7 @@ router.get("/favorite/work", (request, response) => {
               `${Boolean(request.user)}`
             ],
             currentPageDescription: currentPageDescription,
-            workList: null
+            workList: null,
           });
         } else {
           let maxPage = ~~(favoritedWork.length / maxViewOnPage);
@@ -518,6 +594,7 @@ router.get("/favorite/work", (request, response) => {
           // それぞれのレコードのfavorite_toを取得し、workTableからそれぞれのレコードを取得
           const favoritedWorkIdList: string[] = [];
           const favoritedWorkList: boolean[] = [];
+          // eslint-disable-next-line camelcase
           favoritedWork.forEach((favoritedWork: favorited_workTable) => {
             favoritedWorkIdList.push(favoritedWork.favorite_to);
             favoritedWorkList.push(true);
@@ -529,68 +606,87 @@ router.get("/favorite/work", (request, response) => {
               knex("user")
                 .where("id", userId)
                 .then((user: userTable[]) => {
-                  const userFlagisMine: boolean[] = [];
+                  const userFlagIsMine: boolean[] = [];
                   // user.idとwork.user_idが一致するかどうかを判定し、一致する場合はtrueを返す
                   workList.forEach((work: workTable) => {
-                    userFlagisMine.push(work.created_by_user_id === userId);
+                    userFlagIsMine.push(work.created_by_user_id === userId);
                   });
                   // workList.base_category_idをキーにして、base_categoryテーブルからカテゴリ名を取得し、workListに追加
+                  // eslint-disable-next-line camelcase
                   const baseCategoryList: base_categoryTable[] = [];
                   workList.forEach((work: workTable) => {
                     knex("base_category")
                       .where("id", work.base_category_id)
+                      // eslint-disable-next-line camelcase
                       .then((baseCategory: base_categoryTable[]) => {
                         baseCategoryList.push(baseCategory[0]);
                         // workList.idそれぞれについて、favorited_work_numberから、いいね数を取得
                         if (baseCategoryList.length === workList.length) {
                           const favoritedWorkNumberList: number[] = [];
-                          favoritedWorkIdList.forEach((favoritedWorkId: string) => {
-                            knex("favorited_work")
-                              .where("favorite_to", favoritedWorkId)
-                              .then((favoritedWorkNumber: favorited_workTable[]) => {
-                                favoritedWorkNumberList.push(favoritedWorkNumber.length);
-                                if (favoritedWorkNumberList.length === workList.length) {
-                                  response.render("list/my_favorite_work_list", {
-                                    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                                      `${Boolean(request.user)}`
-                                    ],
-                                    workList: workList,
-                                    baseCategoryList: baseCategoryList,
-                                    idx: idx,
-                                    maxPage: maxPage,
-                                    maxViewOnPage: maxViewOnPage,
-                                    currentPage: currentPage,
-                                    userInfo: user,
-                                    currentPageDescription: currentPageDescription,
-                                    isMine: userFlagisMine,
-                                    favoritedWorkList: favoritedWorkList,
-                                    isCreatorView: "myFavWorkList",
-                                    favoritedWorkNumberList: favoritedWorkNumberList, // お気に入り数
-                                  })
-                                }
-                              })
-                              .catch((error: Error) => {
-                                console.log(error);
-                              })
-                          });
+                          favoritedWorkIdList.forEach(
+                            (favoritedWorkId: string) => {
+                              knex("favorited_work")
+                                .where("favorite_to", favoritedWorkId)
+                                .then(
+                                  (
+                                    // eslint-disable-next-line camelcase
+                                    favoritedWorkNumber: favorited_workTable[]
+                                  ) => {
+                                    favoritedWorkNumberList.push(
+                                      favoritedWorkNumber.length
+                                    );
+                                    if (
+                                      favoritedWorkNumberList.length ===
+                                      workList.length
+                                    ) {
+                                      response.render(
+                                        "list/my_favorite_work_list",
+                                        {
+                                          side_menu: JSON.parse(
+                                            JSON.stringify(sideMenuList)
+                                          )[`${Boolean(request.user)}`],
+                                          workList: workList,
+                                          baseCategoryList: baseCategoryList,
+                                          idx: idx,
+                                          maxPage: maxPage,
+                                          maxViewOnPage: maxViewOnPage,
+                                          currentPage: currentPage,
+                                          userInfo: user,
+                                          currentPageDescription:
+                                            currentPageDescription,
+                                          isMine: userFlagIsMine,
+                                          favoritedWorkList: favoritedWorkList,
+                                          isCreatorView: "myFavWorkList",
+                                          favoritedWorkNumberList:
+                                            favoritedWorkNumberList, // お気に入り数
+                                        }
+                                      );
+                                    }
+                                  }
+                                )
+                                .catch((error: Error) => {
+                                  console.log(error);
+                                });
+                            }
+                          );
                         }
                       })
                       .catch((error: Error) => {
-                        console.log("bbbbb");
-                      })
+                        console.log(error);
+                      });
                   });
                 })
                 .catch((error: Error) => {
-                  console.log("ccccc");
-                })
+                  console.log(error);
+                });
             });
         }
       })
       .catch((error: Error) => {
-        console.log("ddddd");
+        console.log(error);
       });
   }
-})
+});
 
 router.get("/invalidAccess", function (request, response) {
   const userInfo = request.user ? request.user : null;
