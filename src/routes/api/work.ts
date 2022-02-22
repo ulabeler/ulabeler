@@ -96,7 +96,7 @@ router.post("/old/favorite/:workId", (request, response) => {
 
 router.post("/favorite/:workId", (request, response) => {
   if (!request.user) {
-    response.status(403).send("unAuthorized");
+    response.status(401).send("unAuthorized");
   } else {
     const favorited_at = new Date();
     const targetFavoriteItem: favorited_workTable = {
