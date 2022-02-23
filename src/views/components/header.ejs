@@ -9,9 +9,9 @@
     <table class="toptable" cellpadding="5">
         <tr>
             <th><span class="magnifying_glass"></span>
-                <form method="get" action="#" class="search_container">
-                    <input type="text" size="25" placeholder="キーワード検索">
-                    <input type="submit" value="&#xf002">
+                <form method="get" action="/search" class="search_container">
+                    <input type="text" size="25" placeholder="キーワード検索" name="q" id="searchInput">
+                    <input type="submit" value="&#xf002" id="searchSubmit">
                 </form>
             </th>
         </tr>
@@ -29,6 +29,19 @@
         </div>
     </form>
 </div>
+<script>
+    const searchSubmit = document.getElementById('searchSubmit');
+    // 0文字の場合は検索ボタンを無効にする
+    searchSubmit.disabled = true;
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keyup', () => {
+        if (searchInput.value.length > 0) {
+            searchSubmit.disabled = false;
+        } else {
+            searchSubmit.disabled = true;
+        }
+    });
+</script>
 <noscript>
     <p>JavaScriptを有効にしてください。</p>
 </noscript>

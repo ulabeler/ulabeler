@@ -11,7 +11,7 @@ import {
   base_categoryTable,
 } from "../tools/TypeAlias/tableType_alias";
 import sideMenuList from "../tools/data/sidemenu.json";
-import { pickHashTags } from "../tools/pickHashTags";
+import { pickHashTags } from "../tools/parser";
 // import { v4 as uuidv4 } from "uuid";
 // eslint-disable-next-line new-cap
 const router = express.Router();
