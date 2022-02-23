@@ -1,4 +1,3 @@
-/* eslint-disable no-irregular-whitespace */
 // 渡されたテキストから、ハッシュタグ(配列)とそれ以外を分けて返す
 /**
  * @param {string} text テキスト
@@ -74,7 +73,7 @@ function pickHashTags(text: string) {
  * @return {string[]} 検索ワード
  */
 function searchWordParse(text: string): string[] {
-  // textを" "や"　"で区切って配列に格納する
+  // textを半角スペースや全角スペースで区切って配列に格納する
   const textArray = text.split(/[\x20\u3000]/g);
   return textArray;
 }
