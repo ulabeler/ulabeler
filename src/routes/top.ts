@@ -360,7 +360,7 @@ router.get("/creator_work/:userId", function (request, response) {
                     `${Boolean(request.user)}`
                   ],
                   title: "作品一覧",
-                  userInfo: request.user,
+                  userInfo: userInfo,
                 });
                 resolve("NoWorks");
                 return;
