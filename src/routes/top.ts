@@ -507,6 +507,16 @@ router.get("/privacypolicy", (request, response) => {
   });
 });
 
+router.get("/faq", (request, response) => {
+  const userInfo = request.user ? request.user : null;
+  response.render("faq", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    userInfo: userInfo,
+  });
+});
+
 router.get("/invalidAccess", function (request, response) {
   const userInfo = request.user ? request.user : null;
   response.render("./components/message", {
