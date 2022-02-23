@@ -18,9 +18,9 @@
 
                                             <tr>
                                                 <th rowspan="4">
-                                                    <% console.log(userInfo) %> 
-                                                    <% console.log(userInfo.icon_path) %> 
-                                                    <p class=user_img2><img src="<%= userInfo.icon_path %>" alt="<%- userInfo.id %>">
+                                                    <% console.log(JSON.parse(userInfo)) %> 
+                                                    <% console.log(JSON.parse(userInfo)[0].icon_path) %> 
+                                                    <p class=user_img2><img src="<%= JSON.parse(userInfo)[0].icon_path %>" alt="<%- userInfo.id %>">
                                                     </p>
                                                 </th>
                                                 <td>　　　　　</td>

@@ -124,7 +124,7 @@ router.get("/work", (request, response) => {
                                           maxPage: maxPage,
                                           maxViewOnPage: maxViewOnPage,
                                           currentPage: currentPage,
-                                          userInfo: user,
+                                          userInfo: JSON.stringify(user),
                                           currentPageDescription:
                                             currentPageDescription,
                                           isMine: userFlagIsMine,
