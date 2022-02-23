@@ -487,45 +487,6 @@ router.get("/creator_work/:userId", function (request, response) {
   }
 });
 
-router.get("/settings/profile", (request, response) => {
-  if (request.user) {
-    response.render("user/member_information_confirmation", {
-      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-        `${Boolean(request.user)}`
-      ],
-      userInfo: request.user,
-    });
-  } else {
-    response.redirect("/invalidAccess");
-  }
-});
-
-router.get("/settings/profile/edit", (request, response) => {
-  if (request.user) {
-    response.render("user/member_information_modification", {
-      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-        `${Boolean(request.user)}`
-      ],
-      userInfo: request.user,
-    });
-  } else {
-    response.redirect("/invalidAccess");
-  }
-});
-
-router.get("/settings/profile/edit/icon", (request, response) => {
-  if (request.user) {
-    response.render("user/icon_modification", {
-      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-        `${Boolean(request.user)}`
-      ],
-      userInfo: request.user,
-    });
-  } else {
-    response.redirect("/invalidAccess");
-  }
-});
-
 router.get("/sitepolicy", (request, response) => {
   const userInfo = request.user ? request.user : null;
   response.render("sitePolicy", {
