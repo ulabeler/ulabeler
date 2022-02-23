@@ -88,7 +88,8 @@ router.post("/sign_up", function (request, response) {
       password: bcrypt.hashSync(request.body.password, 10),
       mailaddress: request.body.email,
       created_at: new Date(),
-      icon_path: "/images/system/user.png",
+      icon_path:
+        "https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png",
       self_introduction: null,
       cardnumber: null,
       name_card: null,
@@ -108,8 +109,8 @@ router.post("/sign_up", function (request, response) {
         // favorited_user_numberテーブルにデータを追加
         knex("favorited_user_number")
           .insert({
-            user_id: userdata.id,
-            favorited_user_number: 0,
+            favorited_to_id: userdata.id,
+            number: 0,
           })
           .then(function () {
             sendMail("sign_up_complete", userdata.mailaddress);
