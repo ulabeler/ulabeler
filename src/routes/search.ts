@@ -4,20 +4,38 @@ import { knex } from "../app";
 // import bcrypt from 'bcrypt';
 // eslint-disable-next-line new-cap
 const router = express.Router();
-// import sideMenuList from "../tools/data/sidemenu.json";
-import { searchWordParse } from "../tools/parser";
+import sideMenuList from "../tools/data/sidemenu.json";
+import { searchWordParse, searchQueryParser } from "../tools/parser";
+import { parsedQuery } from "../tools/TypeAlias/miscAlias";
 
-import { workTable } from "tools/TypeAlias/tableType_alias";
+import { userTable, workTable } from "tools/TypeAlias/tableType_alias";
 
-router.get("/", (request, response) => {
+router.get("/old/", (request, response) => {
   console.log(request.query.q);
   const searchQuery = searchWordParse(request.query.q as string);
   console.table(searchQuery);
   if (searchQuery.length !== 0) {
     // searchQueryに@が含まれる要素がある場合、userTableからそのユーザーのidを取得
     if (searchQuery.length === 1 && searchQuery[0].includes("@")) {
-      response.redirect(`/creator_work/${searchQuery[0].slice(1)}`);
-      return;
+      knex("user")
+        .where("id", searchQuery[0].slice(1))
+        .select("id")
+        .then((user: userTable[]) => {
+          if (user.length === 0) {
+            response.render("search_error", {
+              side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                `${Boolean(request.user)}`
+              ],
+              recentQuery: request.query.q,
+            });
+            return;
+          } else {
+            response.redirect(
+              `/creator_work/${searchQuery[0].slice(1)}?q=${request.query.q}`
+            );
+            return;
+          }
+        });
     } else {
       for (let i = 0; i < searchQuery.length; i++) {
         if (searchQuery[i].indexOf("@") !== -1) {
@@ -41,17 +59,83 @@ router.get("/", (request, response) => {
                 );
               }
             })
+            .on("query", function (data: string[]) {
+              console.log(data);
+            })
             .then((resultWork: workTable[]) => {
               if (resultWork.length !== 0) {
                 response.status(200).json(resultWork);
                 return;
               } else {
-                response.status(200).send("対象の作品は見つかりませんでした。");
+                response.render("search_error", {
+                  side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                    `${Boolean(request.user)}`
+                  ],
+                  recentQuery: request.query.q,
+                });
                 return;
               }
             });
         }
       }
+    }
+  }
+});
+
+router.get("/", (request, response) => {
+  console.log(request.query.q);
+  const parsedQuery: parsedQuery = searchQueryParser(request.query.q as string);
+  console.table(parsedQuery);
+  if (parsedQuery.rawQuery.length !== 0) {
+    // searchQueryに@が含まれる要素がある場合、userTableからそのユーザーのidを取得
+    if (parsedQuery.rawQuery.length === 1 && parsedQuery.userId) {
+      knex("user")
+        .where("id", parsedQuery.userId)
+        .select("id")
+        .then((user: userTable[]) => {
+          if (user.length === 0) {
+            response.render("search_error", {
+              side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                `${Boolean(request.user)}`
+              ],
+              recentQuery: request.query.q,
+            });
+            return;
+          } else {
+            response.redirect(
+              `/creator_work/${parsedQuery.userId}?q=${request.query.q}`
+            );
+            return;
+          }
+        });
+    } else if (
+      parsedQuery.other.length === 0 &&
+      parsedQuery.userId === null &&
+      parsedQuery.hashTags
+    ) {
+      knex("work")
+        // hashtagはjson型。一つでも一致したらその結果を返す
+        .where(function () {
+          for (let i = 0; i < parsedQuery.hashTags.length; i++) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            this.orWhere("hashtag", "like", `%${parsedQuery.hashTags[i]}%`);
+          }
+        })
+        .on("query", function (data: string[]) {
+          console.log(data);
+        })
+        .then((resultWork: workTable[]) => {
+          response.status(200).json(resultWork);
+        });
+    } else {
+      response.render("search_error", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        recentQuery: request.query.q,
+      });
+      return;
     }
   }
 });

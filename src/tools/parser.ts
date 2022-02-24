@@ -1,3 +1,4 @@
+import { parsedQuery } from "./TypeAlias/miscAlias";
 // 渡されたテキストから、ハッシュタグ(配列)とそれ以外を分けて返す
 /**
  * @param {string} text テキスト
@@ -78,4 +79,60 @@ function searchWordParse(text: string): string[] {
   return textArray;
 }
 
-export { pickHashTags, searchWordParse };
+// 検索クエリとして飛んできた文字列をパースして検索に使用できるオブジェクトを返すメソッド
+/**
+ * @param {string} query 検索クエリ
+ * @return {parsedQuery} パースした検索クエリ
+ */
+function searchQueryParser(query: string): parsedQuery {
+  const parsedQuery: parsedQuery = {
+    userId: null,
+    hashTags: [],
+    other: [],
+    rawQuery: [],
+  };
+
+  parsedQuery.rawQuery = query.split(/[\x20\u3000]/g);
+  // rawQueryの末尾に" "や全角スペースがあれば、それも除去する
+  for (let i = 0; i < parsedQuery.rawQuery.length; i++) {
+    if (
+      parsedQuery.rawQuery[i].endsWith(" ") ||
+      parsedQuery.rawQuery[i].endsWith("　")
+    ) {
+      parsedQuery.rawQuery[i] = parsedQuery.rawQuery[i].slice(
+        0,
+        parsedQuery.rawQuery[i].length - 1
+      );
+    }
+  }
+
+  // rawQueryの中に"@"がある場合その要素を抽出してuserIdに格納する
+  // 最初1件のみ抽出し、以降は無視する
+  for (let i = 0; i < parsedQuery.rawQuery.length; i++) {
+    if (parsedQuery.rawQuery[i].startsWith("@")) {
+      parsedQuery.userId = parsedQuery.rawQuery[i].slice(1);
+      break;
+    }
+  }
+
+  // rawQueryの中に"#"がある場合その要素を抽出してhashTagsに格納する
+  for (let i = 0; i < parsedQuery.rawQuery.length; i++) {
+    if (parsedQuery.rawQuery[i].startsWith("#")) {
+      parsedQuery.hashTags.push(parsedQuery.rawQuery[i].slice(1));
+    }
+  }
+
+  // rawQueryの中に"@"や"#"がない場合、その要素をotherに格納する
+  for (let i = 0; i < parsedQuery.rawQuery.length; i++) {
+    if (
+      parsedQuery.rawQuery[i].startsWith("@") === false &&
+      parsedQuery.rawQuery[i].startsWith("#") === false
+    ) {
+      parsedQuery.other.push(parsedQuery.rawQuery[i]);
+    }
+  }
+
+  return parsedQuery;
+}
+
+export { pickHashTags, searchWordParse, searchQueryParser };

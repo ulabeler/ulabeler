@@ -54,17 +54,6 @@
                     <%- include("./components/login.ejs") %>
                         <%- include("./components/footer.ejs") %>
         </body>
-        <script>
-            const searchTextBox = document.getElementById('searchInput');
-            window.onload = function () {
-                searchTextBox.focus();
-                const urlParams = new URLSearchParams(location.search);
-                console.log("############");
-                console.log(urlParams.get('q'));
-                if (urlParams.has('q')) {
-                    searchInput.value = urlParams.get('q');
-                }
-            }
-        </script>
+        <script src="/javascripts/searchInit.js"></script>
 
 </html>
