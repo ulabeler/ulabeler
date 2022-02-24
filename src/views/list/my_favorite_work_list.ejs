@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <%- include("../components/lib.ejs") %>
         <title>U labeler</title>
 </head>
 <header class="header">
     <%- include("../components/header.ejs") %>
+
         <body>
             <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
                 <%- include("../components/login.ejs") %>
@@ -13,25 +15,27 @@
                         <br>
                         <br>
                         <!-- ページ名 -->
-                        <h3 class="h3_center4"><%- currentPageDescription.title %>
-                            <hr>
+                        <h3 class="h3_center4">
+                            <%- currentPageDescription.title %>
+                                <hr>
                         </h3>
-                    <% if (workList === null) { %>
-                        <h3>お気に入りに登録した作品がありません。</h3>
-                    </article>
-                    <% } else { %>
                         <div id="js-show-popup">
                             <div class="box_wrapper_2">
-                                <%- include("../components/workListOverView.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription, }) %>
+                                <%- include("../components/workListOverView.ejs", { workList: workList, idx: idx,
+                                    maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage,
+                                    currentPageDescription: currentPageDescription, }) %>
                             </div>
                         </div>
                         <!-- ポップアップの中身 -->
-                        <%- include("../components/workListDetailForFavList.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isMine: isMine}) %>
+                        <%- include("../components/workListDetailForFavList.ejs", { workList: workList,idx: idx,
+                            maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage,
+                            currentPageDescription: currentPageDescription}) %>
                     </article>
                     <br>
-                    <%- include("../components/listPagenation.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isCreatorView: isCreatorView }) %>
-                    <% } %> 
-                    <%- include("../components/footer.ejs") %>
+                    <%- include("../components/listPagenation.ejs", { workList: workList, idx: idx, maxPage: maxPage,
+                        maxViewOnPage: maxViewOnPage, currentPage: currentPage, currentPageDescription:
+                        currentPageDescription,isCreatorView: isCreatorView }) %>
+                        <%- include("../components/footer.ejs") %>
         </body>
 
 </html>

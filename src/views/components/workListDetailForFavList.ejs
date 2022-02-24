@@ -18,9 +18,7 @@
 
                                             <tr>
                                                 <th rowspan="4">
-                                                    <% console.log(JSON.parse(userInfo)) %> 
-                                                    <% console.log(JSON.parse(userInfo)[0].icon_path) %> 
-                                                    <p class=user_img2><img src="<%= JSON.parse(userInfo)[0].icon_path %>" alt="<%- userInfo.id %>">
+                                                    <p class=user_img2><img src="<%= workList[i].icon_path %>" alt="<%-workList[i].created_by_user_id %>">
                                                     </p>
                                                 </th>
                                                 <td>　　　　　</td>
@@ -35,7 +33,7 @@
 
                                             </tr>
                                             <tr>
-                                                <td class="userid2">＠<%- userInfo.id %>
+                                                <td class="userid2">＠<%- workList[i].created_by_user_id %>
                                                 </td>
                                                 <input type="hidden" name="">
                                             </tr>
@@ -70,7 +68,7 @@
                                         </table>
 
                                         <p class="explanation">
-                                            <%- baseCategoryList[i].name_subcategory %>
+                                            <%- workList[i].baseCategoryName %>
                                         </p>
                                         <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
                                         <div class="explanation2"><a href="">
@@ -116,12 +114,12 @@
                                             <div class="favorite3">
                                                 <p class="favorite2 favNumIdx-<%-workList[i].id%>"  id="favNumIdx-<%-workList[i].id%>">
                                                     <font size="4">
-                                                        <%= favoritedWorkNumberList[i]%>
+                                                        <%= workList[i].favoritedWorkNumber %>
                                                     </font>
                                                 </p>
                                             </div>
                 </div>
-                <% if (isMine) { %>
+                <% if (workList[i].isMine) { %>
                     <p class="button6"><button type="button" class="black_button4"
                             onclick="location.href='/work/<%- workList[i].id %>/edit'">編集</button></p>
                     <% } else { %>
