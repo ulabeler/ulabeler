@@ -126,7 +126,17 @@ router.get("/", (request, response) => {
             }
           })
           .then((resultWork: workTable[]) => {
-            response.status(200).json(resultWork);
+            if (resultWork.length === 0) {
+              response.render("search_error", {
+                side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                  `${Boolean(request.user)}`
+                ],
+                recentQuery: request.query.q,
+              });
+              return;
+            } else {
+              response.status(200).json(resultWork);
+            }
           })
           .catch((error: Error) => {
             console.log(error);
@@ -151,7 +161,17 @@ router.get("/", (request, response) => {
             }
           })
           .then((resultWork: workTable[]) => {
-            response.status(200).json(resultWork);
+            if (resultWork.length === 0) {
+              response.render("search_error", {
+                side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                  `${Boolean(request.user)}`
+                ],
+                recentQuery: request.query.q,
+              });
+              return;
+            } else {
+              response.status(200).json(resultWork);
+            }
           })
           .catch((error: Error) => {
             console.log(error);
@@ -170,7 +190,18 @@ router.get("/", (request, response) => {
             }
           })
           .then((resultWork: workTable[]) => {
-            response.status(200).json(resultWork);
+            if (resultWork.length === 0) {
+              response.render("search_error", {
+                side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                  `${Boolean(request.user)}`
+                ],
+                recentQuery: request.query.q,
+              });
+              return;
+            } else {
+              response.status(200).json(resultWork);
+              return;
+            }
           });
       } else {
         // ハッシュタグとその他がある場合の処理
@@ -194,7 +225,17 @@ router.get("/", (request, response) => {
             console.log(data);
           })
           .then((resultWork: workTable[]) => {
-            response.status(200).json(resultWork);
+            if (resultWork.length === 0) {
+              response.render("search_error", {
+                side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                  `${Boolean(request.user)}`
+                ],
+                recentQuery: request.query.q,
+              });
+              return;
+            } else {
+              response.status(200).json(resultWork);
+            }
           });
       }
     } else if (parsedQuery.other.length !== 0) {
@@ -208,7 +249,17 @@ router.get("/", (request, response) => {
           }
         })
         .then((resultWork: workTable[]) => {
-          response.status(200).json(resultWork);
+          if (resultWork.length === 0) {
+            response.render("search_error", {
+              side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+                `${Boolean(request.user)}`
+              ],
+              recentQuery: request.query.q,
+            });
+            return;
+          } else {
+            response.status(200).json(resultWork);
+          }
         });
     } else {
       // クエリが空の場合の処理
