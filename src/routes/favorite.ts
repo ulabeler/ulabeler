@@ -302,11 +302,6 @@ router.get("/work", async (request, response) => {
         favoritedWorkList: favoritedWorkList,
         isCreatorView: "myFavWorkList",
       });
-
-      console.table(myFavoriteWorkList);
-      console.log(currentPage);
-      console.log(idx);
-      console.log(currentPageDescription);
     }
   }
 });
