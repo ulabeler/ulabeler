@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("./components/lib.ejs") %>
+        <title>U labeler</title>
+        <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
+</head>
+<header class="header">
+    <%- include("./components/header.ejs") %>
+
+        <body>
+            <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
+                <article>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+                    <!-- ページ名 -->
+
+                    <section class="box_item_4">
+                        <br>
+                        </div>
+                        <div class=userpage>
+                        </div>
+
+
+                        <form action="select_color.html" method="post">
+                            <h3>
+                                <font color="red">検索結果がありません。</font>
+                            </h3>
+                            <p>
+                                <font color="red">キーワード</font>をご確認ください。
+                            </p>
+                            <br>
+                            <p>検索できる項目</p>
+                            <p>作品名、ユーザーID、#ハッシュタグ</p>
+                            <br>
+
+                        </form>
+                    </section>
+
+                    </div>
+                    <br><br><br><br><br><br><br><br><br>
+                    </div>
+
+                    <noscript>
+                        <p>JavaScriptを有効にしてください。</p>
+                    </noscript>
+                </article>
+
+                <footer>
+                    <%- include("./components/login.ejs") %>
+                        <%- include("./components/footer.ejs") %>
+        </body>
+        <script src="/javascripts/searchInit.js"></script>
+
+</html>
