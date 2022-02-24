@@ -106,6 +106,16 @@ function searchQueryParser(query: string): parsedQuery {
     }
   }
 
+  // rawQueryのそれぞれの要素の末尾に\nがあれば、それも除去する
+  for (let i = 0; i < parsedQuery.rawQuery.length; i++) {
+    if (parsedQuery.rawQuery[i].endsWith("\n")) {
+      parsedQuery.rawQuery[i] = parsedQuery.rawQuery[i].slice(
+        0,
+        parsedQuery.rawQuery[i].length - 1
+      );
+    }
+  }
+
   // rawQueryの中に"@"がある場合その要素を抽出してuserIdに格納する
   // 最初1件のみ抽出し、以降は無視する
   for (let i = 0; i < parsedQuery.rawQuery.length; i++) {
