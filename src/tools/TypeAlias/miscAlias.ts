@@ -16,3 +16,13 @@ export type useWorkList = workTable & {
   baseCategoryName?: string;
   favoritedWorkNumber?: number;
 };
+
+export type myFavoriteWorkList = workTable & {
+  isFavorited?: boolean;
+  favoritedWorkNumber?: number;
+  baseCategoryName?: string;
+  creatorIconPath?: string;
+  creatorName?: string;
+  favorited_at?: Date;
+  userFlagIsMine?: boolean;
+};
