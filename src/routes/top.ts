@@ -415,17 +415,9 @@ router.get("/creator_work/:userId", async function (request, response) {
           currentPage: currentPage,
           userInfo: userInfo,
           currentPageDescription: currentPageDescription,
-          isMine: true,
+          isMine: isMine(),
           isCreatorView: false,
         });
-        console.log(maxPage);
-        console.table(userInfo);
-        console.table(userWorkList);
-        response.status(200);
-        console.log(currentPage);
-        console.log(idx);
-        console.log(maxViewOnPage);
-        console.log(isMine());
       }
     }
   } else {
