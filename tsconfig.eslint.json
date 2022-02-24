@@ -17,7 +17,6 @@
     ],
     "exclude": [
         "node_modules",
-        "src/public/*",
         "素材/*",
         "built/*",
         "assets/alpha/routes/alpha/*/*",

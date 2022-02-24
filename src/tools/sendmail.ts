@@ -57,7 +57,3 @@ function sendMail(scene: string, sendTo: string, html?: string): void {
     }
   );
 }
-
-// 実行 単体デバッグ用。dotenvの設定をしていないとエラーになる
-// sendMail("sign_up_complete", "na2na@na2na.dev")
-// main("nagarebosi429@gmail.com")

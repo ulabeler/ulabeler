@@ -49,6 +49,9 @@ import mailModRouter from "./routes/mailMod";
 import paymentRouter from "./routes/payment/payment";
 import PayPayRouter from "./routes/payment/paypay";
 import workRouter from "./routes/work";
+import settingsRouter from "./routes/settings";
+import favoriteRouter from "./routes/favorite";
+import searchRouter from "./routes/search";
 import passport from "passport";
 
 // const usersRouter = require('./routes/alpha/users');
@@ -71,6 +74,9 @@ app.use("/api/user", userAPIRouter);
 app.use("/api/media", mediaAPIRouter);
 app.use("/api/work", workAPIRouter);
 app.use("/work", workRouter);
+app.use("/settings", settingsRouter);
+app.use("/favorite", favoriteRouter);
+app.use("/search", searchRouter);
 app.use("/mail_address_modification", mailModRouter);
 
 // catch 404 and forward to error handler

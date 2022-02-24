@@ -1,11 +1,5 @@
-# 間に合わんが？？？？？？？
-
-# 現状
-
-燃え燃え
-
 # 導入
-`sudo git clone -b master --recursive git@github.com:na2na-p/ulabeler.git`
+`sudo git clone -b master --recursive https://github.com/ulabeler/ulabeler.git`  
 `npm install && npm run build`した後DBをいい感じにします。MySQL は別で動かしておく必要があります。  
  DB の初期化はしてないので今のところは SQL 自分で流してください  
  ただし、XAMPP についてくる MariaDB だとマイグレーションで死にます。  

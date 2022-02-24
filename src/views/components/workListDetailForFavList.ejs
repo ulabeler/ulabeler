@@ -18,9 +18,9 @@
 
                                             <tr>
                                                 <th rowspan="4">
-                                                    <% console.log(userInfo) %> 
-                                                    <% console.log(userInfo.icon_path) %> 
-                                                    <p class=user_img2><img src="<%= userInfo.icon_path %>" alt="<%- userInfo.id %>">
+                                                    <% console.log(JSON.parse(userInfo)) %> 
+                                                    <% console.log(JSON.parse(userInfo)[0].icon_path) %> 
+                                                    <p class=user_img2><img src="<%= JSON.parse(userInfo)[0].icon_path %>" alt="<%- userInfo.id %>">
                                                     </p>
                                                 </th>
                                                 <td>　　　　　</td>
@@ -70,7 +70,7 @@
                                         </table>
 
                                         <p class="explanation">
-                                            <%- workList[i].baseCategoryName %>
+                                            <%- baseCategoryList[i].name_subcategory %>
                                         </p>
                                         <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
                                         <div class="explanation2"><a href="">
@@ -90,14 +90,14 @@
                     <%- workList[i].introduction %>
                 </p>
                 <div class="okiniiri">
-                    <% if (!workList[i].isFavorited) { %>
+                    <% if (!favoritedWorkList) { %>
                         <p class="star2"><button type="button"
                                 style="background: transparent;outline: none;border: none;"
                                 onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
                                 <font size="15" color="orange">☆</font>
                             </button></p><!-- お気に入りしてない☆-->
                         <% } else { %>
-                            <% if (workList[i].isFavorited) { %>
+                            <% if (favoritedWorkList[i]) { %>
                                 <p class="star2_1">
                                     <button type="button" style="background: transparent;outline: none;border: none;"
                                         onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',true)">
@@ -116,7 +116,7 @@
                                             <div class="favorite3">
                                                 <p class="favorite2 favNumIdx-<%-workList[i].id%>"  id="favNumIdx-<%-workList[i].id%>">
                                                     <font size="4">
-                                                        <%= workList[i].favoritedWorkNumber%>
+                                                        <%= favoritedWorkNumberList[i]%>
                                                     </font>
                                                 </p>
                                             </div>

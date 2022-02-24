@@ -41,7 +41,7 @@ module.exports = function (app: any) {
               } else {
                 bcrypt.compare(
                   password,
-                  result[0].password,
+                  result[0].password as string,
                   function (err: any, res: boolean) {
                     if (res) {
                       return done(null, result[0]);
@@ -64,7 +64,7 @@ module.exports = function (app: any) {
               } else {
                 bcrypt.compare(
                   password,
-                  result[0].password,
+                  result[0].password as string,
                   function (err: any, res: boolean) {
                     if (res) {
                       return done(null, result[0]);
