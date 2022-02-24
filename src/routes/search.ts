@@ -119,7 +119,7 @@ router.get("/", (request, response) => {
           for (let i = 0; i < parsedQuery.hashTags.length; i++) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            this.orWhere("hashtag", "like", `%${parsedQuery.hashTags[i]}%`);
+            this.andWhere("hashtag", "like", `%${parsedQuery.hashTags[i]}%`);
           }
         })
         .on("query", function (data: string[]) {
