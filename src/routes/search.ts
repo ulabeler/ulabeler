@@ -89,7 +89,7 @@ router.get("/", (request, response) => {
   if (parsedQuery.rawQuery.length !== 0) {
     // searchQueryに@が含まれる要素がある場合、userTableからそのユーザーのidを取得
     if (parsedQuery.userId) {
-      // ユーザーid単体での検索の場合
+      // ユーザーidが含まれている場合の処理
       if (parsedQuery.rawQuery.length === 1) {
         knex("user")
           .where("id", parsedQuery.userId)
@@ -125,9 +125,6 @@ router.get("/", (request, response) => {
               this.andWhere("hashtag", "like", `%${parsedQuery.hashTags[i]}%`);
             }
           })
-          .on("query", function (data: string[]) {
-            console.log(data);
-          })
           .then((resultWork: workTable[]) => {
             response.status(200).json(resultWork);
           })
@@ -153,9 +150,6 @@ router.get("/", (request, response) => {
               this.andWhere("name", "like", `%${parsedQuery.other[i]}%`);
             }
           })
-          .on("query", function (data: string[]) {
-            console.log(data);
-          })
           .then((resultWork: workTable[]) => {
             response.status(200).json(resultWork);
           })
@@ -164,22 +158,60 @@ router.get("/", (request, response) => {
           });
       }
     } else if (parsedQuery.hashTags.length !== 0) {
+      // ユーザーidはないが、ハッシュタグがある場合の処理
+      if (parsedQuery.other.length !== 0) {
+        knex("work")
+          // hashtagはjson型。一つでも一致したらその結果を返す
+          .where(function () {
+            for (let i = 0; i < parsedQuery.hashTags.length; i++) {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              this.andWhere("hashtag", "like", `%${parsedQuery.hashTags[i]}%`);
+            }
+          })
+          .then((resultWork: workTable[]) => {
+            response.status(200).json(resultWork);
+          });
+      } else {
+        // ハッシュタグとその他がある場合の処理
+        knex("work")
+          // hashtagはjson型。一つでも一致したらその結果を返す
+          .where(function () {
+            for (let i = 0; i < parsedQuery.hashTags.length; i++) {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              this.andWhere("hashtag", "like", `%${parsedQuery.hashTags[i]}%`);
+            }
+          })
+          .andWhere(function () {
+            for (let i = 0; i < parsedQuery.other.length; i++) {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              this.andWhere("name", "like", `%${parsedQuery.other[i]}%`);
+            }
+          })
+          .on("query", function (data: string[]) {
+            console.log(data);
+          })
+          .then((resultWork: workTable[]) => {
+            response.status(200).json(resultWork);
+          });
+      }
+    } else if (parsedQuery.other.length !== 0) {
+      // ユーザーidとハッシュタグがないが、その他がある場合の処理
       knex("work")
-        // hashtagはjson型。一つでも一致したらその結果を返す
         .where(function () {
-          for (let i = 0; i < parsedQuery.hashTags.length; i++) {
+          for (let i = 0; i < parsedQuery.other.length; i++) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            this.andWhere("hashtag", "like", `%${parsedQuery.hashTags[i]}%`);
+            this.andWhere("name", "like", `%${parsedQuery.other[i]}%`);
           }
-        })
-        .on("query", function (data: string[]) {
-          console.log(data);
         })
         .then((resultWork: workTable[]) => {
           response.status(200).json(resultWork);
         });
     } else {
+      // クエリが空の場合の処理
       response.render("search_error", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
           `${Boolean(request.user)}`
