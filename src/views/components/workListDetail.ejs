@@ -70,7 +70,7 @@
                                         </table>
 
                                         <p class="explanation">
-                                            <%- baseCategoryList[i].name_subcategory %>
+                                            <%- workList[i].baseCategoryName %>
                                         </p>
                                         <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
                                         <div class="explanation2"><a href="">
@@ -90,14 +90,14 @@
                     <%- workList[i].introduction %>
                 </p>
                 <div class="okiniiri">
-                    <% if (!favoritedWorkList) { %>
+                    <% if (!workList[i].isFavorited) { %>
                         <p class="star2"><button type="button"
                                 style="background: transparent;outline: none;border: none;"
                                 onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
                                 <font size="15" color="orange">☆</font>
                             </button></p><!-- お気に入りしてない☆-->
                         <% } else { %>
-                            <% if (favoritedWorkList[i]) { %>
+                            <% if (workList[i].isFavorited) { %>
                                 <p class="star2_1">
                                     <button type="button" style="background: transparent;outline: none;border: none;"
                                         onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',true)">
@@ -116,7 +116,7 @@
                                             <div class="favorite3">
                                                 <p class="favorite2 favNumIdx-<%-workList[i].id%>"  id="favNumIdx-<%-workList[i].id%>">
                                                     <font size="4">
-                                                        <%= favoritedWorkNumberList[i]%>
+                                                        <%= workList[i].favoritedWorkNumber%>
                                                     </font>
                                                 </p>
                                             </div>

@@ -90,11 +90,6 @@ router.post("/sign_up", function (request, response) {
       created_at: new Date(),
       icon_path:
         "https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png",
-      self_introduction: null,
-      cardnumber: null,
-      name_card: null,
-      expiration: null,
-      deleted_at: null,
     };
     knex("user")
       .insert({
@@ -113,6 +108,8 @@ router.post("/sign_up", function (request, response) {
             number: 0,
           })
           .then(function () {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             sendMail("sign_up_complete", userdata.mailaddress);
             response.status(201).send(true);
           });
@@ -166,7 +163,7 @@ router.post("/create/temp_password", function (request, response) {
   if (!request.body.mail) {
     response.status(400).send("Bad Request");
   } else {
-    const mailaddress: userTable["mailaddress"] = request.body.mail;
+    const mailaddress: userTable["mailaddress"] = request.body.mail as string;
     // 該当するメールアドレスがあるかを確認し、あればそのidを取得
     knex("user")
       .where("mailaddress", mailaddress)
@@ -228,7 +225,7 @@ router.post("/reset_password_attempt", function (request, response) {
     // eslint-disable-next-line camelcase
     const token: password_resetTable["token"] = request.body.token;
     // パラメーターからパスワードを取得
-    const password: userTable["password"] = request.body.new_password;
+    const password: userTable["password"] = request.body.new_password as string;
     // パラメーターから仮のパスワードを取得
     // eslint-disable-next-line camelcase
     const temp_password: password_resetTable["temp_password"] =
@@ -479,7 +476,8 @@ router.post("/password/changeAttempt", function (request, response) {
       message: "不正な画面遷移です。",
     });
   } else {
-    const CurrentPassword: userTable["password"] = request.body.CurrentPassword;
+    const CurrentPassword: userTable["password"] = request.body
+      .CurrentPassword as string;
     const NewPassword: userTable["password"] = bcrypt.hashSync(
       request.body.NewPassword,
       10

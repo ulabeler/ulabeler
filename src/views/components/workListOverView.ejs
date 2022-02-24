@@ -12,15 +12,15 @@
                 <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>" alt="<%- workList[i].name %>" />
                 </div>
                 <p class="explanation">
-                    <%- baseCategoryList[i].name_subcategory %> <br>「<%- workList[i].name %>」
+                    <%- workList[i].baseCategoryName %> <br>「<%- workList[i].name %>」
                 </p>
-                <% if (typeof(favoritedWorkList) == "undefined") { %>
+                <% if (typeof(workList[i].isFavorited) == "undefined") { %>
                     <p class="star2"><button type="button" style="background: transparent;outline: none;border: none;"
                             onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>')">
                             <font size="15" color="orange">☆</font>
                         </button></p><!-- お気に入りしてない☆-->
                     <% } else { %>
-                        <% if (favoritedWorkList[i]) { %>
+                        <% if (workList[i].isFavorited) { %>
                             <p class="star2_1"><button type="button"
                                     style="background: transparent;outline: none;border: none;"
                                     onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>')">
@@ -38,7 +38,7 @@
                                         <div class="favorite3">
                                             <p class="favorite2 favNumIdx-<%-workList[i].id%>" id="favNumIdx-<%-workList[i].id%>">
                                                 <font size="4">
-                                                    <%= favoritedWorkNumberList[i]%>
+                                                    <%= workList[i].favoritedWorkNumber%>
                                                 </font>
                                             </p>
                                         </div>
@@ -67,7 +67,7 @@
                                                 // お気に入り数を表示
                                                 // favViewNumの要素数分ループ
                                                 for (let i = 0; i < favViewNum.length; i++) {
-                                                    favViewNum[i].innerHTML = response.data.number;
+                                                    favViewNum[i].innerHTML = `<font size="4">${response.data.number}</font>`;
                                                 }
                                                 // favViewNum.innerHTML = `<font size="4">${response.data}</font>`;
                                                 // alert(response.data);
@@ -100,7 +100,7 @@
                                         // お気に入り数を表示
                                         // favViewNumの要素数分ループ
                                         for (let i = 0; i < favViewNum.length; i++) {
-                                            favViewNum[i].innerHTML = response.data.number;
+                                            favViewNum[i].innerHTML = `<font size="4">${response.data.number}</font>`;
                                         }
                                         // favViewNum.innerHTML = `<font size="4">${response.data}</font>`;
                                         // alert(response.data);
