@@ -5,7 +5,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "allowJs": true,
-    "rootDirs": ["./src", "src/tools/TypeAlias", "./src/routes"],
+    "rootDirs": ["./src", "src/tools/TypeAlias", "./src/routes", "."],
     "typeRoots": ["src/@types", "node_modules/@types"],
     "baseUrl": "./src",
     "outDir": "./built",
