@@ -76,25 +76,24 @@
             <div id="js-show-popup">
               <div class="box_wrapper_2">
 
-                <%- include("../components/workListOverView.ejs", { workList: workList, baseCategoryList:
-                  baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage,
-                  userInfo: userInfo, currentPageDescription: currentPageDescription, }) %>
+                <%- include("../components/workListOverView.ejs", { workList :workList, idx: idx, maxPage:
+                  maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo,
+                  currentPageDescription: currentPageDescription, }) %>
 
 
               </div>
             </div>
 
 
-            <%- include("../components/workListDetail.ejs", { workList: workList, baseCategoryList: baseCategoryList,
-              idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo,
-              currentPageDescription: currentPageDescription,isMine: isMine }) %>
+            <%- include("../components/workListDetail.ejs", { workList :workList, idx: idx, maxPage: maxPage,
+              maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo,
+              currentPageDescription: currentPageDescription,isMine: isMine}) %>
 
           </article>
           <br>
-
-          <%- include("../components/listPagenation.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx:
-            idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo,
-            currentPageDescription: currentPageDescription,isCreatorView: isCreatorView }) %>
+          <%- include("../components/listPagenation.ejs", { workList :workList, idx: idx, maxPage: maxPage,
+              maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription:
+              currentPageDescription,isCreatorView: isCreatorView }) %>
             <%- include("../components/footer.ejs") %>
     </body>
 
@@ -125,9 +124,10 @@
             console.log(error);
           });
       }
-      window.onload = function () {
+      window.addEventListener('DOMContentLoaded', function () {
+        console.log('userId: ' + userId);
         getUserFavNum(userId);
-      };
+      });
     </script>
     <script src="/javascripts/searchInit.js"></script>
 

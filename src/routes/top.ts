@@ -16,6 +16,8 @@ const router = express.Router();
 import sideMenuList from "../tools/data/sidemenu.json";
 import config from "../config/config.json";
 import { useWorkList } from "../tools/TypeAlias/miscAlias";
+import { getUserSocialInfo } from "../tools/user";
+
 const maxViewOnPage = config.maxViewOnPage || 8; // 1ページに表示する最大件数
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
@@ -278,7 +280,7 @@ router.get("/my_work", async function (request, response) {
   }
 });
 
-router.get("/creator_work/:userId", function (request, response) {
+router.get("/v1/creator_work/:userId", function (request, response) {
   if (request.params.userId) {
     let currentPage = 1; // 現在のページ番号
     let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
@@ -463,6 +465,160 @@ router.get("/creator_work/:userId", function (request, response) {
             });
           });
       });
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
+});
+
+router.get("/creator_work/:userId", async function (request, response) {
+  if (request.params.userId) {
+    let currentPage = 1; // 現在のページ番号
+    let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
+    if (
+      request.query.page !== undefined &&
+      request.query.page !== "" &&
+      request.query.page !== null &&
+      request.query.page !== "1"
+    ) {
+      idx = (Number(request.query.page) - 1) * maxViewOnPage;
+      currentPage = Number(request.query.page);
+    }
+
+    const currentPageDescription = {
+      title: "作品一覧",
+      uriPrefix: `/creator_work/${request.params.userId}`,
+    };
+
+    // request.query.userIdとrequest.user.idが一致する場合isMineにtrueを設定
+    const isMine = () => {
+      if (request.user) {
+        if (request.params.userId == request.user.id) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    };
+    // console.log("isMine:" + isMine);
+    // request.query.userIdに対応するユーザーを取得
+    const TEMPuserInfoRow = await getUserSocialInfo(request.params.userId);
+    if (!TEMPuserInfoRow) {
+      response.render("components/message", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        message: "ユーザーが見つかりませんでした。",
+        userInfo: request.user,
+      });
+      return;
+    } else {
+      const userInfo: userTable = {
+        id: TEMPuserInfoRow.id,
+        name: TEMPuserInfoRow.name,
+        icon_path: TEMPuserInfoRow.icon_path,
+        self_introduction: TEMPuserInfoRow.self_introduction,
+      };
+
+      // request.query.userIdの作品を取得
+      const userWorkList: useWorkList[] = await knex("work")
+        .where("created_by_user_id", request.params.userId)
+        .orderBy("create_at", "desc")
+        .catch((err: Error) => {
+          console.log(err);
+          response.status(500).send("Internal Server Error");
+          return;
+        });
+
+      if (userWorkList.length === 0) {
+        response.render("list/creator_work_first", {
+          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+            `${Boolean(request.user)}`
+          ],
+          title: currentPageDescription.title,
+          userInfo: userInfo,
+        });
+        return;
+      } else {
+        const maxPage = ~~(userWorkList.length / maxViewOnPage);
+
+        // userWorkListについて、base_category_idを取得
+        // 取得した値は、userWorkList[i].baseCategoryNameに格納する
+        for (let i = 0; i < userWorkList.length; i++) {
+          const baseCategoryId: workTable["base_category_id"] =
+            userWorkList[i].base_category_id;
+          const baseCategoryName: string = await knex("base_category")
+            .where("id", baseCategoryId)
+            // eslint-disable-next-line camelcase
+            .then((baseCategory: base_categoryTable[]) => {
+              return baseCategory[0].name_subcategory;
+            });
+          userWorkList[i].baseCategoryName = baseCategoryName;
+        }
+
+        // userWorkListについて、favorited_work_numberから、いいね数を取得
+        // 取得した値は、userWorkList[i].favoritedWorkNumberに格納する
+        for (let i = 0; i < userWorkList.length; i++) {
+          const favoritedWorkNumber: number = await knex(
+            "favorited_work_number"
+          )
+            .where("favorited_to_id", userWorkList[i].id)
+            // eslint-disable-next-line camelcase
+            .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
+              return favoritedWorkNumber[0].number;
+            });
+          userWorkList[i].favoritedWorkNumber = favoritedWorkNumber;
+        }
+
+        // userWorkListについて、favorited_workから、いいねしているかどうかを取得
+        // 取得した値は、userWorkList[i].favoritedWorkListに格納する
+        if (request.user) {
+          for (let i = 0; i < userWorkList.length; i++) {
+            const favoritedWorkList: boolean[] = [];
+            const favoritedWorkNumber: number = await knex("favorited_work")
+              .where("favorite_to", userWorkList[i].id)
+              .andWhere("favorite_from", request.user.id)
+              // eslint-disable-next-line camelcase
+              .then((favoritedWork: favorited_workTable[]) => {
+                return favoritedWork.length;
+              });
+            favoritedWorkList.push(favoritedWorkNumber > 0);
+            userWorkList[i].isFavorited = favoritedWorkList[0];
+          }
+        } else {
+          for (let i = 0; i < userWorkList.length; i++) {
+            const favoritedWorkList: boolean[] = [];
+            favoritedWorkList.push(false);
+            userWorkList[i].isFavorited = favoritedWorkList[0];
+          }
+        }
+
+        response.render("list/creator_work", {
+          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+            `${Boolean(request.user)}`
+          ],
+          workList: userWorkList,
+          idx: idx,
+          maxPage: maxPage,
+          maxViewOnPage: maxViewOnPage,
+          currentPage: currentPage,
+          userInfo: userInfo,
+          currentPageDescription: currentPageDescription,
+          isMine: true,
+          isCreatorView: false,
+        });
+        console.log(maxPage);
+        console.table(userInfo);
+        console.table(userWorkList);
+        response.status(200);
+        console.log(currentPage);
+        console.log(idx);
+        console.log(maxViewOnPage);
+        console.log(isMine());
+      }
+    }
   } else {
     response.redirect("/invalidAccess");
     return;
