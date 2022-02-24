@@ -5,82 +5,10 @@ import { knex } from "../app";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 import sideMenuList from "../tools/data/sidemenu.json";
-import { searchWordParse, searchQueryParser } from "../tools/parser";
+import { searchQueryParser } from "../tools/parser";
 import { parsedQuery } from "../tools/TypeAlias/miscAlias";
 
 import { userTable, workTable } from "tools/TypeAlias/tableType_alias";
-
-router.get("/old/", (request, response) => {
-  console.log(request.query.q);
-  const searchQuery = searchWordParse(request.query.q as string);
-  console.table(searchQuery);
-  if (searchQuery.length !== 0) {
-    // searchQueryに@が含まれる要素がある場合、userTableからそのユーザーのidを取得
-    if (searchQuery.length === 1 && searchQuery[0].includes("@")) {
-      knex("user")
-        .where("id", searchQuery[0].slice(1))
-        .select("id")
-        .then((user: userTable[]) => {
-          if (user.length === 0) {
-            response.render("search_error", {
-              side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                `${Boolean(request.user)}`
-              ],
-              recentQuery: request.query.q,
-            });
-            return;
-          } else {
-            response.redirect(
-              `/creator_work/${searchQuery[0].slice(1)}?q=${request.query.q}`
-            );
-            return;
-          }
-        });
-    } else {
-      for (let i = 0; i < searchQuery.length; i++) {
-        if (searchQuery[i].indexOf("@") !== -1) {
-          // searchQuery[i]以外の要素を別の配列に格納
-          const searchQueryWithoutUserId = searchQuery
-            .slice(0, i)
-            .concat(searchQuery.slice(i + 1));
-          knex("work")
-            .where("created_by_user_id", searchQuery[i].slice(1))
-            // andWhereで検索条件を追加。
-            // searchQueryWithoutUserIdの要素数分だけ繰り返す
-            // nameを検索
-            .andWhere(function () {
-              for (let j = 0; j < searchQueryWithoutUserId.length; j++) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                this.andWhere(
-                  "name",
-                  "like",
-                  `%${searchQueryWithoutUserId[j]}%`
-                );
-              }
-            })
-            .on("query", function (data: string[]) {
-              console.log(data);
-            })
-            .then((resultWork: workTable[]) => {
-              if (resultWork.length !== 0) {
-                response.status(200).json(resultWork);
-                return;
-              } else {
-                response.render("search_error", {
-                  side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-                    `${Boolean(request.user)}`
-                  ],
-                  recentQuery: request.query.q,
-                });
-                return;
-              }
-            });
-        }
-      }
-    }
-  }
-});
 
 router.get("/", (request, response) => {
   console.log(request.query.q);
