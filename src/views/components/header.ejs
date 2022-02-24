@@ -34,11 +34,21 @@
     // 0文字の場合は検索ボタンを無効にする
     searchSubmit.disabled = true;
     const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('keyup', () => {
-        if (searchInput.value.length > 0) {
-            searchSubmit.disabled = false;
-        } else {
+
+    // searchInputの中に文字が無ければ検索ボタンを無効にする
+    // 200msごとに判定する
+    setInterval(() => {
+        if (searchInput.value.length === 0) {
             searchSubmit.disabled = true;
+        } else {
+            searchSubmit.disabled = false;
+        }
+    }, 200);
+
+    // focusがsearchInputに当たっている場合、Enterを押したら検索ボタンを押す
+    searchInput.addEventListener('keydown', function (e) {
+        if (e.keyCode === 13) {
+            searchSubmit.click();
         }
     });
 </script>
