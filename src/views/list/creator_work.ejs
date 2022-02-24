@@ -76,9 +76,9 @@
             <div id="js-show-popup">
               <div class="box_wrapper_2">
 
-                <%- include("../components/workListOverView.ejs", { workList :workList, idx: idx, maxPage:
-                  maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo,
-                  currentPageDescription: currentPageDescription, }) %>
+                <%- include("../components/workListOverView.ejs", { workList :workList, idx: idx, maxPage: maxPage,
+                  maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription:
+                  currentPageDescription, }) %>
 
 
               </div>
@@ -86,19 +86,21 @@
 
 
             <%- include("../components/workListDetail.ejs", { workList :workList, idx: idx, maxPage: maxPage,
-              maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo,
-              currentPageDescription: currentPageDescription,isMine: isMine}) %>
+              maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription:
+              currentPageDescription,isMine: isMine}) %>
 
           </article>
           <br>
           <%- include("../components/listPagenation.ejs", { workList :workList, idx: idx, maxPage: maxPage,
-              maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription:
-              currentPageDescription,isCreatorView: isCreatorView }) %>
+            maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription:
+            currentPageDescription,isCreatorView: isCreatorView }) %>
             <%- include("../components/footer.ejs") %>
     </body>
 
     <script>
-      const userId = document.getElementById('userId').innerHTML.slice(1);
+      // \nが含まれていたら除去
+      // スーペースが含まれていたら除去
+      const userId = document.getElementById('userId').innerHTML.slice(1).replace(/\n/g,'').replace(/\s/g,'');
 
       function getUserFavNum(userId) {
         axios.post('/api/work/getuserfavnum', {
@@ -125,7 +127,6 @@
           });
       }
       window.addEventListener('DOMContentLoaded', function () {
-        console.log('userId: ' + userId);
         getUserFavNum(userId);
       });
     </script>
