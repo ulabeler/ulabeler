@@ -41,7 +41,6 @@ router.get("/", (request, response) => {
                 );
               }
             })
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .then((resultWork: workTable[]) => {
               if (resultWork.length !== 0) {
                 response.status(200).json(resultWork);
