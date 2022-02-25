@@ -6,7 +6,7 @@ import { knex } from "../app";
 const router = express.Router();
 import sideMenuList from "../tools/data/sidemenu.json";
 import { searchQueryParser } from "../tools/parser";
-import { parsedQuery } from "../tools/TypeAlias/miscAlias";
+import { parsedQuery, searchResult } from "../tools/TypeAlias/miscAlias";
 import { searchWork } from "../tools/search";
 
 import { userTable } from "tools/TypeAlias/tableType_alias";
@@ -39,7 +39,7 @@ router.get("/", async (request, response) => {
         console.log(error);
       });
   } else if (parsedQuery.rawQuery.length !== 0) {
-    const searchResult = {
+    const searchResult: searchResult = {
       workList: await searchWork(parsedQuery),
     };
     console.table(searchResult.workList);

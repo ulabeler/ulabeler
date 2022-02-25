@@ -28,5 +28,14 @@ export type myFavoriteWorkList = workTable & {
 };
 
 export type searchResult = {
-  workList?: boolean | workTable[];
+  workList?: searchWorkList & {
+    isFavorited?: boolean;
+    favoritedWorkNumber?: number;
+    baseCategoryName?: string;
+    creatorIconPath?: string;
+    creatorName?: string;
+    userFlagIsMine?: boolean;
+  };
 };
+
+type searchWorkList = boolean | workTable[];
