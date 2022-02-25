@@ -126,9 +126,6 @@ router.post(
     if (request.body.file) {
       if (request.user) {
         const userId = request.user.id;
-        // 画像のタイプをBase64から取得
-        // ;base64の前までを取得
-        const imgExt = request.body.file.split("/")[1].split(";")[0];
         // 画像はBase64で送られてくるので、デコードしてから画像を保存する
         const imgData = Buffer.from(
           request.body.file.replace(/^data:image\/\w+;base64,/, ""),
@@ -136,7 +133,8 @@ router.post(
         );
         // 256x256にリサイズし、putObjectでS3に保存
         sharp(imgData)
-          .resize(512)
+          .resize(256)
+          .webp()
           .toBuffer()
           .then((imgBuffer) => {
             // console.log(imgExt);
@@ -144,7 +142,7 @@ router.post(
             if (imgData) {
               // 拡張子を取得
               // const ext = temp_path.split(".").pop();
-              const fileName = "media/icon/" + uuidv4() + "." + imgExt;
+              const fileName = "media/icon/" + uuidv4() + ".webp";
               // console.log(fileName);
               // console.log("dest:", dest);
               // 画像を保存
