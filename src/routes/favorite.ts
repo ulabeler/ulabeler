@@ -214,7 +214,7 @@ router.get("/v1/creator", (request, response) => {
   }
 });
 
-router.get("/creator", (request, response) => {
+router.get("/creator", async (request, response) => {
   if (!request.user) {
     response.redirect("/invalidAccess");
     return;
@@ -242,25 +242,37 @@ router.get("/creator", (request, response) => {
     };
     const userId = request.user.id;
     // お気に入り作者リストを取得
-    knex("favorited_user")
+    // eslint-disable-next-line camelcase
+    const favoritedUser: favorited_userTable[] = await knex("favorited_user")
       .where("favorite_from", userId)
-      .orderBy(orderBy)
-      // eslint-disable-next-line camelcase
-      .then((favoritedUser: favorited_userTable[]) => {
-        if (favoritedUser.length == 0) {
-          response.status(500).send("お気に入り作者がありません");
-        } else {
-          console.log(viewType);
-          console.log(currentPage);
-          console.log(idx);
-          response.render("list/my_favorite_creator_list1", {
-            side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-              `${Boolean(request.user)}`
-            ],
-            currentPageDescription: currentPageDescription,
-          });
-        }
+      .orderBy(orderBy);
+    if (favoritedUser.length == 0) {
+      console.log(viewType);
+      console.log(currentPage);
+      console.log(idx);
+      response.render("list/my_favorite_creator_list1", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        currentPageDescription: currentPageDescription,
       });
+    } else {
+      const myFavoriteCreatorList: userTable[] = [];
+      // favoritedUserのfavorite_toのidに一致するuserを取得
+      for (let i = 0; i < favoritedUser.length; i++) {
+        const user: userTable = await knex("user")
+          .select("id", "name", "icon_path", "self_introduction")
+          .where("id", favoritedUser[i].favorite_to)
+          .first();
+        myFavoriteCreatorList.push(user);
+      }
+
+      console.table(myFavoriteCreatorList);
+      console.log(viewType);
+      console.log(currentPage);
+      console.log(idx);
+      response.status(200).send("お気に入り作者あり");
+    }
   }
 });
 
