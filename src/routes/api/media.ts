@@ -1,28 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import express from "express";
 // eslint-disable-next-line new-cap
 const router = express.Router();
-// import bcrypt from "bcrypt";
-// import { sendMail } from "../../tools/sendmail";
 import { knex } from "../../app";
-// eslint-disable-next-line camelcase
-import {
-  userTable,
-  // eslint-disable-next-line camelcase
-  //   password_resetTable,
-  // eslint-disable-next-line camelcase
-  //   mail_confirmationTable,
-} from "../../tools/TypeAlias/tableType_alias";
-// import sideMenuList from "../../tools/data/sidemenu.json";
 import { v4 as uuidv4 } from "uuid"; // uuidv4()
-// eslint-disable-next-line new-cap
-// import passport from "passport";
 import { putObject } from "../../tools/aws/aws";
 import multer from "multer";
 import path from "path";
-import fse from "fs-extra";
-// const bucketName = process.env.AWSBUCKETNAME || "";
-// const S3Prefix = process.env.S3PREFIX || "";
 const mediaProxyPrefix = process.env.MEDIAPROXYPREFIX || "";
 import sharp from "sharp";
 
@@ -50,14 +33,10 @@ router.post(
           .webp()
           .toBuffer()
           .then((imgBuffer) => {
-            // console.log(imgExt);
-            // console.log(imgData);
             if (imgData) {
               // 拡張子を取得
               // const ext = temp_path.split(".").pop();
               const fileName = "media/icon/" + uuidv4() + ".webp";
-              // console.log(fileName);
-              // console.log("dest:", dest);
               // 画像を保存
               const distUri = `${mediaProxyPrefix}${fileName}`;
               putObject(`${fileName}`, imgBuffer)
@@ -74,7 +53,7 @@ router.post(
                       response.status(200).send("画像の保存に成功しました");
                     });
                 })
-                .catch((err: any) => {
+                .catch((err: Error) => {
                   console.log(err);
                   response.status(200).send(distUri);
                 });
