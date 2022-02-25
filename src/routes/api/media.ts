@@ -62,7 +62,6 @@ router.post(
             }
           });
       } else {
-        // ここにかく
         response.status(401).send("UnAuthorized");
       }
     } else {
