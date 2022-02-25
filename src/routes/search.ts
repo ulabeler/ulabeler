@@ -14,7 +14,7 @@ import { userTable } from "tools/TypeAlias/tableType_alias";
 router.get("/", async (request, response) => {
   const parsedQuery: parsedQuery = searchQueryParser(request.query.q as string);
   console.table(parsedQuery);
-  if (parsedQuery.userId && parsedQuery.rawQuery.length === 0) {
+  if (parsedQuery.userId && parsedQuery.rawQuery.length === 1) {
     // ユーザーidが含まれている場合の処理
     knex("user")
       .where("id", parsedQuery.userId)
