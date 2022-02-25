@@ -271,7 +271,14 @@ router.get("/creator", async (request, response) => {
       console.log(viewType);
       console.log(currentPage);
       console.log(idx);
-      response.status(200).send("お気に入り作者あり");
+
+      response.render("list/my_favorite_creator_list1", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        currentPageDescription: currentPageDescription,
+        creatorList: myFavoriteCreatorList,
+      });
     }
   }
 });
