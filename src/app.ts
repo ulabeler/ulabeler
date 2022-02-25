@@ -87,7 +87,7 @@ app.use(function (request, response) {
       `${Boolean(request.user)}`
     ],
     message:
-      "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
+      "404 Not Found.<br>この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
     userInfo: userInfo,
   });
 });
