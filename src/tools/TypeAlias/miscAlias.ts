@@ -26,3 +26,7 @@ export type myFavoriteWorkList = workTable & {
   favorited_at?: Date;
   userFlagIsMine?: boolean;
 };
+
+export type searchResult = {
+  workList?: boolean | workTable[];
+};

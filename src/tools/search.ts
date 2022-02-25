@@ -77,6 +77,7 @@ async function searchWork(
       if (resultWork.length === 0) {
         return false;
       }
+      console.log(resultWork);
       return resultWork;
     } else {
       // ハッシュタグとその他がある場合の処理
