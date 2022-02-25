@@ -26,3 +26,16 @@ export type myFavoriteWorkList = workTable & {
   favorited_at?: Date;
   userFlagIsMine?: boolean;
 };
+
+export type searchResult = {
+  workList?: searchWorkList & {
+    isFavorited?: boolean;
+    favoritedWorkNumber?: number;
+    baseCategoryName?: string;
+    creatorIconPath?: string;
+    creatorName?: string;
+    userFlagIsMine?: boolean;
+  };
+};
+
+type searchWorkList = boolean | workTable[];

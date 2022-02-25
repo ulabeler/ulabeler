@@ -15,23 +15,18 @@
                     <%- workList[i].baseCategoryName %> <br>「<%- workList[i].name %>」
                 </p>
                 <% if (typeof(workList[i].isFavorited) == "undefined") { %>
-                    <p class="star2"><button type="button" style="background: transparent;outline: none;border: none;"
-                            onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>')">
-                            <font size="15" color="orange">☆</font>
-                        </button></p><!-- お気に入りしてない☆-->
+                    <div id="click" onclick="event.stopPropagation(); ">
+                        <label><input type="checkbox" name="favorite" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>')">★</div></label>
+                    </div> 
                     <% } else { %>
                         <% if (workList[i].isFavorited) { %>
-                            <p class="star2_1"><button type="button"
-                                    style="background: transparent;outline: none;border: none;"
-                                    onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>')">
-                                    <font size="15" color="orange">★</font>
-                                </button></p>
+                            <div id="click" onclick="event.stopPropagation(); ">
+                                <label><input type="checkbox" name="favorite" checked><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>')">★</div></label>
+                            </div> 
                             <% } else { %>
-                                <p class="star2"><button type="button"
-                                        style="background: transparent;outline: none;border: none;"
-                                        onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>')">
-                                        <font size="15" color="orange">☆</font>
-                                    </button></p><!-- お気に入りしてない☆-->
+                                <div id="click" onclick="event.stopPropagation(); ">
+                                    <label><input type="checkbox" name="favorite" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>')">★</div></label>
+                                </div> 
                                 <% } %>
                                     <% } %>
 

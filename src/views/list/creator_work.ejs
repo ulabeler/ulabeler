@@ -58,11 +58,11 @@
             </div>
             <div class=userpage>
               <div class="td2">
-                <!-- <p class = "star"><a href=""><font color="orange">★</font></a></p> -->
-                <!-- お気に入りしいる★-->
-                <p class="star_1" onclick="setUserFav('<%- userInfo.id %>')" id="favUserStar">
-                  <font color="orange">☆</font>
-                </p><!-- お気に入りしいない☆-->
+                <div id="click">
+                  <label><input type="checkbox" name="favorite" id="favCheck">
+                    <div class="star2_1 pyon" onclick="setUserFav('<%- userInfo.id %>')">★</div>
+                  </label>
+                </div>
                 <p class="favorite" id="userFavNum"></p>
               </div>
             </div>
@@ -100,7 +100,7 @@
     <script>
       // \nが含まれていたら除去
       // スーペースが含まれていたら除去
-      const userId = document.getElementById('userId').innerHTML.slice(1).replace(/\n/g,'').replace(/\s/g,'');
+      const userId = document.getElementById('userId').innerHTML.slice(1).replace(/\n/g, '').replace(/\s/g, '');
 
       function getUserFavNum(userId) {
         axios.post('/api/work/getuserfavnum', {
@@ -109,7 +109,7 @@
           .then(function (response) {
             console.log(response);
             document.getElementById('userFavNum').innerHTML = response.data.number;
-            document.getElementById('favUserStar').innerHTML = response.data.isFavorite ? '<font color="orange">★</font>' : '<font color="orange">☆</font>';
+            document.getElementById('favCheck').checked = response.data.isFavorite ? true : false;
           })
           .catch(function (error) {
             console.log(error);

@@ -37,24 +37,28 @@ function photoPreview(event, f = null) {
   }
 
   reader.onload = function (event) {
-    if(true){
-      var img = document.createElement("img");
-      img.setAttribute("src", reader.result);
-      img.setAttribute("id", "previewIconImage");
-      preview.appendChild(img);
-      // multipart/form-dataを扱う
-      axios.post('/api/media/posticon', {
-        file: reader.result
-      })
-      .then(function (response) {
+    // multipart/form-dataを扱う
+    axios.post('/api/media/posticon', {
+      file: reader.result
+    })
+    .then(function (response) {
+        var img = document.createElement("img");
+        img.setAttribute("src", reader.result);
+        img.setAttribute("id", "previewIconImage");
+        preview.appendChild(img);
         console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
+        // status 400が帰ってきたらAlertで表示
+        if (error.response.status === 400) {
+          alert(error.response.data);
+          location.reload();
+        }
+        else {
+          alert('アイコン画像のアップロードに失敗しました');
+          location.reload();
+        }
       });
-    }else{
-      alert("うんち");
-    }
   };
 
   reader.readAsDataURL(file);

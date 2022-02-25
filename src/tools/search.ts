@@ -26,7 +26,7 @@ async function searchWork(
           }
         })
         .catch((error: Error) => {
-          console.log(error);
+          console.error(error);
         });
       if (resultWork.length === 0) {
         return false;
@@ -52,7 +52,7 @@ async function searchWork(
           }
         })
         .catch((error: Error) => {
-          console.log(error);
+          console.error(error);
         });
       if (resultWork.length === 0) {
         return false;
@@ -72,7 +72,7 @@ async function searchWork(
           }
         })
         .catch((error: Error) => {
-          console.log(error);
+          console.error(error);
         });
       if (resultWork.length === 0) {
         return false;
@@ -97,7 +97,7 @@ async function searchWork(
           }
         })
         .catch((error: Error) => {
-          console.log(error);
+          console.error(error);
         });
       if (resultWork.length === 0) {
         return false;
@@ -122,4 +122,9 @@ async function searchWork(
   }
 }
 
+// async function searchWorkWithUserName(parsedQuery: parsedQuery)
+// メモ
+// otherが作品名であると仮定したとき
+// otherが作者名であると仮定したとき
+// otherが上記2つの混合であるとしたとき（or使うのがいいかも）
 export { searchWork };

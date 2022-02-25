@@ -52,6 +52,7 @@ import workRouter from "./routes/work";
 import settingsRouter from "./routes/settings";
 import favoriteRouter from "./routes/favorite";
 import searchRouter from "./routes/search";
+import purchaseRouter from "./routes/purchase";
 import passport from "passport";
 
 // const usersRouter = require('./routes/alpha/users');
@@ -77,17 +78,18 @@ app.use("/work", workRouter);
 app.use("/settings", settingsRouter);
 app.use("/favorite", favoriteRouter);
 app.use("/search", searchRouter);
+app.use("/purchase", purchaseRouter);
 app.use("/mail_address_modification", mailModRouter);
 
 // catch 404 and forward to error handler
 app.use(function (request, response) {
   const userInfo = request.user ? request.user : null;
-  response.render("./components/message", {
+  response.status(404).render("./components/message", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
     message:
-      "この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
+      "404 Not Found.<br>この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
     userInfo: userInfo,
   });
 });
