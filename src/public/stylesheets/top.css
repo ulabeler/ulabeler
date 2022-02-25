@@ -190,7 +190,7 @@ hr {
 }
 #nav1:checked + .open {
 	/* ハンバーガーopen */
-	background: #474747;
+	background: #000000;
 	transform: translateX(-250px);
 }
 #nav1:checked + .open span {
@@ -1354,7 +1354,7 @@ p.new_warning{
 .user_img img{
 	width: 100px;
 	height: 100px;
-	padding-right: 10px;
+	border-radius: 20px;
 
 }
 
@@ -2024,7 +2024,7 @@ th {
 .image_wrapper5 img{
 	width: 50%;
 	padding: 0;
-	
+	border-radius: 30px;
 }
 .image_wrapper6 img{
 	width: 10%;
@@ -2206,7 +2206,13 @@ th {
 
 .taikai{
 	text-align: left;
+	color: #333;
 }
+.taikai:hover{
+	text-align: left;
+	color: rgb(145, 145, 145);
+}
+
 
 
 /*                  プライバシーポリシー                    */
@@ -2287,11 +2293,20 @@ th {
 .footer_text{
 	text-align: right;	
 	margin: 0 0 0 auto;
+	color: #333;
 }
 
+.footer_text a{
+	color: #333;
+}
+
+.footer_text a:hover{
+	color: rgb(160, 159, 159);
+}
 .footer_text1{
 	text-align: right;
 	margin: 0 10% 0 auto;
+	color: #333;
 }
 
 .button8{
