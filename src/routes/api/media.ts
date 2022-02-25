@@ -60,6 +60,21 @@ router.post(
             } else {
               response.status(200).send("ここまではきた");
             }
+          })
+          .catch((err: Error) => {
+            console.log(err);
+            // エラーが"Input buffer contains unsupported image format"なら400を返す
+            if (
+              err.message === "Input buffer contains unsupported image format"
+            ) {
+              response
+                .status(400)
+                .send(
+                  "画像のアップロードに失敗しました。対応していない画像形式です。"
+                );
+            } else {
+              response.status(500).send("画像の保存に失敗しました");
+            }
           });
       } else {
         response.status(401).send("UnAuthorized");
