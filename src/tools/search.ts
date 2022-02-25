@@ -26,7 +26,7 @@ async function searchWork(
           }
         })
         .catch((error: Error) => {
-          console.log(error);
+          console.error(error);
         });
       if (resultWork.length === 0) {
         return false;
@@ -52,7 +52,7 @@ async function searchWork(
           }
         })
         .catch((error: Error) => {
-          console.log(error);
+          console.error(error);
         });
       if (resultWork.length === 0) {
         return false;
@@ -72,12 +72,11 @@ async function searchWork(
           }
         })
         .catch((error: Error) => {
-          console.log(error);
+          console.error(error);
         });
       if (resultWork.length === 0) {
         return false;
       }
-      console.log(resultWork);
       return resultWork;
     } else {
       // ハッシュタグとその他がある場合の処理
@@ -98,7 +97,7 @@ async function searchWork(
           }
         })
         .catch((error: Error) => {
-          console.log(error);
+          console.error(error);
         });
       if (resultWork.length === 0) {
         return false;
