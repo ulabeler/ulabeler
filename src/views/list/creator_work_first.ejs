@@ -27,7 +27,7 @@
                                                 <tr>
                                                     <th rowspan="4">
                                                         <p class=user_img><img src="<%- userInfo.icon_path %>"
-                                                                alt="商品画像">
+                                                                alt="ユーザーアイコン">
                                                         </p>
                                                     </th>
                                                     <td>　　　　　</td>
@@ -65,11 +65,11 @@
                             </div>
                             <div class=userpage>
                                 <div class="td2">
-                                    <!-- <p class = "star"><a href=""><font color="orange">★</font></a></p> -->
-                                    <!-- お気に入りしいる★-->
-                                    <p class="star_1" onclick="setUserFav('<%- userInfo.id %>')" id="favUserStar">
-                                        <font color="orange">☆</font>
-                                    </p><!-- お気に入りしいない☆-->
+                                    <div id="click">
+                                        <label><input type="checkbox" name="favorite" id="favCheck">
+                                            <div class="star2_1 pyon" onclick="setUserFav('<%- userInfo.id %>')">★</div>
+                                        </label>
+                                    </div>
                                     <p class="favorite" id="userFavNum"></p>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                     .then(function (response) {
                         console.log(response);
                         document.getElementById('userFavNum').innerHTML = response.data.number;
-                        document.getElementById('favUserStar').innerHTML = response.data.isFavorite ? '<font color="orange">★</font>' : '<font color="orange">☆</font>';
+                        document.getElementById('favCheck').checked = response.data.isFavorite ? true : false;
                     })
                     .catch(function (error) {
                         console.log(error);
