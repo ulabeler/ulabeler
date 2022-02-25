@@ -82,7 +82,7 @@ app.use("/mail_address_modification", mailModRouter);
 // catch 404 and forward to error handler
 app.use(function (request, response) {
   const userInfo = request.user ? request.user : null;
-  response.render("./components/message", {
+  response.status(404).render("./components/message", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
