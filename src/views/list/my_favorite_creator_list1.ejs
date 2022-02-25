@@ -13,9 +13,7 @@
                 <article>
 
                     <!-- ページタイトル -->
-                    <h3 class="creator_list_title">お気に入り作者リスト
-                        <hr>
-                    </h3>
+                    <h3 class="creator_list_title"><%= currentPageDescription.title %> <hr></h3>
 
                     <!-- html切り替え画像 -->
                     <div class="list_change">
@@ -55,19 +53,11 @@
                     <% } %>
 
 
-                    <!-- ページネーション やまページネーションだるそう。。。-->
-                    <div class="pagination">
-                        <ul class="example">
-                            <li><a href="#">前へ</a></li>
-                            <!--2ページ以降-->
-                            <li class="pagination_nau">1</li><!-- 現在ページはaタグじゃなくて直書きクラス -->
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">次へ</a></li>
-                        </ul>
-                    </div>
-
+                    
                 </article>
+                <%- include("../components/listPagenation.ejs", { workList :creatorList, idx: idx, maxPage: maxPage,
+                    maxViewOnPage: maxViewOnPage, currentPage: currentPage, currentPageDescription:
+                    currentPageDescription,isCreatorView: isCreatorView }) %>
                 <%- include("../components/login.ejs") %>
                 <%- include("../components/footer.ejs") %>
             </body>

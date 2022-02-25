@@ -219,6 +219,7 @@ router.get("/creator", async (request, response) => {
     response.redirect("/invalidAccess");
     return;
   } else {
+    const maxViewOnPageFavCreator = 5;
     // request.query.viewTypeがundefinedの場合は、"list"をviewTypeに設定。
     // viewTypeには"list"か"tile"が入る。
     const viewType = request.query.viewType === "tile" ? "tile" : "list";
@@ -267,17 +268,26 @@ router.get("/creator", async (request, response) => {
         myFavoriteCreatorList.push(user);
       }
 
-      console.table(myFavoriteCreatorList);
-      console.log(viewType);
-      console.log(currentPage);
-      console.log(idx);
+      // maxPageは~~(myFavoriteCreatorList.length / maxViewOnPageFavCreator)か1のどちらかになる
+      const maxPage =
+        myFavoriteCreatorList.length % maxViewOnPageFavCreator === 0
+          ? myFavoriteCreatorList.length / maxViewOnPageFavCreator
+          : Math.floor(myFavoriteCreatorList.length / maxViewOnPageFavCreator) +
+            1;
 
+      console.log(viewType);
+      console.log(maxPage);
       response.render("list/my_favorite_creator_list1", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
           `${Boolean(request.user)}`
         ],
         currentPageDescription: currentPageDescription,
         creatorList: myFavoriteCreatorList,
+        maxViewOnPage: maxViewOnPageFavCreator,
+        currentPage: currentPage,
+        idx: idx,
+        maxPage: maxPage,
+        isCreatorView: "myFavCreatorList",
       });
     }
   }
