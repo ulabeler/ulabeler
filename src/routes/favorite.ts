@@ -277,11 +277,6 @@ router.get("/creator", async (request, response) => {
         myFavoriteCreatorList.length,
         maxViewOnPageFavCreator
       );
-
-      console.log("要素数:" + myFavoriteCreatorList.length);
-      console.log("idx:" + idx);
-      console.log(viewType);
-      console.log(maxPage);
       response.render("list/my_favorite_creator_list1", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
           `${Boolean(request.user)}`
