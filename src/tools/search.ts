@@ -61,7 +61,7 @@ async function searchWork(
     }
   } else if (parsedQuery.hashTags.length !== 0) {
     // ユーザーidはないが、ハッシュタグがある場合の処理
-    if (parsedQuery.other.length !== 0) {
+    if (parsedQuery.other.length === 0) {
       const resultWork: workTable[] = await knex("work")
         // hashtagはjson型。一つでも一致したらその結果を返す
         .where(function () {
@@ -95,6 +95,9 @@ async function searchWork(
             // @ts-ignore
             this.andWhere("name", "like", `%${parsedQuery.other[i]}%`);
           }
+        })
+        .on("query", function (data: string[]) {
+          console.log(data);
         })
         .catch((error: Error) => {
           console.error(error);
