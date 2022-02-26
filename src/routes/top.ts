@@ -334,6 +334,7 @@ router.get("/creator_work/:userId", async function (request, response) {
       // request.query.userIdの作品を取得
       const userWorkList: useWorkList[] = await knex("work")
         .where("created_by_user_id", request.params.userId)
+        .andWhere("flag_public", 1)
         .orderBy("create_at", "desc")
         .catch((err: Error) => {
           console.log(err);

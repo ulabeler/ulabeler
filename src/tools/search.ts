@@ -17,6 +17,7 @@ async function searchWork(
       // userId + ハッシュタグ
       const resultWork: workTable[] = await knex("work")
         .where("created_by_user_id", parsedQuery.userId)
+        .andWhere("flag_public", 1)
         // hashtagはjson型。一つでも一致したらその結果を返す
         .andWhere(function () {
           for (let i = 0; i < parsedQuery.hashTags.length; i++) {
@@ -36,6 +37,7 @@ async function searchWork(
       // 全部入り
       const resultWork: workTable[] = await knex("work")
         .where("created_by_user_id", parsedQuery.userId)
+        .andWhere("flag_public", 1)
         // hashtagはjson型。一つでも一致したらその結果を返す
         .andWhere(function () {
           for (let i = 0; i < parsedQuery.hashTags.length; i++) {
@@ -71,6 +73,7 @@ async function searchWork(
             this.andWhere("hashtag", "like", `%${parsedQuery.hashTags[i]}%`);
           }
         })
+        .andWhere("flag_public", 1)
         .catch((error: Error) => {
           console.error(error);
         });
@@ -89,6 +92,7 @@ async function searchWork(
             this.andWhere("hashtag", "like", `%${parsedQuery.hashTags[i]}%`);
           }
         })
+        .andWhere("flag_public", 1)
         .andWhere(function () {
           for (let i = 0; i < parsedQuery.other.length; i++) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -106,13 +110,15 @@ async function searchWork(
     }
   } else if (parsedQuery.other.length !== 0) {
     // ユーザーidとハッシュタグがないが、その他がある場合の処理
-    const resultWork: workTable[] = await knex("work").where(function () {
-      for (let i = 0; i < parsedQuery.other.length; i++) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        this.andWhere("name", "like", `%${parsedQuery.other[i]}%`);
-      }
-    });
+    const resultWork: workTable[] = await knex("work")
+      .where(function () {
+        for (let i = 0; i < parsedQuery.other.length; i++) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          this.andWhere("name", "like", `%${parsedQuery.other[i]}%`);
+        }
+      })
+      .andWhere("flag_public", 1);
     if (resultWork.length === 0) {
       return false;
     }
