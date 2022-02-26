@@ -17,7 +17,7 @@ import sideMenuList from "../tools/data/sidemenu.json";
 import config from "../config/config.json";
 import { useWorkList } from "../tools/TypeAlias/miscAlias";
 import { getUserSocialInfo } from "../tools/user";
-import { getMaxPage } from "../tools/util";
+import { getMaxPage, getRandomIdList } from "../tools/util";
 
 const maxViewOnPage = config.maxViewOnPage || 8; // 1ページに表示する最大件数
 
@@ -28,13 +28,20 @@ const host =
     : "https://ulabeler.na2na.website";
 
 /* GET home page. */
-router.get("/", function (request, response) {
+router.get("/", async function (request, response) {
+  const libraryWorkNumOnView = 20;
   const userInfo = request.user ? request.user : null;
+  const libraryWorkList = await getRandomIdList(
+    libraryWorkNumOnView,
+    request.user
+  );
+  console.table(libraryWorkList);
   response.render("top", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
     userInfo: userInfo,
+    workList: libraryWorkList,
   });
 });
 

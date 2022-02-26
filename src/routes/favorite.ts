@@ -165,56 +165,6 @@ router.get("/work", async (request, response) => {
   }
 });
 
-router.get("/v1/creator", (request, response) => {
-  if (!request.user) {
-    response.redirect("/invalidAccess");
-    return;
-  } else {
-    // request.query.viewTypeがundefinedの場合は、"list"をviewTypeに設定。
-    // viewTypeには"list"か"tile"が入る。
-    const viewType = request.query.viewType === "tile" ? "tile" : "list";
-    const orderBy = request.query.orderBy
-      ? request.query.orderBy
-      : "favorited_at"; // 後で変更するかは要検討。UI見るに可変ではなさそうな気はする。
-    let currentPage = 1; // 現在のページ番号
-    let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
-    if (
-      request.query.page !== undefined &&
-      request.query.page !== "" &&
-      request.query.page !== null &&
-      request.query.page !== "1"
-    ) {
-      idx = (Number(request.query.page) - 1) * maxViewOnPage;
-      currentPage = Number(request.query.page);
-    }
-    const currentPageDescription = {
-      title: "お気に入り作者リスト",
-      uriPrefix: `/favorite/creator`,
-    };
-    const userId = request.user.id;
-    // お気に入り作者リストを取得
-    knex("favorited_user")
-      .where("favorite_from", userId)
-      .orderBy(orderBy)
-      // eslint-disable-next-line camelcase
-      .then((favoritedUser: favorited_userTable[]) => {
-        if (favoritedUser.length == 0) {
-          response.status(500).send("お気に入り作者がありません");
-        } else {
-          console.log(viewType);
-          console.log(currentPage);
-          console.log(idx);
-          response.render("list/my_favorite_creator_list1", {
-            side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-              `${Boolean(request.user)}`
-            ],
-            currentPageDescription: currentPageDescription,
-          });
-        }
-      });
-  }
-});
-
 router.get("/creator", async (request, response) => {
   if (!request.user) {
     response.redirect("/invalidAccess");
