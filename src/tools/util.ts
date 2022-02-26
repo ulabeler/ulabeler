@@ -3,21 +3,33 @@
 // import crypto from "crypto";
 // import { userTable, workTable, base_categoryTable } from "./TypeAlias/tableType_alias";
 
-// // ベースカテゴリのidを渡すことで、引数として指定した配列にサブカテゴリ名を入れる
-// /**
-//  * @param {Array} List
-//  * @return {Array} List
-//  */
-// export async function addSubCategoryName(List: workTable[]): Promise<workTable> {
-//     const subCategoryNameList: string[] = [];
-//     for (const work of
-//         await knex("base_category")
-//             .select("name_subcategory")
-//             .whereIn("id", List.map((work) => work.base_category_id))) {
-//         subCategoryNameList.push(work.sub_category_name);
-//     }
-//     for (let i = 0; i < List.length; i++) {
-//         List[i].ext_name_subcategory = subCategoryNameList[i];
-//     }
-//     return List;
-// }
+// お気に入り作者リストで使うページネーション用MaxPageを返すやつ
+/**
+ * @param {string} viewType myFavCreatorList-ListかmyFavCreatorList-tile
+ * @param {number} ListLength 対象の作者数
+ * @param {number} maxViewOnPage 1ページ当たりの表示数
+ * @return {number} maxPage ページネーションで表示される最大ページ数
+ */
+function getMaxPage(
+  viewType: string,
+  ListLength: number,
+  maxViewOnPage: number
+): number {
+  if (viewType == "myFavCreatorList-List") {
+    // よく考えたらこれタイルでもリストでも一緒では
+    const maxPage =
+      ListLength % maxViewOnPage === 0
+        ? ListLength / maxViewOnPage
+        : Math.floor(ListLength / maxViewOnPage) + 1;
+    return maxPage;
+  } else {
+    // よく考えたらこれタイルでもリストでも一緒では
+    const maxPage =
+      ListLength % maxViewOnPage === 0
+        ? ListLength / maxViewOnPage
+        : Math.floor(ListLength / maxViewOnPage) + 1;
+    return maxPage;
+  }
+}
+
+export { getMaxPage };

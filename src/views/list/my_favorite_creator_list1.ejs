@@ -13,53 +13,102 @@
                 <article>
 
                     <!-- ページタイトル -->
-                    <h3 class="creator_list_title"><%= currentPageDescription.title %> <hr></h3>
-
-                    <!-- html切り替え画像 -->
-                    <div class="list_change">
-                        <a href="my_favorite_creator_list2.html"><img src="/images/system/list1.png" class="list_change_image"
-                                alt="リスト切り替え"></a>
-                    </div>
+                    <h3 class="creator_list_title">
+                        <%= currentPageDescription.title %>
+                            <hr>
+                    </h3>
 
 
-                    <% for( let index = 0; index < creatorList.length; index++ ) { %>
-                        <div class="creator_box_list1">
-                            <!-- 作者ページのリンク やまよろしく-->
-                            <a href="/creator_work/<%= creatorList[index].id %>">
-                                <table>
-                                    <td>
-                                        <!-- ユーザー詳細 -->
-                                        <div class="favorite_creator_detail">
-                                            <!-- アイコン -->
-                                            <div class="creator_icon_area">
-                                                <img src="<%= creatorList[index].icon_path %>" class="creator_icon_image" alt="クリエイターアイコン">
-                                            </div>
-                                            <!-- ユーザーネーム -->
-                                            <p class="favorite_creator_name_id"><%= creatorList[index].name %></p>
-                                            <!-- ユーザーID -->
-                                            <p class="favorite_creator_name_id"><%= creatorList[index].id %></p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <!-- 自己紹介文 -->
-                                        <div class="favorite_creator_txt">
-                                            <p><%= creatorList[index].self_introduction %></p>
-                                        </div>
-                                    </td>
-                                </table>
-                            </a>
+                    <% if (isCreatorView=="myFavCreatorList-List" ) { %>
+                        <!-- html切り替え画像 -->
+                        <div class="list_change">
+                            <a href="/favorite/creator?viewType=tile"><img src="/images/system/list1.png"
+                                    class="list_change_image" alt="リスト切り替え"></a>
                         </div>
-                        <hr class="favorite_creator_Separation">
-                    <% } %>
+                        <% console.log(creatorList) %>
+                            <% for( let index=idx; index < (idx + maxViewOnPage); index++ ) { %>
+                                <% if (index>= creatorList.length) { break; } %>
+                                    <div class="creator_box_list1">
+                                        <% console.log(index) %>
+                                            <% console.log(creatorList[index].id) %>
+                                                <a href="/creator_work/<%= creatorList[index].id %>">
+                                                    <table>
+                                                        <td>
+                                                            <!-- ユーザー詳細 -->
+                                                            <div class="favorite_creator_detail">
+                                                                <!-- アイコン -->
+                                                                <div class="creator_icon_area">
+                                                                    <img src="<%= creatorList[index].icon_path %>"
+                                                                        class="creator_icon_image" alt="クリエイターアイコン">
+                                                                </div>
+                                                                <!-- ユーザーネーム -->
+                                                                <p class="favorite_creator_name_id">
+                                                                    <%= creatorList[index].name %>
+                                                                </p>
+                                                                <!-- ユーザーID -->
+                                                                <p class="favorite_creator_name_id">
+                                                                    <%= creatorList[index].id %>
+                                                                </p>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <!-- 自己紹介文 -->
+                                                            <div class="favorite_creator_txt">
+                                                                <p>
+                                                                    <%= creatorList[index].self_introduction %>
+                                                                </p>
+                                                            </div>
+                                                        </td>
+                                                    </table>
+                                                </a>
+                                    </div>
+                                    <hr class="favorite_creator_Separation">
+                                    <% } %>
+                                        <% } else if (isCreatorView=="myFavCreatorList-Tile" ){%>
+                                            <div class="list_change">
+                                                <a href="/favorite/creator?viewType=list"><img
+                                                        src="/images/system/list2.png" class="list_change_image"
+                                                        alt="リスト切り替え"></a>
+                                            </div>
+                                            <div class="creator_box_wrapper">
+                                                <% for( let index=idx; index < (idx + maxViewOnPage); index++ ) { %>
+                                                    <% if (index>= creatorList.length) { break; } %>
+                                                        <% for( let column=0; column < 4; column++ ) { %>
+                                                            <section class="favorite_creator_detail">
+                                                                <!-- 作者ページのリンク -->
+                                                                <a href="/creator_work/<%= creatorList[index].id %>">
+                                                                    <!-- アイコン   リダ適当な画像突っ込んでcssよロしく-->
+                                                                    <div class="creator_icon_area">
+                                                                        <img src="<%= creatorList[index].icon_path %>"
+                                                                            class="creator_icon_image" alt="クリエイターアイコン">
+                                                                    </div>
+                                                                    <!-- ユーザーネーム -->
+                                                                    <p class="favorite_creator_name_id">
+                                                                        <%= creatorList[index].name %>
+                                                                    </p>
+                                                                    <!-- ユーザーID -->
+                                                                    <p class="favorite_creator_name_id">
+                                                                        <%= creatorList[index].id %>
+                                                                    </p>
+                                                                </a>
+                                                                </section>
+                                                                <% if (column==3) { %>
+                                                                    <hr class="favorite_creator_Separation2">
+                                                                    <!-- 四つ表示したら表示 -->
+                                                                    <% } %>
+                                                                        <% index++ %>
+                                                                            <% } %>
+                                                                                <% } %>
+                                            </div>
+                                            <% } %>
 
 
-                    
                 </article>
                 <%- include("../components/listPagenation.ejs", { workList :creatorList, idx: idx, maxPage: maxPage,
                     maxViewOnPage: maxViewOnPage, currentPage: currentPage, currentPageDescription:
                     currentPageDescription,isCreatorView: isCreatorView }) %>
-                <%- include("../components/login.ejs") %>
-                <%- include("../components/footer.ejs") %>
-            </body>
-        
-        </html>
+                    <%- include("../components/login.ejs") %>
+                        <%- include("../components/footer.ejs") %>
+        </body>
+
+</html>
