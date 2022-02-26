@@ -10,6 +10,7 @@
 
         <body>
             <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+            <%- include("../components/login.ejs") %>
 
                 <article>
                     <br>
@@ -120,7 +121,6 @@
 
                 <%- include("../components/listPagenation", {currentPage: currentPage, currentPageDescription: currentPageDescription}) %>
 
-                    <%- include("../components/login.ejs") %>
                         <%- include("../components/footer.ejs") %>
         </body>
         <script src="/javascripts/searchInit.js"></script>
