@@ -15,6 +15,10 @@ import {
   workTable,
   // eslint-disable-next-line camelcase
   base_categoryTable,
+  // eslint-disable-next-line camelcase
+  favorited_work_numberTable,
+  // eslint-disable-next-line camelcase
+  favorited_workTable,
 } from "tools/TypeAlias/tableType_alias";
 
 router.get("/", async (request, response) => {
@@ -67,6 +71,15 @@ router.get("/", async (request, response) => {
       singleUserSearchResult: await searchUser(parsedQuery),
     };
 
+    if (searchResult.workList === false) {
+      response.render("search_error", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        recentQuery: request.query.q,
+      });
+    }
+
     let maxPage = 0; // 適当入れてる
 
     if (searchResult.workList) {
@@ -77,10 +90,6 @@ router.get("/", async (request, response) => {
         searchResult.workList.length,
         maxViewOnPage
       );
-      // それぞれの作者情報の取得。お気に入り作品リストと同じような処理すればいいはず
-      // 対象の作品のお気に入り数の取得
-      // ログイン状態により分岐
-      // お気に入りしているか
 
       // searchResult.workListにある作品のbaseCategoryNameの取得
       // 結果はsearchResult.workList.baseCategoryNameに格納
@@ -128,11 +137,59 @@ router.get("/", async (request, response) => {
           .icon_path as string;
       }
 
+      // userWorkListについて、favorited_work_numberから、いいね数を取得
+      // 取得した値は、myFavoriteWorkList[i].favoritedWorkNumberに格納する
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      for (let i = 0; i < searchResult.workList.length; i++) {
+        const favoritedWorkNumber: number = await knex("favorited_work_number")
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .where("favorited_to_id", searchResult.workList[i].id)
+          // eslint-disable-next-line camelcase
+          .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
+            return favoritedWorkNumber[0].number;
+          });
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        searchResult.workList[i].favoritedWorkNumber = favoritedWorkNumber;
+      }
+
       if (request.user) {
         // myFavoriteWorkListについて、created_by_user_idとrequest.user.idが同じかどうかを判定
         // 取得した値は、searchResult.workList[i].userFlagIsMineに格納する
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        for (let i = 0; i < searchResult.workList.length; i++) {
+          const userFlagIsMine: boolean =
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            searchResult.workList[i].created_by_user_id === request.user.id;
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          searchResult.workList[i].userFlagIsMine = userFlagIsMine;
+        }
+
         // お気に入りしているかどうかの判定
         // 取得した値はsearchResult.workList[i].isFavoritedに格納する
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        for (let i = 0; i < searchResult.workList.length; i++) {
+          const favoritedWorkList: boolean[] = [];
+          const favoritedWorkNumber: number = await knex("favorited_work")
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            .where("favorite_to", searchResult.workList[i].id)
+            .andWhere("favorite_from", request.user.id)
+            // eslint-disable-next-line camelcase
+            .then((favoritedWork: favorited_workTable[]) => {
+              return favoritedWork.length;
+            });
+          favoritedWorkList.push(favoritedWorkNumber > 0);
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          searchResult.workList[i].isFavorited = favoritedWorkList[0];
+        }
       }
     }
 
@@ -151,6 +208,7 @@ router.get("/", async (request, response) => {
       isCreatorView: viewType,
       idx: idx,
       maxPage: maxPage,
+      maxViewOnPage: maxViewOnPage,
     });
   } else {
     // クエリが空の場合の処理
