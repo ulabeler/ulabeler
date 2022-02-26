@@ -10,6 +10,7 @@
 
         <body>
             <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+            <%- include("../components/login.ejs") %>
 
                 <article>
                     <br>
@@ -111,16 +112,13 @@
                                 <!-- ポップアップの中身 -->
 
                                 <% if (searchResult.workList) { %>
-                                    <div class="popup" id="js-popup">
                                         <%- include("../components/workListDetailForSearch", { workList: searchResult.workList, maxViewOnPage: maxViewOnPage}) %>
-                                    </div>
                                     <% } %>
                 </article>
                 <br>
 
                 <%- include("../components/listPagenation", {currentPage: currentPage, currentPageDescription: currentPageDescription}) %>
 
-                    <%- include("../components/login.ejs") %>
                         <%- include("../components/footer.ejs") %>
         </body>
         <script src="/javascripts/searchInit.js"></script>

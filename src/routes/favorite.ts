@@ -131,7 +131,7 @@ router.get("/work", async (request, response) => {
               },
             ];
           });
-        myFavoriteWorkList[i].name = userInfo[0].name as string;
+        myFavoriteWorkList[i].creatorName = userInfo[0].name as string;
         myFavoriteWorkList[i].creatorIconPath = userInfo[0].icon_path as string;
       }
 

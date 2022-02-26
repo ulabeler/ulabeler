@@ -213,7 +213,7 @@ CREATE TABLE `favorited_user` (
 
 LOCK TABLES `favorited_user` WRITE;
 /*!40000 ALTER TABLE `favorited_user` DISABLE KEYS */;
-INSERT INTO `favorited_user` VALUES ('ulabeler','2na2','2022-02-25 16:08:01'),('ulabeler','ulabeler','2022-02-25 16:51:24');
+INSERT INTO `favorited_user` VALUES ('na2na','ulabeler','2022-02-26 15:15:52'),('ulabeler','2na2','2022-02-25 16:08:01'),('ulabeler','apple','2022-02-26 08:42:54'),('ulabeler','kobayasi','2022-02-26 08:43:09'),('ulabeler','orange','2022-02-26 08:45:13'),('ulabeler','pineapple','2022-02-26 08:45:19'),('ulabeler','ulabeler','2022-02-25 16:51:24'),('ulabeler','yama','2022-02-26 08:45:24'),('ulabeler','yamada','2022-02-26 08:45:30'),('ulabeler','yamafuji','2022-02-26 08:45:36');
 /*!40000 ALTER TABLE `favorited_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +238,7 @@ CREATE TABLE `favorited_user_number` (
 
 LOCK TABLES `favorited_user_number` WRITE;
 /*!40000 ALTER TABLE `favorited_user_number` DISABLE KEYS */;
-INSERT INTO `favorited_user_number` VALUES ('2na2',1),('apple',0),('na2na',0),('ulabeler',1);
+INSERT INTO `favorited_user_number` VALUES ('2na2',1),('apple',1),('kobayasi',1),('na2na',0),('nagarebosi',0),('orange',1),('pineapple',1),('ulabeler',2),('yama',1),('yamada',1),('yamafuji',1);
 /*!40000 ALTER TABLE `favorited_user_number` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +266,7 @@ CREATE TABLE `favorited_work` (
 
 LOCK TABLES `favorited_work` WRITE;
 /*!40000 ALTER TABLE `favorited_work` DISABLE KEYS */;
-INSERT INTO `favorited_work` VALUES ('ulabeler','2ade79b60637','2022-02-25 15:16:27'),('ulabeler','3433777e8916','2022-02-24 18:13:29'),('ulabeler','4bfa18cdfe55','2022-02-25 15:33:54'),('ulabeler','b7edc32c2dc0','2022-02-23 03:28:02'),('ulabeler','b9e5c437d684','2022-02-25 04:44:11'),('ulabeler','db8e43171e68','2022-02-25 15:30:08'),('ulabeler','fca90358cdec','2022-02-25 15:29:29');
+INSERT INTO `favorited_work` VALUES ('na2na','2ade79b60637','2022-02-26 15:14:12'),('na2na','db8e43171e68','2022-02-26 15:14:08'),('na2na','edf5aa0c1078','2022-02-26 15:14:09'),('na2na','fca90358cdec','2022-02-26 15:14:10'),('ulabeler','2ade79b60637','2022-02-25 15:16:27'),('ulabeler','3433777e8916','2022-02-26 15:01:15'),('ulabeler','4bfa18cdfe55','2022-02-25 15:33:54'),('ulabeler','b7edc32c2dc0','2022-02-23 03:28:02'),('ulabeler','b9e5c437d684','2022-02-25 04:44:11'),('ulabeler','db8e43171e68','2022-02-25 15:30:08'),('ulabeler','fca90358cdec','2022-02-25 15:29:29');
 /*!40000 ALTER TABLE `favorited_work` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,7 +291,7 @@ CREATE TABLE `favorited_work_number` (
 
 LOCK TABLES `favorited_work_number` WRITE;
 /*!40000 ALTER TABLE `favorited_work_number` DISABLE KEYS */;
-INSERT INTO `favorited_work_number` VALUES ('06cd36182afc',0),('2ade79b60637',1),('3433777e8916',1),('4bfa18cdfe55',1),('6e96f7131583',0),('81edff70d7d3',0),('b7edc32c2dc0',1),('b9e5c437d684',1),('d0a01b45a9f0',0),('d74dfadaec92',0),('db8e43171e68',1),('edf5aa0c1078',0),('fca90358cdec',1);
+INSERT INTO `favorited_work_number` VALUES ('06cd36182afc',0),('2ade79b60637',2),('3433777e8916',1),('4bfa18cdfe55',1),('6e96f7131583',0),('81edff70d7d3',0),('b7edc32c2dc0',1),('b9e5c437d684',1),('d0a01b45a9f0',0),('d74dfadaec92',0),('db8e43171e68',2),('edf5aa0c1078',1),('fca90358cdec',2);
 /*!40000 ALTER TABLE `favorited_work_number` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -531,7 +531,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('2na2','2na2','$2b$10$V5oRKJNbhAUSzPLHYnfSn.a8SsUxuYkWlLuB.9aojGqWSGzPfTC4.','2na2@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-25 02:56:54',NULL),('apple','りんご','$2b$10$Qpwt77mBHR1kKdAMiOA34ek/8ida.2bOd3uT.hVUxLTG9l/1jCgfu','apple@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-25 16:58:44',NULL),('na2na','なずな','$2b$10$4Xz2Prm2AyS.NMwjL.w5RuvWtCuV1FiQQUoEPNsw0K.PeJSuSZ.1a','na2na@na2na.dev','/images/system/user.png',NULL,NULL,NULL,NULL,'2022-02-08 00:41:52',NULL),('ulabeler','ゆーらべらー','$2b$10$uquoNVSt/zHP9gUh5pCjCOMVytrjGRX1pBLj6OIUSRvHPs2U7ITXC','develop@na2na.dev','https://mediaulabeler.na2na.website/media/icon/eccb410b-1559-4bdb-b77d-8594022347ef.webp','わーーーーーーーーーーーーーーーーーーーーーーーーーーーわーーーーーーーーーーーーーーーーーーーーーーーーーーー','4485805109814218','HAL TARO','0822','2021-11-29 17:34:00',NULL);
+INSERT INTO `user` VALUES ('2na2','2na2','$2b$10$V5oRKJNbhAUSzPLHYnfSn.a8SsUxuYkWlLuB.9aojGqWSGzPfTC4.','2na2@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-25 02:56:54',NULL),('apple','りんご','$2b$10$Qpwt77mBHR1kKdAMiOA34ek/8ida.2bOd3uT.hVUxLTG9l/1jCgfu','apple@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-25 16:58:44',NULL),('kobayasi','しょーちゃん','$2b$10$jh7B5dqQ7g0oAfcY7xXIMOTlamyq42x/TxKA989Qq6sGj7WmYgNPO','kobayasi@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-26 07:45:02',NULL),('na2na','なずな','$2b$10$4Xz2Prm2AyS.NMwjL.w5RuvWtCuV1FiQQUoEPNsw0K.PeJSuSZ.1a','na2na@na2na.dev','https://mediaulabeler.na2na.website/media/icon/40e614bf-0438-4de5-9ae0-e2c676942519.webp','にゃーん',NULL,NULL,NULL,'2022-02-08 00:41:52',NULL),('nagarebosi','赤ちゃん','$2b$10$2Zgei.4ZUGbjTJadIIg/v.6D92DOpLClnx5lg8X9flHEIz.6ty9UK','nagarebosi@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-26 07:45:34',NULL),('orange','みかん','$2b$10$UlSnJdB5mrIt/oqEzTIDKOiIQZqeZSuVEf6J2WlOpVzDtum2BxNHm','orange@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-26 07:43:36',NULL),('pineapple','食べたい','$2b$10$Icoa61qogxcWD9jfJduWK.Wal0kflJnZzUC760gEouIbxuk1TyeYO','pineapple@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-26 07:50:55',NULL),('ulabeler','ゆーらべらー','$2b$10$uquoNVSt/zHP9gUh5pCjCOMVytrjGRX1pBLj6OIUSRvHPs2U7ITXC','develop@na2na.dev','https://mediaulabeler.na2na.website/media/icon/eccb410b-1559-4bdb-b77d-8594022347ef.webp','わーーーーーーーーーーーーーーーーーーーーーーーーーーー\nわーーーーーーーーーーーーーーーーーーーーーーーーーーー','4485805109814218','HAL TARO','0822','2021-11-29 17:34:00',NULL),('yama','山','$2b$10$5yB3XM.C7hWYpVG/mCpgIO7nvEGa8/oCFBhpG0f77qxSlFiTiZKCm','yama@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-26 07:45:59',NULL),('yamada','たろう','$2b$10$oruXr9ASfqPw4NPIO3KqEeuIIYZI9s3XK6dG/8T.BkVujcSKcj2Xa','yamada@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-26 07:44:28',NULL),('yamafuji','富士山','$2b$10$pJm96bQgYVhhaoDmgacCcOuqIUQtEd5BlrFWxkn.f3jl2zSN.HIwO','yamafuji@na2na.dev','https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png',NULL,NULL,NULL,NULL,'2022-02-26 07:47:10',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -636,4 +636,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-25 17:29:49
+-- Dump completed on 2022-02-26 16:28:44

@@ -26,7 +26,7 @@
                                             <tr>
                                                 <td>
                                                     <p class="username">
-                                                        <%- workList[i].created_by_user_id %>
+                                                        <%- workList[i].creatorName %>
                                                     </p>
                                                 </td>
                                                 <input type="hidden" name="">
@@ -90,16 +90,16 @@
                 <div class="okiniiri">
                     <% if (!favoritedWorkList) { %>
                         <div id="click">
-                            <label><input type="checkbox" name="favorite" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>')">★</div></label>
+                            <label><input type="checkbox" name="favorite"  class="favStatusIdx-<%-workList[i].id%>"><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>')">★</div></label>
                         </div> 
                         <% } else { %>
                             <% if (favoritedWorkList[i]) { %>
                                 <div id="click">
-                                    <label><input type="checkbox" name="favorite" checked><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>')">★</div></label>
+                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" checked><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>')">★</div></label>
                                 </div> 
                             <% } else { %>
                                 <div id="click">
-                                    <label><input type="checkbox" name="favorite" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>')">★</div></label>
+                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>')">★</div></label>
                                 </div> 
                             <% } %>
                                         <% } %>
