@@ -31,8 +31,9 @@ MySQLWorkbench 関係のファイルも追加しています。以降の編集�
 - [ ] public/javascripts以下のリファクタリング
 - [ ] ルーティング関係のリファクタリング
 
-- [ ] express-validator を利用したバリデーション API に切り替え
+# その他
 
+- [ ] express-validator を利用したバリデーション API に切り替え
 - [ ] 作者ページのアイコン角丸になってない
 - [ ] 住所はどのタイミングで DB に投げますか。→ 確定前の再編集を考慮すべき
 - [ ] [データベース]やり取りの履歴を残す目的で、description と reply を JSON 型へ変更する。TS 型定義は済
