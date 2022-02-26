@@ -96,9 +96,6 @@ async function searchWork(
             this.andWhere("name", "like", `%${parsedQuery.other[i]}%`);
           }
         })
-        .on("query", function (data: string[]) {
-          console.log(data);
-        })
         .catch((error: Error) => {
           console.error(error);
         });
