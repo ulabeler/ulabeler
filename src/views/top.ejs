@@ -5,30 +5,909 @@
   <%- include("./components/lib.ejs") %>
     <title>U labeler</title>
     <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/slide.css" rel="stylesheet" type="text/css"></link>
 </head>
 <header class="header">
-  <%- include("./components/header.ejs") %>
-
+    <%- include("./components/header.ejs") %>
     <body>
-      <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
+        <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
 
         <article>
 
-          <%- include("./components/login.ejs") %>
+            <br>
+            <br>
+            <br>
+            <br>
 
-            <p id="show_username">テストユーザーさん</p>
-            <a href="/creator_work/ulabeler">作者作品ページ</a>
-            <hr>
-            <a href="https://github.com/na2na-p/ulabeler/issues">既知の問題</a>
 
+            <br>
+            <br>
+            <div class="wrap slide-paused" ontouchstart="">
+                <ul class="slideshow1">
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model7.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model6.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model5.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model4.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model3.jpg"></a>
+                    <li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model2.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model1.jpg"></a>
+                    </li>
+
+                </ul>
+                <ul class="slideshow1">
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model7.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model6.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model5.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model4.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model3.jpg"></a>
+                    <li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model2.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model1.jpg"></a>
+                    </li>
+
+                </ul>
+                <ul class="slideshow1">
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model7.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model6.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model5.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model4.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model3.jpg"></a>
+                    <li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model2.jpg"></a>
+                    </li>
+                    <li class="content1 content-hover"><a href="select_object.html"><img src="/images/system/model1.jpg"></a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- ページ名 -->
+
+
+            <h3 class="h3_center4"> U labeler</h3>
+            <h4>世界に一つだけのオリジナル作品 作ってみてはいかがですか？？</h4>
+            <div class="btn_custmize">
+                <p class="btn_custmize1"><a href="select_object.html">
+                        <font color="white">CUSTOMIZE</font>
+                    </a></p>
+            </div>
+            <br>
+            <br>
+            <br>
+
+
+            <div class="box18">
+                <br><br>
+                <h3 class="h3_center7">ライブラリ
+                    <hr>
+                </h3>
+                <div id="js-show-popup">
+                    <div class="box_wrapper_2">
+
+
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2_1"><a href="">
+                                        <font size="15" color="orange">☆</font>
+                                    </a></p><!-- お気に入りしてない☆-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆 -->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2_1"><a href="">
+                                        <font size="15" color="orange">☆</font>
+                                    </a></p><!-- お気に入りしてない☆-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆 -->
+
+
+
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2"><a href="">
+                                        <font size="15" color="orange">★</font>
+                                    </a></p><!-- お気に入りしてる★-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆-->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2_1"><a href="">
+                                        <font size="15" color="orange">☆</font>
+                                    </a></p><!-- お気に入りしてない☆-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆 -->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2"><a href="">
+                                        <font size="15" color="orange">★</font>
+                                    </a></p><!-- お気に入りしてる★-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆-->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2"><a href="">
+                                        <font size="15" color="orange">★</font>
+                                    </a></p><!-- お気に入りしてる★-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆-->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2"><a href="">
+                                        <font size="15" color="orange">★</font>
+                                    </a></p><!-- お気に入りしてる★-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆-->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2"><a href="">
+                                        <font size="15" color="orange">★</font>
+                                    </a></p><!-- お気に入りしてる★-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆-->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2"><a href="">
+                                        <font size="15" color="orange">★</font>
+                                    </a></p><!-- お気に入りしてる★-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆-->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2"><a href="">
+                                        <font size="15" color="orange">★</font>
+                                    </a></p><!-- お気に入りしてる★-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆-->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2"><a href="">
+                                        <font size="15" color="orange">★</font>
+                                    </a></p><!-- お気に入りしてる★-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆-->
+
+                        <!-- セクション１個で１つの表示👇 -->
+                        <section class="box_item_2">
+                            <br>
+                            <div class="userpage">
+                                <div class="user_3">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box_1">
+                                            <a href="">
+                                                <table cellpadding="0" 　class="usertable">
+
+                                                    <tr>
+                                                        <th rowspan="4">
+                                                            <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                        </th>
+                                                        <td>　　　　　</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p class="username">やまだはなこ</p>
+                                                        </td>
+                                                        <input type="hidden" name="">
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="userid2">＠00000000</td>
+                                                        <input type="hidden" name="">
+                                                    </tr>
+
+
+                                                </table>
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class=userpage>
+                            </div>
+                            <p class="date1">2022/02/02</p>
+                            <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                            <form action="select_color.html" method="post">
+                                <p class="explanation">ペットボトル（500ml）<br>「ひまわりのペットボトル」</p>
+                                <p class="star2_1"><a href="">
+                                        <font size="15" color="orange">☆</font>
+                                    </a></p><!-- お気に入りしてない☆-->
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </form>
+                        </section>
+                        <!-- ここまで👆 -->
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ポップアップの中身 -->
+
+            <div class="popup" id="js-popup">
+                <div class="popup-inner">
+                    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+
+
+                    <!-- 作品詳細（自分）👇 -->
+
+                    <section class="box_item_3">
+                        <br>
+                        <div class="userpage">
+                            <div class="user_3">
+                                <form action="" method="post" id="hoge">
+                                    <div class="user_box_1">
+                                        <a href="">
+                                            <table cellpadding="0" 　class="usertable">
+
+                                                <tr>
+                                                    <th rowspan="4">
+                                                        <p class=user_img2><img src="/images/system/user.png" alt="商品画像"></p>
+                                                    </th>
+                                                    <td>　　　　　</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="username">やまだはなこ</p>
+                                                    </td>
+                                                    <input type="hidden" name="">
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="userid2">＠00000000</td>
+                                                    <input type="hidden" name="">
+                                                </tr>
+
+
+                                            </table>
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class=userpage>
+                        </div>
+                        <p class="date1">2022/02/02</p>
+                        <div class="image_wrapper"><img src="/images/system/color.jpeg" alt="" /></div>
+                        <form action="work_detail_setting.html" method="post">
+
+                            <table class=tannka_table>
+                                <tr>
+                                    <th class="tannka">
+                                        <p>単価：500円</p>
+                                    </th>
+                                    <th class="cart_img2">
+                                        <p class=cart_img><a href=""><img src="/images/system/cart-5.jpg" alt="商品画像"></a>
+                                    </th>
+                                </tr>
+                            </table>
+
+                            <p class="explanation">ペットボトル（500ml）</p>
+                            <h3 class="sakuhinnmei">「ひまわりのペットボトル」</h3>
+                            <div class="explanation2"><a href="">
+                                    <font size="2">#ペットボトル　＃やまおねがい　#やまおねがい</font>
+                                </a></p>
+                            </div>
+                            <br>
+                            <p class="explanation3">ひまわりが大好きなので作りました。</p>
+                            <div class="okiniiri">
+                                <p class="star2_1"><a href="">
+                                        <font size="15" color="orange">☆</font>
+                                    </a></p>
+                                <div class="favorite3">
+                                    <p class="favorite2">
+                                        <font size="4">10</font>
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="button6"><button type="submit" class="black_button4"
+                                    onclick="location.href='work_detail_setting.html'">編集</button></p>
+                            <br>
+                        </form>
+                    </section>
+
+
+                    <!-- 作品詳細（自分）ここまで👆 -->
+
+
+                    <!-- 作品詳細（他者）👇
+
+            <section class="box_item_3">
+                <br>
+                <div class="userpage">
+                    <div class="user_3">
+                    <form action="" method="post" id="hoge">
+                        <div class="user_box_1">
+                            <a href=""><table cellpadding="0"　class = "usertable">
+                                
+                                <tr>
+                                    <th rowspan="4" ><p class = user_img2><img src="/images/system/user.png" alt="商品画像"></p></th>
+                                    <td>　　　　　</td>
+                                </tr>
+                                <tr>    
+                                    <td><p class = "username">やまだはなこ</p></td>
+                                    <input type="hidden" name="">
+                                    
+                                </tr>
+                                <tr>    
+                                    <td class = "userid2">＠00000000</td>
+                                    <input type="hidden" name="">
+                                </tr>
+                                
+                                
+                            </table></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class = userpage>
+            </div>
+                <p class = "date1">2022/02/02</p>
+                <div class="image_wrapper"><img src="/images/system/color.jpeg"  alt="" /></div>
+                <form action="select_color.html" method="post">
+
+                    <table class = tannka_table>
+                        <tr>
+                            <th class = "tannka"><p>単価：500円　</p></th>
+                            <th class="cart_img2"><p class = cart_img><a href=""><img src="/images/system/cart-5.jpg" alt="商品画像"></a></th>
+                        </tr>
+                    </table>
+                    
+                    <p class = "explanation">ペットボトル（500ml）</p>
+                    <h3 class = "sakuhinnmei">「ひまわりのペットボトル」</h3>
+                    <div class = "explanation2"><a href=""><font  size="2">#ペットボトル　＃やまおねがい　#やまおねがい</font></a></p></div>
+                    <br>
+                    <p class = "explanation3">ひまわりが大好きなので作りました。</p>
+                    <div class="okiniiri">
+                        <p class = "star2_1"><a href=""><font  size="15" color="orange">☆</font></a></p>
+                        <div class = "favorite3">
+                            <p class = "favorite2"><font  size="4">10</font></p>
+                        </div> 
+                    </div>
+                    <br>
+                    <a href=""><p class = "tuuhou"><font  size="2" color="red">通報する</font></p></a>
+                    <br>
+                </form>
+            </section> -->
+                    <!-- 作品詳細（他者）ここまで👆 -->
+
+                </div>
+                <div class="black-background" id="js-black-bg"></div>
+            </div>
+
+            <noscript>
+                <p>JavaScriptを有効にしてください。</p>
+            </noscript>
 
         </article>
         <br>
-        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-        <br>
-        <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
+        <%- include("./components/login.ejs") %>
+        <%- include("./components/footer.ejs") %>
+
     </body>
-
-
 
 </html>

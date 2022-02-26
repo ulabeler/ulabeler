@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <%- include("./components/lib.ejs") %>
+    <title>U labeler</title>
+    <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
+</head>
+<header class="header">
+  <%- include("./components/header.ejs") %>
+
+    <body>
+      <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
+
+        <article>
+
+          <%- include("./components/login.ejs") %>
+
+            <p id="show_username">テストユーザーさん</p>
+            <a href="/creator_work/ulabeler">作者作品ページ</a>
+            <hr>
+            <a href="https://github.com/na2na-p/ulabeler/issues">既知の問題</a>
+
+
+        </article>
+        <br>
+        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+        <br>
+        <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
+    </body>
+
+
+
+</html>
