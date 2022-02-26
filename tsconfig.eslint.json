@@ -12,7 +12,7 @@
         "src/app.ts",
         "scripts/*.js",
         "scripts/**/*.ts",
-        "src/public/javascripts/*.ts",
+        "src/public/javascripts/*",
         "src/public/javascripts/util/*.ts",
     ],
     "exclude": [

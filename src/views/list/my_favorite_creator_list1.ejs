@@ -71,9 +71,11 @@
                                                         alt="リスト切り替え"></a>
                                             </div>
                                             <div class="creator_box_wrapper">
+                                                <% console.table(creatorList) %> 
                                                 <% for( let index=idx; index < (idx + maxViewOnPage); index++ ) { %>
                                                     <% if (index>= creatorList.length) { break; } %>
                                                         <% for( let column=0; column < 4; column++ ) { %>
+                                                            <% if (index>= creatorList.length) { break; } %>
                                                             <section class="favorite_creator_detail">
                                                                 <!-- 作者ページのリンク -->
                                                                 <a href="/creator_work/<%= creatorList[index].id %>">

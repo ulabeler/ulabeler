@@ -25,7 +25,7 @@ app.use(bodyParser.json({ limit: "10mb" }));
 
 export const UpImgDirBase = path.join(__dirname, "public/images/");
 
-// import { sendDiscord } from "./tools/discord_send_message"; // メッセ送信処理 できればこれで状態監視できるようにしたい
+import { sendDiscord } from "./tools/discord_send_message"; // メッセ送信処理 できればこれで状態監視できるようにしたい
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -107,6 +107,8 @@ app.use(function (
   // set locals, only providing error in development
   response.locals.message = error.message;
   response.locals.error = request.app.get("env") === "development" ? error : {};
+
+  sendDiscord(error.message);
 
   // render the error page
   response.status(error.status || 500);
