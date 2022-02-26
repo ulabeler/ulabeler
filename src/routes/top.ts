@@ -17,6 +17,7 @@ import sideMenuList from "../tools/data/sidemenu.json";
 import config from "../config/config.json";
 import { useWorkList } from "../tools/TypeAlias/miscAlias";
 import { getUserSocialInfo } from "../tools/user";
+import { getMaxPage } from "../tools/util";
 
 const maxViewOnPage = config.maxViewOnPage || 8; // 1ページに表示する最大件数
 
@@ -334,6 +335,7 @@ router.get("/creator_work/:userId", async function (request, response) {
       // request.query.userIdの作品を取得
       const userWorkList: useWorkList[] = await knex("work")
         .where("created_by_user_id", request.params.userId)
+        .andWhere("flag_public", 1)
         .orderBy("create_at", "desc")
         .catch((err: Error) => {
           console.log(err);
@@ -351,7 +353,11 @@ router.get("/creator_work/:userId", async function (request, response) {
         });
         return;
       } else {
-        const maxPage = ~~(userWorkList.length / maxViewOnPage);
+        let maxPage = 0; // 適当入れてる
+
+        if (userWorkList) {
+          maxPage = getMaxPage("dummy", userWorkList.length, maxViewOnPage);
+        }
 
         // userWorkListについて、base_category_idを取得
         // 取得した値は、userWorkList[i].baseCategoryNameに格納する
