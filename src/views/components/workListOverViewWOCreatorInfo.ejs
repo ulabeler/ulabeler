@@ -3,41 +3,6 @@
         <% if (workList[i]) { %>
             <section class="box_item_2" onclick="showPopUp('listidx-<%-workList[i].id%>')">
                 <br>
-                <div class="userpage">
-                    <div class="user_3">
-                        <form action="" method="post" id="hoge">
-                            <div class="user_box_1">
-                                <a href="">
-                                    <table cellpadding="0" 　class="usertable">
-
-                                        <tr>
-                                            <th rowspan="4">
-                                                <p class=user_img2><img src="<%= workList[i].creatorIconPath %>" alt="<%- workList[i].name %>" />
-                                            </th>
-                                            <td>　　　　　</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <p class="username"><%= workList[i].creatorName %></p>
-                                            </td>
-                                            <input type="hidden" name="">
-
-                                        </tr>
-                                        <tr>
-                                            <td class="userid2">@<%= workList[i].created_by_user_id%>
-                                            </td>
-                                            <input type="hidden" name="">
-                                        </tr>
-
-
-                                    </table>
-                                </a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class=userpage>
-                </div>
                 <p class="date1">
                     <%# work.create_atをyyyy/mm/ddで表示する %>
                         <% const create_at=new Date(workList[i].create_at)%>
