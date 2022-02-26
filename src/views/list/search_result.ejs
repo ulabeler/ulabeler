@@ -112,9 +112,7 @@
                                 <!-- ポップアップの中身 -->
 
                                 <% if (searchResult.workList) { %>
-                                    <div class="popup" id="js-popup">
                                         <%- include("../components/workListDetailForSearch", { workList: searchResult.workList, maxViewOnPage: maxViewOnPage}) %>
-                                    </div>
                                     <% } %>
                 </article>
                 <br>
