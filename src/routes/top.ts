@@ -29,14 +29,19 @@ const host =
 
 /* GET home page. */
 router.get("/", async function (request, response) {
+  const libraryWorkNumOnView = 20;
   const userInfo = request.user ? request.user : null;
-  const libraryWorkList = await getRandomIdList(12);
-  console.log(libraryWorkList);
+  const libraryWorkList = await getRandomIdList(
+    libraryWorkNumOnView,
+    request.user
+  );
+  console.table(libraryWorkList);
   response.render("top", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
     userInfo: userInfo,
+    workList: libraryWorkList,
   });
 });
 

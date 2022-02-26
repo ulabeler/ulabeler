@@ -1,7 +1,13 @@
+/* eslint-disable camelcase */
 // import express from "express";
 import { knex } from "../app";
 // import crypto from "crypto";
-import { workTable } from "./TypeAlias/tableType_alias";
+import {
+  userTable,
+  workTable,
+  base_categoryTable,
+  favorited_work_numberTable,
+} from "./TypeAlias/tableType_alias";
 import { myFavoriteWorkList } from "./TypeAlias/miscAlias";
 
 // お気に入り作者リストで使うページネーション用MaxPageを返すやつ
@@ -34,14 +40,19 @@ function getMaxPage(
 }
 
 // 全ての公開作品から、ランダムに指定件数のidを取得して配列に格納して返すメソッド
+// eslint-disable-next-line valid-jsdoc
 /**
  * @param {number} limit 取得件数
+ * @param {Express.Request["user"]} user ユーザー情報
  * @return {myFavoriteWorkList[]} idList 取得したidの配列
  */
-async function getRandomIdList(limit: number): Promise<myFavoriteWorkList[]> {
+async function getRandomIdList(
+  limit: number,
+  user: Express.Request["user"]
+): Promise<myFavoriteWorkList[]> {
   const topPageWorkList: myFavoriteWorkList[] = [];
   const workList: workTable[] = await knex("work")
-    .where("flag_public", true)
+    .where("flag_public", 1)
     .orderByRaw("RAND()")
     .limit(limit)
     .then((work: workTable[]) => {
@@ -50,7 +61,59 @@ async function getRandomIdList(limit: number): Promise<myFavoriteWorkList[]> {
   for (let i = 0; i < workList.length; i++) {
     topPageWorkList.push(workList[i]);
   }
-  console.table(topPageWorkList);
+
+  for (let i = 0; i < topPageWorkList.length; i++) {
+    // 素体名
+    const baseCategoryId: workTable["base_category_id"] =
+      topPageWorkList[i].base_category_id;
+    const baseCategoryName: string = await knex("base_category")
+      .where("id", baseCategoryId)
+      // eslint-disable-next-line camelcase
+      .then((baseCategory: base_categoryTable[]) => {
+        return baseCategory[0].name_subcategory;
+      });
+    topPageWorkList[i].baseCategoryName = baseCategoryName;
+  }
+
+  for (let i = 0; i < topPageWorkList.length; i++) {
+    // いいね数
+    const favoritedWorkNumber: number = await knex("favorited_work_number")
+      .where("favorited_to_id", topPageWorkList[i].id)
+      // eslint-disable-next-line camelcase
+      .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
+        return favoritedWorkNumber[0].number;
+      });
+    topPageWorkList[i].favoritedWorkNumber = favoritedWorkNumber;
+  }
+
+  for (let i = 0; i < topPageWorkList.length; i++) {
+    // 作者情報の取得
+    const userInfo: userTable[] = await knex("user")
+      .where("id", topPageWorkList[i].created_by_user_id)
+      // eslint-disable-next-line camelcase
+      .then((user: userTable[]) => {
+        return [
+          {
+            name: user[0].name,
+            icon_path: user[0].icon_path,
+          },
+        ];
+      });
+    topPageWorkList[i].creatorName = userInfo[0].name as string;
+    topPageWorkList[i].creatorIconPath = userInfo[0].icon_path as string;
+  }
+
+  for (let i = 0; i < topPageWorkList.length; i++) {
+    // 自分の作品かどうかの判定
+    if (!user) {
+      topPageWorkList[i].userFlagIsMine = false;
+    } else {
+      const userFlagIsMine: boolean =
+        topPageWorkList[i].created_by_user_id === user.id;
+      topPageWorkList[i].userFlagIsMine = userFlagIsMine;
+    }
+  }
+
   return topPageWorkList;
 }
 
