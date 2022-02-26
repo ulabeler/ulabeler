@@ -78,6 +78,7 @@ router.get("/", async (request, response) => {
         ],
         recentQuery: request.query.q,
       });
+      return;
     }
 
     let maxPage = 0; // 適当入れてる
