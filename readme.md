@@ -26,8 +26,9 @@ MySQLWorkbench 関係のファイルも追加しています。以降の編集�
 - [ ] 注文履歴のダミーデータ追加
 - [ ] 注文履歴のルーティング処理追加
 - [ ] ユーザー名も対象とした検索機能の実装
-- [ ] public/javascripts以下のリファクタリング
 - [ ] https://github.com/na2na-p/ulabeler/issues/37
+- [ ] public/javascripts以下のリファクタリング
+- [ ] ルーティング関係のリファクタリング
 
 - [ ] express-validator を利用したバリデーション API に切り替え
 
