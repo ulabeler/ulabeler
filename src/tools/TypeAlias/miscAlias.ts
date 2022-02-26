@@ -1,4 +1,4 @@
-import { workTable } from "./tableType_alias";
+import { userTable, workTable } from "./tableType_alias";
 export type sideMenu = {
   title: string;
   url: string;
@@ -36,6 +36,8 @@ export type searchResult = {
     creatorName?: string;
     userFlagIsMine?: boolean;
   };
+  singleUserSearchResult?: singleUserSearchResult;
 };
 
 type searchWorkList = boolean | workTable[];
+type singleUserSearchResult = boolean | userTable;

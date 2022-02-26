@@ -1,7 +1,7 @@
 /* eslint-disable no-invalid-this */
 import { knex } from "../app";
 import { parsedQuery } from "../tools/TypeAlias/miscAlias";
-import { workTable } from "tools/TypeAlias/tableType_alias";
+import { workTable, userTable } from "tools/TypeAlias/tableType_alias";
 // それぞれのパターンに対応する作品検索処理
 /**
  * @param {parsedQuery} parsedQuery  パース済み検索クエリ
@@ -122,9 +122,31 @@ async function searchWork(
   }
 }
 
+/**
+ * @param {parsedQuery} parsedQuery  パース済み検索クエリ
+ * @return {userTable[]} 検索結果
+ */
+async function searchUser(
+  parsedQuery: parsedQuery
+): Promise<userTable | boolean> {
+  if (parsedQuery.userId) {
+    const resultUser: userTable[] = await knex("user")
+      .where("id", parsedQuery.userId)
+      .catch((error: Error) => {
+        console.error(error);
+      });
+    if (resultUser.length === 0) {
+      return false;
+    }
+    return resultUser[0];
+  } else {
+    return false;
+  }
+}
+
 // async function searchWorkWithUserName(parsedQuery: parsedQuery)
 // メモ
 // otherが作品名であると仮定したとき
 // otherが作者名であると仮定したとき
 // otherが上記2つの混合であるとしたとき（or使うのがいいかも）
-export { searchWork };
+export { searchWork, searchUser };

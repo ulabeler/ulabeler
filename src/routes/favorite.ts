@@ -18,6 +18,7 @@ const router = express.Router();
 import sideMenuList from "../tools/data/sidemenu.json";
 import { myFavoriteWorkList } from "../tools/TypeAlias/miscAlias";
 import config from "../config/config.json";
+import { getMaxPage } from "../tools/util";
 const maxViewOnPage = config.maxViewOnPage || 8; // 1ページに表示する最大件数
 
 router.get("/work", async (request, response) => {
@@ -221,11 +222,15 @@ router.get("/creator", async (request, response) => {
   } else {
     // request.query.viewTypeがundefinedの場合は、"list"をviewTypeに設定。
     // viewTypeには"list"か"tile"が入る。
-    const viewType = request.query.viewType === "tile" ? "tile" : "list";
+    const viewType =
+      request.query.viewType === "tile"
+        ? "myFavCreatorList-Tile"
+        : "myFavCreatorList-List";
     const orderBy = request.query.orderBy
       ? request.query.orderBy
       : "favorited_at"; // 後で変更するかは要検討。UI見るに可変ではなさそうな気はする。
     let currentPage = 1; // 現在のページ番号
+    const maxViewOnPageFavCreator = request.query.viewType === "tile" ? 20 : 5;
     let idx = 0; // 対象ページの最初のインデックス(配列のオフセット)
     if (
       request.query.page !== undefined &&
@@ -233,7 +238,7 @@ router.get("/creator", async (request, response) => {
       request.query.page !== null &&
       request.query.page !== "1"
     ) {
-      idx = (Number(request.query.page) - 1) * maxViewOnPage;
+      idx = (Number(request.query.page) - 1) * maxViewOnPageFavCreator;
       currentPage = Number(request.query.page);
     }
     const currentPageDescription = {
@@ -267,17 +272,22 @@ router.get("/creator", async (request, response) => {
         myFavoriteCreatorList.push(user);
       }
 
-      console.table(myFavoriteCreatorList);
-      console.log(viewType);
-      console.log(currentPage);
-      console.log(idx);
-
+      const maxPage = getMaxPage(
+        viewType,
+        myFavoriteCreatorList.length,
+        maxViewOnPageFavCreator
+      );
       response.render("list/my_favorite_creator_list1", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
           `${Boolean(request.user)}`
         ],
         currentPageDescription: currentPageDescription,
         creatorList: myFavoriteCreatorList,
+        maxViewOnPage: maxViewOnPageFavCreator,
+        currentPage: currentPage,
+        idx: idx,
+        maxPage: maxPage,
+        isCreatorView: viewType,
       });
     }
   }
