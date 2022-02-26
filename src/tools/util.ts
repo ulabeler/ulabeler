@@ -1,7 +1,8 @@
 // import express from "express";
-// import { knex } from "../app";
+import { knex } from "../app";
 // import crypto from "crypto";
-// import { userTable, workTable, base_categoryTable } from "./TypeAlias/tableType_alias";
+import { workTable } from "./TypeAlias/tableType_alias";
+import { myFavoriteWorkList } from "./TypeAlias/miscAlias";
 
 // お気に入り作者リストで使うページネーション用MaxPageを返すやつ
 /**
@@ -32,4 +33,25 @@ function getMaxPage(
   }
 }
 
-export { getMaxPage };
+// 全ての公開作品から、ランダムに指定件数のidを取得して配列に格納して返すメソッド
+/**
+ * @param {number} limit 取得件数
+ * @return {myFavoriteWorkList[]} idList 取得したidの配列
+ */
+async function getRandomIdList(limit: number): Promise<myFavoriteWorkList[]> {
+  const topPageWorkList: myFavoriteWorkList[] = [];
+  const workList: workTable[] = await knex("work")
+    .where("flag_public", true)
+    .orderByRaw("RAND()")
+    .limit(limit)
+    .then((work: workTable[]) => {
+      return work;
+    });
+  for (let i = 0; i < workList.length; i++) {
+    topPageWorkList.push(workList[i]);
+  }
+  console.table(topPageWorkList);
+  return topPageWorkList;
+}
+
+export { getMaxPage, getRandomIdList };
