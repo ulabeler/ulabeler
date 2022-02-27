@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("./components/lib.ejs") %>
+        <title>U labeler</title>
+</head>
+<header class="header">
+    <%- include("./components/header.ejs") %>
+    <body>
+        <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
+    <article>
+        <!-- ページ名 -->
+        <div class="inquiry_title">
+            <h3>購入履歴<hr></h3>
+        </div>
+
+        <div class="naiyou1">
+            <table class ="naiyou">
+                <tr>
+                    <th>注文日：</th>
+                    <th>
+                        <% const purchased_at=new Date(purchaseHistory[index].purchased_at)%>
+                        <%= purchased_at.getFullYear() + "/" + ('00' + (purchased_at.getMonth()+1)).slice(-2) + "/" +
+                            ('00' + purchased_at.getDate()).slice(-2) %>
+                    </th>
+                    <th>　配達日： </th>
+                    <th>
+                        <% if (true) { %>
+                            未確定
+                        <% } %>
+                    </th>
+                    <th>　注文番号： </th>
+                    <th>
+                        <%= purchaseHistory[index].id %>
+                    </th>
+                    <th>　合計金額： </th>
+                    <th>
+                        <% let sumAmount = 0; %>
+                        <% for( let i = 0; i < purchaseHistory[index].itemsDetail.length; i++ ) { %>
+                            <% sumAmount += parseInt(purchaseHistory[index].itemsDetail[i].unitPrice) * purchaseHistory[index].itemsDetail[i].quantity %>
+                        <% } %>
+                        <%= sumAmount %>円
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <br>
+
+        <% for( let i = 0; i < purchaseHistory[index].itemsDetail.length; i++ ) { %>
+            <div class="cart_item_flex">
+                <div class="cart_image7">
+                    <img src="<%= purchaseHistory[index].itemsDetail[i].workImagePath %>" alt="商品画像">
+                    <div class="cart_item_detail5">
+                        <p>素体名:<%= purchaseHistory[index].itemsDetail[i].baseCategoryName %></p>
+                        <p>作品名:「<%= purchaseHistory[index].itemsDetail[i].workName %>」</p>
+                        <!-- <p>カラー:あああ</p>
+                        <p>サイズ:あああああ</p> -->
+                        <p>数量: <%= purchaseHistory[index].itemsDetail[i].quantity %></p>
+                        <p>金額: <%= parseInt(purchaseHistory[index].itemsDetail[i].unitPrice) * purchaseHistory[index].itemsDetail[i].quantity %>円</p>
+                        <div class="double_button5">
+                            <button  type="button" class="white_button" onclick="location.href='#'">詳細</button>
+                            <button  type="button" class="black_button" onclick="location.href='#'">再購入</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <% if (i - 1 < purchaseHistory[index].itemsDetail.length) { %>
+                <hr class="cart_hr">
+                <br>
+            <% } %>
+        <% } %>
+    
+
+
+    
+    <!-- ページネーション やまページネーションだるそう。。。-->
+    <div class="pagination">
+        <ul class="example">
+            <% if (index !== 0) { %>
+                <li><a href="/purchase/history?page=<%= index %>">前へ</a></li><!--2ページ以降-->
+            <% } %>
+                <% for( let i = 0; i < purchaseHistory.length; i++ ) { %>
+                    <% if (i == index) { %>
+                        <li class="pagination_nau"><%= i + 1 %></li>
+                    <% } else { %>
+                        <li><a href="/purchase/history?page=<%= i + 1 %>"><%= i + 1 %></a></li>
+                    <% } %> 
+                <% } %>
+            <% if (index !== purchaseHistory.length - 1) { %>
+                <li><a href="/purchase/history?page=<%= index + 2 %>">前へ</a></li><!--2ページ以降-->
+            <% } %>
+        </ul>
+    </div>
+    </article>
+    <%- include("./components/login.ejs") %>
+    <%- include("./components/footer.ejs") %>
+</body>
+
+</html>
