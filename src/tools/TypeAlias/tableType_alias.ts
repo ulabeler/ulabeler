@@ -51,10 +51,15 @@ export type favorited_user_numberTable = {
 export type purchase_historyTable = {
   id: string;
   user_id: string;
-  items: JSON; // TODO:後で書く
-  number_invoices: string;
+  number_invoice: string | null;
   purchased_at: Date | null;
   payment_method: string;
+};
+
+export type purchased_history_itemTable = {
+  purchase_history_id: string;
+  work_id: string;
+  quantity: number;
 };
 
 export type delivery_addressTable = {

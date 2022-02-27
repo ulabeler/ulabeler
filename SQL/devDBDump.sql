@@ -57,7 +57,7 @@ CREATE TABLE `base_category` (
   KEY `category_settings_name_idx` (`name_subcategory`),
   CONSTRAINT `category_settings_name` FOREIGN KEY (`name_subcategory`) REFERENCES `category_settings` (`name`),
   CONSTRAINT `vendor_id` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `base_category` (
 
 LOCK TABLES `base_category` WRITE;
 /*!40000 ALTER TABLE `base_category` DISABLE KEYS */;
-INSERT INTO `base_category` VALUES (1,1,'ペットボトル','ペットボトル'),(2,1,'皿','皿'),(3,1,'スマホケース','iPhone12 mini'),(4,1,'スマホケース','iPhone12'),(5,1,'スマホケース','iPhone12 Pro'),(6,1,'スマホケース','iPhone12 Pro Max'),(7,1,'スマホケース','iPhone11'),(8,1,'スマホケース','iPhone11 Pro'),(9,1,'スマホケース','iPhone8/SE(第二世代)'),(10,1,'スマホケース','iPhone7'),(11,1,'スマホケース','Xperia Z5'),(12,1,'スマホケース','iPhone13'),(13,1,'スマホケース','iPhone13 Pro'),(14,1,'スマホケース','iPhone13 Pro Max'),(15,1,'お弁当箱','お弁当箱'),(16,1,'サーフボード','サーフボード'),(17,1,'腕時計','腕時計'),(18,1,'トートバッグ','トートバッグ'),(19,1,'靴','靴'),(20,1,'チロルチョコ','チロルチョコ');
+INSERT INTO `base_category` VALUES (1,1,'ペットボトル','ペットボトル'),(2,1,'皿','皿'),(3,1,'スマホケース','iPhone12 mini'),(4,1,'スマホケース','iPhone12'),(5,1,'スマホケース','iPhone12 Pro'),(6,1,'スマホケース','iPhone12 Pro Max'),(7,1,'スマホケース','iPhone11'),(8,1,'スマホケース','iPhone11 Pro'),(9,1,'スマホケース','iPhone8/SE(第二世代)'),(10,1,'スマホケース','iPhone7'),(11,1,'スマホケース','Xperia Z5'),(12,1,'スマホケース','iPhone13'),(13,1,'スマホケース','iPhone13 Pro'),(14,1,'スマホケース','iPhone13 Pro Max'),(15,1,'お弁当箱','お弁当箱'),(16,1,'サーフボード','サーフボード'),(17,1,'腕時計','腕時計'),(18,1,'トートバッグ','トートバッグ'),(19,1,'靴','靴'),(20,1,'チロルチョコ','チロルチョコ'),(21,1,'スマホケース','iPhone13 mini'),(22,1,'スマホケース','iPhone7');
 /*!40000 ALTER TABLE `base_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +165,7 @@ DROP TABLE IF EXISTS `delivery_status`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `delivery_status` (
   `purchase_record_id` varchar(20) NOT NULL,
-  `datetime_scheduled` varchar(20) DEFAULT NULL COMMENT '配送予定日時\\n例)\\n08/30　08:00-12:00',
+  `datetime_scheduled` varchar(20) DEFAULT NULL COMMENT '配送予定日時\\\\n例)\\\\n08/30　08:00-12:00',
   `current_status` varchar(45) DEFAULT NULL,
   `zip_code` char(7) DEFAULT NULL,
   `address` varchar(255) NOT NULL COMMENT '住所',
@@ -266,7 +266,7 @@ CREATE TABLE `favorited_work` (
 
 LOCK TABLES `favorited_work` WRITE;
 /*!40000 ALTER TABLE `favorited_work` DISABLE KEYS */;
-INSERT INTO `favorited_work` VALUES ('na2na','06cd36182afc','2022-02-26 23:31:00'),('na2na','2ade79b60637','2022-02-26 23:19:14'),('na2na','3433777e8916','2022-02-27 01:09:10'),('na2na','6e96f7131583','2022-02-26 23:18:18'),('na2na','81edff70d7d3','2022-02-26 23:25:05'),('na2na','b7edc32c2dc0','2022-02-26 22:12:49'),('na2na','b9e5c437d684','2022-02-26 22:12:51'),('na2na','db8e43171e68','2022-02-26 23:24:25'),('na2na','edf5aa0c1078','2022-02-26 23:17:28'),('na2na','fca90358cdec','2022-02-26 23:16:22'),('ulabeler','2ade79b60637','2022-02-25 15:16:27'),('ulabeler','3433777e8916','2022-02-26 15:01:15'),('ulabeler','4bfa18cdfe55','2022-02-25 15:33:54'),('ulabeler','b7edc32c2dc0','2022-02-23 03:28:02'),('ulabeler','b9e5c437d684','2022-02-25 04:44:11'),('ulabeler','db8e43171e68','2022-02-25 15:30:08'),('ulabeler','fca90358cdec','2022-02-25 15:29:29');
+INSERT INTO `favorited_work` VALUES ('na2na','06cd36182afc','2022-02-27 15:16:15'),('na2na','2ade79b60637','2022-02-26 23:19:14'),('na2na','3433777e8916','2022-02-27 01:09:10'),('na2na','6e96f7131583','2022-02-26 23:18:18'),('na2na','81edff70d7d3','2022-02-26 23:25:05'),('na2na','b7edc32c2dc0','2022-02-26 22:12:49'),('na2na','b9e5c437d684','2022-02-26 22:12:51'),('na2na','db8e43171e68','2022-02-26 23:24:25'),('na2na','edf5aa0c1078','2022-02-26 23:17:28'),('na2na','fca90358cdec','2022-02-26 23:16:22'),('ulabeler','2ade79b60637','2022-02-25 15:16:27'),('ulabeler','3433777e8916','2022-02-26 15:01:15'),('ulabeler','4bfa18cdfe55','2022-02-25 15:33:54'),('ulabeler','b7edc32c2dc0','2022-02-23 03:28:02'),('ulabeler','b9e5c437d684','2022-02-25 04:44:11'),('ulabeler','db8e43171e68','2022-02-25 15:30:08'),('ulabeler','fca90358cdec','2022-02-25 15:29:29');
 /*!40000 ALTER TABLE `favorited_work` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -309,9 +309,9 @@ CREATE TABLE `inquiry` (
   `description` json NOT NULL,
   `name` varchar(45) NOT NULL,
   `mail_address` varchar(255) NOT NULL,
-  `status` varchar(45) NOT NULL COMMENT '「受付済み」\\n「対応中」\\n「対応済み」',
+  `status` varchar(45) NOT NULL COMMENT '「受付済み」\\\\n「対応中」\\\\n「対応済み」',
   `reply` json DEFAULT NULL,
-  `replyed_by_user_id` varchar(15) NOT NULL COMMENT '運営対応者id\\n',
+  `replyed_by_user_id` varchar(15) NOT NULL COMMENT '運営対応者id\\\\n',
   `posted_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL COMMENT '対応中、とか対応済み、とかそういうのを入れる',
   PRIMARY KEY (`id`),
@@ -396,8 +396,7 @@ DROP TABLE IF EXISTS `purchase_history`;
 CREATE TABLE `purchase_history` (
   `id` varchar(20) NOT NULL,
   `user_id` varchar(15) NOT NULL,
-  `items` json NOT NULL,
-  `number_invoice` varchar(20) NOT NULL,
+  `number_invoice` varchar(20) DEFAULT NULL,
   `purchased_at` datetime DEFAULT NULL,
   `payment_method` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
@@ -412,7 +411,36 @@ CREATE TABLE `purchase_history` (
 
 LOCK TABLES `purchase_history` WRITE;
 /*!40000 ALTER TABLE `purchase_history` DISABLE KEYS */;
+INSERT INTO `purchase_history` VALUES ('5e33cf927358','na2na',NULL,'2022-02-27 12:29:22','クレジットカード'),('dbd446585adf','na2na',NULL,'2022-02-26 12:29:22','クレジットカード');
 /*!40000 ALTER TABLE `purchase_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `purchased_history_item`
+--
+
+DROP TABLE IF EXISTS `purchased_history_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `purchased_history_item` (
+  `purchase_history_id` varchar(20) NOT NULL,
+  `work_id` char(12) NOT NULL,
+  `quantity` smallint NOT NULL,
+  PRIMARY KEY (`purchase_history_id`,`work_id`),
+  KEY `work_id_idx` (`work_id`),
+  CONSTRAINT `purchase_history_id` FOREIGN KEY (`purchase_history_id`) REFERENCES `purchase_history` (`id`),
+  CONSTRAINT `work_id` FOREIGN KEY (`work_id`) REFERENCES `work` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `purchased_history_item`
+--
+
+LOCK TABLES `purchased_history_item` WRITE;
+/*!40000 ALTER TABLE `purchased_history_item` DISABLE KEYS */;
+INSERT INTO `purchased_history_item` VALUES ('5e33cf927358','2ade79b60637',3),('5e33cf927358','b9e5c437d684',2),('dbd446585adf','2ade79b60637',20),('dbd446585adf','b9e5c437d684',10);
+/*!40000 ALTER TABLE `purchased_history_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -595,7 +623,7 @@ CREATE TABLE `work` (
 
 LOCK TABLES `work` WRITE;
 /*!40000 ALTER TABLE `work` DISABLE KEYS */;
-INSERT INTO `work` VALUES ('06cd36182afc','ulabeler',1,'ひまわりのスマホ','https://misskey.na2na.dev/media/media/c4a2793e-20ac-497f-864c-ef5e9ce1e6f8.JPG','https://mediaulabeler.na2na.website/media/icon/5ec02478-34bb-4838-9f33-a6009f7d9ea2.webp',1,700,'[]','ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('2ade79b60637','na2na',1,'ふかふかのおふとんMk.Ⅱ','https://misskey.na2na.dev/media/media/da1a5df8-cc98-4230-a23c-0347957ad6e7.JPG','https://mediaulabeler.na2na.website/media/icon/6045c8f7-2bbd-4ff1-9af4-8b5b83dc6315.webp',1,600,'[\"#Apple\", \"#Asahi\", \"#iPhone\"]','おふとんが好きなので作りました',0,'2022-02-02 04:29:22'),('3433777e8916','na2na',1,'1ひまわりのペットボトル2','https://misskey.na2na.dev/media/media/37671b5d-c5de-49c9-a302-a46be0f9cbc5.png','https://mediaulabeler.na2na.website/media/icon/8c542136-9d97-487f-82b0-d35c7b55b3fb.webp',0,700,'[]','ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('4bfa18cdfe55','ulabeler',1,'2ひまわりのペットボトル2','https://misskey.na2na.dev/media/media/24bd6f2a-f0a3-4e16-8485-da8b74cb4317.JPG','https://mediaulabeler.na2na.website/media/icon/a2a9725f-762e-43ef-bad5-93b78e86ffaa.webp',1,700,'[]','ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('6e96f7131583','ulabeler',1,'3ひまわりのペットボトル','https://misskey.na2na.dev/media/media/327f7bae-2ccb-491a-b777-e3bcb9351f8e.png','https://mediaulabeler.na2na.website/media/icon/c0537141-b852-4171-8ab8-f09a38ddbabc.webp',1,600,'[]','ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('81edff70d7d3','ulabeler',1,'4ひまわりのペットボトル2','https://misskey.na2na.dev/media/media/382669d5-1f83-4333-963f-c0099bc27965.JPG','https://mediaulabeler.na2na.website/media/icon/c7288faf-87e2-4c87-a5e1-f91f6febd1d1.webp',1,700,'[]','ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('b7edc32c2dc0','ulabeler',1,'5ひまわりのペットボトル','https://misskey.na2na.dev/media/media/9bb92400-ea69-4930-9789-dec734f7be22.JPG','https://mediaulabeler.na2na.website/media/icon/cb926201-f13b-4423-8333-da0791e2c947.webp',1,600,'[]','ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('b9e5c437d684','ulabeler',1,'6ひまわりのペットボトル','https://misskey.na2na.dev/media/media/aa433992-50ca-449f-b20c-9e659c5e51ff.JPG','https://mediaulabeler.na2na.website/media/icon/4d8aa7b7-5da5-4a49-9ade-9709eeece4a3.webp',1,600,'[]','ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('d0a01b45a9f0','ulabeler',1,'7ひまわりのペットボトル','https://misskey.na2na.dev/media/media/891a8ef4-6b9d-45c2-976b-1caafaeab790.JPG','https://mediaulabeler.na2na.website/media/icon/703c78cd-1a35-4695-94fb-7113cb95507c.webp',1,600,'[]','ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('d74dfadaec92','na2na',1,'8ひまわりのペットボトル','https://misskey.na2na.dev/media/media/1d98fa0c-9272-496b-af4b-270bbb69c2dd.png','https://mediaulabeler.na2na.website/media/icon/5964c2d5-b1f6-4f13-a8c2-4889c88654f5.webp',1,600,'[]','ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('db8e43171e68','ulabeler',1,'9ひまわりのペットボトル2','https://misskey.na2na.dev/media/media/21a83a6e-6ada-4307-8b66-c80fa7b96d92.JPG','https://mediaulabeler.na2na.website/media/icon/b1455744-f982-4f4f-94a1-5740806516dc.webp',1,700,'[]','ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('edf5aa0c1078','ulabeler',1,'aひまわりのペットボトル2','https://misskey.na2na.dev/media/media/40150283-3199-4f9a-ac17-5ef6184d0ab0.JPG','https://mediaulabeler.na2na.website/media/icon/3ce560fc-f2b9-42ba-a4ea-bcace3082a8a.webp',1,700,'[]','ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('fca90358cdec','ulabeler',1,'bひまわりのペットボトル2','https://misskey.na2na.dev/media/media/b59dbe32-e27a-46cb-82a2-bac54c26c4a5.JPG','https://mediaulabeler.na2na.website/media/icon/eeffec33-7dd1-4582-86fa-a468f1dbf124.webp',1,700,'[]','ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22');
+INSERT INTO `work` VALUES ('06cd36182afc','ulabeler',1,'ひまわりのスマホ','https://misskey.na2na.dev/media/media/c4a2793e-20ac-497f-864c-ef5e9ce1e6f8.JPG','https://mediaulabeler.na2na.website/media/icon/5ec02478-34bb-4838-9f33-a6009f7d9ea2.webp',1,700,NULL,'ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('2ade79b60637','na2na',1,'ふかふかのおふとんMk.Ⅱ','https://misskey.na2na.dev/media/media/da1a5df8-cc98-4230-a23c-0347957ad6e7.JPG','https://mediaulabeler.na2na.website/media/icon/6045c8f7-2bbd-4ff1-9af4-8b5b83dc6315.webp',1,600,'[\"#Sony\", \"#α\"]','おふとんが好きなので作りました\r\n',0,'2022-02-02 04:29:22'),('3433777e8916','na2na',1,'1ひまわりのペットボトル2','https://misskey.na2na.dev/media/media/37671b5d-c5de-49c9-a302-a46be0f9cbc5.png','https://mediaulabeler.na2na.website/media/icon/8c542136-9d97-487f-82b0-d35c7b55b3fb.webp',0,700,'[]','ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('4bfa18cdfe55','ulabeler',1,'2ひまわりのペットボトル2','https://misskey.na2na.dev/media/media/24bd6f2a-f0a3-4e16-8485-da8b74cb4317.JPG','https://mediaulabeler.na2na.website/media/icon/a2a9725f-762e-43ef-bad5-93b78e86ffaa.webp',1,700,NULL,'ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('6e96f7131583','ulabeler',1,'3ひまわりのペットボトル','https://misskey.na2na.dev/media/media/327f7bae-2ccb-491a-b777-e3bcb9351f8e.png','https://mediaulabeler.na2na.website/media/icon/c0537141-b852-4171-8ab8-f09a38ddbabc.webp',1,600,NULL,'ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('81edff70d7d3','ulabeler',1,'4ひまわりのペットボトル2','https://misskey.na2na.dev/media/media/382669d5-1f83-4333-963f-c0099bc27965.JPG','https://mediaulabeler.na2na.website/media/icon/c7288faf-87e2-4c87-a5e1-f91f6febd1d1.webp',1,700,NULL,'ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('b7edc32c2dc0','ulabeler',1,'5ひまわりのペットボトル','https://misskey.na2na.dev/media/media/9bb92400-ea69-4930-9789-dec734f7be22.JPG','https://mediaulabeler.na2na.website/media/icon/cb926201-f13b-4423-8333-da0791e2c947.webp',1,600,NULL,'ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('b9e5c437d684','ulabeler',1,'6ひまわりのペットボトル','https://misskey.na2na.dev/media/media/aa433992-50ca-449f-b20c-9e659c5e51ff.JPG','https://mediaulabeler.na2na.website/media/icon/4d8aa7b7-5da5-4a49-9ade-9709eeece4a3.webp',1,600,NULL,'ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('d0a01b45a9f0','ulabeler',1,'7ひまわりのペットボトル','https://misskey.na2na.dev/media/media/891a8ef4-6b9d-45c2-976b-1caafaeab790.JPG','https://mediaulabeler.na2na.website/media/icon/703c78cd-1a35-4695-94fb-7113cb95507c.webp',1,600,NULL,'ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('d74dfadaec92','na2na',1,'8ひまわりのペットボトル','https://misskey.na2na.dev/media/media/1d98fa0c-9272-496b-af4b-270bbb69c2dd.png','https://mediaulabeler.na2na.website/media/icon/5964c2d5-b1f6-4f13-a8c2-4889c88654f5.webp',1,600,NULL,'ひまわりが大好きなので作りました。いぇい',0,'2022-02-02 04:29:22'),('db8e43171e68','ulabeler',1,'9ひまわりのペットボトル2','https://misskey.na2na.dev/media/media/21a83a6e-6ada-4307-8b66-c80fa7b96d92.JPG','https://mediaulabeler.na2na.website/media/icon/b1455744-f982-4f4f-94a1-5740806516dc.webp',1,700,NULL,'ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('edf5aa0c1078','ulabeler',1,'aひまわりのペットボトル2','https://misskey.na2na.dev/media/media/40150283-3199-4f9a-ac17-5ef6184d0ab0.JPG','https://mediaulabeler.na2na.website/media/icon/3ce560fc-f2b9-42ba-a4ea-bcace3082a8a.webp',1,700,NULL,'ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22'),('fca90358cdec','ulabeler',1,'bひまわりのペットボトル2','https://misskey.na2na.dev/media/media/b59dbe32-e27a-46cb-82a2-bac54c26c4a5.JPG','https://mediaulabeler.na2na.website/media/icon/eeffec33-7dd1-4582-86fa-a468f1dbf124.webp',1,700,NULL,'ひまわりが大好きなので作りました。',0,'2022-02-02 04:31:22');
 /*!40000 ALTER TABLE `work` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -635,4 +663,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-27 12:34:09
+-- Dump completed on 2022-02-28  1:48:14

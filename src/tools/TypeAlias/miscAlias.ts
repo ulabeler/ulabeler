@@ -1,4 +1,5 @@
-import { userTable, workTable } from "./tableType_alias";
+/* eslint-disable camelcase */
+import { userTable, workTable, purchase_historyTable } from "./tableType_alias";
 export type sideMenu = {
   title: string;
   url: string;
@@ -39,5 +40,27 @@ export type searchResult = {
   singleUserSearchResult?: singleUserSearchResult;
 };
 
+export type purchaseHistoryView = purchase_historyTable & {
+  itemsDetail: {
+    workId?: string;
+    workName?: string;
+    baseCategoryName?: string;
+    baseCategoryId?: number;
+    workImagePath?: string;
+    unitPrice?: number;
+    quantity?: number;
+    dummy?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [prop: string]: any;
+  }[];
+};
+
 type searchWorkList = boolean | workTable[];
 type singleUserSearchResult = boolean | userTable;
+
+export type purchaseHistoryWorkList = {
+  workName?: string;
+  workImagePath?: string;
+  unitPrice?: number;
+  baseCategoryName?: string;
+};

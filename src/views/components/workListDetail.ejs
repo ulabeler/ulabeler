@@ -76,11 +76,13 @@
                                         <div class="explanation2"><a href="">
                                             <font size="2"><% if (workList[i].hashtag) { %>
                                                 <% const hashTag=JSON.parse(workList[i].hashtag) %>
+                                                <% if (hashTag !== null) { %>
                                                     <% for(let j=0; j < hashTag.length; j++){ %>
                                                         <a href="/search?q=%23<%- hashTag[j].slice(1) %>">
                                                         <%- hashTag[j] %></a>
                                                             <% } %>
                                                                 <% } %></font></p>
+                                                                <% } %> 
                 </div>
                 <br>
                 <p class="explanation3">
