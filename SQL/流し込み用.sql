@@ -85,3 +85,6 @@ INSERT INTO `ulabeler_dev`.`purchased_history_item` (`purchase_history_id`, `wor
 INSERT INTO `ulabeler_dev`.`purchased_history_item` (`purchase_history_id`, `work_id`, `quantity`) VALUES ('5e33cf927358', 'b9e5c437d684', '2');
 INSERT INTO `ulabeler_dev`.`purchased_history_item` (`purchase_history_id`, `work_id`, `quantity`) VALUES ('dbd446585adf', 'b9e5c437d684', '10');
 INSERT INTO `ulabeler_dev`.`purchased_history_item` (`purchase_history_id`, `work_id`, `quantity`) VALUES ('dbd446585adf', '2ade79b60637', '20');
+
+INSERT INTO `ulabeler_dev`.`base_category` (`id`, `vendor_id`, `name_category`, `name_subcategory`) VALUES ('21', '1', 'スマホケース', 'iPhone13 mini');
+INSERT INTO `ulabeler_dev`.`base_category` (`id`, `vendor_id`, `name_category`, `name_subcategory`) VALUES ('22', '1', 'スマホケース', 'iPhone7');
