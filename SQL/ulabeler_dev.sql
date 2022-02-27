@@ -152,8 +152,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`purchase_history` (
   `id` VARCHAR(20) NOT NULL,
   `user_id` VARCHAR(15) NOT NULL,
-  `items` JSON NOT NULL,
-  `number_invoice` VARCHAR(20) DEFAULT NULL,
+  `number_invoice` VARCHAR(20) NULL DEFAULT NULL,
   `purchased_at` DATETIME NULL DEFAULT NULL,
   `payment_method` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
@@ -171,7 +170,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`delivery_status` (
   `purchase_record_id` VARCHAR(20) NOT NULL,
-  `datetime_scheduled` VARCHAR(20) NULL DEFAULT NULL COMMENT '配送予定日時\\n例)\\n08/30　08:00-12:00',
+  `datetime_scheduled` VARCHAR(20) NULL DEFAULT NULL COMMENT '配送予定日時\\\\n例)\\\\n08/30　08:00-12:00',
   `current_status` VARCHAR(45) NULL DEFAULT NULL,
   `zip_code` CHAR(7) NULL DEFAULT NULL,
   `address` VARCHAR(255) NOT NULL COMMENT '住所',
@@ -237,7 +236,7 @@ CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`work` (
   `thumbnail_path` VARCHAR(255) NOT NULL,
   `flag_public` TINYINT NOT NULL,
   `unit_price` DECIMAL(10,0) NOT NULL,
-  `hashtag` JSON NULL DEFAULT NULL,
+  `hashtag` JSON NULL,
   `introduction` VARCHAR(255) NULL DEFAULT NULL,
   `num_of_images` TINYINT NULL DEFAULT '0',
   `create_at` DATETIME NOT NULL,
@@ -302,9 +301,9 @@ CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`inquiry` (
   `description` JSON NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `mail_address` VARCHAR(255) NOT NULL,
-  `status` VARCHAR(45) NOT NULL COMMENT '「受付済み」\\n「対応中」\\n「対応済み」',
-  `reply` JSON NULL,
-  `replyed_by_user_id` VARCHAR(15) NOT NULL COMMENT '運営対応者id\\n',
+  `status` VARCHAR(45) NOT NULL COMMENT '「受付済み」\\\\n「対応中」\\\\n「対応済み」',
+  `reply` JSON NULL DEFAULT NULL,
+  `replyed_by_user_id` VARCHAR(15) NOT NULL COMMENT '運営対応者id\\\\n',
   `posted_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL COMMENT '対応中、とか対応済み、とかそういうのを入れる',
   PRIMARY KEY (`id`),
@@ -429,6 +428,28 @@ CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`work_used_stamps` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `ulabeler_dev`.`purchased_history_item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`purchased_history_item` (
+  `purchase_history_id` VARCHAR(20) NOT NULL,
+  `work_id` CHAR(12) NOT NULL,
+  `quantity` SMALLINT NOT NULL,
+  PRIMARY KEY (`purchase_history_id`, `work_id`),
+  INDEX `work_id_idx` (`work_id` ASC) VISIBLE,
+  CONSTRAINT `purchase_history_id`
+    FOREIGN KEY (`purchase_history_id`)
+    REFERENCES `ulabeler_dev`.`purchase_history` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `work_id`
+    FOREIGN KEY (`work_id`)
+    REFERENCES `ulabeler_dev`.`work` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

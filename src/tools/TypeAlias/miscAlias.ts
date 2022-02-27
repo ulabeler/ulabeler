@@ -1,4 +1,5 @@
-import { userTable, workTable } from "./tableType_alias";
+/* eslint-disable camelcase */
+import { userTable, workTable, purchase_historyTable } from "./tableType_alias";
 export type sideMenu = {
   title: string;
   url: string;
@@ -37,6 +38,18 @@ export type searchResult = {
     userFlagIsMine?: boolean;
   };
   singleUserSearchResult?: singleUserSearchResult;
+};
+
+export type purchaseHistoryView = purchase_historyTable & {
+  itemsDetail: {
+    workId?: string;
+    workName?: string;
+    baseCategoryName?: string;
+    workImagePath?: string;
+    workPrice?: number;
+    unit_price?: number;
+    quantity?: number;
+  }[];
 };
 
 type searchWorkList = boolean | workTable[];

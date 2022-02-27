@@ -165,7 +165,7 @@ DROP TABLE IF EXISTS `delivery_status`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `delivery_status` (
   `purchase_record_id` varchar(20) NOT NULL,
-  `datetime_scheduled` varchar(20) DEFAULT NULL COMMENT '配送予定日時\\n例)\\n08/30　08:00-12:00',
+  `datetime_scheduled` varchar(20) DEFAULT NULL COMMENT '配送予定日時\\\\n例)\\\\n08/30　08:00-12:00',
   `current_status` varchar(45) DEFAULT NULL,
   `zip_code` char(7) DEFAULT NULL,
   `address` varchar(255) NOT NULL COMMENT '住所',
@@ -266,7 +266,7 @@ CREATE TABLE `favorited_work` (
 
 LOCK TABLES `favorited_work` WRITE;
 /*!40000 ALTER TABLE `favorited_work` DISABLE KEYS */;
-INSERT INTO `favorited_work` VALUES ('na2na','06cd36182afc','2022-02-26 23:31:00'),('na2na','2ade79b60637','2022-02-26 23:19:14'),('na2na','3433777e8916','2022-02-27 01:09:10'),('na2na','6e96f7131583','2022-02-26 23:18:18'),('na2na','81edff70d7d3','2022-02-26 23:25:05'),('na2na','b7edc32c2dc0','2022-02-26 22:12:49'),('na2na','b9e5c437d684','2022-02-26 22:12:51'),('na2na','db8e43171e68','2022-02-26 23:24:25'),('na2na','edf5aa0c1078','2022-02-26 23:17:28'),('na2na','fca90358cdec','2022-02-26 23:16:22'),('ulabeler','2ade79b60637','2022-02-25 15:16:27'),('ulabeler','3433777e8916','2022-02-26 15:01:15'),('ulabeler','4bfa18cdfe55','2022-02-25 15:33:54'),('ulabeler','b7edc32c2dc0','2022-02-23 03:28:02'),('ulabeler','b9e5c437d684','2022-02-25 04:44:11'),('ulabeler','db8e43171e68','2022-02-25 15:30:08'),('ulabeler','fca90358cdec','2022-02-25 15:29:29');
+INSERT INTO `favorited_work` VALUES ('na2na','06cd36182afc','2022-02-27 15:16:15'),('na2na','2ade79b60637','2022-02-26 23:19:14'),('na2na','3433777e8916','2022-02-27 01:09:10'),('na2na','6e96f7131583','2022-02-26 23:18:18'),('na2na','81edff70d7d3','2022-02-26 23:25:05'),('na2na','b7edc32c2dc0','2022-02-26 22:12:49'),('na2na','b9e5c437d684','2022-02-26 22:12:51'),('na2na','db8e43171e68','2022-02-26 23:24:25'),('na2na','edf5aa0c1078','2022-02-26 23:17:28'),('na2na','fca90358cdec','2022-02-26 23:16:22'),('ulabeler','2ade79b60637','2022-02-25 15:16:27'),('ulabeler','3433777e8916','2022-02-26 15:01:15'),('ulabeler','4bfa18cdfe55','2022-02-25 15:33:54'),('ulabeler','b7edc32c2dc0','2022-02-23 03:28:02'),('ulabeler','b9e5c437d684','2022-02-25 04:44:11'),('ulabeler','db8e43171e68','2022-02-25 15:30:08'),('ulabeler','fca90358cdec','2022-02-25 15:29:29');
 /*!40000 ALTER TABLE `favorited_work` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -309,9 +309,9 @@ CREATE TABLE `inquiry` (
   `description` json NOT NULL,
   `name` varchar(45) NOT NULL,
   `mail_address` varchar(255) NOT NULL,
-  `status` varchar(45) NOT NULL COMMENT '「受付済み」\\n「対応中」\\n「対応済み」',
+  `status` varchar(45) NOT NULL COMMENT '「受付済み」\\\\n「対応中」\\\\n「対応済み」',
   `reply` json DEFAULT NULL,
-  `replyed_by_user_id` varchar(15) NOT NULL COMMENT '運営対応者id\\n',
+  `replyed_by_user_id` varchar(15) NOT NULL COMMENT '運営対応者id\\\\n',
   `posted_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL COMMENT '対応中、とか対応済み、とかそういうのを入れる',
   PRIMARY KEY (`id`),
@@ -396,7 +396,6 @@ DROP TABLE IF EXISTS `purchase_history`;
 CREATE TABLE `purchase_history` (
   `id` varchar(20) NOT NULL,
   `user_id` varchar(15) NOT NULL,
-  `items` json NOT NULL,
   `number_invoice` varchar(20) DEFAULT NULL,
   `purchased_at` datetime DEFAULT NULL,
   `payment_method` varchar(45) NOT NULL,
@@ -412,8 +411,36 @@ CREATE TABLE `purchase_history` (
 
 LOCK TABLES `purchase_history` WRITE;
 /*!40000 ALTER TABLE `purchase_history` DISABLE KEYS */;
-INSERT INTO `purchase_history` VALUES ('5e33cf927358','na2na','[\"2ade79b60637\", \"b9e5c437d684\"]',NULL,'2022-02-27 12:29:22','クレジットカード'),('dbd446585adf','na2na','[\"2ade79b60637\", \"b9e5c437d684\"]',NULL,'2022-02-26 12:29:22','クレジットカード');
+INSERT INTO `purchase_history` VALUES ('5e33cf927358','na2na',NULL,'2022-02-27 12:29:22','クレジットカード'),('dbd446585adf','na2na',NULL,'2022-02-26 12:29:22','クレジットカード');
 /*!40000 ALTER TABLE `purchase_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `purchased_history_item`
+--
+
+DROP TABLE IF EXISTS `purchased_history_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `purchased_history_item` (
+  `purchase_history_id` varchar(20) NOT NULL,
+  `work_id` char(12) NOT NULL,
+  `quantity` smallint NOT NULL,
+  PRIMARY KEY (`purchase_history_id`,`work_id`),
+  KEY `work_id_idx` (`work_id`),
+  CONSTRAINT `purchase_history_id` FOREIGN KEY (`purchase_history_id`) REFERENCES `purchase_history` (`id`),
+  CONSTRAINT `work_id` FOREIGN KEY (`work_id`) REFERENCES `work` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `purchased_history_item`
+--
+
+LOCK TABLES `purchased_history_item` WRITE;
+/*!40000 ALTER TABLE `purchased_history_item` DISABLE KEYS */;
+INSERT INTO `purchased_history_item` VALUES ('5e33cf927358','2ade79b60637',3),('5e33cf927358','b9e5c437d684',2),('dbd446585adf','2ade79b60637',20),('dbd446585adf','b9e5c437d684',10);
+/*!40000 ALTER TABLE `purchased_history_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -636,4 +663,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-27 14:44:38
+-- Dump completed on 2022-02-27 15:18:14
