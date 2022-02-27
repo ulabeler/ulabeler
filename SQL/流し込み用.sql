@@ -77,4 +77,6 @@ INSERT INTO `work` VALUES ('06cd36182afc','ulabeler',1,'ひまわりのスマホ
 /*!40000 ALTER TABLE `work` ENABLE KEYS */;
 UNLOCK TABLES;
 
+-- 注文履歴
 INSERT INTO `ulabeler_dev`.`purchase_history` (`id`, `user_id`, `items`, `purchased_at`, `payment_method`) VALUES ('5e33cf927358', 'na2na', '[\"2ade79b60637\", \"b9e5c437d684\"]', '2022-02-27 12:29:22', 'クレジットカード');
+INSERT INTO `ulabeler_dev`.`purchase_history` (`id`, `user_id`, `items`, `purchased_at`, `payment_method`) VALUES ('dbd446585adf', 'na2na', '[\"2ade79b60637\", \"b9e5c437d684\"]', '2022-02-26 12:29:22', 'クレジットカード');
