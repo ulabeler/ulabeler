@@ -52,7 +52,7 @@ export type purchase_historyTable = {
   id: string;
   user_id: string;
   items: JSON; // TODO:後で書く
-  number_invoices: string;
+  number_invoice: string | null;
   purchased_at: Date | null;
   payment_method: string;
 };

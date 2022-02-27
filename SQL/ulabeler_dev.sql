@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`purchase_history` (
   `id` VARCHAR(20) NOT NULL,
   `user_id` VARCHAR(15) NOT NULL,
   `items` JSON NOT NULL,
-  `number_invoice` VARCHAR(20) NOT NULL,
+  `number_invoice` VARCHAR(20) DEFAULT NULL,
   `purchased_at` DATETIME NULL DEFAULT NULL,
   `payment_method` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),

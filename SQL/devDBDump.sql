@@ -397,7 +397,7 @@ CREATE TABLE `purchase_history` (
   `id` varchar(20) NOT NULL,
   `user_id` varchar(15) NOT NULL,
   `items` json NOT NULL,
-  `number_invoice` varchar(20) NOT NULL,
+  `number_invoice` varchar(20) DEFAULT NULL,
   `purchased_at` datetime DEFAULT NULL,
   `payment_method` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
