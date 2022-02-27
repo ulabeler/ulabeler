@@ -194,6 +194,19 @@ router.get("/", async (request, response) => {
       }
     }
 
+    // topPageWorkList.hashtagのJSON文字列をパースして配列に格納
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    for (let i = 0; i < searchResult.workList.length; i++) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const hashtag = searchResult.workList[i].hashtag;
+      const hashtagArray: string = JSON.stringify(hashtag);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      searchResult.workList[i].hashtag = hashtagArray;
+    }
+
     // TODO ユーザーが複数ヒットした時にsingleUserSearchResultの値を使わないように(ejs側で対応済み、falseにしてるところに条件を入れる)
     // TODO ユーザー名と作品名をごちゃまぜにして検索できるフリーワード検索時、workListのものと被る可能性があるので、被るものは除外し、新たな配列を用意して渡す。渡した後にはfalseを入れる。
     console.table(searchResult.workList);

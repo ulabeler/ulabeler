@@ -268,6 +268,13 @@ router.get("/my_work", async function (request, response) {
       userWorkList[i].isFavorited = favoritedWorkList[0];
     }
 
+    // topPageWorkList.hashtagのJSON文字列をパースして配列に格納
+    for (let i = 0; i < userWorkList.length; i++) {
+      const hashtag = userWorkList[i].hashtag;
+      const hashtagArray: string = JSON.stringify(hashtag);
+      userWorkList[i].hashtag = hashtagArray;
+    }
+
     response.render("list/my_list", {
       side_menu: JSON.parse(JSON.stringify(sideMenuList))[
         `${Boolean(request.user)}`
@@ -415,6 +422,13 @@ router.get("/creator_work/:userId", async function (request, response) {
             favoritedWorkList.push(false);
             userWorkList[i].isFavorited = favoritedWorkList[0];
           }
+        }
+
+        // topPageWorkList.hashtagのJSON文字列をパースして配列に格納
+        for (let i = 0; i < userWorkList.length; i++) {
+          const hashtag = userWorkList[i].hashtag;
+          const hashtagArray: string = JSON.stringify(hashtag);
+          userWorkList[i].hashtag = hashtagArray;
         }
 
         response.render("list/creator_work", {

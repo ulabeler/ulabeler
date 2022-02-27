@@ -135,6 +135,13 @@ router.get("/work", async (request, response) => {
         myFavoriteWorkList[i].creatorIconPath = userInfo[0].icon_path as string;
       }
 
+      // topPageWorkList.hashtagのJSON文字列をパースして配列に格納
+      for (let i = 0; i < myFavoriteWorkList.length; i++) {
+        const hashtag = myFavoriteWorkList[i].hashtag;
+        const hashtagArray: string = JSON.stringify(hashtag);
+        myFavoriteWorkList[i].hashtag = hashtagArray;
+      }
+
       // myFavoriteWorkListについて、created_by_user_idとrequest.user.idが同じかどうかを判定
       // 取得した値は、myFavoriteWorkList[i].userFlagIsMineに格納する
       for (let i = 0; i < myFavoriteWorkList.length; i++) {
