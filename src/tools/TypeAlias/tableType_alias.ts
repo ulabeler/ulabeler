@@ -56,7 +56,7 @@ export type purchase_historyTable = {
   payment_method: string;
 };
 
-export type purchased_history_item = {
+export type purchased_history_itemTable = {
   purchase_history_id: string;
   work_id: string;
   quantity: number;
