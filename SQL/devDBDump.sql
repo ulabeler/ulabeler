@@ -411,7 +411,7 @@ CREATE TABLE `purchase_history` (
 
 LOCK TABLES `purchase_history` WRITE;
 /*!40000 ALTER TABLE `purchase_history` DISABLE KEYS */;
-INSERT INTO `purchase_history` VALUES ('5e33cf927358','ulabeler',NULL,'2022-02-27 12:29:22','クレジットカード'),('dbd446585adf','ulabeler',NULL,'2022-02-26 12:29:22','クレジットカード');
+INSERT INTO `purchase_history` VALUES ('5e33cf927358','na2na',NULL,'2022-02-27 12:29:22','クレジットカード'),('dbd446585adf','na2na',NULL,'2022-02-26 12:29:22','クレジットカード');
 /*!40000 ALTER TABLE `purchase_history` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -663,4 +663,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-28  1:48:14
+-- Dump completed on 2022-02-28  2:16:52
