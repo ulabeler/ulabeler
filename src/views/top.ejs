@@ -271,14 +271,14 @@
     
                                         <p class="explanation"><%- workList[i].baseCategoryName %></p>
                                         <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
-                                        <div class="explanation2"><a href="">
+                                        <div class="explanation2">
                                                 <font size="2"><% if (workList[i].hashtag) { %>
                                                     <% const hashTag=JSON.parse(workList[i].hashtag) %>
                                                         <% for(let j=0; j < hashTag.length; j++){ %>
-                                                            <%- hashTag[j] %>
+                                                            <a href="/search?q=%23<%- hashTag[j].slice(1) %>">
+                                                            <%- hashTag[j] %></a>
                                                                 <% } %>
-                                                                    <% } %></font>
-                                            </a></p>
+                                                                    <% } %></font></p>
                                         </div>
                                         <br>
                                         <p class="explanation3"><%- workList[i].introduction %></p>

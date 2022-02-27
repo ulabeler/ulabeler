@@ -114,6 +114,13 @@ async function getRandomIdList(
     }
   }
 
+  // topPageWorkList.hashtagのJSON文字列をパースして配列に格納
+  for (let i = 0; i < topPageWorkList.length; i++) {
+    const hashtag = topPageWorkList[i].hashtag;
+    const hashtagArray: string = JSON.stringify(hashtag);
+    topPageWorkList[i].hashtag = hashtagArray;
+  }
+
   return topPageWorkList;
 }
 

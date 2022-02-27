@@ -132,7 +132,7 @@ export type workTable = {
   thumbnail_path: string;
   flag_public: boolean;
   unit_price: number;
-  hashtag: JSON | null;
+  hashtag: string;
   introduction: string | null;
   num_of_images: number;
   create_at: Date;
