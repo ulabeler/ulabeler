@@ -115,6 +115,7 @@ router.get("/purchase_confirmation", async function (request, response) {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
           `${Boolean(request.user)}`
         ],
+        cartList: cartList,
       });
     } else {
       // 2回目以降用ejs

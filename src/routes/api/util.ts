@@ -1,5 +1,5 @@
 import express from "express";
-import { cartTable } from "tools/TypeAlias/tableType_alias";
+import { cartTable, workTable } from "tools/TypeAlias/tableType_alias";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 import { knex } from "../../app";
@@ -20,6 +20,32 @@ router.post("/cartCount", async (request, response) => {
       }
       response.status(200).send(sum.toString());
     }
+  }
+});
+
+router.post("/cartUpdate", async (request, response) => {
+  if (!request.user) {
+    response.status(403).send("UnAuthorized");
+  } else if (!request.body.workId || !request.body.quantity) {
+    response.status(400).send("Bad Request");
+  } else {
+    await knex("cart")
+      .where("userId", request.user.id)
+      .andWhere("workId", request.body.workId)
+      .update({ quantity: request.body.quantity })
+      .catch((error: Error) => {
+        console.log(error);
+        response.status(500).send("Internal Server Error");
+      });
+    const unitPrice: workTable["unit_price"] = await knex("work")
+      .select("unit_price")
+      .where("id", request.body.workId);
+    const newQuantityStr: string = request.body.quantity;
+    const newQuantity: number = parseInt(newQuantityStr);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const totalPrice: number = unitPrice[0].unit_price * newQuantity;
+    response.status(200).send(totalPrice.toString());
   }
 });
 
