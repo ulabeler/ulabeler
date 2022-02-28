@@ -1543,7 +1543,7 @@ p.new_warning{
 }
 
 .h3_center4 hr{
-    height: 1px;/* hrの線の太さ */
+    height: 2px;/* hrの線の太さ */
     width: 350px;/* hrの線の長さ */
     background-color: #707070;
     border: none;
@@ -1822,7 +1822,7 @@ p.new_warning{
 }
 
 .creator_list_title hr{
-    height: 1px;/* hrの線の太さ */
+    height: 2px;/* hrの線の太さ */
     width: 330px;/* hrの線の長さ */
     background-color: #707070;
     border: none;
@@ -1931,8 +1931,6 @@ p.new_warning{
 	min-width: 600px;
 	background-color: #fff;
 	margin: 0 auto;
-	margin-top: 5%;
-	margin-bottom: 5%;
 	border-radius: 20px;
 	padding-right: 5%;
 	padding-left: 5%;
@@ -1970,7 +1968,7 @@ input[type="text"] {
 .tekisuto3{
 	border-radius:10px;
 	border: solid 1px;
-	width: 400px;
+	width: 90%;
 }
 
 .tekisuto2{
@@ -1986,7 +1984,7 @@ input[type="text"] {
 
 .toiawase_select{
     height: 33px;
-    width: 100%;
+    width: 90%;
     border-radius: 10px;
     border: solid 1px;
 }
@@ -2010,20 +2008,6 @@ th {
 	border: solid 1px;
 	width: 400px;
 	
-}
-.h3_center4{
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 50px;
-    color: #707070;
-}
-
-.h3_center4 hr{
-    height: 1px;/* hrの線の太さ */
-    width: 350px;/* hrの線の長さ */
-    background-color: #707070;
-    border: none;
-    margin-top: -2px;
 }
 
 .image_wrapper5 img{
