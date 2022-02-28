@@ -54,6 +54,7 @@ import favoriteRouter from "./routes/favorite";
 import searchRouter from "./routes/search";
 import purchaseRouter from "./routes/purchase";
 import customizeRouter from "./routes/customize";
+import workSetRouter from "./routes/workSet";
 import passport from "passport";
 
 // const usersRouter = require('./routes/alpha/users');
@@ -81,6 +82,7 @@ app.use("/favorite", favoriteRouter);
 app.use("/search", searchRouter);
 app.use("/purchase", purchaseRouter);
 app.use("/mail_address_modification", mailModRouter);
+app.use("/workSet", workSetRouter);
 app.use("/customize", customizeRouter);
 
 // catch 404 and forward to error handler

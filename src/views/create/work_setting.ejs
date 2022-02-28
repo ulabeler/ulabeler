@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("../components/lib.ejs") %>
+<title>U labeler</title>
+</head>
+<header class="header">
+    <%- include("../components/header.ejs") %>
+    <body>
+    <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+        <article>
+            <!-- ページ名 -->
+            <div class="pan">
+                <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ <font size="5">作品設定 </font>＞ 作品設定確認</h5>
+            </div>
+            <h3 class="h3_center2">作品設定
+                <hr>
+            </h3>
+            <section class="box_item_4">
+                <br>
+                <div class="userpage">
+                    <div class="user_3">
+                        <form action="" method="post" id="hoge">
+                            <div class="user_box_1">
+                                <a href="">
+                                    <table cellpadding="0" 　class="usertable">
+                                        <tr>
+                                            <th rowspan="4">
+                                                <p class=user_img2><img src="<%= results[0].icon_path %>" alt="画像"></p>
+                                            </th>
+                                            <td>　　　　　</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="username">
+                                                    <%= results[0].name %>
+                                                </p>
+                                            </td>
+                                            <input type="hidden" name="">
+                                        </tr>
+                                        <tr>
+                                            <td class="userid2">@<%= results[0].id %>
+                                            </td>
+                                            <input type="hidden" name="">
+                                        </tr>
+                                    </table>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="userpage">
+                </div>
+                <p class="date1">
+                    <%= date %>
+                </p>
+                <% console.log(result_w[0]) %> 
+                <div class="image_wrapper"><img src="<%= result_w[0].thumbnail_path %>" alt="" /></div>
+                <form method="post">
+                    <p class="explanation">
+                        <%= object_name %>
+                    </p>
+                    <br>
+                    <table class="setumeitable3">
+                        <tr>
+                            <th>作品名　　<font color="red">*</font>：</th>
+                            <th><input type=”text” name="name" id="workName" class="tekisuto"
+                                    style=" height: 30px; width: 400px;" placeholder="20文字以内"
+                                    value="<%= queryarray.name%>" required></p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="gyoukann">
+                                <p class="error_message7">
+                                <p id="errorWorkName"></p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>作品説明文<font color="red">*</font>：</th>
+                            <th>
+                                <font color="#85858"><textarea id="workIntroduction" class="tekisuto"
+                                        placeholder="20文字以内" name="example2" cols="55" rows="8" wrap="soft"
+                                        maxlength="150" value="<%= queryarray.example2%>">150文字以内#ハッシュタグ</textarea>
+                                </font>
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="gyoukann">
+                                <p class="workIntroduction">
+                                <p id="errorWorkIntroduction"></p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="gyoukann">
+                                <p class="error_message7">※ハッシュタグは20文字以内で入力してください。</p><!-- やま jsエラーメッセージ -->
+                            </th>
+                        </tr>
+                    </table>
+                    <div class="button">
+                        <!-- 閉じるボタン（ポップアップ閉じるボタン）jsページ -->
+                        <!-- <button id="" class="black_button" >決定</button> -->
+                        <input type="submit" value="決定" class="black_button" id="send">
+                    </div>
+                    <br>
+                </form>
+            </section>
+            </div>
+            </div>
+            <noscript>
+                <p>JavaScriptを有効にしてください。</p>
+            </noscript>
+        </article>
+        <br>
+        <br>
+        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+        <br>
+        <a href="/work_setting" id="pagetop"><i class="up"></i>↑</a>
+        <script>
+            const workName = document.getElementById('workName');
+            const errorWorkName = document.getElementById('errorWorkName');
+            const workIntroduction = document.getElementById('workIntroduction');
+            const errorWorkIntroduction = document.getElementById('errorWorkIntroduction');
+
+            const send = document.getElementById('send');
+            let errorCountWorkName = 0;
+            let errorCountWorkIntroduction = 0;
+            let tooMany = false;
+            workName.addEventListener("keyup", () => {
+                if (workName.value.length > 20) {
+                    errorWorkName.innerHTML = "20文字以内で入力してください";
+                    errorCountWorkName++;
+                } else if (workName.value.length == 0) {
+                    errorWorkName.innerHTML = "この項目は必須です。";
+                    errorCountWorkName++;
+                } else {
+                    errorWorkName.innerHTML = "";
+                    errorCountWorkName = 0;
+                }
+            });
+
+            workIntroduction.addEventListener("keyup", () => {
+                if (workIntroduction.value.length > 150) {
+                    tooMany = true;
+                    errorWorkIntroduction.innerHTML = "150文字以内で入力してください";
+                    errorCountWorkIntroduction++;
+                } else if (workIntroduction.value.length == 0) {
+                    errorWorkIntroduction.innerHTML = "この項目は必須です。";
+                    errorCountWorkIntroduction++;
+                } else {
+                    errorWorkIntroduction.innerHTML = "";
+                    errorCountWorkIntroduction = 0;
+                }
+            });
+
+            //0.2秒ごとに監視して、errorCountWorkIntroductionとerrorCountWorkNameが0以上なら送信ボタンを無効化する
+            setInterval(() => {
+                if (errorCountWorkName >= 1 || errorCountWorkIntroduction >= 1) {
+                    send.disabled = true;
+                } else {
+                    send.disabled = false;
+                }
+            }, 200);
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+        <script>
+            bubbly({
+                blur: 5,
+                bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.3})`,
+                canvas: document.querySelector("#back"),
+                colorStart: '#fff',
+                colorStop: '#fff',
+                compose: 'source-over',
+                shadowColor: '#ffffef',
+                velocityFunc: () => Math.random() * 1.4,
+                radiusFunc: () => 3 + Math.random() * 20,
+            });
+        </script>
+    </body>
+
+</html>
