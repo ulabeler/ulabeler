@@ -1,0 +1,16 @@
+[
+  {"name" : "iphone11", "path" : "iphone11.png"},
+  {"name" : "iphone11 pro", "path" : "iphone11 pro.png"}, 
+  {"name" : "iphone12", "path" : "iphone12.png"},
+  {"name" : "iphone12 mini", "path" : "iphone12 mini.png"},
+  {"name" : "iphone12 pro", "path" : "iphone12 pro.png"},
+  {"name" : "iphone12 promax", "path" : "iphone11 promax.png"},
+  {"name" : "iphone13 mini", "path" : "iphone13 mini.png"},
+  {"name" : "iphone13 pro", "path" : "iphone13 pro.png"},
+  {"name" : "iphone13 promax", "path" : "iphone13 promax.png"},
+  {"name" : "iphone13", "path" : "iphone13.png"},
+  {"name" : "ペットボトル", "path" : "pet500.png"},
+  {"name" : "皿", "path" : "saucer1.png"},
+  {"name" : "時計", "path" : "watch.png"},
+  {"name" : "チロルチョコ", "path" : "tirol.png"}
+]

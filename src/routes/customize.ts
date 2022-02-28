@@ -107,4 +107,58 @@ router.post("/select_color", function (request, response) {
   return;
 });
 
+// カスタマイズ画面
+router.get("/customize_editing", function (request, response) {
+  // console.log( req.cookies.color);
+  const color = request.cookies.color;
+  const objectName = request.cookies.object_name;
+  response.render("create/customize_editing2", {
+    color: color,
+    object_name: objectName,
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+  });
+});
+
+// router.post("/customize_editing", function (req, res) {
+//   const base = req.body.base;
+//   // console.log(base);
+//   const id = req.session.name;
+//   const imagename = uuidv4();
+//   const rawUUID = uuidv4();
+//   const uuid = rawUUID.substring(rawUUID.length - 12);
+//   const object_id = req.cookies.object_id;
+//   res.cookie("image_path", imagename, {
+//     maxAge: 100 * 60 * 100,
+//     httpOnly: false,
+//   });
+//   // const decode_data = base64.decode(base);
+//   fs.writeFile(`public/images/${imagename}.png`, base, "base64", (err) => {
+//     // 書き出しに失敗した場合
+//     if (err) {
+//       console.log("エラーが発生しました。" + err);
+//       throw err;
+//     } else {
+//       console.log("ファイルが正常に書き出しされました");
+//     }
+//   });
+//   // putObjectImg(imagename,decode_data); // コメント解除すればAWSに保存可能
+//   // AWSに挿入したpathの取り出し方わかってない。
+//   const sql =
+//     "INSERT INTO work(id, created_by_user_id, base_category_id,work_tex_path,purchase_flg) VALUES (?, ?, ?,?,1)";
+//   connect.query(sql, [uuid, id, object_id, imagename], function (err, results) {
+//     if (err) {
+//       throw err;
+//     } else {
+//       console.log("挿入");
+//       const sql =
+//         "INSERT INTO favorited_work_number(favorited_to_id,number) VALUES (?,0)";
+//       connect.query(sql, [uuid]);
+//       res.cookie("work_id", uuid, { maxAge: 100 * 60 * 100, httpOnly: false });
+//       res.redirect("/workSet/work_setting");
+//       return;
+//     }
+//   });
+// });
 export default router;
