@@ -2124,7 +2124,7 @@ th {
 /*            通報画面                  */
 
 .teport_box{
-    width: 80%;
+    width: 90%;
     max-width: 620px;
     margin: 100px auto;
     border-radius: 10px;    /*枠の丸み*/
