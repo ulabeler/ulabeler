@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
+// eslint-disable-next-line camelcase
+import { delivery_addressTable } from "tools/TypeAlias/tableType_alias";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
 // eslint-disable-next-line camelcase
@@ -92,7 +94,6 @@ router.get("/history", async (request, response) => {
   }
 });
 
-// カートは、CookieにworkId と初期値 1 の購入数をセットする
 router.get("/purchase_confirmation", async function (request, response) {
   if (!request.user) {
     response.redirect("/invalidAccess");
@@ -100,7 +101,24 @@ router.get("/purchase_confirmation", async function (request, response) {
   } else {
     const cartList = await knex("cart").where("userId", request.user.id);
     console.table(cartList);
-    response.status(200);
+    // eslint-disable-next-line camelcase
+    const deliveryAddress: delivery_addressTable[] = await knex(
+      "delivery_address"
+    )
+      .where("user_id", request.user.id)
+      .orderBy("updated_at", "desc")
+      .limit(3);
+    console.table(deliveryAddress.length);
+    console.table(deliveryAddress.length === 0);
+    if (deliveryAddress.length === 0) {
+      response.render("purchase/purchase_confirmation_first", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+      });
+    } else {
+      // 2回目以降用ejs
+    }
   }
 });
 

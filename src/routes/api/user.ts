@@ -662,6 +662,14 @@ router.post("/favorite/:userId", (request, response) => {
   }
 });
 
+router.post("/isLogin", (request, response) => {
+  if (request.user) {
+    response.status(200).send(true);
+  } else {
+    response.status(200).send(false);
+  }
+});
+
 // CLI専用
 // 該当idのユーザーを物理削除
 router.post("/dev/force_delete_user", function (request, response) {
