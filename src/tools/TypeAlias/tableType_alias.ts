@@ -137,8 +137,8 @@ export type workTable = {
   thumbnail_path: string;
   flag_public: boolean;
   unit_price: number;
-  hashtag: string;
-  introduction: string | null;
+  hashtag: string | null;
+  introduction?: string | null;
   num_of_images: number;
   create_at: Date;
   // ext_name_subcategory: null | string;

@@ -1,5 +1,7 @@
 import express from "express";
 import { knex } from "../app";
+import base64 from "urlsafe-base64";
+import { putObject } from "../tools/aws/aws";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 // const env = process.env.U_DB_ENVIRONMENT || "development";
@@ -8,10 +10,14 @@ const router = express.Router();
 //     ? "http://localhost:3001"
 //     : "https://ulabeler.na2na.website";
 import sideMenuList from "../tools/data/sidemenu.json";
+import { v4 as uuidv4 } from "uuid"; // uuidv4()
+const mediaProxyPrefix = process.env.MEDIAPROXYPREFIX || "";
+import sharp from "sharp";
 
 import {
   // eslint-disable-next-line camelcase
   base_categoryTable,
+  workTable,
 } from "tools/TypeAlias/tableType_alias";
 
 // オブジェクト選択
@@ -47,7 +53,7 @@ router.post("/select_object", async function (request, response) {
       response.redirect("/customize/select_object_sub");
       return;
     } else {
-      response.cookie("object_name", object, {
+      response.cookie("object_name", object[0].name_category, {
         maxAge: 100 * 60 * 100,
         httpOnly: false,
       });
@@ -109,7 +115,7 @@ router.post("/select_color", function (request, response) {
 
 // カスタマイズ画面
 router.get("/customize_editing", function (request, response) {
-  // console.log( req.cookies.color);
+  // console.log( request.cookies.color);
   const color = request.cookies.color;
   const objectName = request.cookies.object_name;
   response.render("create/customize_editing2", {
@@ -121,44 +127,91 @@ router.get("/customize_editing", function (request, response) {
   });
 });
 
-// router.post("/customize_editing", function (req, res) {
-//   const base = req.body.base;
-//   // console.log(base);
-//   const id = req.session.name;
-//   const imagename = uuidv4();
-//   const rawUUID = uuidv4();
-//   const uuid = rawUUID.substring(rawUUID.length - 12);
-//   const object_id = req.cookies.object_id;
-//   res.cookie("image_path", imagename, {
-//     maxAge: 100 * 60 * 100,
-//     httpOnly: false,
-//   });
-//   // const decode_data = base64.decode(base);
-//   fs.writeFile(`public/images/${imagename}.png`, base, "base64", (err) => {
-//     // 書き出しに失敗した場合
-//     if (err) {
-//       console.log("エラーが発生しました。" + err);
-//       throw err;
-//     } else {
-//       console.log("ファイルが正常に書き出しされました");
-//     }
-//   });
-//   // putObjectImg(imagename,decode_data); // コメント解除すればAWSに保存可能
-//   // AWSに挿入したpathの取り出し方わかってない。
-//   const sql =
-//     "INSERT INTO work(id, created_by_user_id, base_category_id,work_tex_path,purchase_flg) VALUES (?, ?, ?,?,1)";
-//   connect.query(sql, [uuid, id, object_id, imagename], function (err, results) {
-//     if (err) {
-//       throw err;
-//     } else {
-//       console.log("挿入");
-//       const sql =
-//         "INSERT INTO favorited_work_number(favorited_to_id,number) VALUES (?,0)";
-//       connect.query(sql, [uuid]);
-//       res.cookie("work_id", uuid, { maxAge: 100 * 60 * 100, httpOnly: false });
-//       res.redirect("/workSet/work_setting");
-//       return;
-//     }
-//   });
-// });
+router.post("/customize_editing", async function (request, response) {
+  if (!request.user) {
+    response.redirect("/invalidAccess"); // 未ログイン時の処理を追加すべき。
+    return;
+  } else {
+    const base = request.body.base;
+    console.log(base);
+    const workTexPath = "media/workTexture/" + uuidv4() + ".png";
+    const thumbnailPath = "media/workThumbnail/" + uuidv4() + ".webp";
+    response.cookie("image_path", thumbnailPath, {
+      maxAge: 100 * 60 * 100,
+      httpOnly: false,
+    });
+
+    // base64で送られてきたbaseをデコードする
+    const decodedImage = base64.decode(base);
+
+    const thumbnailBuffer = await sharp(decodedImage)
+      .resize(512, 512)
+      .webp()
+      .toBuffer();
+
+    const workTexBuffer = await sharp(decodedImage)
+      .resize(512, 512)
+      .webp()
+      .toBuffer();
+
+    const unitPrice = 600; // TODO 物によって変わるようにこの前にDB叩いて引っ張ってくる
+
+    const workInfo: workTable = {
+      id: uuidv4().substring(36 - 12),
+      created_by_user_id: request.user.id,
+      base_category_id: request.cookies.object_id,
+      name: "dummy",
+      work_tex_path: `${mediaProxyPrefix}${workTexPath}`,
+      thumbnail_path: `${mediaProxyPrefix}${thumbnailPath}`,
+      flag_public: false,
+      unit_price: unitPrice,
+      hashtag: "",
+      num_of_images: 0,
+      create_at: new Date(),
+    };
+
+    console.table(workInfo);
+
+    await putObject(thumbnailPath, thumbnailBuffer).then(() => {
+      console.log("Thumbnail dist->");
+      console.log(workInfo.thumbnail_path);
+    });
+
+    await putObject(workTexPath, workTexBuffer).then(() => {
+      console.log("Texture dist->");
+      console.log(workInfo.work_tex_path);
+    });
+
+    await knex("work").insert(workInfo);
+    await knex("favorited_work_number").insert({
+      favorited_to_id: workInfo.id,
+      num_of_favorited: 0,
+    });
+
+    response.send(workInfo);
+
+    // const sql =
+    //   "INSERT INTO work(id, created_by_user_id, base_category_id,work_tex_path,purchase_flg) VALUES (?, ?, ?,?,1)";
+    // connect.query(
+    //   sql,
+    //   [uuid, id, object_id, imagename],
+    //   function (err, results) {
+    //     if (err) {
+    //       throw err;
+    //     } else {
+    //       console.log("挿入");
+    //       const sql =
+    //         "INSERT INTO favorited_work_number(favorited_to_id,number) VALUES (?,0)";
+    //       connect.query(sql, [uuid]);
+    //       response.cookie("work_id", uuid, {
+    //         maxAge: 100 * 60 * 100,
+    //         httpOnly: false,
+    //       });
+    //       response.redirect("/workSet/work_setting");
+    //       return;
+    //     }
+    //   }
+    // );
+  }
+});
 export default router;
