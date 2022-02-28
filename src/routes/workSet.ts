@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
 import { userTable, workTable } from "tools/TypeAlias/tableType_alias";
 import { knex } from "../app";
@@ -10,6 +11,7 @@ const router = express.Router();
 //     ? "http://localhost:3001"
 //     : "https://ulabeler.na2na.website";
 import sideMenuList from "../tools/data/sidemenu.json";
+import { pickHashTags } from "../tools/parser";
 // import { v4 as uuidv4 } from "uuid"; // uuidv4()
 // const mediaProxyPrefix = process.env.MEDIAPROXYPREFIX || "";
 // import sharp from "sharp";
@@ -52,6 +54,50 @@ router.get("/work_setting", async function (request, response) {
       `${Boolean(request.user)}`
     ],
   });
+});
+
+router.post("/work_setting", async function (request, response) {
+  if (!request.user) {
+    response.status(401).send("UnAuthorized");
+  } else {
+    // workIdのスペースを取り除く
+    const workId = request.body.workId.replace(/\s+/g, "");
+    // console.log(`${host}/work/${workId}/edit`);
+    // console.log(request.headers.referer);
+    // if (request.headers.referer !== `${host}/work/${workId}/edit`) {
+    //   response.redirect("/invalidAccess");
+    //   return;
+    // } else {
+    if (
+      !request.body.workName &&
+      !request.body.workIntroduction &&
+      !request.body.isPublic
+    ) {
+      response.redirect("/invalidAccess");
+    } else {
+      console.log(workId);
+      const newIntroduction = request.body.workIntroduction;
+      const parse = pickHashTags(newIntroduction);
+      console.log(parse);
+      request.session!.parseResult = parse;
+
+      const currentWorkInfo = await knex("work").where("id", workId);
+      console.table(currentWorkInfo);
+      response.render("create/work_setting_confirmation", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        userInfo: request.user,
+        work: currentWorkInfo[0],
+        newName: request.body.workName,
+        newIntroduction: parse.text,
+        newIsPublic: request.body.isPublic,
+        hashTag: parse.hashTag,
+        baseCategory: request.session!.baseCategory,
+      });
+    }
+    // }
+  }
 });
 
 export default router;

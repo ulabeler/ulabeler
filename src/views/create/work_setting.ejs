@@ -98,7 +98,8 @@
                         <input id="isPublic" type="checkbox" class="check1" name="check" checked>公開
                     </div>
                     <div class="button">
-                        <input type="submit" value="決定" class="black_button" id="send">
+                        <button type="button" class="black_button2" id="send"
+                                                onclick="update()">決定</button>
                     </div>
                     <br>
                 </form>
@@ -109,11 +110,7 @@
                 <p>JavaScriptを有効にしてください。</p>
             </noscript>
         </article>
-        <br>
-        <br>
-        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-        <br>
-        <a href="/work_setting" id="pagetop"><i class="up"></i>↑</a>
+        <%- include("../components/footer.ejs") %>
         <script>
             const workName = document.getElementById('workName');
             const workIntroduction = document.getElementById('workIntroduction');
@@ -266,6 +263,11 @@
                 inputWorkIntroduction.name = 'workIntroduction';
                 inputWorkIntroduction.value = workIntroduction.value;
                 form.appendChild(inputWorkIntroduction);
+                const setWorkId = document.createElement('input');
+                setWorkId.type = 'hidden';
+                setWorkId.name = 'workId';
+                setWorkId.value = workId;
+                form.appendChild(setWorkId);
                 const inputIsPublic = document.createElement('input');
                 inputIsPublic.type = 'hidden';
                 inputIsPublic.name = 'isPublic';
