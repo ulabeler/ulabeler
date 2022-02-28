@@ -92,4 +92,57 @@ router.get("/history", async (request, response) => {
   }
 });
 
+router.get("/purchase_confirmation", function (request, response) {
+  const cookie = request.cookies;
+  if (typeof cookie.pay == "undefined") {
+    response.cookie("pay", "card", { maxAge: 100 * 60 * 100, httpOnly: false });
+  }
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate() + 3;
+  if (typeof cookie.day == "undifind") {
+    response.cookie("day", `${month}/${day} 18時～20時`, {
+      maxAge: 100 * 60 * 100,
+      httpOnly: false,
+    });
+  }
+  const id = request.session.name;
+  const sql =
+    "SELECT w.name,w.work_tex_path,w.unit_price,b.name_subcategory as total FROM work as w INNER JOIN base_category as b ON b.id = w.base_category_id WHERE created_by_user_id = ? and purchase_flg = 1";
+  connect.query(sql, [id], function (err, result_r) {
+    if (err) {
+      throw err;
+    } else {
+      // response.json(result_r);
+      const sql =
+        "SELECT * FROM delivery_address WHERE user_id = ? ORDER BY updated_at desc limit 1";
+      connect.query(sql, [id], function (err, result_c) {
+        if (err) {
+          throw err;
+        } else {
+          const sql = "select * from user where id = ?";
+          connect.query(sql, [id], function (err, result_d) {
+            if (err) {
+              throw err;
+            } else {
+              response.render("purchase_confirmation", {
+                result_r: result_r,
+                result_c: result_c,
+                result_d: result_d,
+                cookie: cookie,
+                year: year,
+                month: month,
+                day: day,
+              });
+              // response.json(result_c);
+            }
+          });
+        }
+      });
+      // response.send(result_r);
+    }
+  });
+});
+
 export default router;
