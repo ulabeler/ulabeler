@@ -16,7 +16,7 @@
             </th>
             <td>
                 <div class="carticon15">
-                    <a href="cart.html"><img src="/images/system/cart-5.png" alt="ロゴ"></a>
+                    <a href="/cart"><img src="/images/system/cart-5.png" alt="ロゴ"></a>
                 </div>
             </td>
             <td>
@@ -47,6 +47,16 @@
     searchInput.addEventListener('keydown', function (e) {
         if (e.keyCode === 13) {
             searchSubmit.click();
+        }
+    });
+
+    const currentKeepCartNum = document.getElementById('currentKeepCartNum');
+
+    window.addEventListener('load', async () => {
+        // カート数を取得
+        const currentCartNum = await axios.post('/api/util/cartCount');
+        if (currentKeepCartNum.data != 0) {
+            currentKeepCartNum.innerText = currentCartNum.data;
         }
     });
 </script>
