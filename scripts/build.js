@@ -34,6 +34,11 @@ function cpPublicDir(distDir) {
           file,
           `${distDir}/public/javascripts/util/${file.split("/")[5]}`
         );
+      } else if (file.includes("/custom")) {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/custom/${file.split("/")[5]}`
+        );
       } else {
         fse.copySync(
           file,
