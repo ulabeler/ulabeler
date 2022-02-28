@@ -177,3 +177,9 @@ export type sample_imagesTable = {
   sample_images_path: string;
   added_at: Date;
 };
+
+export type cartTable = {
+  workId: string;
+  userId: string;
+  quantity: number;
+};

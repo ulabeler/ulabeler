@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
 import { userTable, workTable } from "tools/TypeAlias/tableType_alias";
+import { addCart } from "../tools/util";
 import { knex } from "../app";
 // import { putObject } from "../tools/aws/aws";
 // eslint-disable-next-line new-cap
@@ -102,9 +104,15 @@ router.post("/work_setting", async function (request, response) {
 });
 
 router.post("/work_setting_confirmation", async function (request, response) {
+  if (!request.user) {
+    response.redirect("/invalidAccess");
+    return;
+  }
   // console.log(request.body);
-  // const workId = request.body.workId;
+  const workId = request.body.workId;
   // const name = request.body.newName;
+
+  addCart(workId, request.user.id);
 
   response.redirect("/purchase/purchase_confirmation");
   return;
