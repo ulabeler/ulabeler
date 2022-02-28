@@ -59,6 +59,10 @@ a:hover img {
 
 }
 
+article hr{
+	margin: 0 auto;
+}
+
 .box_wrapper {
 	flex-wrap: wrap;
 	justify-content: center;
@@ -77,7 +81,7 @@ a:hover img {
 	box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .2); 
 	background-color: #ffffff;
 	border: none;
-	margin: o auto;
+	margin: 0 auto;
 	transition: all 0.6s ease 0s;
 }
 
@@ -284,6 +288,7 @@ footer small {
 }
 
 /* bodyの中のコンテンツ */
+
 article {
 	width: 100%; 
 	margin: 0 auto 20px;
@@ -297,6 +302,9 @@ article h5{
 	text-align: left;
 }
 
+article hr{
+	margin:0 auto;
+}
 section {
 	margin: 4em 0;
 }
@@ -664,7 +672,7 @@ dl {
 	border-bottom: 1px solid #eee;
 	padding: 20px 0;
 	margin-right: 10%;
-	margin-left: 10;
+	margin-left: 10%;
 }
 dt, dd {
 	display: table-cell;
@@ -932,6 +940,13 @@ p.new_warning{
 
 .popup-inner img {
     width: 60%;
+}
+
+.popup-inner hr {
+    margin:0 auto;
+}
+.popup-inner2 hr{
+    margin: 0 auto;
 }
 
 .close-btn {
