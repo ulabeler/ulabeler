@@ -95,9 +95,19 @@ router.post("/work_setting", async function (request, response) {
         hashTag: parse.hashTag,
         baseCategory: request.session!.baseCategory,
       });
+      return;
     }
     // }
   }
+});
+
+router.post("/work_setting_confirmation", async function (request, response) {
+  // console.log(request.body);
+  // const workId = request.body.workId;
+  // const name = request.body.newName;
+
+  response.redirect("/purchase/purchase_confirmation");
+  return;
 });
 
 export default router;

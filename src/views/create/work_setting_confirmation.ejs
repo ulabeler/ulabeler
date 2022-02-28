@@ -88,7 +88,8 @@
                         <table class="button_table">
                             <tr>
                                 <th style = "width: 20%;"></th>
-                                <th><button  type="button" class="white_button2" onclick="location.href='/work_setting'">戻る</button></th>
+                                <th><button type="button" class="white_button2"
+                                    onclick="history.back()">戻る</button></th>
                                 <th style = "width: 30%;"></th>
                                 <th><button type="button" class="black_button2" onclick="change()">購入確認へ</button>
                                 </th>
@@ -106,5 +107,32 @@
     </article>
     <%- include("../components/footer.ejs") %>
 </body>
+<script>
+    const newIsPublic = document.getElementById("newIsPublic");
+    const workId = document.getElementById("workId").value;
+    const rawNewName = document.getElementById("newName");
+
+    //rawnewNameから"「"を削除し、"」"を削除する
+    let newName = rawNewName.innerText.replace(/「/g, '').replace(/」/g, '');
+
+    function change() {
+        console.log(newIsPublic.checked);
+        axios.post(`/workSet/work_setting_confirmation`, {
+            newIsPublic: newIsPublic.checked,
+            newName: newName,
+            workId: workId
+        })
+            .then(function (response) {
+                if (response.status == 200 && response.data) {
+                    alert("保存しました");
+                    // location.href = "/my_work";
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                alert("保存に失敗しました");
+            });
+    }
+</script>
 
 </html>
