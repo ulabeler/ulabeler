@@ -114,7 +114,7 @@ router.post("/work_setting_confirmation", async function (request, response) {
 
   addCart(workId, request.user.id);
 
-  response.redirect("/purchase/purchase_confirmation");
+  response.status(200).send(true);
   return;
 });
 

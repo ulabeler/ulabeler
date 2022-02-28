@@ -124,8 +124,7 @@
         })
             .then(function (response) {
                 if (response.status == 200 && response.data) {
-                    alert("保存しました");
-                    // location.href = "/my_work";
+                    location.href = "/purchase/purchase_confirmation";
                 }
             })
             .catch(function (error) {
