@@ -306,9 +306,17 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        <p class="button6"><button type="submit" class="black_button4"
-                                                onclick="location.href='work_detail_setting.html'">編集</button></p>
-                                        <br>
+                                        <% if (workList[i].userFlagIsMine) { %>
+                                            <p class="button6"><button type="button" class="black_button4"
+                                                    onclick="location.href='/work/<%- workList[i].id %>/edit'">編集</button></p>
+                                            <% } else { %>
+                                                <br>
+                                                <a href="#" onclick="event.stopPropagation(); checkisLogin('<%=workList[i].id%>')">
+                                                    <p class="tuuhou">
+                                                        <font size="2" color="red">通報する</font>
+                                                    </p>
+                                                </a>
+                                                <% } %>
                                 </section>
     
                             </div>
@@ -384,6 +392,16 @@
                         }
                     });
                 return;
+            }
+            function checkisLogin(id){
+                axios.post("/api/user/isLogin")
+                .then(function(response){
+                    if(response.data.isLogin){
+                        location.href = `/work/${id}/report`;
+                    }else{
+                        alert("ログインしてください。");
+                    }
+                })
             }
         </script>
 
