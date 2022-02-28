@@ -1003,15 +1003,15 @@ p.new_warning{
 }
 
 .cart_hr{
-    height: 2px;/* hrの線の太さ */
-    width: 75%;/* hrの線の長さ */
+    height: 1px;/* hrの線の太さ */
+    width: 85%;/* hrの線の長さ */
     background-color: #707070;
     border: none;
     /* margin-top: -2px; */
 }
 
 .cart_flex{
-    margin: 0% 20%;
+    margin: 0% 15%;
 	
     max-width: 960px;
     display: flex;
@@ -1038,7 +1038,7 @@ p.new_warning{
 
 .cart_item_flex{
     
-    margin: 0% 15%;
+    margin: 0% 10%;
     display: flex;
     justify-content: space-between;
     /* background-color: #ff0088; */
@@ -1081,6 +1081,7 @@ p.new_warning{
 }
 
 .total{
+	width: 60px;
     margin-top:  15%;
     margin-left: 33%;
 }
@@ -1419,7 +1420,7 @@ p.new_warning{
 .favorite{
 	text-align: right;
 	margin: auto;
-	padding-right: 10px;
+	padding-right: 20px;
 }
 .userid{
 	font-size: 10px;
@@ -1470,15 +1471,14 @@ p.new_warning{
 	text-align: right;
 	font-size: 20px;
 	line-height: 0px;
-	margin-right: -16px;
-	margin-bottom: 10px;
-	margin-top: -10px;
 }
 
 .favorite3{
 	text-align: right;
 	line-height: 15px;
-	margin-right: 30px;
+	margin-right: 20px;
+	margin-top:-10px;
+	margin-bottom:10px;
 }
 
 .box_wrapper_2 {
@@ -2207,7 +2207,7 @@ th {
 }
 
 .privacy_title hr{
-    height: 1px;/* hrの線の太さ */
+    height: 2px;/* hrの線の太さ */
     width: 350px;/* hrの線の長さ */
     background-color: #707070;
     border: none;
