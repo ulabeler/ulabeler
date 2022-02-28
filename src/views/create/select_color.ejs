@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("../components/lib.ejs") %>
+        <title>U labeler</title>
+</head>
+
+<header class="header">
+  <%- include("../components/header.ejs") %>
+  <body>
+  <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+    <article>
+    <br>
+    <br>
+    <div class="pan">
+      <h5>素体選択 ＞<font size = "5">カラー選択</font>  ＞ カスタマイズ ＞ 作品設定 ＞ 作品設定確認</h5>
+    </div>
+
+    <!-- ページ名 -->
+    <h3 class="h3_center2">カラー選択<hr></h3>
+            
+    <section class="box_item_4">
+      <br>
+  <div class = userpage>
+  </div>
+      
+      <div class="image_wrapper"><img src="/images/system/color.jpeg"  alt="" /></div>
+      <br>
+      <form method="post">
+        <table>
+          <tr>
+            <td><p class = "explanation"><%= object_name[0].name_category %></p></td>
+            <td>　　　　　　　　　　　　　　　　　　</td>
+            <td>カラー：</td>
+            <td><input type="color" id="color" name="color"></td>
+          </tr>
+        </table>
+        
+        <br>
+        <br>      
+          <div class="double_button4">
+            <table class="button_table">
+                <tr>
+                    <th style = "width: 20%;"></th>
+                    <th><button  type="button" class="white_button2" onclick="location.href='/customize/select_object'">戻る</button></th>
+                    <th style = "width: 30%;"></th>
+                    <th><button  type="submit" class="black_button2">決定</button></th>
+                    <th style = "width: 20%;"></th>
+                </tr>
+            </table>
+            <br>
+            
+        </div>
+      </form>
+  </section>
+  
+</div>
+
+</div>
+
+    </article>
+</article>
+<%- include("../components/login.ejs") %>
+<%- include("../components/footer.ejs") %>
+</body>
+
+</html>
