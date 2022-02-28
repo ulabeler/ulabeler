@@ -71,7 +71,7 @@
                                             <%- workList[i].baseCategoryName %>
                                         </p>
                                         <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
-                                        <div class="explanation2"><a href="">
+                                        <div class="explanation2">
                                             <font size="2"><% if (workList[i].hashtag) { %>
                                                 <% const hashTag=JSON.parse(workList[i].hashtag) %>
                                                 <% if (hashTag !== null) { %>
@@ -110,7 +110,7 @@
                                                 </p>
                                             </div>
                 </div>
-                <% if (workList[i].isMine) { %>
+                <% if (workList[i].userFlagIsMine) { %>
                     <p class="button6"><button type="button" class="black_button4"
                             onclick="location.href='/work/<%- workList[i].id %>/edit'">編集</button></p>
                     <% } else { %>
