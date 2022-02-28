@@ -187,7 +187,11 @@ router.post("/customize_editing", async function (request, response) {
     });
 
     await knex("work").insert(workInfo);
-    await knex("favorited_work_number").insert(favWorkInfo);
+    await knex("favorited_work_number")
+      .insert(favWorkInfo)
+      .catch((err: Error) => {
+        console.log(err);
+      });
 
     response.cookie("work_id", workInfo.id, {
       maxAge: 100 * 60 * 100,
