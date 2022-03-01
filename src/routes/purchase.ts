@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
+// eslint-disable-next-line camelcase
+import { delivery_addressTable } from "tools/TypeAlias/tableType_alias";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
 // eslint-disable-next-line camelcase
@@ -88,6 +90,35 @@ router.get("/history", async (request, response) => {
         purchaseHistory: purchaseHistory,
         index: index,
       });
+    }
+  }
+});
+
+router.get("/purchase_confirmation", async function (request, response) {
+  if (!request.user) {
+    response.redirect("/invalidAccess");
+    return;
+  } else {
+    const cartList = await knex("cart").where("userId", request.user.id);
+    console.table(cartList);
+    // eslint-disable-next-line camelcase
+    const deliveryAddress: delivery_addressTable[] = await knex(
+      "delivery_address"
+    )
+      .where("user_id", request.user.id)
+      .orderBy("updated_at", "desc")
+      .limit(3);
+    console.table(deliveryAddress.length);
+    console.table(deliveryAddress.length === 0);
+    if (deliveryAddress.length === 0) {
+      response.render("purchase/purchase_confirmation_first", {
+        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+          `${Boolean(request.user)}`
+        ],
+        cartList: cartList,
+      });
+    } else {
+      // 2回目以降用ejs
     }
   }
 });

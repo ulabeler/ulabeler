@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("../components/lib.ejs") %>
+        <title>U labeler</title>
+</head>
+<header class="header">
+    <%- include("../components/header.ejs") %>
+
+    <body>
+        <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+    
+    <article>
+        <!-- ページ名 -->
+    <h3 class="h3_center2">購入確認画面<hr></h3>
+
+    <div class="cart_flex">
+        <p>商品</p>
+        <p class="">数量</p>
+        <p class="total2">合計</p>
+    </div>
+    <hr class="cart_hr">
+
+    <div class="cart_item_flex">
+        <div class="cart_image">
+            <img src="images/item01.jpg" alt="商品画像">
+            <div class="cart_item_detail">
+                <p>素体名:あああああああああ</p>
+                <p>作品名:ああああああああああああ</p>
+                <p>やま金額</p>
+            </div>
+            <div class="cart_item_kazu">
+                    <div class="">
+                        <p>1</p>
+                    </div>
+            </div>
+            <div class="total">
+                <p>¥2000</p>
+            </div>
+        </div>
+    </div>
+    
+    <hr class="cart_hr">
+
+    <div class="cart_item_flex">
+        <div class="cart_image">
+            <img src="images/item01.jpg" alt="商品画像">
+            <div class="cart_item_detail">
+                <p>素体名:あああああああああ</p>
+                <p>作品名:ああああああああああああ</p>
+                <p>カラー:あああ</p>
+                <p>サイズ:あああああ</p>
+                <p>やま金額</p>
+            </div>
+            <div class="cart_item_kazu">
+                <form action="" method="post" id="hoge">
+                    <div class="">
+                        <p>1</p>
+                    </div>
+                </form>
+            </div>
+            <div class="total">
+                <p>¥2000</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="cart_hr">
+    <div class="cart_flex3">
+        
+        <p class="count1">小計</p>
+        <p>¥4000</p>
+    </div>
+    <div class="cart_flex3">
+        <div class="count1">
+            <p>配送料</p>
+        </div>
+            <p>¥300</p>
+    </div>
+    <hr class="cart_hr">
+    <div class="cart_flex3">
+        <div class="count1">
+            <p>合計</p>
+        </div>
+            <p>¥4300</p>
+    </div>
+    <br><br>
+    <p class = "subtitle">～配送情報～</p>
+
+    <div class="purchase_2">
+        <form action="" method="post" id="hoge">
+            <table>
+                <tr>
+                    <td>
+                        <div class="purchase_box2">
+                            <table cellpadding="10">
+                                <tr>
+                                    <th>配達日付　: </th>
+                                    <td>1月31日</td>
+                                    <td>18時~20時</td>
+                                    <input type="hidden" name="">
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td>
+                        <p><a href="">　編集</a></p>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div class="purchase_2">
+        <form action="" method="post" id="hoge">
+            <table>
+                <tr>
+                    <td>
+                        <div class="purchase_box2">
+                            <table cellpadding="10">
+                                <tr>
+                                    <td><font color="red">住所設定をしてください*</font></td>
+                                    <input type="hidden" name="">
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td>
+                        <p><a href="">　設定</a></p>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br>
+    <p class = "subtitle">～支払情報～</p>
+    <div class="purchase_2">
+        <form action="" method="post" id="hoge">
+            <table>
+                <tr>
+                    <td>
+                        <div class="purchase_box2">
+                            <table cellpadding="10">
+                                <tr>
+                                    <td><font color="red">支払設定をしてください*</font></td>
+                                    <input type="hidden" name="">
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td>
+                        <p><a href="">　設定</a></p>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br>
+    <hr class="cart_hr">
+    <br>
+    <br>
+    <div class="double_button2">
+        <button  type="button" class="white_button2" onclick="location.href=''">戻る</button>
+        <button  type="submit" class="black_button2" form=="hoge">決定</button>
+    </div>
+    
+    <%- include("../components/login.ejs") %>
+    <%- include("../components/footer.ejs") %>
+</body>
+<script src="/javascripts/searchInit.js"></script>
+
+</html>

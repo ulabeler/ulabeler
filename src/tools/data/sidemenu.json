@@ -1,6 +1,10 @@
 {
     "true":[
         {
+            "title": "カスタマイズ",
+            "link": "/customize/select_object"
+        },
+        {
             "title": "マイ作品リスト",
             "link": "/my_work"
         },

@@ -46,7 +46,7 @@
 
                                                 </tr>
                                                 <tr>
-                                                    <td class="userid2">＠<%- userInfo.id %>
+                                                    <td class="userid2">@<%- userInfo.id %>
                                                     </td>
                                                     <input type="hidden" name="">
                                                 </tr>
@@ -71,13 +71,12 @@
                             <p class="explanation">
                                 <%- baseCategory.name_subcategory %>
                             </p>
-
                             <br>
-                            <table class="setumeitable3" 　　>
+                            <table class="setumeitable3">
                                 <tr><input type="hidden" id="workId" value="<%- work.id %> ">
                                     <th>作品名　　<font color="red">*</font>：</th>
                                     <th><input type=”text” class="tekisuto" style=" height: 30px; width: 400px;"
-                                            name=”name” placeholder="20文字以内" value="<%- work.name %>" id="workName"></p>
+                                            name=”name” placeholder="20文字以内" value="<%- work.name %>" id="workName" required></p>
                                     </th>
 
                                 </tr>

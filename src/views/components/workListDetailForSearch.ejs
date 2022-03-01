@@ -13,7 +13,7 @@
                             <div class="user_3">
 
                                 <div class="user_box_1">
-                                    <a href="">
+                                    <a href="/creator_work/<%= workList[i].created_by_user_id %>" onclick="event.stopPropagation(); ">
                                         <table cellpadding="0" 　class="usertable">
 
                                             <tr>
@@ -33,7 +33,7 @@
 
                                             </tr>
                                             <tr>
-                                                <td class="userid2">＠<%- workList[i].created_by_user_id %>
+                                                <td class="userid2">@<%- workList[i].created_by_user_id %>
                                                 </td>
                                                 <input type="hidden" name="">
                                             </tr>
@@ -61,8 +61,8 @@
                                                     <p>単価：<%- workList[i].unit_price %>円　</p>
                                                 </th>
                                                 <th class="cart_img2">
-                                                    <p class=cart_img><a href=""><img src="/images/system/cart-5.jpg"
-                                                                alt="商品画像"></a>
+                                                    <p class=cart_img><img src="/images/system/cart-5.jpg"
+                                                                alt="商品画像" onclick="addCart('<%=workList[i].id%>')">
                                                 </th>
                                             </tr>
                                         </table>
@@ -71,7 +71,7 @@
                                             <%- workList[i].baseCategoryName %>
                                         </p>
                                         <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
-                                        <div class="explanation2"><a href="">
+                                        <div class="explanation2">
                                             <font size="2"><% if (workList[i].hashtag) { %>
                                                 <% const hashTag=JSON.parse(workList[i].hashtag) %>
                                                 <% if (hashTag !== null) { %>
@@ -110,7 +110,7 @@
                                                 </p>
                                             </div>
                 </div>
-                <% if (workList[i].isMine) { %>
+                <% if (workList[i].userFlagIsMine) { %>
                     <p class="button6"><button type="button" class="black_button4"
                             onclick="location.href='/work/<%- workList[i].id %>/edit'">編集</button></p>
                     <% } else { %>

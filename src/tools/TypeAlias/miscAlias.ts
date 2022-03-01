@@ -1,5 +1,10 @@
 /* eslint-disable camelcase */
-import { userTable, workTable, purchase_historyTable } from "./tableType_alias";
+import {
+  userTable,
+  workTable,
+  purchase_historyTable,
+  // cartTable,
+} from "./tableType_alias";
 export type sideMenu = {
   title: string;
   url: string;
@@ -63,4 +68,18 @@ export type purchaseHistoryWorkList = {
   workImagePath?: string;
   unitPrice?: number;
   baseCategoryName?: string;
+};
+
+export type cartListWorkDetail = cartUtil & {
+  workName?: string;
+  baseCategoryName?: string;
+  workImagePath?: string;
+  unitPrice?: number;
+  baseCategoryId?: number;
+};
+
+type cartUtil = {
+  workId?: string;
+  userId?: string;
+  quantity?: number;
 };

@@ -44,6 +44,7 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 import userAPIRouter from "./routes/api/user";
 import mediaAPIRouter from "./routes/api/media";
 import workAPIRouter from "./routes/api/work";
+import utilAPIROuter from "./routes/api/util";
 import indexRouter from "./routes/top";
 import mailModRouter from "./routes/mailMod";
 import paymentRouter from "./routes/payment/payment";
@@ -53,6 +54,8 @@ import settingsRouter from "./routes/settings";
 import favoriteRouter from "./routes/favorite";
 import searchRouter from "./routes/search";
 import purchaseRouter from "./routes/purchase";
+import customizeRouter from "./routes/customize";
+import workSetRouter from "./routes/workSet";
 import passport from "passport";
 
 // const usersRouter = require('./routes/alpha/users');
@@ -74,12 +77,15 @@ app.use("/payment/paypay", PayPayRouter);
 app.use("/api/user", userAPIRouter);
 app.use("/api/media", mediaAPIRouter);
 app.use("/api/work", workAPIRouter);
+app.use("/api/util", utilAPIROuter);
 app.use("/work", workRouter);
 app.use("/settings", settingsRouter);
 app.use("/favorite", favoriteRouter);
 app.use("/search", searchRouter);
 app.use("/purchase", purchaseRouter);
 app.use("/mail_address_modification", mailModRouter);
+app.use("/workSet", workSetRouter);
+app.use("/customize", customizeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (request, response) {

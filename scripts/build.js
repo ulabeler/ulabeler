@@ -34,6 +34,38 @@ function cpPublicDir(distDir) {
           file,
           `${distDir}/public/javascripts/util/${file.split("/")[5]}`
         );
+      } else if (file.includes("/custom")) {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/custom/${file.split("/")[5]}`
+        );
+      } else {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/${file.split("/")[4]}`
+        );
+      }
+    });
+  });
+
+  glob("./src/public/javascripts/**/*.json", (err, files) => {
+    if (files.length === 0) {
+      return;
+    }
+    console.log("Public: Things that are not TypeScript");
+    console.log(files);
+    files.forEach((file) => {
+      // fileの末尾が.jsならばコピーする
+      if (file.includes("/util")) {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/util/${file.split("/")[5]}`
+        );
+      } else if (file.includes("/custom")) {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/custom/${file.split("/")[5]}`
+        );
       } else {
         fse.copySync(
           file,
