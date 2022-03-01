@@ -7,6 +7,7 @@ import {
   workTable,
   base_categoryTable,
   favorited_work_numberTable,
+  cartTable,
 } from "./TypeAlias/tableType_alias";
 import { myFavoriteWorkList } from "./TypeAlias/miscAlias";
 
@@ -124,4 +125,45 @@ async function getRandomIdList(
   return topPageWorkList;
 }
 
-export { getMaxPage, getRandomIdList };
+// カート追加用のメソッド
+/**
+ * @param {string} workId 作品id
+ * @param {string} userId ユーザー情報
+ * @param {number} quantity カートに入れる数
+ */
+async function addCart(workId: string, userId: string, quantity?: number) {
+  const currentWorkInsCartData: cartTable = {
+    workId: workId,
+    userId: userId,
+    quantity: quantity || 1,
+  };
+
+  const currentCart = await knex("cart")
+    .where("workId", workId)
+    .andWhere("userId", userId)
+    .catch((err: Error) => {
+      console.log(err);
+    });
+
+  if (currentCart.length === 0) {
+    await knex("cart")
+      .insert(currentWorkInsCartData)
+      .catch((err: Error) => {
+        console.log(err);
+      });
+    return true;
+  } else {
+    await knex("cart")
+      .where("workId", workId)
+      .andWhere("userId", userId)
+      .update({
+        quantity: currentCart[0].quantity + 1,
+      })
+      .catch((err: Error) => {
+        console.log(err);
+      });
+    return true;
+  }
+}
+
+export { getMaxPage, getRandomIdList, addCart };

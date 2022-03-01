@@ -10,12 +10,13 @@ import {
   favorited_work_numberTable,
   // eslint-disable-next-line camelcase
   favorited_workTable,
+  cartTable,
 } from "tools/TypeAlias/tableType_alias";
 // eslint-disable-next-line new-cap
 const router = express.Router();
 import sideMenuList from "../tools/data/sidemenu.json";
 import config from "../config/config.json";
-import { useWorkList } from "../tools/TypeAlias/miscAlias";
+import { cartListWorkDetail, useWorkList } from "../tools/TypeAlias/miscAlias";
 import { getUserSocialInfo } from "../tools/user";
 import { getMaxPage, getRandomIdList } from "../tools/util";
 
@@ -481,6 +482,58 @@ router.get("/faq", (request, response) => {
     ],
     userInfo: userInfo,
   });
+});
+
+router.get("/cart", async (request, response) => {
+  if (!request.user) {
+    response.redirect("/invalidAccess");
+    return;
+  } else {
+    const currentCartList: cartTable[] = await knex("cart").where(
+      "userId",
+      request.user.id
+    );
+    console.log(currentCartList);
+    const currentCartWorkDetailList: cartListWorkDetail[] = [];
+    for (let i = 0; i < currentCartList.length; i++) {
+      const workInfo: workTable[] = await knex("work")
+        .select("name", "thumbnail_path", "unit_price", "base_category_id")
+        .where("id", currentCartList[i].workId);
+      currentCartWorkDetailList[i] = {
+        workName: workInfo[0].name,
+        workImagePath: workInfo[0].thumbnail_path,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        unitPrice: parseInt(workInfo[0].unit_price),
+        baseCategoryId: workInfo[0].base_category_id,
+      };
+    }
+
+    for (let i = 0; i < currentCartList.length; i++) {
+      // eslint-disable-next-line camelcase
+      const currentCartWorkCategoryName: base_categoryTable[] = await knex(
+        "base_category"
+      )
+        .select("name_subcategory")
+        .where("id", currentCartWorkDetailList[i].baseCategoryId);
+      currentCartWorkDetailList[i].baseCategoryName =
+        currentCartWorkCategoryName[0].name_subcategory;
+    }
+
+    for (let i = 0; i < currentCartList.length; i++) {
+      currentCartWorkDetailList[i].workId = currentCartList[i].workId;
+      currentCartWorkDetailList[i].quantity = currentCartList[i].quantity;
+    }
+
+    console.table(currentCartWorkDetailList);
+
+    response.render("cart", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      currentCartWorkDetailList: currentCartWorkDetailList,
+    });
+  }
 });
 
 router.get("/invalidAccess", function (request, response) {
