@@ -65,7 +65,7 @@ export type purchased_history_itemTable = {
 export type delivery_addressTable = {
   user_id: string;
   updated_at: Date;
-  zipcode: string;
+  zip_code: string;
   address: string;
   familyname: string;
   firstname: string;

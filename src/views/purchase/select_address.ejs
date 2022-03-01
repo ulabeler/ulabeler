@@ -19,23 +19,23 @@
                 <table>
                     <tr>
                         <th>名前<font color="red">*</font>　　：</th>
-                        <td><input type="text" name="familyname" class="" placeholder="姓"></td>
-                        <td><input type="text" name="firstname" class="" placeholder="名"></td>
+                        <td><input type="text" name="familyname" class="" id="familyname" placeholder="姓" value="HEW"></td>
+                        <td><input type="text" name="firstname" class="" id="firstname" placeholder="名" value="太郎"></td>
                     </tr>
                     <tr>
                         <th>フリガナ<font color="red">*</font>：</th>
-                        <td><input type="text" name="familyname_furigana" class="" placeholder="姓"></td>
-                        <td><input type="text" name="firstname_furigana" class="" placeholder="名"></td>
+                        <td><input type="text" name="familyname_furigana" class="" id="familyname_furigana" placeholder="姓" value="ヒュウ"></td>
+                        <td><input type="text" name="firstname_furigana" class="" id="firstname_furigana" placeholder="名" value="タロウ"></td>
                     </tr>
                     <tr>
                         <th>住所<font color="red">*</font>　　：　〒</th>
-                        <td><input type="text" id="zipcode" value="" maxlength="7" name="zip_code"></td>
+                        <td><input type="text" id="zipcode" maxlength="8" name="zip_code" value="1600023"></td>
                         <td><button type="button" class="" id="search_btn">住所選択</button></td>
                     </tr>
                     <tr>
                         <th></th>
-                        <td><input type="text" class="mati_select" id="address1" name="address1"></td>
-                        <td><button type="button" class="" id="">郵便番号検索</button></td>
+                        <td><input type="text" class="mati_select" id="address1" name="address1" placeholder="都道府県"></td>
+                        <td><!--<button type="button" class="" id="">郵便番号検索</button>--></td>
                     </tr>
                     <tr>
                         <th></th>
@@ -49,14 +49,15 @@
                     </tr>
                     <tr>
                         <th></th>
-                        <td colspan="2"><input type="text" name="" class="long_input" placeholder="建物名、部屋番号など （任意）">
+                        <td colspan="2"><input type="text" name="" class="long_input" placeholder="建物名、部屋番号など （任意）" id="address4">
                         </td>
                     </tr>
                 </table>
             </div>
             <!-- 初回時非表示 -->
             <hr class="address_select_center_hr">
-            <% if(typeof results[0] !=='undefined' ){ %>
+            <% console.log(results[0]) %> 
+            <% if(typeof results[0] !== 'undefined' ){ %>
                 <p class="address_sub_title">～　過去の住所　～</p>
                 <!-- ループ表示 -->
                 <% for( let i = 0; i < results.length; i++ ) { %>
@@ -91,7 +92,7 @@
                                                 <th>郵便番号　　　: </th>
                                                 <% if(typeof results[i] !=='undefined' ){ %>
                                                     <td>
-                                                        <%= results[i]["zp_code"] %>
+                                                        <%= results[i]["zip_code"] %>
                                                     </td>
                                                     <% } %>
                                                         <input type="hidden" name="">
@@ -119,7 +120,7 @@
                     <div class="double_button">
                         <button type="button" class="white_button"
                             onclick="window.close()">戻る</button><!-- 購入確認画面へ -->
-                        <input type="submit" class="black_button" value="決定">
+                        <input type="button" class="black_button" value="決定" onclick="send()">
                     </div>
         </form>
 
@@ -146,6 +147,9 @@
             $("#search_btn").click(function () {
                 //入力値をセット
                 var param = { zipcode: $('#zipcode').val() }
+
+                // paramから"-"を除去
+                param.zipcode = param.zipcode.replace(/-/g, '');
                 //zipcloudのAPIのURL
                 var send_url = "http://zipcloud.ibsnet.co.jp/api/search";
                 $.ajax({
@@ -177,6 +181,52 @@
                 });
             });
         });
+
+
+        const familyname = document.getElementById('familyname');
+        const firstname = document.getElementById('firstname');
+        const familyname_furigana = document.getElementById('familyname_furigana');
+        const firstname_furigana = document.getElementById('firstname_furigana');
+        const zipcode = document.getElementById('zipcode');
+        const prefecture = document.getElementById('address1');
+        const city = document.getElementById('address2');
+        const address1 = document.getElementById('address3');
+        const address2 = document.getElementById('address4');
+
+        function send(){
+            // 全て入力されているかを判定する
+            if(familyname.value == '' || firstname.value == '' || familyname_furigana.value == '' || firstname_furigana.value == '' || zipcode.value == '' || prefecture.value == '' || city.value == '' || address1.value == ''){
+                alert('全て入力してください');
+                return false;
+            }
+            console.log(familyname.value);
+            const address = `${prefecture.value}${city.value}${address1.value}${address2.value}`;
+            const data = {
+                familyname: familyname.value,
+                firstname: firstname.value,
+                familyname_furigana: familyname_furigana.value,
+                firstname_furigana: firstname_furigana.value,
+                zipcode: zipcode.value,
+                address: address
+            }
+
+            axios.post('/api/user/setUserDeliveryInfo', data)
+            .then(function (response) {
+                    console.log(response);
+                    if (response.status == 201) {
+                        var ref = window.opener || parent;
+                        ref.location.reload();
+                        console.log(response);
+                        window.close();
+                    } else {
+                        alert("情報の更新に失敗しました");
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+    }
+        
     </script>
 </body>
 

@@ -12,6 +12,7 @@ import {
   reportTable,
   favorited_userTable,
   tempDeliverySettingsTable,
+  delivery_addressTable,
   // favorited_user_numberTable,
 } from "../../tools/TypeAlias/tableType_alias";
 import sideMenuList from "../../tools/data/sidemenu.json";
@@ -767,6 +768,34 @@ router.post("/updateUserCardInfo", async (request, response) => {
         return;
       });
     console.table(userCardInfo);
+    console.table(request.user);
+    response.status(201).send(true);
+  }
+});
+
+router.post("/setUserDeliveryInfo", async (request, response) => {
+  if (!request.user) {
+    response.status(401).send("UnAuthorized");
+    return;
+  } else {
+    const userDeliveryInfo: delivery_addressTable = {
+      user_id: request.user.id,
+      updated_at: new Date(),
+      address: request.body.address,
+      zip_code: request.body.zipcode,
+      familyname: request.body.familyname,
+      firstname: request.body.firstname,
+      familyname_furigana: request.body.familyname_furigana,
+      firstname_furigana: request.body.firstname_furigana,
+    };
+    await knex("delivery_address")
+      .insert(userDeliveryInfo)
+      .catch((err: Error) => {
+        console.error(err);
+        response.status(500).send("Internal Server Error");
+        return;
+      });
+    console.table(userDeliveryInfo);
     console.table(request.user);
     response.status(201).send(true);
   }

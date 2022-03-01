@@ -101,10 +101,40 @@
                     <td>
                         <div class="purchase_box2">
                             <table cellpadding="10">
-                                <tr>
-                                    <td><font color="red">住所設定をしてください*</font></td>
-                                    <input type="hidden" name="">
-                                </tr>
+                                <% if (typeof deliveryAddress[0] == 'undefined') { %>
+                                    <tr>
+                                        <td>
+                                            <font color="red">住所設定をしてください*</font>
+                                        </td>
+                                    </tr>
+                                        <% } else { %>
+                                            <tr>
+                                                <th>お名前　　: </th>
+                                                <td><%= deliveryAddress[0].familyname %></td>
+                                                <td><%= deliveryAddress[0].firstname %></td>
+                                            </tr>
+                                            <tr>
+                                                <th>ふりがな　: </th>
+                                                <td><%= deliveryAddress[0].familyname_furigana %></td>
+                                                <td><%= deliveryAddress[0].firstname_furigana %></td>
+                                                <input type="hidden" name="">
+                                            </tr>
+                                            <tr>
+                                                <th>住所　　　: </th>
+                                                <td>〒<%# 7桁の数字の場合は先頭3桁の後に-を追加する %>
+                                                    <% if (deliveryAddress[0].zip_code.includes("-")) { %>
+                                                     <%= deliveryAddress[0].zip_code %> 
+                                                    <% } else { %>
+                                                        <%= deliveryAddress[0].zip_code.substr(0, 3) %>-<%= deliveryAddress[0].zip_code.substr(3, 7) %>
+                                                        <% } %> 
+                                                </td>
+                                                <input type="hidden" name="">
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <td colspan="2"><%= deliveryAddress[0].address %></td>
+                                            </tr>
+                                        <% } %> 
                             </table>
                         </div>
                     </td>
@@ -161,7 +191,7 @@
         window.open('/purchase/select_payment_method', "setter", 'width=500,toolbar=no,menubar=no,scrollbars=yes,status=no');
     }
     function selectAddress() {
-        window.open('/purchase/select_address', "setter", 'width=1000,toolbar=no,menubar=no,scrollbars=yes,status=no' );
+        window.open('/purchase/select_address', "setter", 'width=500,toolbar=no,menubar=no,scrollbars=yes,status=no');
     }
 </script>
 
