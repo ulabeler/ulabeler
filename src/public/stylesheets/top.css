@@ -1171,7 +1171,6 @@ p.new_warning{
 
 .address_input{
     width: 550px;
-    /* min-width: ; */
     margin: 0 auto 30px auto;
     /* background-color: #ff0088; */
 }
@@ -1188,7 +1187,6 @@ p.new_warning{
     text-align: left;
     font-weight: normal;
     vertical-align: top;
-    width: 8em;
 }
 
 .address_select_center_hr{
@@ -1888,6 +1886,7 @@ p.new_warning{
     height: 1px;/* hrの線の太さ */
     width: 70%;/* hrの線の長さ */
     max-width: 900px;
+	min-width: 500px;
     background-color: #707070;
     border: none;
 }
