@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
 // eslint-disable-next-line camelcase
-import { delivery_addressTable } from "tools/TypeAlias/tableType_alias";
+import {
+  // eslint-disable-next-line camelcase
+  base_categoryTable,
+  cartTable,
+  // eslint-disable-next-line camelcase
+  delivery_addressTable,
+  workTable,
+} from "tools/TypeAlias/tableType_alias";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
 // eslint-disable-next-line camelcase
@@ -14,6 +21,7 @@ import {
   purchaseHistoryWorkList,
 } from "../tools/TypeAlias/miscAlias";
 // import { workTable } from "./tableType_alias";
+import { cartListWorkDetail } from "../tools/TypeAlias/miscAlias";
 
 router.get("/history", async (request, response) => {
   if (!request.user) {
@@ -99,8 +107,43 @@ router.get("/purchase_confirmation", async function (request, response) {
     response.redirect("/invalidAccess");
     return;
   } else {
-    const cartList = await knex("cart").where("userId", request.user.id);
-    console.table(cartList);
+    const currentCartList: cartTable[] = await knex("cart").where(
+      "userId",
+      request.user.id
+    );
+    console.log(currentCartList);
+    const currentCartWorkDetailList: cartListWorkDetail[] = [];
+    for (let i = 0; i < currentCartList.length; i++) {
+      const workInfo: workTable[] = await knex("work")
+        .select("name", "thumbnail_path", "unit_price", "base_category_id")
+        .where("id", currentCartList[i].workId);
+      currentCartWorkDetailList[i] = {
+        workName: workInfo[0].name,
+        workImagePath: workInfo[0].thumbnail_path,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        unitPrice: parseInt(workInfo[0].unit_price),
+        baseCategoryId: workInfo[0].base_category_id,
+      };
+    }
+
+    for (let i = 0; i < currentCartList.length; i++) {
+      // eslint-disable-next-line camelcase
+      const currentCartWorkCategoryName: base_categoryTable[] = await knex(
+        "base_category"
+      )
+        .select("name_subcategory")
+        .where("id", currentCartWorkDetailList[i].baseCategoryId);
+      currentCartWorkDetailList[i].baseCategoryName =
+        currentCartWorkCategoryName[0].name_subcategory;
+    }
+
+    for (let i = 0; i < currentCartList.length; i++) {
+      currentCartWorkDetailList[i].workId = currentCartList[i].workId;
+      currentCartWorkDetailList[i].quantity = currentCartList[i].quantity;
+    }
+
+    console.table(currentCartWorkDetailList);
     // eslint-disable-next-line camelcase
     const deliveryAddress: delivery_addressTable[] = await knex(
       "delivery_address"
@@ -108,18 +151,61 @@ router.get("/purchase_confirmation", async function (request, response) {
       .where("user_id", request.user.id)
       .orderBy("updated_at", "desc")
       .limit(3);
-    console.table(deliveryAddress.length);
-    console.table(deliveryAddress.length === 0);
+
+    // 3日後の日付をmm月dd日に変換
+    const threeDaysLater = new Date();
+    threeDaysLater.setDate(threeDaysLater.getDate() + 3);
+    const threeDaysLaterString =
+      threeDaysLater.getMonth() + 1 + "月" + threeDaysLater.getDate() + "日";
+
+    const shippingFee = 300; // 基本の配送料金
+    console.table(threeDaysLaterString);
     if (deliveryAddress.length === 0) {
       response.render("purchase/purchase_confirmation_first", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
           `${Boolean(request.user)}`
         ],
-        cartList: cartList,
+        CartWorkDetailList: currentCartWorkDetailList,
+        shippingFee: shippingFee,
+        threeDaysLaterString: threeDaysLaterString,
       });
     } else {
       // 2回目以降用ejs
     }
+  }
+});
+
+router.get("/select_delivery_date", (request, response) => {
+  if (!request.user) {
+    response.redirect("/invalidAccess");
+    return;
+  } else {
+    const shippingFee = 300;
+    const threeDaysLater = new Date();
+    threeDaysLater.setDate(threeDaysLater.getDate() + 3);
+    const threeDaysLaterString =
+      threeDaysLater.getMonth() + 1 + "月" + threeDaysLater.getDate() + "日";
+
+    const immediateDelivery = new Date();
+    immediateDelivery.setDate(immediateDelivery.getDate() + 1);
+    const immediateDeliveryString =
+      immediateDelivery.getMonth() +
+      1 +
+      "月" +
+      immediateDelivery.getDate() +
+      "日";
+
+    // 午前10時よりも前ならばtrue
+    const isAllowImmediateDelivery: boolean = new Date().getHours() < 10;
+    response.render("purchase/select_delivery_date", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      threeDaysLaterString: threeDaysLaterString,
+      immediateDeliveryString: immediateDeliveryString,
+      shippingFee: shippingFee,
+      isAllowImmediateDelivery: isAllowImmediateDelivery,
+    });
   }
 });
 

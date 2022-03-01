@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("../components/lib.ejs") %>
+        <title>U labeler</title>
+</head>
+<header class="header">
+
+    <body>
+
+        <article>
+            <!-- ページタイトル -->
+            <div class="inquiry_title">
+                <h3>お届け日選択
+                    <hr>
+                </h3>
+            </div>
+
+            <div class="inquiry_setting">
+                <form action="purchase_confirmation.html" method="get" id="hoge4">
+                    <table border="1">
+                        <!-- 発送？配送？ -->
+                        <tr>
+                            <th>発送方法</th>
+                            <th>お届け予定日</th>
+                            <th>発送料</th>
+                        </tr>
+                        <tr>
+                            <td class="inquiry_table_td"><input type="radio" name="deliverySpeedType" value="none"
+                                    checked><label for="deliverySpeedType"> 指定なし</label></td>
+                            <td class="inquiry_table_middle">
+                                <%= threeDaysLaterString %>　時間帯指定なし
+                            </td>
+                            <td class="inquiry_table_td">¥<%= shippingFee %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="inquiry_table_td"><input type="radio" name="deliverySpeedType"
+                                    value="custom"><label for="deliverySpeedType"> 日時指定</label></td>
+                            <td class="inquiry_table_middle"><input name="customDate" type="date" value="" disabled>
+                                <select name="customTime" disabled>
+                                    <option value="none" disabled selected>お届け時間を選択</option>
+                                    <option value="1">時間帯指定なし</option>
+                                    <option value="2">8時～12時</option>
+                                    <option value="3">14時～16時</option>
+                                    <option value="4">16時～18時</option>
+                                    <option value="5">18時～20時</option>
+                                    <option value="6">19時～21時</option>
+                                </select>
+                            </td>
+                            <td class="inquiry_table_td">¥<%= shippingFee %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="inquiry_table_td"><input type="radio" name="deliverySpeedType" value="immediate"
+                                    <% if (!isAllowImmediateDelivery) { %>
+                                disabled
+                                <% } %>><label for="deliverySpeedType"> 即日発送</label>
+                            </td>
+                            <td class="inquiry_table_middle">
+                                <%= immediateDeliveryString %>
+                            </td>
+                            <td class="inquiry_table_td">¥1000</td>
+                        </tr>
+                    </table>
+                    <div class="double_button">
+                        <button type="button" class="white_button"
+                            onclick="location.href='purchase_confirmation.html'">戻る</button>
+                        <button type="button" class="black_button" onclick="update()">決定</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ボタン -->
+
+
+
+
+
+        </article>
+        <%- include("../components/footer.ejs") %>
+    </body>
+    <script>
+        // deliverySpeedTypeが、customでなければcustomDateとcustomTimeをdisabledにする
+        const deliverySpeedType = document.getElementsByName("deliverySpeedType");
+        const customDate = document.getElementsByName("customDate");
+        const customTime = document.getElementsByName("customTime");
+        // deliverySpeedTypeのvalueがcustomでなければcustomDateとcustomTimeをdisabledにする
+        deliverySpeedType.forEach(function (element) {
+            element.addEventListener("change", function () {
+                if (element.value !== "custom") {
+                    customDate[0].disabled = true;
+                    customDate[0].required = false;
+                    customTime[0].disabled = true;
+                    customTime[0].required = false;
+                } else {
+                    customDate[0].disabled = false;
+                    customDate[0].required = true;
+                    customTime[0].disabled = false;
+                    customTime[0].required = true;
+                }
+            });
+        });
+
+        let deliverySpeedTypeValue = "none";
+        function update() {
+            for (let i = 0; i < deliverySpeedType.length; i++) {
+                if (deliverySpeedType[i].checked) {
+                    deliverySpeedTypeValue = deliverySpeedType[i].value;
+                }
+            }
+
+            let customDateValue = new Date;
+            let customTimeValue = null;
+            if (deliverySpeedTypeValue === "custom") {
+                // customDateValueとcustomTimeValueに値が入っているかを確認する
+                if (customDate[0].value !== "" && customTime[0].value !== "none") {
+                    customDateValue = customDate[0].value;
+                    customTimeValue = customTime[0].value;
+                } else {
+                    alert("お届け予定日とお届け時間を選択してください");
+                    return;
+                }
+                customDateValue = new Date(customDate[0].value);
+                customTimeValue = customTime[0].value;
+                // customDateValueが、3日後以降でなければalertを出す
+                if (customDateValue < new Date(new Date().setDate(new Date().getDate() + 3))) {
+                    alert("お届け予定日は今日から3日後以降にしてください");
+                    return;
+                }
+            }
+
+            console.log(deliverySpeedTypeValue);
+            console.log(customDateValue);
+            console.log(customTimeValue);
+
+            // 現在のウィンドウの呼び出し元を取得し、リロードさせる
+            var ref = window.opener || parent;
+            ref.location.reload();
+        }
+
+    </script>
+
+</html>

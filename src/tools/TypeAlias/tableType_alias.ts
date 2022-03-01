@@ -75,16 +75,16 @@ export type delivery_addressTable = {
 
 export type delivery_statusTable = {
   purchase_record_id: string;
-  datetime_schedule: Date | null;
-  current_status: string | null;
-  zipcode: string;
-  address: string;
-  familyname: string;
-  firstname: string;
-  familyname_furigana: string | null;
-  firstname_furigana: string | null;
-  datetime_results: Date | null;
-  updated_at: Date | null;
+  datetime_schedule?: Date | null;
+  current_status?: string | null;
+  zipcode?: string;
+  address?: string;
+  familyname?: string;
+  firstname?: string;
+  familyname_furigana?: string | null;
+  firstname_furigana?: string | null;
+  datetime_results?: Date | null;
+  updated_at?: Date | null;
 };
 
 export type base_settingsTable = {
