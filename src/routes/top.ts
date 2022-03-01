@@ -26,7 +26,7 @@ const env = process.env.U_DB_ENVIRONMENT || "development";
 let host = "https://ulabeler.na2na.website";
 if (env === "development") {
   host = "http://localhost:3001";
-} else if (env === "remoteTest") {
+} else if (env === "staging") {
   host = "https://devulabeler.na2na.website";
 } else {
   host = "https://ulabeler.na2na.website";
