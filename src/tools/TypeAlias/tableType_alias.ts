@@ -184,7 +184,7 @@ export type cartTable = {
   quantity: number;
 };
 
-export type tempDeliverySettingsTable = {
+export type tempdeliverysettingsTable = {
   userId: string;
   estimatedDeliveryDate: Date;
   estimatedDeliveryTimeCategory: string;

@@ -11,7 +11,7 @@ import {
   mail_confirmationTable,
   reportTable,
   favorited_userTable,
-  tempDeliverySettingsTable,
+  tempdeliverysettingsTable,
   delivery_addressTable,
   // favorited_user_numberTable,
 } from "../../tools/TypeAlias/tableType_alias";
@@ -673,8 +673,8 @@ router.post("/updateTempDeliveryInfo", async (request, response) => {
   if (!request.user) {
     response.status(401).send("Forbidden");
   } else {
-    const currentTempData: tempDeliverySettingsTable[] = await knex(
-      "tempDeliverySettings"
+    const currentTempData: tempdeliverysettingsTable[] = await knex(
+      "tempdeliverysettings"
     ).where({
       userId: request.user.id,
     });
@@ -694,13 +694,13 @@ router.post("/updateTempDeliveryInfo", async (request, response) => {
         );
       }
 
-      const tempDeliveryInfo: tempDeliverySettingsTable = {
+      const tempDeliveryInfo: tempdeliverysettingsTable = {
         userId: request.user.id,
         estimatedDeliveryDate: estimatedDeliveryDate,
         estimatedDeliveryTimeCategory: request.body.customTime,
         effectiveDate: new Date(new Date().setDate(new Date().getDate() + 1)),
       };
-      await knex("tempDeliverySettings")
+      await knex("tempdeliverysettings")
         .insert(tempDeliveryInfo)
         .then(() => {
           console.log(tempDeliveryInfo);
@@ -726,14 +726,14 @@ router.post("/updateTempDeliveryInfo", async (request, response) => {
         );
       }
 
-      const tempDeliveryInfo: tempDeliverySettingsTable = {
+      const tempDeliveryInfo: tempdeliverysettingsTable = {
         userId: request.user.id,
         estimatedDeliveryDate: estimatedDeliveryDate,
         estimatedDeliveryTimeCategory: request.body.customTime,
         effectiveDate: new Date(new Date().setDate(new Date().getDate() + 1)),
       };
       console.log(tempDeliveryInfo);
-      await knex("tempDeliverySettings")
+      await knex("tempdeliverysettings")
         .where({
           userId: request.user.id,
         })
