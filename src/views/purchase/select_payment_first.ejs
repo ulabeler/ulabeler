@@ -13,13 +13,10 @@
             <!-- ページ名 -->
             <h3 class="icon_setting_title">支払方法選択<hr></h3>
 
-    <form action="" method="post" id="hoge"><!-- 購入確認画面へ -->
-
 
         <div class="address_input">
             <div class="select_payment">
 
-                <form action="*" method="post">
                     <input type="radio" value="paypay" name="paymentMethod">PayPay<br>
                     <input type="radio" value="card" name="paymentMethod" checked>クレジットカード<br><br>
                 <div class="payment_detali">
@@ -41,10 +38,7 @@
                 </tr>
                 <tr>
                     <th colspan="2">カード番号<font color="red">*</font>　　　　：</th>
-                    <td><input type="text" name="cardnumber1" class="" placeholder="1234"></td>
-                    <td><input type="text" name="cardnumber2" class="" placeholder="1234"></td>
-                    <td><input type="text" name="cardnumber3" class="" placeholder="1234"></td>
-                    <td><input type="text" name="cardnumber4" class="" placeholder="1234"></td>
+                    <td><input type="text" name="cardnumber" class="" placeholder="1234" maxlength="16"></td>
                 </tr>
                 <tr>
                     <th colspan="2">カード有効期限<font color="red">*</font>　　：</th>
@@ -101,9 +95,8 @@
 
     <div class="double_button">
         <button type="button" class="white_button" onclick="location.href=''">戻る</button><!-- 購入確認画面へ -->
-        <button type="submit" class="black_button" form="hoge">決定</button>
+        <button type="button" class="black_button" onclick="send()">決定</button>
     </div>
-</form>
     
     </article>
     <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
@@ -121,19 +114,32 @@
             });
 
             const paymentMethod = document.getElementsByName("paymentMethod");
-            const cardName = document.getElementsByName("name_card");
-            const cardNumber1 = document.getElementsByName("cardnumber1");
-            const cardNumber2 = document.getElementsByName("cardnumber2");
-            const cardNumber3 = document.getElementsByName("cardnumber3");
-            const cardNumber4 = document.getElementsByName("cardnumber4");
+            const cardNameElement = document.getElementsByName("name_card");
+            const cardNumber = document.getElementsByName("cardnumber");
+            const cardName = document.getElementsByName("name_card")
             const cardExpirationMonth = document.getElementsByName("expirationMonth");
             const cardExpirationYear = document.getElementsByName("expirationYear");
 
-            function submit(){
-                let cardnumber = null;
+            function send(){
+                let cardNumber = null;
                 let name_card = null;
-                if (paymentMethod == "card") {
-                    
+                let paymentMethodValue = "default";
+                
+                for (let i = 0; i < paymentMethod.length; i++) {
+                    if (paymentMethod[i].checked) {
+                        paymentMethodValue = paymentMethod[i].value;
+                    }
+                }
+                
+                console.log(paymentMethodValue);
+
+                if (paymentMethodValue == "card") {
+                    // cardNameを変数に格納
+                    name_card = cardName.value;
+                    // cardNumber1~cardNumber4を文字列連結する
+                    cardNumber = `${cardNameElement[0].value}`;
+                    console.log(cardNumber);
+                    console.log(cardNameElement[0].value)
                 }
             }
     </script>    
