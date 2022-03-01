@@ -55,17 +55,35 @@ router.post("/cartAdd", async (request, response) => {
   } else if (!request.body.workId) {
     response.status(400).send("Bad Request");
   } else {
-    await knex("cart")
-      .insert({
-        userId: request.user.id,
-        workId: request.body.workId,
-        quantity: 1,
-      })
+    const isAlreadyExist = await knex("cart")
+      .where("userId", request.user.id)
+      .andWhere("workId", request.body.workId)
       .catch((error: Error) => {
         console.log(error);
         response.status(500).send("Internal Server Error");
       });
-    response.status(200).send(true);
+    if (isAlreadyExist.length === 0) {
+      await knex("cart")
+        .insert({
+          userId: request.user.id,
+          workId: request.body.workId,
+          quantity: 1,
+        })
+        .catch((error: Error) => {
+          console.log(error);
+          response.status(500).send("Internal Server Error");
+        });
+    } else {
+      await knex("cart")
+        .where("userId", request.user.id)
+        .andWhere("workId", request.body.workId)
+        .increment("quantity", 1)
+        .catch((error: Error) => {
+          console.log(error);
+          response.status(500).send("Internal Server Error");
+        });
+    }
+    response.status(200).send("OK");
   }
 });
 

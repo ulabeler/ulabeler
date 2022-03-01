@@ -60,6 +60,29 @@
             currentKeepCartNum.innerText = currentCartNum.data;
         }
     });
+
+    function addCart(id) {
+        axios.post("/api/util/cartAdd", {
+            workId: id
+        })
+            .then(async function (response) {
+                console.log(response);
+                if (response.data) {
+                    const currentCartNum = await axios.post('/api/util/cartCount');
+                    console.log(currentCartNum.data);
+                    if (currentCartNum.data !== 0) {
+                        currentKeepCartNum.innerText = currentCartNum.data;
+                    }
+                    alert('カートに追加しました');
+                }
+            })
+            .catch(function (error) {
+                // 403エラーの場合Alertを出す
+                if (error.response.status === 403) {
+                    alert('ログインしてください');
+                }
+            });
+    }
 </script>
 <noscript>
     <p>JavaScriptを有効にしてください。</p>
