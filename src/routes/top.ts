@@ -23,10 +23,14 @@ import { getMaxPage, getRandomIdList } from "../tools/util";
 const maxViewOnPage = config.maxViewOnPage || 8; // 1ページに表示する最大件数
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
-const host =
-  env === "development"
-    ? "http://localhost:3001"
-    : "https://ulabeler.na2na.website";
+let host = "https://ulabeler.na2na.website";
+if (env === "development") {
+  host = "http://localhost:3001";
+} else if (env === "remoteTest") {
+  host = "https://devulabeler.na2na.website";
+} else {
+  host = "https://ulabeler.na2na.website";
+}
 
 /* GET home page. */
 router.get("/", async function (request, response) {

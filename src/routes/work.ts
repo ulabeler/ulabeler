@@ -19,10 +19,14 @@ const router = express.Router();
 // import crypto from "crypto";
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
-const host =
-  env === "development"
-    ? "http://localhost:3001"
-    : "https://ulabeler.na2na.website";
+let host = "https://ulabeler.na2na.website";
+if (env === "development") {
+  host = "http://localhost:3001";
+} else if (env === "remoteTest") {
+  host = "https://devulabeler.na2na.website";
+} else {
+  host = "https://ulabeler.na2na.website";
+}
 
 // 無理無理無理無理無理無理無理無理無理無理後回し
 // 作品に対するいいねの状態を操作するもの。

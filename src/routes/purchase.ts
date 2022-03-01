@@ -40,10 +40,14 @@ PAYPAY.Configure({
 });
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
-const host =
-  env === "development"
-    ? "http://localhost:3001"
-    : "https://ulabeler.na2na.website";
+let host = "https://ulabeler.na2na.website";
+if (env === "development") {
+  host = "http://localhost:3001";
+} else if (env === "remoteTest") {
+  host = "https://devulabeler.na2na.website";
+} else {
+  host = "https://ulabeler.na2na.website";
+}
 
 router.get("/history", async (request, response) => {
   if (!request.user) {
