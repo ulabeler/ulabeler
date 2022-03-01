@@ -9,7 +9,8 @@ import {
   // eslint-disable-next-line camelcase
   delivery_addressTable,
   workTable,
-  tempDeliverySettingsTable,
+  // eslint-disable-next-line camelcase
+  tempdeliverysettingsTable,
 } from "tools/TypeAlias/tableType_alias";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
@@ -178,8 +179,8 @@ router.get("/purchase_confirmation", async function (request, response) {
       .orderBy("updated_at", "desc")
       .limit(1);
 
-    const currentTempDeliveryInfo: tempDeliverySettingsTable[] = await knex(
-      "tempDeliverySettings"
+    const currentTempDeliveryInfo: tempdeliverysettingsTable[] = await knex(
+      "tempdeliverysettings"
     ).where("userId", request.user.id);
 
     const threeDaysLater = new Date();
@@ -344,8 +345,8 @@ router.get("/submit", async (request, response) => {
         .orderBy("updated_at", "desc")
         .limit(1);
 
-      const currentTempDeliveryInfo: tempDeliverySettingsTable[] = await knex(
-        "tempDeliverySettings"
+      const currentTempDeliveryInfo: tempdeliverysettingsTable[] = await knex(
+        "tempdeliverysettings"
       ).where("userId", request.user.id);
 
       const threeDaysLater = new Date();
@@ -518,8 +519,8 @@ router.get("/paypay/callback/:orderId", async (request, response) => {
     .orderBy("updated_at", "desc")
     .limit(1);
 
-  const currentTempDeliveryInfo: tempDeliverySettingsTable[] = await knex(
-    "tempDeliverySettings"
+  const currentTempDeliveryInfo: tempdeliverysettingsTable[] = await knex(
+    "tempdeliverysettings"
   ).where("userId", request.user.id);
 
   const threeDaysLater = new Date();
