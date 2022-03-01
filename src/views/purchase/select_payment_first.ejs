@@ -20,8 +20,8 @@
             <div class="select_payment">
 
                 <form action="*" method="post">
-                    <input type="radio" value="paypay" name="1">PayPay<br>
-                    <input type="radio" value="card" name="1" checked>クレジットカード<br><br>
+                    <input type="radio" value="paypay" name="paymentMethod">PayPay<br>
+                    <input type="radio" value="card" name="paymentMethod" checked>クレジットカード<br><br>
                 <div class="payment_detali">
                     ご利用になるクレジットカードの情報を<br>
                     お間違いのないようにご入力してください。
@@ -29,7 +29,7 @@
                 <div class="choise_card">
                     <br>
                     ご利用可能なクレジットカード
-                    <img src="images/visa.png" alt="">
+                    <img src="/images/system/visa.png" alt="">
                 </div> 
             </div>
             <table >
@@ -37,18 +37,18 @@
                 <th></th>
                 <tr>
                     <th colspan="2">カード名義人<font color="red">*</font>　　　：</th>
-                    <td colspan="4"><input type="text" name="" class="" placeholder="半角ローマ字"></td>
+                    <td colspan="4"><input type="text" name="name_card" class="" placeholder="半角ローマ字"></td>
                 </tr>
                 <tr>
                     <th colspan="2">カード番号<font color="red">*</font>　　　　：</th>
-                    <td><input type="text" name="" class="" placeholder="1234"></td>
-                    <td><input type="text" name="" class="" placeholder="1234"></td>
-                    <td><input type="text" name="" class="" placeholder="1234"></td>
-                    <td><input type="text" name="" class="" placeholder="1234"></td>
+                    <td><input type="text" name="cardnumber1" class="" placeholder="1234"></td>
+                    <td><input type="text" name="cardnumber2" class="" placeholder="1234"></td>
+                    <td><input type="text" name="cardnumber3" class="" placeholder="1234"></td>
+                    <td><input type="text" name="cardnumber4" class="" placeholder="1234"></td>
                 </tr>
                 <tr>
                     <th colspan="2">カード有効期限<font color="red">*</font>　　：</th>
-                    <td><select class="mati_select" name="">
+                    <td><select class="mati_select" name="expirationMonth">
                         <option value="" selected>00</option>
                         <option value="1">01</option>
                         <option value="2">02</option>
@@ -65,7 +65,7 @@
                         </select>
                     </td>
                     <td>月</td>
-                    <td><select class="mati_select" name="">
+                    <td><select class="mati_select" name="expirationYear">
                         <option value="" selected>00</option>
                         <option value="1">22</option>
                         <option value="2">23</option>
@@ -86,7 +86,8 @@
                 </tr>
                 <tr>
                     <th colspan="2">セキュリティコード<font color="red">*</font>：</th>
-                    <td colspan="1"><input type="text" name="" class="" placeholder="・・・"></td>
+                    <td colspan="1"><input type="text" name="card" class="" placeholder="・・・"></td>
+                    <!-- 今回は使わないので破棄 -->
                 </tr>
             </table>
         </div>
@@ -118,7 +119,23 @@
             velocityFunc:() => Math.random() * 1.4,
             radiusFunc:() => 3 + Math.random() * 20,
             });
-        </script>
+
+            const paymentMethod = document.getElementsByName("paymentMethod");
+            const cardName = document.getElementsByName("name_card");
+            const cardNumber1 = document.getElementsByName("cardnumber1");
+            const cardNumber2 = document.getElementsByName("cardnumber2");
+            const cardNumber3 = document.getElementsByName("cardnumber3");
+            const cardNumber4 = document.getElementsByName("cardnumber4");
+            const cardExpirationMonth = document.getElementsByName("expirationMonth");
+            const cardExpirationYear = document.getElementsByName("expirationYear");
+
+            function submit(){
+                let cardnumber = null;
+                let name_card = null;
+                if (paymentMethod == "card") {
+                    
+                }
+            }
     </script>    
     <br>
 </body>
