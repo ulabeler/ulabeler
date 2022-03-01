@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("../components/lib.ejs") %>
+        <title>U labeler</title>
+</head>
+
+<body>
+    <header class="header">
+    <article>
+        <!-- ページ名 -->
+        <h3 class="h3_address_title">住所選択
+            <hr>
+        </h3>
+        <form method="post" id="hoge">
+            <!-- 購入確認画面へ -->
+            <div class="address_input">
+                <table>
+                    <tr>
+                        <th>名前<font color="red">*</font>　　：</th>
+                        <td><input type="text" name="familyname" class="" placeholder="姓"></td>
+                        <td><input type="text" name="firstname" class="" placeholder="名"></td>
+                    </tr>
+                    <tr>
+                        <th>フリガナ<font color="red">*</font>：</th>
+                        <td><input type="text" name="familyname_furigana" class="" placeholder="姓"></td>
+                        <td><input type="text" name="firstname_furigana" class="" placeholder="名"></td>
+                    </tr>
+                    <tr>
+                        <th>住所<font color="red">*</font>　　：　〒</th>
+                        <td><input type="text" id="zipcode" value="" maxlength="7" name="zip_code"></td>
+                        <td><button type="button" class="" id="search_btn">住所選択</button></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td><input type="text" class="mati_select" id="address1" name="address1"></td>
+                        <td><button type="button" class="" id="">郵便番号検索</button></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td colspan="2"><input type="text" name="address2" class="long_input" placeholder="市区町村"
+                                id="address2"></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td colspan="2"><input type="text" name="address3" class="long_input" placeholder="丁目・番地"
+                                id="address3"></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td colspan="2"><input type="text" name="" class="long_input" placeholder="建物名、部屋番号など （任意）">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- 初回時非表示 -->
+            <hr class="address_select_center_hr">
+            <% if(typeof results[0] !=='undefined' ){ %>
+                <p class="address_sub_title">～　過去の住所　～</p>
+                <!-- ループ表示 -->
+                <% for( let i = 0; i < results.length; i++ ) { %>
+                    <div class="select_address">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="address_box">
+                                        <table>
+                                            <tr>
+                                                <th>お名前　　　　: </th>
+                                                <% if(typeof results[i] !=='undefined' ){ %>
+                                                    <td>
+                                                        <%= results[i]["familyname"] %>
+                                                            <%= results[i]["firstname"] %>
+                                                    </td>
+                                                    <% } %>
+                                                        <td></td>
+                                                        <input type="hidden" name="">
+                                            </tr>
+                                            <tr>
+                                                <th>フリガナ　　　: </th>
+                                                <% if(typeof results[i] !=='undefined' ){ %>
+                                                    <td>
+                                                        <%= results[i]["familyname_furigana"] %>
+                                                            <%= results[i]["firstname_furigana"] %>
+                                                    </td>
+                                                    <% } %>
+                                                        <input type="hidden" name="">
+                                            </tr>
+                                            <tr>
+                                                <th>郵便番号　　　: </th>
+                                                <% if(typeof results[i] !=='undefined' ){ %>
+                                                    <td>
+                                                        <%= results[i]["zp_code"] %>
+                                                    </td>
+                                                    <% } %>
+                                                        <input type="hidden" name="">
+                                            </tr>
+                                            <tr>
+                                                <th>住所　　　　: </th>
+                                                <% if(typeof results[i] !=='undefined' ){ %>
+                                                    <td>
+                                                        <%= results[i]["address"] %>
+                                                    </td>
+                                                    <% } %>
+                                                        <input type="hidden" name="">
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><input type="checkbox" name="check" value="check">選択</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                <% } %>
+                <% } %>
+                    <div class="double_button">
+                        <button type="button" class="white_button"
+                            onclick="window.close()">戻る</button><!-- 購入確認画面へ -->
+                        <input type="submit" class="black_button" value="決定">
+                    </div>
+        </form>
+
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script>
+        bubbly({
+            blur: 5,
+            bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.1})`,
+            canvas: document.querySelector("#back"),
+            colorStart: '#fff',
+            colorStop: '#fff',
+            compose: 'source-over',
+            shadowColor: '#ffffef',
+            velocityFunc: () => Math.random() * 1.4,
+            radiusFunc: () => 3 + Math.random() * 20,
+        });
+
+        $(function () {
+            //検索ボタンをクリックされたときに実行
+            $("#search_btn").click(function () {
+                //入力値をセット
+                var param = { zipcode: $('#zipcode').val() }
+                //zipcloudのAPIのURL
+                var send_url = "http://zipcloud.ibsnet.co.jp/api/search";
+                $.ajax({
+                    type: "GET",
+                    cache: false,
+                    data: param,
+                    url: send_url,
+                    dataType: "jsonp",
+                    success: function (res) {
+                        //結果によって処理を振り分ける
+                        if (res.status == 200) {
+                            //処理が成功したとき
+                            //該当する住所を表示
+                            for (var i = 0; i < res.results.length; i++) {
+                                var result = res.results[i];
+                                $("#address1").val(result.address1);
+                                $("#address2").val(result.address2);
+                                $("#address3").val(result.address3);
+                            }
+                        } else {
+                            //エラーだった時
+                            //エラー内容を表示
+                            $('#zip_result').html(res.message);
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(XMLHttpRequest);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

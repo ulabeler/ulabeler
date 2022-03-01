@@ -243,6 +243,27 @@ router.get("/select_delivery_date", async (request, response) => {
   }
 });
 
+router.get("/select_address", async (request, response) => {
+  if (!request.user) {
+    response.redirect("/invalidAccess");
+    return;
+  } else {
+    // eslint-disable-next-line camelcase
+    const deliveryAddress: delivery_addressTable[] = await knex(
+      "delivery_address"
+    )
+      .where("user_id", request.user.id)
+      .orderBy("updated_at", "desc")
+      .limit(3)
+      .catch((error: Error) => {
+        console.log(error);
+      });
+    response.render("purchase/select_address", {
+      results: deliveryAddress,
+    });
+  }
+});
+
 router.get("/select_payment_method", async (request, response) => {
   if (!request.user) {
     response.status(403).send("Forbidden");

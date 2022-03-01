@@ -109,7 +109,7 @@
                         </div>
                     </td>
                     <td>
-                        <p><a href="">　設定</a></p>
+                        <p><a onclick="selectAddress()">　設定</a></p>
                     </td>
                 </tr>
             </table>
@@ -144,7 +144,7 @@
     <br>
     <div class="double_button2">
         <button  type="button" class="white_button2" onclick="location.href=''">戻る</button>
-        <button  type="submit" class="black_button2" form=="hoge">決定</button>
+        <button  type="button" class="black_button2">決定</button>
     </div>
     </article>
     
@@ -155,10 +155,13 @@
 
 <script>
     function setNewDeriveryDate() {
-        console.log(window.open('/purchase/select_delivery_date', "setNewDeriveryDate", 'width=500,toolbar=no,menubar=no,scrollbars=yes,status=no' ));
+        window.open('/purchase/select_delivery_date', "setter", 'width=500,toolbar=no,menubar=no,scrollbars=yes,status=no');
     }
     function selectPaymentMethod() {
-        console.log(window.open('/purchase/select_payment_method', "setNewDeriveryDate", 'width=500,toolbar=no,menubar=no,scrollbars=yes,status=no' ));
+        window.open('/purchase/select_payment_method', "setter", 'width=500,toolbar=no,menubar=no,scrollbars=yes,status=no');
+    }
+    function selectAddress() {
+        window.open('/purchase/select_address', "setter", 'width=1000,toolbar=no,menubar=no,scrollbars=yes,status=no' );
     }
 </script>
 
