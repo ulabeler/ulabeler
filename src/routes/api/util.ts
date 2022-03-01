@@ -49,4 +49,42 @@ router.post("/cartUpdate", async (request, response) => {
   }
 });
 
+router.post("/cartAdd", async (request, response) => {
+  if (!request.user) {
+    response.status(403).send("UnAuthorized");
+  } else if (!request.body.workId) {
+    response.status(400).send("Bad Request");
+  } else {
+    await knex("cart")
+      .insert({
+        userId: request.user.id,
+        workId: request.body.workId,
+        quantity: 1,
+      })
+      .catch((error: Error) => {
+        console.log(error);
+        response.status(500).send("Internal Server Error");
+      });
+    response.status(200).send(true);
+  }
+});
+
+router.post("/cartRemove", async (request, response) => {
+  if (!request.user) {
+    response.status(403).send("UnAuthorized");
+  } else if (!request.body.workId) {
+    response.status(400).send("Bad Request");
+  } else {
+    await knex("cart")
+      .where("userId", request.user.id)
+      .andWhere("workId", request.body.workId)
+      .del()
+      .catch((error: Error) => {
+        console.log(error);
+        response.status(500).send("Internal Server Error");
+      });
+    response.status(200).send(true);
+  }
+});
+
 export default router;

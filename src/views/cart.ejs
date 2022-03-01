@@ -38,7 +38,7 @@
                         <div class="workId" id="<%= currentCartWorkDetailList[i].workId %>">
                             <input type="number" class="quantity" name="" value="<%= currentCartWorkDetailList[i].quantity %>" min="1" max="99">
                         </div>
-                    <p><div id="js-show-popup"><font color="brue">削除</font></div></a></p>
+                    <p><div id="js-show-popup" onclick="showPopUp('js-popup')"><font color="brue">削除</font></div></a></p>
                 </div>
                 <div class="total5">
                     <p class="sumAmount" id="sumAmount-<%= currentCartWorkDetailList[i].workId %>">¥<%= currentCartWorkDetailList[i].unitPrice * currentCartWorkDetailList[i].quantity %></p>
@@ -74,9 +74,9 @@
                     <table class="button_table">
                         <tr>
                             <th style = "width: 20%;"></th>
-                            <th><button  type="button" class="white_button2" onclick="location.href='cart.html'">戻る</button></th>
+                            <th><button  type="button" class="white_button2" onclick="closePopUp('js-popup')">戻る</button></th>
                             <th style = "width: 30%;"></th>
-                            <th><button  type="submit" class="red_button2" form=="hoge" onclick="location.href='cart.html'">削除</button></th>
+                            <th><button  type="submit" class="red_button2" onclick="location.href='cart.html'">削除</button></th>
                             <th style = "width: 20%;"></th>
                         </tr>
                     </table>
