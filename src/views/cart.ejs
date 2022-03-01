@@ -38,7 +38,7 @@
                         <div class="workId" id="<%= currentCartWorkDetailList[i].workId %>">
                             <input type="number" class="quantity" name="" value="<%= currentCartWorkDetailList[i].quantity %>" min="1" max="99">
                         </div>
-                    <p><div id="js-show-popup" onclick="showPopUp('js-popup')"><font color="brue">削除</font></div></a></p>
+                    <p><div id="js-show-popup" onclick="showPopUp('cartidx-<%-currentCartWorkDetailList[i].workId%>')"><font color="brue">削除</font></div></a></p>
                 </div>
                 <div class="total5">
                     <p class="sumAmount" id="sumAmount-<%= currentCartWorkDetailList[i].workId %>">¥<%= currentCartWorkDetailList[i].unitPrice * currentCartWorkDetailList[i].quantity %></p>
@@ -55,7 +55,8 @@
     </div>
     <p class="button5"><button type="submit" class="black_button3" onclick="location.href='purchase_confirmation.html'">購入手続きへ</button></p>
 
-    <div class="popup" id="js-popup">
+    <% for( let i = 0; i < currentCartWorkDetailList.length; i++ ) { %>
+    <div class="popup" id="cartidx-<%-currentCartWorkDetailList[i].workId%>">
         <div class="popup-inner">
             <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
 
@@ -74,9 +75,9 @@
                     <table class="button_table">
                         <tr>
                             <th style = "width: 20%;"></th>
-                            <th><button  type="button" class="white_button2" onclick="closePopUp('js-popup')">戻る</button></th>
+                            <th><button  type="button" class="white_button2" onclick="closePopUp('cartidx-<%-currentCartWorkDetailList[i].workId%>')">戻る</button></th>
                             <th style = "width: 30%;"></th>
-                            <th><button  type="submit" class="red_button2" onclick="location.href='cart.html'">削除</button></th>
+                            <th><button  type="submit" class="red_button2" onclick="addCart('<%-currentCartWorkDetailList[i].workId%>')">削除</button></th>
                             <th style = "width: 20%;"></th>
                         </tr>
                     </table>
@@ -89,6 +90,7 @@
         </div>
         <div class="black-background" id="js-black-bg"></div>
     </div>
+    <% } %> 
 
     <% } %> 
     <div id="flg"><%= currentCartWorkDetailList.length %></div>
@@ -140,6 +142,17 @@
             });
         });
     });
+
+    function addCart(id){
+        axios.post("/api/util/cartRemove", {
+            workId: id
+        }).then(res => {
+            console.log(res);
+            location.reload();
+        }).catch(err => {
+            console.log(err);
+        });
+    }
 </script>
 
 </html>
