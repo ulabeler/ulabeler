@@ -112,7 +112,7 @@ router.get("/purchase_confirmation", async function (request, response) {
       "userId",
       request.user.id
     );
-    console.log(currentCartList);
+    // console.log(currentCartList);
     const currentCartWorkDetailList: cartListWorkDetail[] = [];
     for (let i = 0; i < currentCartList.length; i++) {
       const workInfo: workTable[] = await knex("work")
@@ -144,14 +144,14 @@ router.get("/purchase_confirmation", async function (request, response) {
       currentCartWorkDetailList[i].quantity = currentCartList[i].quantity;
     }
 
-    console.table(currentCartWorkDetailList);
+    // console.table(currentCartWorkDetailList);
     // eslint-disable-next-line camelcase
     const deliveryAddress: delivery_addressTable[] = await knex(
       "delivery_address"
     )
       .where("user_id", request.user.id)
       .orderBy("updated_at", "desc")
-      .limit(3);
+      .limit(1);
 
     const currentTempDeliveryInfo: tempDeliverySettingsTable[] = await knex(
       "tempDeliverySettings"
@@ -182,7 +182,7 @@ router.get("/purchase_confirmation", async function (request, response) {
     let paymentMethodString =
       "<font color='red'>支払設定をしてください*</font>";
     const paymentMethod = await knex("user")
-      .select("name_card")
+      .select("name_card", "cardnumber")
       .where("id", request.user.id);
     if (paymentMethod.length !== 0 && paymentMethod[0].name_card == "PayPay") {
       paymentMethodString = "PayPay";
@@ -190,22 +190,17 @@ router.get("/purchase_confirmation", async function (request, response) {
       paymentMethodString = "クレジットカード";
     }
 
-    console.log(paymentMethodString);
-
-    if (deliveryAddress.length === 0) {
-      response.render("purchase/purchase_confirmation_first", {
-        side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-          `${Boolean(request.user)}`
-        ],
-        CartWorkDetailList: currentCartWorkDetailList,
-        shippingFee: shippingFee,
-        estimatedDeliveryDateString: estimatedDeliveryDateString,
-        estimatedDeliveryTimeCategory: estimatedDeliveryTimeCategory,
-        paymentMethodString: paymentMethodString,
-      });
-    } else {
-      // 2回目以降用ejs
-    }
+    response.render("purchase/purchase_confirmation_first", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      CartWorkDetailList: currentCartWorkDetailList,
+      shippingFee: shippingFee,
+      estimatedDeliveryDateString: estimatedDeliveryDateString,
+      estimatedDeliveryTimeCategory: estimatedDeliveryTimeCategory,
+      paymentMethodString: paymentMethodString,
+      deliveryAddress: deliveryAddress,
+    });
   }
 });
 
