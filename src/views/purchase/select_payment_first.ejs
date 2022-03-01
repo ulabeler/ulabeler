@@ -5,143 +5,109 @@
     <%- include("../components/lib.ejs") %>
         <title>U labeler</title>
 </head>
-<header class="header">
-
-    <article>
-        <br><br>
-        <!-- ページ名 -->
-        <h3 class="icon_setting_title">支払方法選択
-            <hr>
-        </h3>
-
-        <form action="" method="post" id="hoge">
-            <!-- 購入確認画面へ -->
 
 
-            <div class="address_input">
-                <div class="select_payment">
+    <body>
 
-                    <form action="*" method="post">
-                        <label><input type="radio" value="pay" name="1">paypay<br></label>
-                        <label><input type="radio" value="pay" name="1" checked>クレジットカード<br></label><br>
-                        <div class="payment_detali">
-                            ご利用になるクレジットカードの情報を<br>
-                            お間違いのないようにご入力してください。
-                        </div>
-                        <div class="choise_card">
-                            <br>
-                            ご利用可能なクレジットカード
-                            <img src="images/visa.png" alt="">
-                        </div>
+        <article>
+            <!-- ページ名 -->
+            <h3 class="icon_setting_title">支払方法選択<hr></h3>
+
+    <form action="" method="post" id="hoge"><!-- 購入確認画面へ -->
+
+
+        <div class="address_input">
+            <div class="select_payment">
+
+                <form action="*" method="post">
+                    <input type="radio" value="paypay" name="1">PayPay<br>
+                    <input type="radio" value="card" name="1" checked>クレジットカード<br><br>
+                <div class="payment_detali">
+                    ご利用になるクレジットカードの情報を<br>
+                    お間違いのないようにご入力してください。
                 </div>
-                <table>
-                    <tr>
-                        <th></th>
-                        <td>　　　</td>
-                    </tr>
-                    <th></th>
-                    <tr>
-                        <th colspan="2">カード名義人<font color="red">*</font>　　　：</th>
-                        <td colspan="4"><input type="text" name="" class="" placeholder="半角ローマ字"></td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">カード番号<font color="red">*</font>　　　　：</th>
-                        <td><input type="text" name="" class="" placeholder="1234"></td>
-                        <td><input type="text" name="" class="" placeholder="1234"></td>
-                        <td><input type="text" name="" class="" placeholder="1234"></td>
-                        <td><input type="text" name="" class="" placeholder="1234"></td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">カード有効期限<font color="red">*</font>　　：</th>
-                        <td><select class="mati_select" name="">
-                                <option value="" selected>00</option>
-                                <option value="1">01</option>
-                                <option value="2">02</option>
-                                <option value="3">03</option>
-                                <option value="4">04</option>
-                                <option value="5">05</option>
-                                <option value="6">06</option>
-                                <option value="7">07</option>
-                                <option value="8">08</option>
-                                <option value="9">09</option>
-                                <option value="10">10</option>
-                                <option value="11">11</option>
-                                <option value="12">12</option>
-                            </select>
-                        </td>
-                        <td>月</td>
-                        <td><select class="mati_select" name="">
-                                <option value="" selected>00</option>
-                                <option value="1">22</option>
-                                <option value="2">23</option>
-                                <option value="3">24</option>
-                                <option value="4">25</option>
-                                <option value="5">26</option>
-                                <option value="6">27</option>
-                                <option value="7">28</option>
-                                <option value="8">29</option>
-                                <option value="9">30</option>
-                                <option value="10">31</option>
-                                <option value="11">32</option>
-                                <option value="12">33</option>
-                            </select>
-                        </td>
-                        <td>年</td>
-
-                    </tr>
-                    <tr>
-                        <th colspan="2">セキュリティコード<font color="red">*</font>：</th>
-                        <td colspan="1"><input type="text" name="" class="" placeholder="・・・"></td>
-                    </tr>
-                </table>
+                <div class="choise_card">
+                    <br>
+                    ご利用可能なクレジットカード
+                    <img src="images/visa.png" alt="">
+                </div> 
             </div>
-
-            </div>
-
-            <div class="check4">
-                <label><input type="checkbox" class="check1" name="check" checked>保存</label>
-            </div>
-
-
-            <div class="double_button">
-                <button type="button" class="white_button" onclick="location.href=''">戻る</button><!-- 購入確認画面へ -->
-                <button type="submit" class="black_button" form="hoge">決定</button>
-            </div>
-        </form>
-
-    </article>
-
-    <footer>
-        <br>
-        <br>
-        <div class="footer_text1">
-            <table class="footer_text">
-
+            <table >
+                <tr><th></th><td>　　　</td></tr>
+                <th></th>
                 <tr>
-                    <td>
-                        <p><a href="faq.html">よくある質問　</a></p>
+                    <th colspan="2">カード名義人<font color="red">*</font>　　　：</th>
+                    <td colspan="4"><input type="text" name="" class="" placeholder="半角ローマ字"></td>
+                </tr>
+                <tr>
+                    <th colspan="2">カード番号<font color="red">*</font>　　　　：</th>
+                    <td><input type="text" name="" class="" placeholder="1234"></td>
+                    <td><input type="text" name="" class="" placeholder="1234"></td>
+                    <td><input type="text" name="" class="" placeholder="1234"></td>
+                    <td><input type="text" name="" class="" placeholder="1234"></td>
+                </tr>
+                <tr>
+                    <th colspan="2">カード有効期限<font color="red">*</font>　　：</th>
+                    <td><select class="mati_select" name="">
+                        <option value="" selected>00</option>
+                        <option value="1">01</option>
+                        <option value="2">02</option>
+                        <option value="3">03</option>
+                        <option value="4">04</option>
+                        <option value="5">05</option>
+                        <option value="6">06</option>
+                        <option value="7">07</option>
+                        <option value="8">08</option>
+                        <option value="9">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        </select>
                     </td>
-                    <td>
-                        <p><a href="privacy_policy.html">プライバシーポリシー　</a></p>
+                    <td>月</td>
+                    <td><select class="mati_select" name="">
+                        <option value="" selected>00</option>
+                        <option value="1">22</option>
+                        <option value="2">23</option>
+                        <option value="3">24</option>
+                        <option value="4">25</option>
+                        <option value="5">26</option>
+                        <option value="6">27</option>
+                        <option value="7">28</option>
+                        <option value="8">29</option>
+                        <option value="9">30</option>
+                        <option value="10">31</option>
+                        <option value="11">32</option>
+                        <option value="12">33</option>
+                        </select>
                     </td>
-                    <td>
-                        <p><a href="site_policy.html">サイトポリシー</a></p>
-                    </td>
+                    <td>年</td>
+                    
+                </tr>
+                <tr>
+                    <th colspan="2">セキュリティコード<font color="red">*</font>：</th>
+                    <td colspan="1"><input type="text" name="" class="" placeholder="・・・"></td>
                 </tr>
             </table>
         </div>
-        <br>
-        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
 
-        <br>
-        <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
+    </div>
 
-    </footer>
+    <!-- <div class="check4">
+        <input type="checkbox" class="check1" name="check" checked>保存
+    </div> -->
 
 
+    <div class="double_button">
+        <button type="button" class="white_button" onclick="location.href=''">戻る</button><!-- 購入確認画面へ -->
+        <button type="submit" class="black_button" form="hoge">決定</button>
+    </div>
+</form>
+    
+    </article>
     <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
-    <script>
-        bubbly({
+        <script>
+            bubbly({
             blur: 5,
             bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.1})`,
             canvas: document.querySelector("#back"),
@@ -149,11 +115,11 @@
             colorStop: '#fff',
             compose: 'source-over',
             shadowColor: '#ffffef',
-            velocityFunc: () => Math.random() * 1.4,
-            radiusFunc: () => 3 + Math.random() * 20,
-        });
-    </script>
-
-    </body>
-
+            velocityFunc:() => Math.random() * 1.4,
+            radiusFunc:() => 3 + Math.random() * 20,
+            });
+        </script>
+    </script>    
+    <br>
+</body>
 </html>
