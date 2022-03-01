@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
 // eslint-disable-next-line camelcase
@@ -23,6 +24,26 @@ import {
 } from "../tools/TypeAlias/miscAlias";
 // import { workTable } from "./tableType_alias";
 import { cartListWorkDetail } from "../tools/TypeAlias/miscAlias";
+import { v4 as uuidv4 } from "uuid";
+
+import PAYPAY from "@paypayopa/paypayopa-sdk-node";
+const PAYPAY_API_KEY = process.env.PAYPAY_API_KEY;
+const PAYPAY_API_SECRET = process.env.PAYPAY_API_SECRET;
+const PAYPAY_MERCHANT_ID = process.env.PAYPAY_MERCHANT_ID;
+
+// eslint-disable-next-line new-cap
+PAYPAY.Configure({
+  clientId: PAYPAY_API_KEY || "",
+  clientSecret: PAYPAY_API_SECRET || "",
+  merchantId: PAYPAY_MERCHANT_ID,
+  productionMode: false,
+});
+
+const env = process.env.U_DB_ENVIRONMENT || "development";
+const host =
+  env === "development"
+    ? "http://localhost:3001"
+    : "https://ulabeler.na2na.website";
 
 router.get("/history", async (request, response) => {
   if (!request.user) {
@@ -59,7 +80,7 @@ router.get("/history", async (request, response) => {
           .where("purchase_history_id", purchaseHistory[i].id)
           .orderBy("work_id", "asc");
       }
-      console.table(purchaseHistory[1].itemsDetail);
+      // console.table(purchaseHistory[1].itemsDetail);
 
       for (let i = 0; i < purchaseHistory.length; i++) {
         for (let j = 0; j < purchaseHistory[i].itemsDetail.length; j++) {
@@ -91,7 +112,7 @@ router.get("/history", async (request, response) => {
         }
       }
 
-      console.table(purchaseHistory[index]);
+      // console.table(purchaseHistory[index]);
       response.render("purchase_history", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
           `${Boolean(request.user)}`
@@ -165,7 +186,7 @@ router.get("/purchase_confirmation", async function (request, response) {
     let estimatedDeliveryTimeCategory = "時間帯指定なし";
 
     if (currentTempDeliveryInfo.length !== 0) {
-      console.table(currentTempDeliveryInfo);
+      // console.table(currentTempDeliveryInfo);
       // 3日後の日付をmm月dd日に変換
       estimatedDeliveryDateString =
         currentTempDeliveryInfo[0].estimatedDeliveryDate.getMonth() +
@@ -178,17 +199,11 @@ router.get("/purchase_confirmation", async function (request, response) {
     }
 
     const shippingFee = 300; // 基本の配送料金
-
-    // let paymentMethodString =
-    //   "<font color='red'>支払設定をしてください*</font>";
     const paymentMethod = await knex("user")
       .select("name_card", "cardnumber")
       .where("id", request.user.id);
-    // if (paymentMethod.length !== 0 && paymentMethod[0].name_card == "PayPay") {
-    //   paymentMethodString = "PayPay";
-    // } else if (paymentMethod.length !== 0) {
-    //   paymentMethodString = "クレジットカード";
-    // }
+
+    console.log(paymentMethod);
 
     response.render("purchase/purchase_confirmation_first", {
       side_menu: JSON.parse(JSON.stringify(sideMenuList))[
@@ -265,6 +280,306 @@ router.get("/select_payment_method", async (request, response) => {
   } else {
     response.render("purchase/select_payment_first.ejs");
   }
+});
+
+router.get("/submit", async (request, response) => {
+  if (request.headers.referer) {
+    const rawReferer = request.headers.referer;
+    // refererからgetパラメータを取り除く
+    const referer = rawReferer;
+    if (!request.user) {
+      response.redirect("/invalidAccess");
+      return;
+    } else if (!(host + "/purchase/purchase_confirmation" == referer)) {
+      console.log("referer: " + referer);
+      response.redirect("/invalidAccess");
+      return;
+    } else {
+      const currentCartList: cartTable[] = await knex("cart").where(
+        "userId",
+        request.user.id
+      );
+      // console.log(currentCartList);
+      const currentCartWorkDetailList: cartListWorkDetail[] = [];
+      for (let i = 0; i < currentCartList.length; i++) {
+        const workInfo: workTable[] = await knex("work")
+          .select("name", "thumbnail_path", "unit_price", "base_category_id")
+          .where("id", currentCartList[i].workId);
+        currentCartWorkDetailList[i] = {
+          workName: workInfo[0].name,
+          workImagePath: workInfo[0].thumbnail_path,
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          unitPrice: parseInt(workInfo[0].unit_price),
+          baseCategoryId: workInfo[0].base_category_id,
+        };
+      }
+
+      for (let i = 0; i < currentCartList.length; i++) {
+        // eslint-disable-next-line camelcase
+        const currentCartWorkCategoryName: base_categoryTable[] = await knex(
+          "base_category"
+        )
+          .select("name_subcategory")
+          .where("id", currentCartWorkDetailList[i].baseCategoryId);
+        currentCartWorkDetailList[i].baseCategoryName =
+          currentCartWorkCategoryName[0].name_subcategory;
+      }
+
+      for (let i = 0; i < currentCartList.length; i++) {
+        currentCartWorkDetailList[i].workId = currentCartList[i].workId;
+        currentCartWorkDetailList[i].quantity = currentCartList[i].quantity;
+      }
+
+      // console.table(currentCartWorkDetailList);
+      // eslint-disable-next-line camelcase
+      const deliveryAddress: delivery_addressTable[] = await knex(
+        "delivery_address"
+      )
+        .where("user_id", request.user.id)
+        .orderBy("updated_at", "desc")
+        .limit(1);
+
+      const currentTempDeliveryInfo: tempDeliverySettingsTable[] = await knex(
+        "tempDeliverySettings"
+      ).where("userId", request.user.id);
+
+      const threeDaysLater = new Date();
+      threeDaysLater.setDate(threeDaysLater.getDate() + 3);
+      let estimatedDeliveryDateString =
+        threeDaysLater.getMonth() + 1 + "月" + threeDaysLater.getDate() + "日";
+
+      let estimatedDeliveryTimeCategory = "時間帯指定なし";
+
+      if (currentTempDeliveryInfo.length !== 0) {
+        // console.table(currentTempDeliveryInfo);
+        // 3日後の日付をmm月dd日に変換
+        estimatedDeliveryDateString =
+          currentTempDeliveryInfo[0].estimatedDeliveryDate.getMonth() +
+          1 +
+          "月" +
+          currentTempDeliveryInfo[0].estimatedDeliveryDate.getDate() +
+          "日";
+        estimatedDeliveryTimeCategory =
+          currentTempDeliveryInfo[0].estimatedDeliveryTimeCategory;
+      }
+
+      const shippingFee = 300; // 基本の配送料金
+      const paymentMethod = await knex("user")
+        .select("name_card", "cardnumber")
+        .where("id", request.user.id);
+
+      // 注文IDの生成
+      // UUIDの下12桁を取得
+      const orderId = uuidv4().split("-").slice(-1)[0];
+      console.log(orderId);
+      console.log(paymentMethod[0].name_card);
+
+      if (paymentMethod[0].name_card !== "PayPay") {
+        // DBへの追加処理
+        await knex("purchase_history").insert({
+          id: orderId,
+          user_id: request.user.id,
+          number_invoice: null,
+          purchased_at: new Date(),
+          payment_method: "クレジットカード",
+        });
+
+        for (let i = 0; i < currentCartList.length; i++) {
+          await knex("purchased_history_item").insert({
+            purchase_history_id: orderId,
+            work_id: currentCartList[i].workId,
+            quantity: currentCartList[i].quantity,
+          });
+        }
+
+        // cartテーブルのデータを削除
+        await knex("cart").where("userId", request.user.id).del();
+
+        response.render("purchase/purchase_completion", {
+          side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+            `${Boolean(request.user)}`
+          ],
+          CartWorkDetailList: currentCartWorkDetailList,
+          shippingFee: shippingFee,
+          estimatedDeliveryDateString: estimatedDeliveryDateString,
+          estimatedDeliveryTimeCategory: estimatedDeliveryTimeCategory,
+          paymentMethod: paymentMethod,
+          deliveryAddress: deliveryAddress,
+        });
+        return;
+      } else {
+        let sumAmount = 0;
+        for (let i = 0; i < currentCartWorkDetailList.length; i++) {
+          sumAmount +=
+            currentCartWorkDetailList[i].unitPrice! *
+            currentCartWorkDetailList[i].quantity!;
+        }
+        sumAmount += shippingFee;
+        const orderDetail = {
+          // uuidv4の先頭8桁を使用
+          order_id: orderId,
+          amount: sumAmount,
+          currency: "JPY",
+          orderDescription: "Ulabelerお買い上げ分",
+        };
+
+        const payload = {
+          // uuidで指定
+          merchantPaymentId: orderDetail.order_id,
+          amount: {
+            amount: orderDetail.amount,
+            currency: "JPY",
+          },
+          codeType: "ORDER_QR",
+          orderDescription: orderDetail.orderDescription,
+          isAuthorization: false,
+          redirectUrl: `${host}/purchase/paypay/callback/${orderDetail.order_id}`, // リダイレクトはGET
+        };
+        // eslint-disable-next-line new-cap
+        PAYPAY.QRCodeCreate(payload, (paypayRawResponse) => {
+          // console.log(response);
+          // response内のurlを抽出
+          const paypayResponse = paypayRawResponse;
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          if (paypayResponse["STATUS"] == 201) {
+            // bodyをJSONパースする
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            const body = JSON.parse(paypayResponse["BODY"]);
+            // urlを取り出す
+            const url = body.data.url;
+            // urlへリダイレクト
+            response.redirect(url);
+          } else {
+            console.log(paypayResponse);
+          }
+        });
+      }
+    }
+  } else {
+    response.redirect("/invalidAccess");
+    return;
+  }
+});
+
+router.get("/paypay/callback/:orderId", async (request, response) => {
+  if (!request.user) {
+    response.redirect("/invalidAccess");
+    return;
+  }
+  const currentCartList: cartTable[] = await knex("cart").where(
+    "userId",
+    request.user.id
+  );
+  // console.log(currentCartList);
+  const currentCartWorkDetailList: cartListWorkDetail[] = [];
+  for (let i = 0; i < currentCartList.length; i++) {
+    const workInfo: workTable[] = await knex("work")
+      .select("name", "thumbnail_path", "unit_price", "base_category_id")
+      .where("id", currentCartList[i].workId);
+    currentCartWorkDetailList[i] = {
+      workName: workInfo[0].name,
+      workImagePath: workInfo[0].thumbnail_path,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      unitPrice: parseInt(workInfo[0].unit_price),
+      baseCategoryId: workInfo[0].base_category_id,
+    };
+  }
+
+  for (let i = 0; i < currentCartList.length; i++) {
+    // eslint-disable-next-line camelcase
+    const currentCartWorkCategoryName: base_categoryTable[] = await knex(
+      "base_category"
+    )
+      .select("name_subcategory")
+      .where("id", currentCartWorkDetailList[i].baseCategoryId);
+    currentCartWorkDetailList[i].baseCategoryName =
+      currentCartWorkCategoryName[0].name_subcategory;
+  }
+
+  for (let i = 0; i < currentCartList.length; i++) {
+    currentCartWorkDetailList[i].workId = currentCartList[i].workId;
+    currentCartWorkDetailList[i].quantity = currentCartList[i].quantity;
+  }
+
+  // console.table(currentCartWorkDetailList);
+  // eslint-disable-next-line camelcase
+  const deliveryAddress: delivery_addressTable[] = await knex(
+    "delivery_address"
+  )
+    .where("user_id", request.user.id)
+    .orderBy("updated_at", "desc")
+    .limit(1);
+
+  const currentTempDeliveryInfo: tempDeliverySettingsTable[] = await knex(
+    "tempDeliverySettings"
+  ).where("userId", request.user.id);
+
+  const threeDaysLater = new Date();
+  threeDaysLater.setDate(threeDaysLater.getDate() + 3);
+  let estimatedDeliveryDateString =
+    threeDaysLater.getMonth() + 1 + "月" + threeDaysLater.getDate() + "日";
+
+  let estimatedDeliveryTimeCategory = "時間帯指定なし";
+
+  if (currentTempDeliveryInfo.length !== 0) {
+    // console.table(currentTempDeliveryInfo);
+    // 3日後の日付をmm月dd日に変換
+    estimatedDeliveryDateString =
+      currentTempDeliveryInfo[0].estimatedDeliveryDate.getMonth() +
+      1 +
+      "月" +
+      currentTempDeliveryInfo[0].estimatedDeliveryDate.getDate() +
+      "日";
+    estimatedDeliveryTimeCategory =
+      currentTempDeliveryInfo[0].estimatedDeliveryTimeCategory;
+  }
+
+  const shippingFee = 300; // 基本の配送料金
+  const paymentMethod = await knex("user")
+    .select("name_card", "cardnumber")
+    .where("id", request.user.id);
+
+  // 注文IDの生成
+  // UUIDの下12桁を取得
+  const orderId = request.params.orderId;
+  console.log(orderId);
+  console.log(paymentMethod[0].name_card);
+  // DBへの追加処理
+  await knex("purchase_history").insert({
+    id: orderId,
+    user_id: request.user.id,
+    number_invoice: null,
+    purchased_at: new Date(),
+    payment_method: "クレジットカード",
+  });
+
+  for (let i = 0; i < currentCartList.length; i++) {
+    await knex("purchased_history_item").insert({
+      purchase_history_id: orderId,
+      work_id: currentCartList[i].workId,
+      quantity: currentCartList[i].quantity,
+    });
+  }
+
+  // cartテーブルのデータを削除
+  await knex("cart").where("userId", request.user.id).del();
+
+  response.render("purchase/purchase_completion", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    CartWorkDetailList: currentCartWorkDetailList,
+    shippingFee: shippingFee,
+    estimatedDeliveryDateString: estimatedDeliveryDateString,
+    estimatedDeliveryTimeCategory: estimatedDeliveryTimeCategory,
+    paymentMethod: paymentMethod,
+    deliveryAddress: deliveryAddress,
+  });
+  return;
 });
 
 export default router;

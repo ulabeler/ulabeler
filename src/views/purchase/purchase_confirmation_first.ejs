@@ -78,9 +78,8 @@
                             <table cellpadding="10">
                                 <tr>
                                     <th>配達予定日　: </th>
-                                    <td><%= estimatedDeliveryDateString %> </td>
-                                    <td><%= estimatedDeliveryTimeCategory %> </td>
-                                    <input type="hidden" name="">
+                                    <td><%= estimatedDeliveryDateString %></td>
+                                    <td><%= estimatedDeliveryTimeCategory %></td>
                                 </tr>
                             </table>
                         </div>
@@ -156,12 +155,13 @@
                             <table cellpadding="10">
                                 <tr>
                                     <th>支払方法　: </th>
-                                    <% if (typeof paymentMethod == 'undefined') { %>
+                                    <% if (typeof paymentMethod[0] == 'undefined') { %>
                                         <td><font color='red'>支払設定をしてください*</font></td>
-                                        <input type="hidden" name="">
                                     <% } else if (paymentMethod[0].name_card == "PayPay") { %>
                                         <td>PayPay</td>
-                                    <% } else { %> 
+                                    <% } else if (paymentMethod[0].name_card == null) { %>
+                                        <td><font color='red'>支払設定をしてください*</font></td>
+                                    <% } else { %>  { %> 
                                         <td>
                                             <%# 先頭12桁を"*"に置き換える" %>  
                                             <%# paymentMethod[0].cardnumberを、4桁ずつに区切り、"-"を挿入する %>
@@ -196,7 +196,7 @@
     <br>
     <div class="double_button2">
         <button  type="button" class="white_button2" onclick="location.href=''">戻る</button>
-        <button  type="button" class="black_button2">決定</button>
+        <button  type="button" class="black_button2" onclick="location.href='/purchase/submit'">決定</button>
     </div>
     </article>
     
