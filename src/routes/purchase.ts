@@ -179,16 +179,16 @@ router.get("/purchase_confirmation", async function (request, response) {
 
     const shippingFee = 300; // 基本の配送料金
 
-    let paymentMethodString =
-      "<font color='red'>支払設定をしてください*</font>";
+    // let paymentMethodString =
+    //   "<font color='red'>支払設定をしてください*</font>";
     const paymentMethod = await knex("user")
       .select("name_card", "cardnumber")
       .where("id", request.user.id);
-    if (paymentMethod.length !== 0 && paymentMethod[0].name_card == "PayPay") {
-      paymentMethodString = "PayPay";
-    } else if (paymentMethod.length !== 0) {
-      paymentMethodString = "クレジットカード";
-    }
+    // if (paymentMethod.length !== 0 && paymentMethod[0].name_card == "PayPay") {
+    //   paymentMethodString = "PayPay";
+    // } else if (paymentMethod.length !== 0) {
+    //   paymentMethodString = "クレジットカード";
+    // }
 
     response.render("purchase/purchase_confirmation_first", {
       side_menu: JSON.parse(JSON.stringify(sideMenuList))[
@@ -198,7 +198,7 @@ router.get("/purchase_confirmation", async function (request, response) {
       shippingFee: shippingFee,
       estimatedDeliveryDateString: estimatedDeliveryDateString,
       estimatedDeliveryTimeCategory: estimatedDeliveryTimeCategory,
-      paymentMethodString: paymentMethodString,
+      paymentMethod: paymentMethod,
       deliveryAddress: deliveryAddress,
     });
   }

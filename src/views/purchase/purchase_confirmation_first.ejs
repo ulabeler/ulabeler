@@ -155,8 +155,30 @@
                         <div class="purchase_box2">
                             <table cellpadding="10">
                                 <tr>
-                                    <td><%= paymentMethodString %> </td>
-                                    <input type="hidden" name="">
+                                    <th>支払方法　: </th>
+                                    <% if (typeof paymentMethod == 'undefined') { %>
+                                        <td><font color='red'>支払設定をしてください*</font></td>
+                                        <input type="hidden" name="">
+                                    <% } else if (paymentMethod[0].name_card == "PayPay") { %>
+                                        <td>PayPay</td>
+                                    <% } else { %> 
+                                        <td>
+                                            <%# 先頭12桁を"*"に置き換える" %>  
+                                            <%# paymentMethod[0].cardnumberを、4桁ずつに区切り、"-"を挿入する %>
+                                            <% var cardnumber = paymentMethod[0].cardnumber %>
+                                            <% var cardnumber_1 = cardnumber.substr(0, 4) %>
+                                            <% var cardnumber_2 = cardnumber.substr(4, 4) %>
+                                            <% var cardnumber_3 = cardnumber.substr(8, 4) %>
+                                            <% var cardnumber_4 = cardnumber.substr(12, 4) %>
+                                            <% cardnumber_1 = cardnumber_1.replace(/[0-9]/g, "*") %>
+                                            <% cardnumber_2 = cardnumber_2.replace(/[0-9]/g, "*") %>
+                                            <% cardnumber_3 = cardnumber_3.replace(/[0-9]/g, "*") %>
+                                            <% cardnumber_4 = cardnumber_4 %>
+                                            <% cardnumber = cardnumber_1 + "-" + cardnumber_2 + "-" + cardnumber_3 + "-" + cardnumber_4 %>
+                                            <%= cardnumber %>
+                                        </td>
+                                        <td>クレジットカード</td>
+                                    <% } %> 
                                 </tr>
                             </table>
                         </div>

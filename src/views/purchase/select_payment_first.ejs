@@ -47,7 +47,7 @@
                 <tr>
                     <th colspan="2">カード番号<font color="red">*</font>　　　　：</th>
                     <td colspan="4"><input type="text" name="cardnumber" id="cardnumber" class=""
-                            placeholder="カード番号(架空の番号でお願いします。)" maxlength="16" minlength="12" required></td>
+                            placeholder="カード番号(架空の番号でお願いします。)" maxlength="16" minlength="16" required></td>
                 </tr>
                 <tr>
                     <th colspan="2">カード有効期限<font color="red">*</font>　　：</th>
@@ -186,6 +186,12 @@
                 console.log(cardNumber);
                 console.log(cardName);
                 console.log(cardExpiration);
+                
+                // cardNumberが16文字出ない場合はエラー
+                if (cardNumber.length != 16) {
+                    alert("カード番号は16桁で入力してください");
+                    return;
+                }
             }
 
             if (paymentMethodValue == "PayPay") {
