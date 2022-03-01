@@ -183,3 +183,9 @@ export type cartTable = {
   userId: string;
   quantity: number;
 };
+
+export type tempDeliverySettings = {
+  userId: string;
+  estimatedDeliveryDate: Date;
+  estimatedDeliveryTimeCategory: string;
+};
