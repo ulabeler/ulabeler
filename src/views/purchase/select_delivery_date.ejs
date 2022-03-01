@@ -41,12 +41,12 @@
                             <td class="inquiry_table_middle"><input name="customDate" type="date" value="" disabled>
                                 <select name="customTime" disabled>
                                     <option value="none" disabled selected>お届け時間を選択</option>
-                                    <option value="1">時間帯指定なし</option>
-                                    <option value="2">8時～12時</option>
-                                    <option value="3">14時～16時</option>
-                                    <option value="4">16時～18時</option>
-                                    <option value="5">18時～20時</option>
-                                    <option value="6">19時～21時</option>
+                                    <option value="時間帯指定なし">時間帯指定なし</option>
+                                    <option value="8時～12時">8時～12時</option>
+                                    <option value="14時～16時">14時～16時</option>
+                                    <option value="16時～18時">16時～18時</option>
+                                    <option value="18時～20時">18時～20時</option>
+                                    <option value="19時～21時">19時～21時</option>
                                 </select>
                             </td>
                             <td class="inquiry_table_td">¥<%= shippingFee %>
@@ -112,7 +112,7 @@
             }
 
             let customDateValue = new Date;
-            let customTimeValue = null;
+            let customTimeValue = "時間帯指定なし";
             if (deliverySpeedTypeValue === "custom") {
                 // customDateValueとcustomTimeValueに値が入っているかを確認する
                 if (customDate[0].value !== "" && customTime[0].value !== "none") {
@@ -135,9 +135,19 @@
             console.log(customDateValue);
             console.log(customTimeValue);
 
-            // 現在のウィンドウの呼び出し元を取得し、リロードさせる
-            var ref = window.opener || parent;
-            ref.location.reload();
+            axios.post("/api/user/updateTempDeliveryInfo",{
+                deliverySpeedType: deliverySpeedTypeValue,
+                customDate: customDateValue,
+                customTime: customTimeValue
+            })
+            .then(function (response) {
+                // 現在のウィンドウの呼び出し元を取得し、リロードさせる
+                var ref = window.opener || parent;
+                ref.location.reload();
+                console.log(response);
+                window.close();
+            })
+
         }
 
     </script>

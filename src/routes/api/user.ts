@@ -11,6 +11,7 @@ import {
   mail_confirmationTable,
   reportTable,
   favorited_userTable,
+  tempDeliverySettingsTable,
   // favorited_user_numberTable,
 } from "../../tools/TypeAlias/tableType_alias";
 import sideMenuList from "../../tools/data/sidemenu.json";
@@ -66,7 +67,7 @@ router.post("/check_userID", function (request, response) {
         }
       })
       .catch(function (err: any) {
-        console.log(err);
+        console.error(err);
         response.status(500).send("Internal Server Error");
       });
   }
@@ -115,7 +116,7 @@ router.post("/sign_up", function (request, response) {
           });
       })
       .catch(function (err: any) {
-        console.log(err);
+        console.error(err);
         response.status(500).send("Internal Server Error");
       });
   }
@@ -141,14 +142,14 @@ router.post("/v2_sign_in", function (request, response) {
   // 認証に成功した場合、"/"へリダイレクトする
   passport.authenticate("local", function (err: any, user: Express.User) {
     if (err) {
-      console.log(err);
+      console.error(err);
       response.status(500).send("Internal Server Error");
     } else if (!user) {
       response.status(200).send(false);
     } else {
       request.logIn(user, function (err) {
         if (err) {
-          console.log(err);
+          console.error(err);
           response.status(500).send("Internal Server Error");
         } else {
           response.status(200).send(true);
@@ -194,7 +195,7 @@ router.post("/create/temp_password", function (request, response) {
             })
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .catch(function (err: any) {
-              console.log(err);
+              console.error(err);
               response.status(500).send("Internal Server Error");
             });
         } else {
@@ -203,7 +204,7 @@ router.post("/create/temp_password", function (request, response) {
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch(function (err: any) {
-        console.log(err);
+        console.error(err);
         response.status(500).send("Internal Server Error");
       });
   }
@@ -230,11 +231,6 @@ router.post("/reset_password_attempt", function (request, response) {
     // eslint-disable-next-line camelcase
     const temp_password: password_resetTable["temp_password"] =
       request.body.temp_password;
-
-    console.log(id);
-    console.log(token);
-    console.log(password);
-    console.log(temp_password);
 
     // password_resetでtokenとidが一致するものを取得
     knex("password_reset")
@@ -263,12 +259,12 @@ router.post("/reset_password_attempt", function (request, response) {
                         response.status(201).send(true);
                       })
                       .catch(function (err: any) {
-                        console.log(err);
+                        console.error(err);
                         response.status(500).send("Internal Server Error");
                       });
                   })
                   .catch(function (err: any) {
-                    console.log(err);
+                    console.error(err);
                     response.status(500).send("Internal Server Error");
                   });
               } else {
@@ -287,7 +283,7 @@ router.post("/reset_password_attempt", function (request, response) {
         }
       })
       .catch(function (err: any) {
-        console.log(err);
+        console.error(err);
         response.status(500).send("Internal Server Error");
       });
   }
@@ -309,7 +305,7 @@ router.post("/check_email", function (request, response) {
         }
       })
       .catch(function (err: any) {
-        console.log(err);
+        console.error(err);
         response.status(500).send("Internal Server Error");
       });
   }
@@ -369,13 +365,13 @@ router.post(
           })
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .catch(function (err: any) {
-            console.log(err);
+            console.error(err);
             response.status(500).send("Internal Server Error");
             return;
           });
       })
       .catch(function (err: any) {
-        console.log(err);
+        console.error(err);
         response.status(500).send("Internal Server Error");
         return;
       });
@@ -411,7 +407,6 @@ router.post("/modification_mailaddress_attempt", function (request, response) {
               const tokenConfirmation: mail_confirmationTable["token_confirmation"] =
                 results[0].token_confirmation;
               if (tokenConfirmation === confirmationAttemptCode) {
-                console.log(results[0]);
                 // メールアドレスを変更
                 knex("user")
                   .where("id", id)
@@ -426,13 +421,13 @@ router.post("/modification_mailaddress_attempt", function (request, response) {
                       .then(function () {
                         response.status(201).send(true);
                       })
-                      .catch(function (err: any) {
-                        console.log(err);
+                      .catch(function (err: Error) {
+                        console.error(err);
                         response.status(500).send("Internal Server Error");
                       });
                   })
-                  .catch(function (err: any) {
-                    console.log(err);
+                  .catch(function (err: Error) {
+                    console.error(err);
                     response.status(500).send("Internal Server Error");
                   });
               } else {
@@ -458,7 +453,7 @@ router.post("/modification_mailaddress_attempt", function (request, response) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       )
       .catch(function (err: any) {
-        console.log(err);
+        console.error(err);
         response.status(500).send("Internal Server Error");
       });
   }
@@ -500,7 +495,7 @@ router.post("/password/changeAttempt", function (request, response) {
                   response.status(201).send(true);
                 })
                 .catch(function (err: any) {
-                  console.log(err);
+                  console.error(err);
                   response.status(500).send("Internal Server Error");
                 });
             } else {
@@ -513,7 +508,7 @@ router.post("/password/changeAttempt", function (request, response) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       )
       .catch(function (err: any) {
-        console.log(err);
+        console.error(err);
         response.status(500).send("Internal Server Error");
       });
   }
@@ -539,7 +534,7 @@ router.post("/modification_userinfo_attempt", function (request, response) {
           response.status(201).send(true);
         })
         .catch(function (err: any) {
-          console.log(err);
+          console.error(err);
           response.status(500).send("Internal Server Error");
         });
     }
@@ -579,7 +574,7 @@ router.post("/report/create", function (request, response) {
                 response.status(201).send(true);
               })
               .catch(function (err: any) {
-                console.log(err);
+                console.error(err);
                 response.status(500).send("Internal Server Error");
               });
           } else {
@@ -587,7 +582,7 @@ router.post("/report/create", function (request, response) {
           }
         })
         .catch(function (err: any) {
-          console.log(err);
+          console.error(err);
           response.status(500).send("Internal Server Error");
         });
     }
@@ -624,12 +619,12 @@ router.post("/favorite/:userId", (request, response) => {
                   response.status(201).send("Added");
                 })
                 .catch((err: any) => {
-                  console.log(err);
+                  console.error(err);
                   response.status(500).send("Internal Server Error");
                 });
             })
             .catch((err: any) => {
-              console.log(err);
+              console.error(err);
               response.status(500).send("Internal Server Error");
             });
         } else {
@@ -649,12 +644,12 @@ router.post("/favorite/:userId", (request, response) => {
                   response.status(201).send("Removed");
                 })
                 .catch((err: any) => {
-                  console.log(err);
+                  console.error(err);
                   response.status(500).send("Internal Server Error");
                 });
             })
             .catch((err: any) => {
-              console.log(err);
+              console.error(err);
               response.status(500).send("Internal Server Error");
             });
         }
@@ -667,6 +662,87 @@ router.post("/isLogin", (request, response) => {
     response.status(200).send(true);
   } else {
     response.status(200).send(false);
+  }
+});
+
+router.post("/updateTempDeliveryInfo", async (request, response) => {
+  if (!request.user) {
+    response.status(401).send("Forbidden");
+  } else {
+    const currentTempData: tempDeliverySettingsTable[] = await knex(
+      "tempDeliverySettings"
+    ).where({
+      userId: request.user.id,
+    });
+    if (currentTempData.length === 0) {
+      // 日付設定
+      let estimatedDeliveryDate: Date;
+      if (request.body.deliverySpeedType == "custom") {
+        estimatedDeliveryDate = new Date(request.body.customDate);
+      } else if (request.body.deliverySpeedType == "none") {
+        // estimatedDeliveryDateは3日後
+        estimatedDeliveryDate = new Date(
+          new Date().setDate(new Date().getDate() + 3)
+        );
+      } else {
+        estimatedDeliveryDate = new Date(
+          new Date().setDate(new Date().getDate() + 1)
+        );
+      }
+
+      const tempDeliveryInfo: tempDeliverySettingsTable = {
+        userId: request.user.id,
+        estimatedDeliveryDate: estimatedDeliveryDate,
+        estimatedDeliveryTimeCategory: request.body.customTime,
+        effectiveDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+      };
+      await knex("tempDeliverySettings")
+        .insert(tempDeliveryInfo)
+        .then(() => {
+          console.log(tempDeliveryInfo);
+          response.status(201).send(true);
+        })
+        .catch((err: Error) => {
+          console.error(err);
+          response.status(500).send("Internal Server Error");
+        });
+    } else {
+      // 日付設定
+      let estimatedDeliveryDate: Date;
+      if (request.body.deliverySpeedType == "custom") {
+        estimatedDeliveryDate = new Date(request.body.customDate);
+      } else if (request.body.deliverySpeedType == "none") {
+        // estimatedDeliveryDateは3日後
+        estimatedDeliveryDate = new Date(
+          new Date().setDate(new Date().getDate() + 3)
+        );
+      } else {
+        estimatedDeliveryDate = new Date(
+          new Date().setDate(new Date().getDate() + 1)
+        );
+      }
+
+      const tempDeliveryInfo: tempDeliverySettingsTable = {
+        userId: request.user.id,
+        estimatedDeliveryDate: estimatedDeliveryDate,
+        estimatedDeliveryTimeCategory: request.body.customTime,
+        effectiveDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+      };
+      console.log(tempDeliveryInfo);
+      await knex("tempDeliverySettings")
+        .where({
+          userId: request.user.id,
+        })
+        .update(tempDeliveryInfo)
+        .then(() => {
+          console.log(tempDeliveryInfo);
+          response.status(201).send(true);
+        })
+        .catch((err: Error) => {
+          console.error(err);
+          response.status(500).send("Internal Server Error");
+        });
+    }
   }
 });
 
