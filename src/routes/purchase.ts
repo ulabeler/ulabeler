@@ -8,6 +8,7 @@ import {
   // eslint-disable-next-line camelcase
   delivery_addressTable,
   workTable,
+  tempDeliverySettingsTable,
 } from "tools/TypeAlias/tableType_alias";
 import { knex } from "../app";
 // import bcrypt from 'bcrypt';
@@ -152,14 +153,31 @@ router.get("/purchase_confirmation", async function (request, response) {
       .orderBy("updated_at", "desc")
       .limit(3);
 
-    // 3日後の日付をmm月dd日に変換
+    const currentTempDeliveryInfo: tempDeliverySettingsTable[] = await knex(
+      "tempDeliverySettings"
+    ).where("userId", request.user.id);
+
     const threeDaysLater = new Date();
     threeDaysLater.setDate(threeDaysLater.getDate() + 3);
-    const threeDaysLaterString =
+    let estimatedDeliveryDateString =
       threeDaysLater.getMonth() + 1 + "月" + threeDaysLater.getDate() + "日";
 
+    let estimatedDeliveryTimeCategory = "時間帯指定なし";
+
+    if (currentTempDeliveryInfo.length !== 0) {
+      console.table(currentTempDeliveryInfo);
+      // 3日後の日付をmm月dd日に変換
+      estimatedDeliveryDateString =
+        currentTempDeliveryInfo[0].estimatedDeliveryDate.getMonth() +
+        1 +
+        "月" +
+        currentTempDeliveryInfo[0].estimatedDeliveryDate.getDate() +
+        "日";
+      estimatedDeliveryTimeCategory =
+        currentTempDeliveryInfo[0].estimatedDeliveryTimeCategory;
+    }
+
     const shippingFee = 300; // 基本の配送料金
-    console.table(threeDaysLaterString);
     if (deliveryAddress.length === 0) {
       response.render("purchase/purchase_confirmation_first", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
@@ -167,7 +185,8 @@ router.get("/purchase_confirmation", async function (request, response) {
         ],
         CartWorkDetailList: currentCartWorkDetailList,
         shippingFee: shippingFee,
-        threeDaysLaterString: threeDaysLaterString,
+        estimatedDeliveryDateString: estimatedDeliveryDateString,
+        estimatedDeliveryTimeCategory: estimatedDeliveryTimeCategory,
       });
     } else {
       // 2回目以降用ejs
