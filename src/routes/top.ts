@@ -207,7 +207,7 @@ router.get("/my_work", async function (request, response) {
     // workから、userIdと一致するworkを取得
     const userWorkList: useWorkList[] = await knex("work")
       .where("created_by_user_id", userId)
-      .orderBy("create_at", "asc")
+      .orderBy("create_at", "desc")
       .catch((err: Error) => {
         console.log(err);
         response.status(500).send("Internal Server Error");

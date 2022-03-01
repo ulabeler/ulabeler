@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import express from "express";
-import { userTable, workTable } from "tools/TypeAlias/tableType_alias";
+import {
+  // eslint-disable-next-line camelcase
+  base_categoryTable,
+  userTable,
+  workTable,
+} from "tools/TypeAlias/tableType_alias";
 import { addCart } from "../tools/util";
 import { knex } from "../app";
 // import { putObject } from "../tools/aws/aws";
@@ -83,7 +88,21 @@ router.post("/work_setting", async function (request, response) {
       console.log(parse);
       request.session!.parseResult = parse;
 
-      const currentWorkInfo = await knex("work").where("id", workId);
+      const currentWorkInfo: workTable[] = await knex("work").where(
+        "id",
+        workId
+      );
+
+      // eslint-disable-next-line camelcase
+      const currentWorkBaseInfo: base_categoryTable[] = await knex(
+        "base_category"
+      )
+        .where("id", currentWorkInfo[0].base_category_id)
+        .catch((err: Error) => {
+          console.log(err);
+        });
+      console.table(currentWorkBaseInfo);
+
       console.table(currentWorkInfo);
       response.render("create/work_setting_confirmation", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
@@ -95,7 +114,7 @@ router.post("/work_setting", async function (request, response) {
         newIntroduction: parse.text,
         newIsPublic: request.body.isPublic,
         hashTag: parse.hashTag,
-        baseCategory: request.session!.baseCategory,
+        baseCategory: currentWorkBaseInfo[0].name_subcategory,
       });
       return;
     }
