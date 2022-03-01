@@ -28,11 +28,14 @@ import crypto from "crypto";
 // システムエラー/Code:PW-EX1 → L500付近で吐く設定ではあるけどこの条件引くことはまずないと思います。。。
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
-
-const host =
-  env === "development"
-    ? "http://localhost:3001"
-    : "https://ulabeler.na2na.website";
+let host = "https://ulabeler.na2na.website";
+if (env === "development") {
+  host = "http://localhost:3001";
+} else if (env === "remoteTest") {
+  host = "https://devulabeler.na2na.website";
+} else {
+  host = "https://ulabeler.na2na.website";
+}
 
 router.post("/check_userID", function (request, response) {
   // キーが足りていなければ400を返す
