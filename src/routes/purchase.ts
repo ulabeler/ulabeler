@@ -228,4 +228,12 @@ router.get("/select_delivery_date", (request, response) => {
   }
 });
 
+router.get("/select_payment_method", async (request, response) => {
+  if (!request.user) {
+    response.status(403).send("Forbidden");
+  } else {
+    response.render("purchase/select_payment_first.ejs");
+  }
+});
+
 export default router;

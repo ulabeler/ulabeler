@@ -65,8 +65,7 @@
                         </tr>
                     </table>
                     <div class="double_button">
-                        <button type="button" class="white_button"
-                            onclick="window.close()">戻る</button>
+                        <button type="button" class="white_button" onclick="window.close()">戻る</button>
                         <button type="button" class="black_button" onclick="update()">決定</button>
                     </div>
                 </form>
@@ -79,9 +78,21 @@
 
 
         </article>
-        <%- include("../components/footer.ejs") %>
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
     <script>
+        bubbly({
+            blur: 5,
+            bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.1})`,
+            canvas: document.querySelector("#back"),
+            colorStart: '#fff',
+            colorStop: '#fff',
+            compose: 'source-over',
+            shadowColor: '#ffffef',
+            velocityFunc: () => Math.random() * 1.4,
+            radiusFunc: () => 3 + Math.random() * 20,
+        });
+
         // deliverySpeedTypeが、customでなければcustomDateとcustomTimeをdisabledにする
         const deliverySpeedType = document.getElementsByName("deliverySpeedType");
         const customDate = document.getElementsByName("customDate");
@@ -135,18 +146,18 @@
             console.log(customDateValue);
             console.log(customTimeValue);
 
-            axios.post("/api/user/updateTempDeliveryInfo",{
+            axios.post("/api/user/updateTempDeliveryInfo", {
                 deliverySpeedType: deliverySpeedTypeValue,
                 customDate: customDateValue,
                 customTime: customTimeValue
             })
-            .then(function (response) {
-                // 現在のウィンドウの呼び出し元を取得し、リロードさせる
-                var ref = window.opener || parent;
-                ref.location.reload();
-                console.log(response);
-                window.close();
-            })
+                .then(function (response) {
+                    // 現在のウィンドウの呼び出し元を取得し、リロードさせる
+                    var ref = window.opener || parent;
+                    ref.location.reload();
+                    console.log(response);
+                    window.close();
+                })
 
         }
 

@@ -132,7 +132,7 @@
                         </div>
                     </td>
                     <td>
-                        <p><a href="">　設定</a></p>
+                        <p><a onclick="selectPaymentMethod()">　設定</a></p>
                     </td>
                 </tr>
             </table>
@@ -156,10 +156,9 @@
 <script>
     function setNewDeriveryDate() {
         console.log(window.open('/purchase/select_delivery_date', "setNewDeriveryDate", 'width=500,toolbar=no,menubar=no,scrollbars=yes,status=no' ));
-        //setNewDeriveryDateが閉じられたらリロードする
-        window.onunload = function() {
-            location.reload();
-        }
+    }
+    function selectPaymentMethod() {
+        console.log(window.open('/purchase/select_payment_method', "setNewDeriveryDate", 'width=500,toolbar=no,menubar=no,scrollbars=yes,status=no' ));
     }
 </script>
 
