@@ -468,6 +468,17 @@ CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`cart` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `ulabeler_dev`.`tempDeliverySettings`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`tempDeliverySettings` (
+  `userId` VARCHAR(15) NOT NULL,
+  `estimatedDeliveryDate` DATETIME NOT NULL,
+  `estimatedDeliveryTimeCategory` VARCHAR(45) NOT NULL,
+  `effectiveDate` DATETIME NOT NULL,
+  PRIMARY KEY (`userId`))
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

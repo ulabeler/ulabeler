@@ -65,7 +65,7 @@ export type purchased_history_itemTable = {
 export type delivery_addressTable = {
   user_id: string;
   updated_at: Date;
-  zipcode: string;
+  zip_code: string;
   address: string;
   familyname: string;
   firstname: string;
@@ -75,16 +75,16 @@ export type delivery_addressTable = {
 
 export type delivery_statusTable = {
   purchase_record_id: string;
-  datetime_schedule: Date | null;
-  current_status: string | null;
-  zipcode: string;
-  address: string;
-  familyname: string;
-  firstname: string;
-  familyname_furigana: string | null;
-  firstname_furigana: string | null;
-  datetime_results: Date | null;
-  updated_at: Date | null;
+  datetime_schedule?: Date | null;
+  current_status?: string | null;
+  zipcode?: string;
+  address?: string;
+  familyname?: string;
+  firstname?: string;
+  familyname_furigana?: string | null;
+  firstname_furigana?: string | null;
+  datetime_results?: Date | null;
+  updated_at?: Date | null;
 };
 
 export type base_settingsTable = {
@@ -182,4 +182,11 @@ export type cartTable = {
   workId: string;
   userId: string;
   quantity: number;
+};
+
+export type tempDeliverySettingsTable = {
+  userId: string;
+  estimatedDeliveryDate: Date;
+  estimatedDeliveryTimeCategory: string;
+  effectiveDate?: Date;
 };
