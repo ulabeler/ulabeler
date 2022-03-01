@@ -188,4 +188,5 @@ export type tempDeliverySettings = {
   userId: string;
   estimatedDeliveryDate: Date;
   estimatedDeliveryTimeCategory: string;
+  effectiveDate: Date;
 };
