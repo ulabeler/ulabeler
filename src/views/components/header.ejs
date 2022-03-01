@@ -55,7 +55,8 @@
     window.addEventListener('load', async () => {
         // カート数を取得
         const currentCartNum = await axios.post('/api/util/cartCount');
-        if (currentKeepCartNum.data != 0) {
+        console.log(currentCartNum.data);
+        if (currentCartNum.data !== 0) {
             currentKeepCartNum.innerText = currentCartNum.data;
         }
     });

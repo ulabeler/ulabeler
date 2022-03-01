@@ -77,7 +77,7 @@
                             <th style = "width: 20%;"></th>
                             <th><button  type="button" class="white_button2" onclick="closePopUp('cartidx-<%-currentCartWorkDetailList[i].workId%>')">戻る</button></th>
                             <th style = "width: 30%;"></th>
-                            <th><button  type="submit" class="red_button2" onclick="addCart('<%-currentCartWorkDetailList[i].workId%>')">削除</button></th>
+                            <th><button  type="submit" class="red_button2" onclick="removeCart('<%-currentCartWorkDetailList[i].workId%>')">削除</button></th>
                             <th style = "width: 20%;"></th>
                         </tr>
                     </table>
@@ -93,7 +93,7 @@
     <% } %> 
 
     <% } %> 
-    <div id="flg"><%= currentCartWorkDetailList.length %></div>
+    <input type="hidden" name="flg" id="flg" value="<%= currentCartWorkDetailList.length %>">
     
     </article>
     <%- include("./components/login.ejs") %>
@@ -106,7 +106,7 @@
     const totalAmount = document.getElementById("totalAmount");
     const flg = document.getElementById("flg");
 
-    if (flg.innerText != 0) {
+    if (flg.value != 0) {
         // 0.2秒ごとに更新する
         setInterval(() => {
             let sumAmount = 0;
@@ -143,7 +143,7 @@
         });
     });
 
-    function addCart(id){
+    function removeCart(id){
         axios.post("/api/util/cartRemove", {
             workId: id
         }).then(res => {
