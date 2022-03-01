@@ -1198,6 +1198,7 @@ p.new_warning{
     border-spacing: 0;
 }
 .address_input2 td{
+	width: 15%;
     padding: 10px;
     /* background-color: #ff0088; */
 }
