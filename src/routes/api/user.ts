@@ -746,6 +746,32 @@ router.post("/updateTempDeliveryInfo", async (request, response) => {
   }
 });
 
+router.post("/updateUserCardInfo", async (request, response) => {
+  if (!request.user) {
+    response.status(401).send("UnAuthorized");
+  } else {
+    const userCardInfo: userTable = {
+      id: request.user.id,
+      cardnumber: request.body.cardNumber,
+      name_card: request.body.cardName,
+      expiration: request.body.cardExpiration,
+    };
+    await knex("user")
+      .update(userCardInfo)
+      .where({
+        id: request.user.id,
+      })
+      .catch((err: Error) => {
+        console.error(err);
+        response.status(500).send("Internal Server Error");
+        return;
+      });
+    console.table(userCardInfo);
+    console.table(request.user);
+    response.status(201).send(true);
+  }
+});
+
 // CLI専用
 // 該当idのユーザーを物理削除
 router.post("/dev/force_delete_user", function (request, response) {
