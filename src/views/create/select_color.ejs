@@ -25,7 +25,7 @@
   <div class = userpage>
   </div>
       
-      <div class="image_wrapper"><img src="
+      <div class="image_wrapper"><img id="thumbnail" src="
         <% if (typeof thumbnailPath !== 'undefined') { %> 
         <%= thumbnailPath %>
         <% } else { %>
@@ -71,7 +71,9 @@
 <%- include("../components/footer.ejs") %>
 </body>
 <script>
-  
+  // img id=thumbnailの物の色を変える
+  // 真上にcanvasを設定し、そこにimgを描画する
+  // 
 </script>
 
 </html>
