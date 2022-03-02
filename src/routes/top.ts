@@ -36,10 +36,7 @@ if (env === "development") {
 router.get("/", async function (request, response) {
   const libraryWorkNumOnView = 20;
   const userInfo = request.user ? request.user : null;
-  const libraryWorkList = await getRandomIdList(
-    libraryWorkNumOnView,
-    request.user
-  );
+  const libraryWorkList = await getRandomIdList(libraryWorkNumOnView, userInfo);
   console.table(libraryWorkList);
   response.render("top", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
