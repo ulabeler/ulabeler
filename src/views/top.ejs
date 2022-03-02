@@ -287,16 +287,16 @@
                                         <div class="okiniiri">
                                             <% if (typeof(workList[i].isFavorited) == "undefined") { %>
                                                 <div id="click" onclick="event.stopPropagation(); ">
-                                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'overView')">★</div></label>
+                                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
                                                 </div> 
                                                 <% } else { %>
                                                     <% if (workList[i].isFavorited) { %>
                                                         <div id="click" onclick="event.stopPropagation(); ">
-                                                            <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" checked><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'overView')">★</div></label>
+                                                            <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" checked><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
                                                         </div> 
                                                         <% } else { %>
                                                             <div id="click" onclick="event.stopPropagation(); ">
-                                                                <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'overView')">★</div></label>
+                                                                <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
                                                             </div> 
                                                             <% } %>
                                                                 <% } %>
@@ -358,7 +358,7 @@
                                 for (let i = 0; i < favViewNum.length; i++) {
                                     favViewNum[i].innerHTML = `<font size="4">${response.data.number}</font>`;
                                     console.log(favStatus[i].checked);
-                                    if (where == "overView") {
+                                    if (where == "detail") {
                                         if (favStatus[0].checked) {
                                             favStatus[i].checked = false;
                                         } else {
@@ -366,9 +366,9 @@
                                         }
                                     } else {
                                         if (favStatus[0].checked) {
-                                            favStatus[1 - i].checked = false;
+                                            favStatus[1].checked = true;
                                         } else {
-                                            favStatus[1 - i].checked = true;
+                                            favStatus[1].checked = false;
                                         }
                                     }
                                 }
