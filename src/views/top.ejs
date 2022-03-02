@@ -2,60 +2,407 @@
 <html lang="ja">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="robots" content="none,noindex,nofollow">
-  <meta name="description" content="ハンドメイドショップサイト">
-  <meta name="keywords" content="ECサイト">
-  <title>U labeler</title>
-
-  <link href="/stylesheets/top.css" rel="stylesheet" type="text/css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
-
+    <%- include("./components/libTopPage") %>
+        <title>U labeler</title>
 </head>
 <header class="header">
+    <%- include("./components/headerTopPage") %>
 
-  <div class="header_logo">
-    <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
-  </div>
+        <body>
+            <%- include("./components/sidemenu", {side_menu: side_menu}) %>
 
-  <!-- 検索ボックス -->
-  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+                <article>
 
-  <span class="magnifying_glass"></span>
-  <form method="get" action="#" class="search_container">
-    <input type="text" size="25" placeholder="キーワード検索">
-    <input type="submit" value="&#xf002">
-  </form>
-
-  </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
 
 
-  <body>
+                    <br>
+                    <br>
+                    <div class="wrap slide-paused" ontouchstart="">
+                        <ul class="slideshow1">
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model7.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model6.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model5.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model4.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model3.jpg"></a>
+                            <li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model2.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model1.jpg"></a>
+                            </li>
 
-    <input type="checkbox" id="nav1">
-    <label for="nav1" class="open"><span></span></label>
-    <label for="nav1" class="close"></label>
+                        </ul>
+                        <ul class="slideshow1">
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model7.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model6.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model5.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model4.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model3.jpg"></a>
+                            <li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model2.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model1.jpg"></a>
+                            </li>
+
+                        </ul>
+                        <ul class="slideshow1">
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model7.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model6.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model5.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model4.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model3.jpg"></a>
+                            <li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model2.jpg"></a>
+                            </li>
+                            <li class="content1 content-hover"><a href="/customize/select_object"><img
+                                        src="/images/system/model1.jpg"></a>
+                            </li>
+
+                        </ul>
+
+                    </div>
 
 
-    <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
-
-    <article>
-
-      <%- include("./components/login.ejs") %>
-
-      <p id="show_username">テストユーザーさん</p>
-      <a href="/creator_work/ulabeler">作者作品ページ</a>
-      <hr>
-      <a href="https://github.com/na2na-p/ulabeler/issues">既知の問題</a>
+                    <!-- ページ名 -->
 
 
-    </article>
-    <br>
-    <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-    <br>
-    <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
-  </body>
+                    <h3 class="h3_center4"> U labeler</h3>
+                    <h4>世界に一つだけのオリジナル作品 作ってみてはいかがですか？？</h4>
+                    <a href="/customize/select_object"><div class="btn_custmize">
+                        <p class="btn_custmize1">
+                                <font color="white">CUSTOMIZE</font>
+                            </p>
+                    </div></a>
+                    <br>
+                    <br>
+                    <br>
 
 
+                    <div class="box18">
+                        <br><br>
+                        <h3 class="h3_center7">ライブラリ
+                            <hr>
+                        </h3>
+                        <div id="js-show-popup">
+                            <div class="box_wrapper_2">
+
+
+                                <% for( let i=0; i < workList.length; i++ ) { %>
+                                    <!-- セクション１個で１つの表示👇 -->
+                                    <section class="box_item_2" onclick="showPopUp('listidx-<%-workList[i].id%>')">
+                                        <br>
+                                        <div class="userpage">
+                                            <div class="user_3">
+                                                <form action="" method="post" id="hoge">
+                                                    <div class="user_box_1">
+                                                        <div class="user_box_1">
+                                                            <a href="/creator_work/<%= workList[i].created_by_user_id %>" onclick="event.stopPropagation(); ">
+                                                            <table cellpadding="0" 　class="usertable">
+
+                                                                <tr>
+                                                                    <th rowspan="4">
+                                                                        <p class=user_img2><img src="<%= workList[i].creatorIconPath %>" alt="<%- workList[i].name %>" />
+                                                                    </th>
+                                                                    <td>　　　　　</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <p class="username"><%= workList[i].creatorName %></p>
+                                                                    </td>
+                                                                    <input type="hidden" name="">
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="userid2">@<%= workList[i].created_by_user_id%>
+                                                                    </td>
+                                                                    <input type="hidden" name="">
+                                                                </tr>
+
+
+                                                            </table>
+                                                        </a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class=userpage>
+                                        </div>
+                                        <p class="date1">
+                                            <% const create_at=new Date(workList[i].create_at)%>
+                                                <%= create_at.getFullYear() + "/" + ('00' +
+                                                    (create_at.getMonth()+1)).slice(-2) + "/" + ('00' +
+                                                    create_at.getDate()).slice(-2) %>
+                                        </p>
+                                        <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>" alt="<%- workList[i].name %>" /></div>
+                                            <p class="explanation"><%- workList[i].baseCategoryName %><br>「<%- workList[i].name %>」</p>
+                                            <% if (typeof(workList[i].isFavorited) == "undefined") { %>
+                                                <div id="click" onclick="event.stopPropagation(); ">
+                                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'overView')">★</div></label>
+                                                </div> 
+                                                <% } else { %>
+                                                    <% if (workList[i].isFavorited) { %>
+                                                        <div id="click" onclick="event.stopPropagation(); ">
+                                                            <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" checked><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'overView')">★</div></label>
+                                                        </div> 
+                                                        <% } else { %>
+                                                            <div id="click" onclick="event.stopPropagation(); ">
+                                                                <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'overView')">★</div></label>
+                                                            </div> 
+                                                            <% } %>
+                                                                <% } %>
+                                            <div class="favorite3">
+                                                <p class="favorite2 favNumIdx-<%-workList[i].id%>" id="favNumIdx-<%-workList[i].id%>">
+                                                    <font size="4">
+                                                        <%= workList[i].favoritedWorkNumber%>
+                                                    </font>
+                                                </p>
+                                            </div>
+                                    </section>
+                                    <!-- ここまで👆 -->
+                                    <% } %>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ポップアップの中身 -->
+
+                    <% for( let i = 0; i < workList.length; i++ ) { %>
+                        <div class="popup" id="listidx-<%-workList[i].id%>">
+                            <div class="popup-inner">
+                                <div class="close-btn" id="js-close-btn" onclick="closePopUp('listidx-<%-workList[i].id%>')"><i
+                                    class="fas fa-times"></i></div>
+    
+    
+                                <!-- 作品詳細（自分）👇 -->
+    
+                                <section class="box_item_3">
+                                    <br>
+                                    <div class="userpage">
+                                        <div class="user_3">
+                                            <form action="" method="post" id="hoge">
+                                                <div class="user_box_1">
+                                                    <a href="/creator_work/<%= workList[i].created_by_user_id %>" onclick="event.stopPropagation(); ">
+                                                        <table cellpadding="0" 　class="usertable">
+    
+                                                            <tr>
+                                                                <th rowspan="4">
+                                                                    <p class=user_img2><img src="<%= workList[i].creatorIconPath %>" alt="<%-workList[i].created_by_user_id %>">
+                                                                    </p>
+                                                                </th>
+                                                                <td>　　　　　</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    <p class="username">
+                                                                        <%- workList[i].creatorName %>
+                                                                    </p>
+                                                                </td>
+                                                                <input type="hidden" name="">
+                
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="userid2">@<%- workList[i].created_by_user_id %>
+                                                                </td>
+                                                                <input type="hidden" name="">
+                                                            </tr>
+    
+    
+                                                        </table>
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class=userpage>
+                                    </div>
+                                    <p class="date1">
+                                        <% const create_at=new Date(workList[i].create_at)%>
+                                        <%= create_at.getFullYear() + "/" + ('00' + (create_at.getMonth()+1)).slice(-2) + "/" +
+                                            ('00' + create_at.getDate()).slice(-2) %>
+                                    </p>
+                                    <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>" alt="" />
+                                        <table class=tannka_table>
+                                            <tr>
+                                                <th class="tannka">
+                                                    <p>単価：<%- workList[i].unit_price %>円　</p>
+                                                </th>
+                                                <th class="cart_img2">
+                                                    <p class=cart_img><img src="/images/system/cart-5.jpg"
+                                                                alt="商品画像" onclick="addCart('<%=workList[i].id%>')">
+                                                </th>
+                                            </tr>
+                                        </table>
+    
+                                        <p class="explanation"><%- workList[i].baseCategoryName %></p>
+                                        <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
+                                        <div class="explanation2">
+                                                <font size="2"><% if (workList[i].hashtag) { %>
+                                                    <% const hashTag=JSON.parse(workList[i].hashtag) %>
+                                                    <% if (hashTag !== null) { %>
+                                                        <% for(let j=0; j < hashTag.length; j++){ %>
+                                                            <a href="/search?q=%23<%- hashTag[j].slice(1) %>">
+                                                            <%- hashTag[j] %></a>
+                                                                <% } %>
+                                                                    <% } %></font></p>
+                                                                <% } %> 
+                                        </div>
+                                        <br>
+                                        <p class="explanation3"><%- workList[i].introduction %></p>
+                                        <div class="okiniiri">
+                                            <% if (typeof(workList[i].isFavorited) == "undefined") { %>
+                                                <div id="click" onclick="event.stopPropagation(); ">
+                                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
+                                                </div> 
+                                                <% } else { %>
+                                                    <% if (workList[i].isFavorited) { %>
+                                                        <div id="click" onclick="event.stopPropagation(); ">
+                                                            <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" checked><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
+                                                        </div> 
+                                                        <% } else { %>
+                                                            <div id="click" onclick="event.stopPropagation(); ">
+                                                                <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
+                                                            </div> 
+                                                            <% } %>
+                                                                <% } %>
+                                            <div class="favorite3">
+                                                <p class="favorite2">
+                                                    <font size="4"><%= workList[i].favoritedWorkNumber%></font>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <% if (workList[i].userFlagIsMine) { %>
+                                            <p class="button6"><button type="button" class="black_button4"
+                                                    onclick="location.href='/work/<%- workList[i].id %>/edit'">編集</button></p>
+                                            <% } else { %>
+                                                <br>
+                                                <a href="#" onclick="event.stopPropagation(); checkIsLoginForReport('<%=workList[i].id%>')">
+                                                    <p class="tuuhou">
+                                                        <font size="2" color="red">通報する</font>
+                                                    </p>
+                                                </a>
+                                                <% } %>
+                                </section>
+    
+                            </div>
+                        <div class="black-background js-black-bg" id="" onclick="closePopUp('listidx-<%-workList[i].id%>')"></div>
+                    </div>
+                    <% } %>
+                </article>
+                <br>
+                <%- include("./components/login.ejs") %>
+                    <%- include("./components/footer.ejs") %>
+
+        </body>
+        <script>
+            // お気に入り処理
+            /**
+             * @param {string} id 作品id
+             * @param {string} where 呼び出し元
+             * @return {void}
+             */
+            function selectFavorite(id, where) {
+                const favViewNum = document.querySelectorAll(`.favNumIdx-${id}`);
+                const favStatus = document.querySelectorAll(`.favStatusIdx-${id}`);
+                axios.post(
+                    `/api/work/favorite/${id}`,
+                )
+                    .then(function (response) {
+                        console.log(response);
+                        // /api/work/getworkfavnumにPOSTし、返却値をalertで表示
+                        axios.post(
+                            `/api/work/getworkfavnum/`,
+                            {
+                                id: id
+                            }
+                        )
+                            .then(function (response) {
+                                console.log(response);
+                                // お気に入り数を表示
+                                // favViewNumの要素数分ループ
+                                for (let i = 0; i < favViewNum.length; i++) {
+                                    favViewNum[i].innerHTML = `<font size="4">${response.data.number}</font>`;
+                                    console.log(favStatus[i].checked);
+                                    if (where == "detail") {
+                                        if (favStatus[0].checked) {
+                                            favStatus[i].checked = false;
+                                        } else {
+                                            favStatus[i].checked = true;
+                                        }
+                                    } else {
+                                        if (favStatus[0].checked) {
+                                            favStatus[1].checked = true;
+                                        } else {
+                                            favStatus[1].checked = false;
+                                        }
+                                    }
+                                }
+                                // favViewNum.innerHTML = `<font size="4">${response.data}</font>`;
+                                // alert(response.data);
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                        // location.reload();
+                    })
+                    .catch(function (error) {
+                        // httpStatusCodeを取得
+                        console.log(error.response.status);
+                        if (error.response.status == 401) {
+                            // favStatusのcheckedをfalseにする
+                            for (let i = 0; i < favStatus.length; i++) {
+                                favStatus[i].checked = false;
+                            }
+                            alert("お気に入りに追加するには、ログインしてください。");
+                        }
+                    });
+                return;
+            }
+            function checkIsLoginForReport(id){
+                axios.post("/api/user/isLogin")
+                .then(function(response){
+                    if(response.data.isLogin){
+                        location.href = `/work/${id}/report`;
+                    }else{
+                        alert("ログインしてください。");
+                    }
+                })
+            }
+        </script>
 
 </html>

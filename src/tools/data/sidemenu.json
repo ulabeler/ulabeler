@@ -1,6 +1,10 @@
 {
     "true":[
         {
+            "title": "カスタマイズ",
+            "link": "/customize/select_object"
+        },
+        {
             "title": "マイ作品リスト",
             "link": "/my_work"
         },
@@ -10,11 +14,11 @@
         },
         {
             "title": "お気に入り作者リスト",
-            "link": "#"
+            "link": "/favorite/creator"
         },
         {
             "title": "購入履歴",
-            "link": "#"
+            "link": "/purchase/history"
         },
         {
             "title": "会員情報",

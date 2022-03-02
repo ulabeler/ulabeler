@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("../components/lib.ejs") %>
+<title>U labeler</title>
+</head>
+<header class="header">
+    <%- include("../components/header.ejs") %>
+    <body>
+    <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+        <article>
+            <!-- ページ名 -->
+            <div class="pan">
+                <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ <font size="5">作品設定 </font>＞ 作品設定確認</h5>
+            </div>
+            <h3 class="h3_center2">作品設定
+                <hr>
+            </h3>
+            <section class="box_item_4">
+                <br>
+                <div class="userpage">
+                    <div class="user_3">
+                        <form action="" method="post" id="hoge">
+                            <div class="user_box_1">
+                                <a href="">
+                                    <table cellpadding="0" 　class="usertable">
+                                        <tr>
+                                            <th rowspan="4">
+                                                <p class=user_img2><img src="<%= results[0].icon_path %>" alt="ユーザーアイコン"></p>
+                                            </th>
+                                            <td>　　　　　</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p class="username">
+                                                    <%= results[0].name %>
+                                                </p>
+                                            </td>
+                                            <input type="hidden" name="">
+                                        </tr>
+                                        <tr>
+                                            <td class="userid2">@<%= results[0].id %>
+                                            </td>
+                                            <input type="hidden" name="">
+                                        </tr>
+                                    </table>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="userpage">
+                </div>
+                <p class="date1">
+                    <% const create_at=new Date(result_w[0].create_at)%>
+                    <%= create_at.getFullYear() + "/" + ('00' + (create_at.getMonth()+1)).slice(-2) + "/" +
+                        ('00' + create_at.getDate()).slice(-2) %>
+                </p>
+                <div class="image_wrapper"><img src="<%= result_w[0].thumbnail_path %>" alt="" /></div>
+                <form method="post">
+                    <p class="explanation">
+                        <%= object_name %>
+                    </p>
+                    <br>
+                    <table class="setumeitable3">
+                        <tr><th>作品名　　<font color="red">*</font>：</th>
+                            <th><input type=”text” name="name" id="workName" class="tekisuto"
+                                    style=" height: 30px; width: 400px;" placeholder="20文字以内"
+                                    value="<%= queryarray.name%>" required></p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="gyoukann">
+                                <p class="error_message7">
+                                <p id="errorWorkName"></p>
+                            </th>
+                        </tr>
+                        <input type="hidden" id="workId" value="<%- result_w[0].id %>">
+                        <tr>
+                            <th>作品説明文<font color="red">*</font>：</th>
+                            <th>
+                                <font color="#85858"><textarea id="workIntroduction" class="tekisuto"
+                                        placeholder="150文字以内#ハッシュタグ" name="example2" cols="55" rows="8" wrap="soft"
+                                        maxlength="150" value="<%= queryarray.example2%>"></textarea>
+                                </font>
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="gyoukann">
+                                <p class="workIntroduction">
+                                <p id="errorWorkIntroduction"></p>
+                            </th>
+                        </tr>
+                    </table>
+                    <div class="check">
+                    <label><input id="isPublic" type="checkbox" class="check1" name="check" checked>公開</label>
+                    </div>
+                    <div class="button">
+                        <button type="button" class="black_button2" id="send"
+                                                onclick="update()">決定</button>
+                    </div>
+                    <br>
+                </form>
+            </section>
+            </div>
+            </div>
+            <noscript>
+                <p>JavaScriptを有効にしてください。</p>
+            </noscript>
+        </article>
+        <%- include("../components/footer.ejs") %>
+        <script>
+            const workName = document.getElementById('workName');
+            const workIntroduction = document.getElementById('workIntroduction');
+            const isPublic = document.getElementById('isPublic');
+            const send = document.getElementById('send');
+            const workId = document.getElementById('workId').value;
+
+            const errorWorkName = document.getElementById('errorWorkName');
+            const errorWorkIntroduction = document.getElementById('errorWorkIntroduction');
+
+            let errorCountWorkName = 0;
+            let errorCountWorkIntroduction = 0;
+            let tooMany = false;
+
+            workName.addEventListener("keyup", () => {
+                if (workName.value.length > 20) {
+                    errorWorkName.innerHTML = "20文字以内で入力してください";
+                    errorCountWorkName++;
+                } else if (workName.value.length == 0) {
+                    errorWorkName.innerHTML = "この項目は必須です。";
+                    errorCountWorkName++;
+                } else {
+                    errorWorkName.innerHTML = "";
+                    errorCountWorkName = 0;
+                }
+            });
+
+            workIntroduction.addEventListener("keyup", () => {
+                if (workIntroduction.value.length > 150) {
+                    tooMany = true;
+                    errorWorkIntroduction.innerHTML = "150文字以内で入力してください";
+                    errorCountWorkIntroduction++;
+                } else if (workIntroduction.value.length == 0) {
+                    errorWorkIntroduction.innerHTML = "この項目は必須です。";
+                    errorCountWorkIntroduction++;
+                } else {
+                    errorWorkIntroduction.innerHTML = "";
+                    errorCountWorkIntroduction = 0;
+                }
+            });
+
+            workName.addEventListener("focusout", () => {
+                if (workName.value.length > 0) {
+                    // @ts-ignore
+                    axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
+                        text: workName.value,
+                    })
+                        .then(function (response) {
+                            if (response.data == true) {
+                                errorWorkName.innerText = '不適切なワードが含まれています。';
+                                errorCountWorkName++;
+                            } else {
+                                if (tooMany) {
+                                    return;
+                                } else {
+                                    errorWorkName.innerText = '';
+                                    if (workName.value.length == 0) {
+                                        errorCountWorkName++;
+                                    } else {
+                                        errorCountWorkName = 0;
+                                    }
+                                }
+                            }
+                        })
+                        .catch(function (error) {
+                            alert(error); // TODO: エラー時の遷移先
+                        });
+                }
+            });
+
+            workIntroduction.addEventListener("focusout", () => {
+                if (workIntroduction.value.length > 0) {
+                    // @ts-ignore
+                    axios.post('https://tools.na2na.dev/api/word/is_includeNgWord', {
+                        text: workIntroduction.value,
+                    })
+                        .then(function (response) {
+                            if (response.data == true) {
+                                errorWorkIntroduction.innerText = '不適切なワードが含まれています。';
+                                errorCountWorkIntroduction++;
+                            } else {
+                                if (tooMany) {
+                                    return;
+                                } else {
+                                    errorWorkIntroduction.innerText = '';
+                                    if (workIntroduction.value.length == 0) {
+                                        errorCountWorkIntroduction++;
+                                    } else {
+                                        errorCountWorkIntroduction = 0;
+                                    }
+                                }
+                            }
+                        })
+                        .catch(function (error) {
+                            alert(error); // TODO: エラー時の遷移先
+                        });
+                }
+            });
+
+            //0.2秒ごとに監視して、errorCountWorkIntroductionとerrorCountWorkNameが0以上なら送信ボタンを無効化する
+            setInterval(() => {
+                if (errorCountWorkName >= 1 || errorCountWorkIntroduction >= 1) {
+                    send.disabled = true;
+                } else {
+                    send.disabled = false;
+                }
+            }, 200);
+
+            function update() {
+                console.log(workName.value);
+                console.log(workIntroduction.value);
+                console.log(isPublic.checked);
+                console.log(workId);
+                // 文字が入力されているかを確認
+                if (workName.value.length == 0) {
+                    errorWorkName.innerHTML = "この項目は必須です。";
+                    errorCountWorkName++;
+                    return
+                }
+                if (workIntroduction.value.length == 0) {
+                    errorWorkIntroduction.innerHTML = "この項目は必須です。";
+                    errorCountWorkIntroduction++;
+                    return
+                }
+
+                if (isPublic.checked) {
+                    isPublic.value = "checked";
+                } else {
+                    isPublic.value = "unchecked";
+                }
+
+                workName.value = workName.value.replace(/\s+/g, "");
+
+                // workName: workName.value,
+                // workIntroduction: workIntroduction.value,
+                // isPublic: isPublic.checked,
+                // これらを、/work/${workId}/edit/confirmへPOST
+                // formを新たに作って送信する
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/workSet/work_setting`;
+                form.style.display = 'none';
+                const inputWorkName = document.createElement('input');
+                inputWorkName.type = 'hidden';
+                inputWorkName.name = 'workName';
+                inputWorkName.value = workName.value;
+                form.appendChild(inputWorkName);
+                const inputWorkIntroduction = document.createElement('input');
+                inputWorkIntroduction.type = 'hidden';
+                inputWorkIntroduction.name = 'workIntroduction';
+                inputWorkIntroduction.value = workIntroduction.value;
+                form.appendChild(inputWorkIntroduction);
+                const setWorkId = document.createElement('input');
+                setWorkId.type = 'hidden';
+                setWorkId.name = 'workId';
+                setWorkId.value = workId;
+                form.appendChild(setWorkId);
+                const inputIsPublic = document.createElement('input');
+                inputIsPublic.type = 'hidden';
+                inputIsPublic.name = 'isPublic';
+                inputIsPublic.value = isPublic.value;
+                form.appendChild(inputIsPublic);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+        <script>
+            bubbly({
+                blur: 5,
+                bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.3})`,
+                canvas: document.querySelector("#back"),
+                colorStart: '#fff',
+                colorStop: '#fff',
+                compose: 'source-over',
+                shadowColor: '#ffffef',
+                velocityFunc: () => Math.random() * 1.4,
+                radiusFunc: () => 3 + Math.random() * 20,
+            });
+        </script>
+    </body>
+
+</html>

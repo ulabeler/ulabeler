@@ -12,19 +12,21 @@
  */
 function showPopUp(id: string) {
   console.log(id);
-  const target= document.getElementById(id);
+  const target = document.getElementById(id);
   console.log(target);
-    target!.classList.add('is-show');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  target!.classList.add("is-show");
 }
 
 // ポップアップを閉じる
 /**
- * @param {id} string
+ * @param {string} id
  * @return {void}
- *///
- function closePopUp(id: string) {
+ */
+function closePopUp(id: string) {
   console.log(id);
-  const target= document.getElementById(id);
+  const target = document.getElementById(id);
   console.log(target);
-    target!.classList.remove('is-show');
-};
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  target!.classList.remove("is-show");
+}

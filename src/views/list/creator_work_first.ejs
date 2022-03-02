@@ -6,94 +6,117 @@
         <title>U labeler</title>
 </head>
 <header class="header">
+    <%- include("../components/header.ejs") %>
 
-    <div class="header_logo">
-        <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
-    </div>
+        <body>
+            <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+                <%- include("../components/login.ejs") %>
 
-    <!-- 検索ボックス -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+                    <article>
+                        <div class="footerFixed">
+                            <br>
+                            <br>
 
-    <span class="magnifying_glass"></span>
-    <form method="get" action="#" class="search_container">
-        <input type="text" size="25" placeholder="キーワード検索">
-        <input type="submit" value="&#xf002">
-    </form>
+                            <div class="userpage">
 
+                                <div class="user_2">
+                                    <form action="" method="post" id="hoge">
+                                        <div class="user_box">
+                                            <table cellpadding="0" 　class="usertable">
 
+                                                <tr>
+                                                    <th rowspan="4">
+                                                        <p class=user_img><img src="<%- userInfo.icon_path %>"
+                                                                alt="ユーザーアイコン">
+                                                        </p>
+                                                    </th>
+                                                    <td>　　　　　</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="username">
+                                                            <%- userInfo.name %>
+                                                        </p>
+                                                    </td>
+                                                    <input type="hidden" name="">
 
-    <body>
-        <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
-        <%- include("../components/login.ejs") %>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="userid" id="userId">@<%- userInfo.id %>
+                                                        </p>
+                                                        </p>
+                                                    </td>
+                                                    <input type="hidden" name="">
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="setumei">
+                                                        <%- userInfo.self_introduction %>
+                                                    </td>
 
-            <article>
-                <div class="footerFixed">
-                <br>
-                <br>
-
-                <div class="userpage">
-
-                    <div class="user_2">
-                        <form action="" method="post" id="hoge">
-                            <div class="user_box">
-                                <table cellpadding="0" 　class="usertable">
-
-                                    <tr>
-                                        <th rowspan="4">
-                                            <p class=user_img><img src="<%- userInfo.icon_path %>" alt="商品画像"></p>
-                                        </th>
-                                        <td>　　　　　</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="username">
-                                                <%- userInfo.name %>
-                                            </p>
-                                        </td>
-                                        <input type="hidden" name="">
-
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="userid">＠<%- userInfo.id %>
-                                            </p>
-                                        </td>
-                                        <input type="hidden" name="">
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="setumei">
-                                            <%- userInfo.self_introduction %>
-                                        </td>
-
-                                    </tr>
+                                                </tr>
 
 
 
-                                </table>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-                <div class=userpage>
-                    <div class="td2">
-                        <!-- <p class = "star"><a href=""><font color="orange">★</font></a></p> -->
-                        <!-- お気に入りしいる★-->
-                        <p class="star_1"><a href="">
-                                <font color="orange">☆</font>
-                            </a></p><!-- お気に入りしいない☆-->
-                        <p class="favorite">100</p>
-                    </div>
-                </div>
-                <br>
-                <p class="senn">作品一覧
-                    <hr crass="hr3">
-                </p>
-                <br>
+                            <div class=userpage>
+                                <div class="td2">
+                                    <div id="click">
+                                        <label><input type="checkbox" name="favorite" id="favCheck">
+                                            <div class="star2_1 pyon" onclick="setUserFav('<%- userInfo.id %>')">★</div>
+                                        </label>
+                                    </div>
+                                    <p class="favorite" id="userFavNum"></p>
+                                </div>
+                            </div>
+                            <br>
+                            <p class="senn">作品一覧
+                                <hr crass="hr3">
+                            </p>
+                            <br>
 
-                <h3>このユーザーは作品を投稿していません。</h3>
-                </div>
-            </article>
-            <%- include("../components/footer.ejs") %>
-    </body>
+                            <h3>このユーザーは作品を投稿していません。</h3>
+                        </div>
+                    </article>
+                    <%- include("../components/footer.ejs") %>
+        </body>
+        <script>
+            // \nが含まれていたら除去
+            // スーペースが含まれていたら除去
+            const userId = document.getElementById('userId').innerHTML.slice(1).replace(/\n/g, '').replace(/\s/g, '');
+
+            function getUserFavNum(userId) {
+                axios.post('/api/work/getuserfavnum', {
+                    id: userId
+                })
+                    .then(function (response) {
+                        console.log(response);
+                        document.getElementById('userFavNum').innerHTML = response.data.number;
+                        document.getElementById('favCheck').checked = response.data.isFavorite ? true : false;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+
+            function setUserFav(userId) {
+                axios.post(`/api/user/favorite/${userId}`)
+                    .then(function (response) {
+                        console.log(response);
+                        getUserFavNum(userId);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+            window.addEventListener('DOMContentLoaded', function () {
+                getUserFavNum(userId);
+            });
+        </script>
+        <script src="/javascripts/searchInit.js"></script>
 
 </html>

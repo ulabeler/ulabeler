@@ -1,0 +1,124 @@
+body{
+    margin: 0 auto;
+}
+
+/* ポップアップ */
+.popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: .6s;
+}
+
+.popup.is-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-inner {
+	border-radius: 10px ; /*四角い枠*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width:60%;
+    max-width: 600px;
+    padding: 0px;
+    background-color: #fff;
+    z-index: 2;
+}
+
+.popup-inner img {
+    width: 60%;
+}
+
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+.close-btn i {
+    font-size: 20px;
+    color: #333;
+}
+
+.black-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.8);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.box_item_3 {
+    text-align: center;
+    margin: 0 auto;
+	width: 83%;
+	margin: 0 auto;
+	margin-top: 5%;
+	/* margin-bottom: 5%; */
+	border-radius: 20px;
+	padding-right: 5%;
+	padding-left: 5%;
+	/* box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .2);  */
+
+}
+.box_item_3 h3 {
+    margin: 0 auto;
+	font-size: 20px;
+
+}
+
+.box_item_3 p {
+	font-size: 15px;
+	margin: 0;
+	padding: 0;
+}
+.box_item_3 a {
+	color: #333;
+}
+.box_item_3 a:hover {
+	color: #cccccc;
+}
+.box_item_3 img {
+	width: 100%;
+	border-radius: 20px;
+	/* border: 1px solid #4e4e4e; */
+}
+
+
+.button_table{
+	margin: 0 auto;
+
+}
+
+.white_button2{
+    font-size: 13px;
+    border-radius: 6px;/* ボタンの角丸 */
+    background-color: #fff;/* ボタンの色 */
+    color:#000;/* ボタンの文字色 */
+    height: 32px;/*ボタンの細さ*/
+    width: 110px;/* ボタンの長さ */
+}
+
+.red_button2{
+    font-size: 13px;
+    border-radius: 6px;/* ボタンの角丸 */
+    background-color: rgb(255, 90, 90);/* ボタンの色 */
+    color:#fff;/* ボタンの文字色 */
+    height: 32px;/*ボタンの細さ*/
+    width: 110px;/* ボタンの長さ */
+}

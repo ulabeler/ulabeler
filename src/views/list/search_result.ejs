@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("../components/lib.ejs") %>
+        <title>U labeler</title>
+</head>
+<header class="header">
+    <%- include("../components/header.ejs") %>
+
+        <body>
+            <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+            <%- include("../components/login.ejs") %>
+
+                <article>
+                    <br>
+                    <br>
+                    <% if (false) { %>
+                        <h3 class="h3_center5">検索結果：ユーザー</h3>
+                        <div class="creator_box_list1">
+                            <!-- 作者ページのリンク やまよろしく-->
+                            <a href="/creator_work/<%= searchResult.singleUserSearchResult.id %>">
+                                <table>
+                                    <td>
+                                        <!-- ユーザー詳細 -->
+                                        <div class="favorite_creator_detail">
+                                            <!-- アイコン -->
+                                            <div class="creator_icon_area">
+                                                <img src="<%= searchResult.singleUserSearchResult.icon_path %>"
+                                                    class="creator_icon_image" alt="クリエイターアイコン">
+                                            </div>
+                                            <!-- ユーザーネーム -->
+                                            <p class="favorite_creator_name_id">
+                                                <%= searchResult.singleUserSearchResult.name %>
+                                            </p>
+                                            <!-- ユーザーID -->
+                                            <p class="favorite_creator_name_id">
+                                                <%= searchResult.singleUserSearchResult.id %>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <!-- 自己紹介文 -->
+                                        <div class="favorite_creator_txt">
+                                            <p>
+                                                <%= searchResult.singleUserSearchResult.self_introduction %>
+                                            </p>
+                                        </div>
+                                    </td>
+                                </table>
+                            </a>
+                        </div>
+                        <hr class="favorite_creator_Separation">
+                        <%# TODO: ここにユーザーの作品を表示する %>
+                        <br>
+                        <br>
+                        <br>
+                        <% } else if (searchResult.singleUserSearchResult) { %>
+                            <h3 class="h3_center5">検索結果：ユーザー</h3>
+                            <div class="creator_box_list1">
+                                <!-- 作者ページのリンク やまよろしく-->
+                                <a href="/creator_work/<%= searchResult.singleUserSearchResult.id %>">
+                                    <table>
+                                        <td>
+                                            <!-- ユーザー詳細 -->
+                                            <div class="favorite_creator_detail">
+                                                <!-- アイコン -->
+                                                <div class="creator_icon_area">
+                                                    <img src="<%= searchResult.singleUserSearchResult.icon_path %>"
+                                                        class="creator_icon_image" alt="クリエイターアイコン">
+                                                </div>
+                                                <!-- ユーザーネーム -->
+                                                <p class="favorite_creator_name_id">
+                                                    <%= searchResult.singleUserSearchResult.name %>
+                                                </p>
+                                                <!-- ユーザーID -->
+                                                <p class="favorite_creator_name_id">
+                                                    <%= searchResult.singleUserSearchResult.id %>
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <!-- 自己紹介文 -->
+                                            <div class="favorite_creator_txt">
+                                                <p>
+                                                    <%= searchResult.singleUserSearchResult.self_introduction %>
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </table>
+                                </a>
+                            </div>
+                            <hr class="favorite_creator_Separation">
+                            <br>
+                            <br>
+                            <br>
+                            <% } else if (!parsedQuery.singleUserSearchResult) { %>
+                            <% } else { %> 
+                                <h3 class="h3_center5">検索結果：ユーザー</h3>
+                                <p>見つかりませんでした。</p>
+                            <% } %> 
+
+                                <h3 class="h3_center5">検索結果：作品</h3>
+                                <div id="js-show-popup">
+                                    <div class="box_wrapper_2">
+                                        <%- include("../components/workListOverView.ejs", { workList: searchResult.workList, idx: idx,
+                                            maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage,
+                                            currentPageDescription: currentPageDescription, }) %>
+                                    </div>
+                                </div>
+
+                                <!-- ポップアップの中身 -->
+
+                                <% if (searchResult.workList) { %>
+                                        <%- include("../components/workListDetailForSearch", { workList: searchResult.workList, maxViewOnPage: maxViewOnPage}) %>
+                                    <% } %>
+                </article>
+                <br>
+
+                <%- include("../components/listPagenation", {currentPage: currentPage, currentPageDescription: currentPageDescription}) %>
+
+                        <%- include("../components/footer.ejs") %>
+        </body>
+        <script src="/javascripts/searchInit.js"></script>
+
+</html>

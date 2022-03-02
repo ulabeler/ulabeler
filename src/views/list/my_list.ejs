@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <%- include("../components/lib.ejs") %>
-    <title>U labeler</title>
+        <title>U labeler</title>
 </head>
 <header class="header">
     <%- include("../components/header.ejs") %>
-    <body>
-        <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
-            <article>
-                <br>
-                <br>
-                <!-- ページ名 -->
-                <h3 class="h3_center2"><%- currentPageDescription.title %> 
-                    <hr>
-                </h3>
-                <div id="js-show-popup">
-                    <div class="box_wrapper_2">
-                        <%- include("../components/workListOverView.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription, }) %>
+
+        <body>
+            <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+                <article>
+                    <br>
+                    <br>
+                    <!-- ページ名 -->
+                    <h3 class="h3_center2">
+                        <%- currentPageDescription.title %>
+                            <hr>
+                    </h3>
+                    <div id="js-show-popup">
+                        <div class="box_wrapper_2">
+                            <%- include("../components/workListOverViewWOCreatorInfo.ejs", { workList :workList, idx: idx, maxPage:
+                                maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo,
+                                currentPageDescription: currentPageDescription, }) %>
+                        </div>
                     </div>
-                </div>
-                <%- include("../components/workListDetail.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isMine: isMine}) %>
-            </article>
-            <br>
-            <%- include("../components/listPagenation.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isCreatorView: isCreatorView }) %>
-            <%- include("../components/footer.ejs") %>
-    </body>
+                    <%- include("../components/workListDetail.ejs", { workList :workList, idx: idx, maxPage: maxPage,
+                        maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo,
+                        currentPageDescription: currentPageDescription,isMine: isMine}) %>
+                </article>
+                <br>
+                <%- include("../components/listPagenation.ejs", { workList :workList, idx: idx, maxPage: maxPage,
+                    maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription:
+                    currentPageDescription,isCreatorView: isCreatorView }) %>
+                    <%- include("../components/footer.ejs") %>
+        </body>
 
 </html>

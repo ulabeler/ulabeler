@@ -55,4 +55,22 @@ const checkLogin = (request: Express.Request, response: any, next: any) => {
   return next();
 };
 
-export { findById, getisAuth, checkLogin };
+// ユーザーの公開情報を取得するメソッド
+/**
+ * @param {string} userId
+ */
+async function getUserSocialInfo(userId: string) {
+  const userSocialInfo: userTable[] = await knex("user")
+    .select("id", "name", "icon_path", "self_introduction")
+    .where("id", userId)
+    .catch((error: Error) => {
+      console.log(error);
+    });
+  if (userSocialInfo.length === 0) {
+    return;
+  } else {
+    return userSocialInfo[0];
+  }
+}
+
+export { findById, getisAuth, checkLogin, getUserSocialInfo };

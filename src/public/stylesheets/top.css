@@ -22,7 +22,6 @@ a:hover img {
 	width: 100%;
 	height: 150px;
 	align-items: flex-start;
-	background: rgba(240, 240, 240, 0.6);
 	justify-content: flex-end;
 }
 .header_logo {
@@ -59,6 +58,10 @@ a:hover img {
 
 }
 
+article hr{
+	margin: 0 auto;
+}
+
 .box_wrapper {
 	flex-wrap: wrap;
 	justify-content: center;
@@ -77,7 +80,8 @@ a:hover img {
 	box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .2); 
 	background-color: #ffffff;
 	border: none;
-	margin: o auto;
+	margin: 0 auto;
+	margin-bottom: 40px;
 	transition: all 0.6s ease 0s;
 }
 
@@ -146,7 +150,7 @@ hr {
 	display: none;
 }
 
-label {
+.hbg label{
 	cursor: pointer;
 	position: fixed;
 	top: 0;
@@ -191,7 +195,7 @@ label {
 }
 #nav1:checked + .open {
 	/* ハンバーガーopen */
-	background: #474747;
+	background: #000000;
 	transform: translateX(-250px);
 }
 #nav1:checked + .open span {
@@ -251,7 +255,7 @@ label {
 }
 .menu a:hover {
 	/* マウスを乗せたとき */
-	background: #414141;
+	background: #000000;
 }
 #nav1:checked ~ .menu {
 	transform: none;
@@ -261,7 +265,6 @@ header,
 footer {
 	box-sizing: border-box;
 	text-align: center;
-	background: rgba(240, 240, 240, 0.6);
 }
 header .logo,
 footer .copyright {
@@ -276,14 +279,12 @@ header {
 	position: relative;
 	margin-bottom: 40px;
 }
-footer {
-	background: rgba(240, 240, 240, 0.6);
-}
 footer small {
 	font-size: 1em;
 }
 
 /* bodyの中のコンテンツ */
+
 article {
 	width: 100%; 
 	margin: 0 auto 20px;
@@ -297,6 +298,9 @@ article h5{
 	text-align: left;
 }
 
+article hr{
+	margin:0 auto;
+}
 section {
 	margin: 4em 0;
 }
@@ -664,7 +668,7 @@ dl {
 	border-bottom: 1px solid #eee;
 	padding: 20px 0;
 	margin-right: 10%;
-	margin-left: 10;
+	margin-left: 10%;
 }
 dt, dd {
 	display: table-cell;
@@ -923,7 +927,7 @@ p.new_warning{
     transform: translate(-50%,-50%);
     width:60%;
 	height: auto;
-    max-width: 500px;
+    max-width: 800px;
     padding: 0px;
     background-color: #fff;
     z-index: 2;
@@ -932,6 +936,13 @@ p.new_warning{
 
 .popup-inner img {
     width: 60%;
+}
+
+.popup-inner hr {
+    margin:0 auto;
+}
+.popup-inner2 hr{
+    margin: 0 auto;
 }
 
 .close-btn {
@@ -995,7 +1006,7 @@ p.new_warning{
 }
 
 .h3_center hr{
-    height: 1px;/* hrの線の太さ */
+    height: 2px;/* hrの線の太さ */
     width: 130px;/* hrの線の長さ */
     background-color: #707070;
     border: none;
@@ -1003,15 +1014,15 @@ p.new_warning{
 }
 
 .cart_hr{
-    height: 2px;/* hrの線の太さ */
-    width: 75%;/* hrの線の長さ */
+    height: 1px;/* hrの線の太さ */
+    width: 85%;/* hrの線の長さ */
     background-color: #707070;
     border: none;
     /* margin-top: -2px; */
 }
 
 .cart_flex{
-    margin: 0% 20%;
+    margin: 0% 15%;
 	
     max-width: 960px;
     display: flex;
@@ -1038,7 +1049,7 @@ p.new_warning{
 
 .cart_item_flex{
     
-    margin: 0% 15%;
+    margin: 0% 10%;
     display: flex;
     justify-content: space-between;
     /* background-color: #ff0088; */
@@ -1075,11 +1086,13 @@ p.new_warning{
 }
 
 .cart_item_kazu{
-    margin-top:  5%;
+	margin-left: 3%;
+	margin-top:  5%;
     /* background-color: #ff0088; */
 }
 
 .total{
+	width: 60px;
     margin-top:  15%;
     margin-left: 33%;
 }
@@ -1130,7 +1143,7 @@ p.new_warning{
 }
 
 .h3_center2 hr{
-    height: 1px;/* hrの線の太さ */
+    height: 2px;/* hrの線の太さ */
     width: 230px;/* hrの線の長さ */
     background-color: #707070;
     border: none;
@@ -1154,7 +1167,6 @@ p.new_warning{
 
 .address_input{
     width: 550px;
-    /* min-width: ; */
     margin: 0 auto 30px auto;
     /* background-color: #ff0088; */
 }
@@ -1171,8 +1183,40 @@ p.new_warning{
     text-align: left;
     font-weight: normal;
     vertical-align: top;
-    width: 8em;
 }
+
+
+
+.address_input2{
+    width: 550px;
+    /* min-width: ; */
+    margin: 0 auto 30px auto;
+    /* background-color: #ff0088; */
+}
+
+.address_input2 table{
+    border-spacing: 0;
+}
+.address_input2 td{
+	width: 15%;
+    padding: 10px;
+    /* background-color: #ff0088; */
+}
+.address_input2 th{
+    padding: 15px;
+	/* width: 20px; */
+    text-align: left;
+    font-weight: normal;
+    vertical-align: top;
+    width: 10em;
+}
+.address_input2 input[type=text]{
+    height: 20px;
+    width: 100%;
+    border-radius: 6px;
+}
+
+
 
 .address_select_center_hr{
     height: 1px;/* hrの線の太さ */
@@ -1418,7 +1462,7 @@ p.new_warning{
 .favorite{
 	text-align: right;
 	margin: auto;
-	padding-right: 15px;
+	padding-right: 20px;
 }
 .userid{
 	font-size: 10px;
@@ -1467,15 +1511,16 @@ p.new_warning{
 
 .favorite2{
 	text-align: right;
-	line-height: -0px;
-	margin-right: 50px;
-
+	font-size: 20px;
+	line-height: 0px;
 }
 
 .favorite3{
 	text-align: right;
 	line-height: 15px;
-	margin-right: 30px;
+	margin-right: 20px;
+	margin-top:-10px;
+	margin-bottom:10px;
 }
 
 .box_wrapper_2 {
@@ -1540,7 +1585,7 @@ p.new_warning{
 }
 
 .h3_center4 hr{
-    height: 1px;/* hrの線の太さ */
+    height: 2px;/* hrの線の太さ */
     width: 350px;/* hrの線の長さ */
     background-color: #707070;
     border: none;
@@ -1622,8 +1667,7 @@ p.new_warning{
 
 .tannka{
 	text-align: right;
-	line-height: 15px;
-	margin: auto;
+	margin: 0px;
 }
 .sakuhinnmei{
 	text-align: left;
@@ -1697,18 +1741,6 @@ p.new_warning{
 	text-align: center;
 }
 
-.star2_1{
-	text-align: right;
-	font-size: 30px;
-	line-height: 15px;
-	transition: all 0.6s ease 0s;
-}
-
-.star2_1:hover{
-	cursor: pointer;
-	transform: translateY(-10px);
-}
-
 .tuuhou{
 	text-align: left;
 	margin: auto;
@@ -1779,8 +1811,8 @@ p.new_warning{
 }
 
 .icon_setting_title hr{
-    height: 1px;/* hrの線の太さ */
-    width: 280px;/* hrの線の長さ */
+    height: 2px;/* hrの線の太さ */
+    width: 240px;/* hrの線の長さ */
     background-color: #707070;
     border: none;
     margin-top: -2px;
@@ -1831,7 +1863,7 @@ p.new_warning{
 }
 
 .creator_list_title hr{
-    height: 1px;/* hrの線の太さ */
+    height: 2px;/* hrの線の太さ */
     width: 330px;/* hrの線の長さ */
     background-color: #707070;
     border: none;
@@ -1882,6 +1914,7 @@ p.new_warning{
     height: 1px;/* hrの線の太さ */
     width: 70%;/* hrの線の長さ */
     max-width: 900px;
+	min-width: 500px;
     background-color: #707070;
     border: none;
 }
@@ -1936,12 +1969,10 @@ p.new_warning{
 }
 
 .box_item_4 {
-	width: 45%;
+	width: 65%;
 	min-width: 600px;
 	background-color: #fff;
 	margin: 0 auto;
-	margin-top: 5%;
-	margin-bottom: 5%;
 	border-radius: 20px;
 	padding-right: 5%;
 	padding-left: 5%;
@@ -1979,7 +2010,7 @@ input[type="text"] {
 .tekisuto3{
 	border-radius:10px;
 	border: solid 1px;
-	width: 400px;
+	width: 90%;
 }
 
 .tekisuto2{
@@ -1995,7 +2026,7 @@ input[type="text"] {
 
 .toiawase_select{
     height: 33px;
-    width: 100%;
+    width: 90%;
     border-radius: 10px;
     border: solid 1px;
 }
@@ -2019,20 +2050,6 @@ th {
 	border: solid 1px;
 	width: 400px;
 	
-}
-.h3_center4{
-    text-align: center;
-    font-size: 28px;
-    margin-bottom: 50px;
-    color: #707070;
-}
-
-.h3_center4 hr{
-    height: 1px;/* hrの線の太さ */
-    width: 350px;/* hrの線の長さ */
-    background-color: #707070;
-    border: none;
-    margin-top: -2px;
 }
 
 .image_wrapper5 img{
@@ -2078,7 +2095,7 @@ th {
 	border:solid 2px;
 	margin: 0 auto;
 	font-size: 0.8vw;
-	width: 90%;
+	width: 100%;
 }
 .naiyou1{
 	margin: 0 auto;
@@ -2134,7 +2151,7 @@ th {
 /*            通報画面                  */
 
 .teport_box{
-    width: 80%;
+    width: 90%;
     max-width: 620px;
     margin: 100px auto;
     border-radius: 10px;    /*枠の丸み*/
@@ -2232,7 +2249,7 @@ th {
 }
 
 .privacy_title hr{
-    height: 1px;/* hrの線の太さ */
+    height: 2px;/* hrの線の太さ */
     width: 350px;/* hrの線の長さ */
     background-color: #707070;
     border: none;
@@ -2303,10 +2320,20 @@ th {
 	margin: 0 0 0 auto;
 }
 
+.footer_text a{
+	color: #333;
+}
+
+.footer_text a:hover{
+	color: rgb(160, 159, 159);
+}
+
 .footer_text1{
 	text-align: right;
 	margin: 0 10% 0 auto;
 }
+
+
 
 .button8{
 	text-align: right;
@@ -2318,13 +2345,10 @@ table{
     border-collapse: collapse;
 }
 
-
 .carticon15{
     width: 45px;
-	margin: 0 80px 0 auto;
-	opacity: 0.7;
+	margin: 0 80px 35px auto;
 	transition: all 0.6s ease 0s;
-	margin-bottom: 30px;
 }
 
 .carticon15:hover {
@@ -2406,12 +2430,69 @@ transform: translateY(-5px);
     color: #707070;
 }
 
-/* .box18 {
-    padding: 0.2em 0.5em;
-    margin: 5%;
-    color: #565656;
-    background: #ffeaea;
-    box-shadow: 0px 0px 0px 10px #ffeaea;
-    border: dashed 2px #ffc3c3;
-    border-radius: 8px;
-} */
+.star2_1{
+	transition: 0.3s;
+	-webkit-text-stroke: 1px rgb(255, 196, 0);
+	font-size: 50px;
+	text-align: right;
+	margin-top: -10px;
+}
+
+#click{
+	width:25px;
+	margin: 0 25px 0 auto;
+	
+}
+
+#click label{
+	color: #fff;
+	font-size: 50px;
+	height:20px;
+	width:25px;
+	background: none;
+	margin: 0;
+	outline: none;
+	transition: 1s all linear; /* background・colorともに適用 */
+	
+}
+
+.star2_1:hover{
+	cursor: pointer;
+	transform: translateY(-5px);
+}
+
+#click input{
+	display: none;
+}
+#click input+div{
+	filter: none;
+}
+#click input:checked+div{
+	color:rgb(255, 196, 0);
+}
+.pyon {
+    animation: pyon 3s infinite;
+}
+@keyframes pyon {
+    0% {
+        transform: translate(0px, 2px);
+    }
+    5% {
+        transform: translate(0px, -2px);
+    }
+    10% {
+        transform: translate(0px, 2px);
+    }
+    15% {
+        transform: translate(0px, -2px);
+    }
+    20% {
+        transform: translate(0px, 2px);
+    }
+    25% {
+        transform: translate(0px, -2px);
+    }
+    30% {
+        transform: translate(0px, 0px);
+    }
+}

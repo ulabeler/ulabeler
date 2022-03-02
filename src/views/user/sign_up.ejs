@@ -92,6 +92,16 @@
     </article>
     <%- include("../components/footer.ejs") %>
   </body>
+  <script>
+    const submit = document.getElementById('send');
+    const lastInput = document.getElementById('input_password_confirm');
+        // focusがsearchInputに当たっている場合、Enterを押したら検索ボタンを押す
+        lastInput.addEventListener('keydown', function (e) {
+        if (e.keyCode === 13) {
+            searchSubmit.click();
+        }
+      });
+  </script>
 
 <script src="/javascripts/sign-up.js"></script>
 <script src="/javascripts/util/mail_varidate.js"></script>

@@ -1,0 +1,131 @@
+<% for( let i=idx; i < (idx + maxViewOnPage); i++ ) { %>
+    <%# console.log(favoritedWorkList[i]) %> 
+    <%# for( let i=idx; i < idx + 1; i++ ) { %>
+        <% if (workList[i]) { %>
+            <div class="popup" id="listidx-<%-workList[i].id%>">
+                <div class="popup-inner">
+                    <div class="close-btn" id="js-close-btn" onclick="closePopUp('listidx-<%-workList[i].id%>')"><i
+                            class="fas fa-times"></i>
+                    </div>
+                    <section class="box_item_3">
+                        <br>
+                        <div class="userpage">
+                            <div class="user_3">
+
+                                <div class="user_box_1">
+                                    <a href="/creator_work/<%= workList[i].created_by_user_id %>" onclick="event.stopPropagation(); ">
+                                        <table cellpadding="0" 　class="usertable">
+
+                                            <tr>
+                                                <th rowspan="4">
+                                                    <p class=user_img2><img src="<%= workList[i].creatorIconPath %>" alt="<%-workList[i].created_by_user_id %>">
+                                                    </p>
+                                                </th>
+                                                <td>　　　　　</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p class="username">
+                                                        <%- workList[i].created_by_user_id %>
+                                                    </p>
+                                                </td>
+                                                <input type="hidden" name="">
+
+                                            </tr>
+                                            <tr>
+                                                <td class="userid2">@<%- workList[i].created_by_user_id %>
+                                                </td>
+                                                <input type="hidden" name="">
+                                            </tr>
+
+
+                                        </table>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class=userpage>
+                        </div>
+                        <p class="date1">
+                            <% const create_at=new Date(workList[i].create_at)%>
+                                <%= create_at.getFullYear() + "/" + ('00' + (create_at.getMonth()+1)).slice(-2) + "/" +
+                                    ('00' + create_at.getDate()).slice(-2) %>
+                                    <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>" alt="" />
+                                    </div>
+                                    <form action="select_color.html" method="post">
+
+                                        <table class=tannka_table>
+                                            <tr>
+                                                <th class="tannka">
+                                                    <p>単価：<%- workList[i].unit_price %>円　</p>
+                                                </th>
+                                                <th class="cart_img2">
+                                                    <p class=cart_img><img src="/images/system/cart-5.jpg"
+                                                                alt="商品画像" onclick="addCart('<%=workList[i].id%>')">
+                                                </th>
+                                            </tr>
+                                        </table>
+
+                                        <p class="explanation">
+                                            <%- workList[i].baseCategoryName %>
+                                        </p>
+                                        <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
+                                        <div class="explanation2">
+                                            <font size="2"><% if (workList[i].hashtag) { %>
+                                                <% const hashTag=JSON.parse(workList[i].hashtag) %>
+                                                <% if (hashTag !== null) { %>
+                                                    <% for(let j=0; j < hashTag.length; j++){ %>
+                                                        <a href="/search?q=%23<%- hashTag[j].slice(1) %>">
+                                                        <%- hashTag[j] %></a>
+                                                            <% } %>
+                                                                <% } %></font></p>
+                                                                <% } %> 
+                </div>
+                <br>
+                <p class="explanation3">
+                    <%- workList[i].introduction %>
+                </p>
+                <div class="okiniiri">
+                    <% if (!workList[i].isFavorited) { %>
+                        <div id="click">
+                            <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
+                        </div> 
+                        <% } else { %>
+                            <% if (workList[i].isFavorited) { %>
+                                <div id="click">
+                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" checked><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
+                                </div> 
+                            <% } else { %>
+                                <div id="click">
+                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
+                                </div> 
+                            <% } %>
+                                        <% } %>
+                                            <div class="favorite3">
+                                                <p class="favorite2 favNumIdx-<%-workList[i].id%>"  id="favNumIdx-<%-workList[i].id%>">
+                                                    <font size="4">
+                                                        <%= workList[i].favoritedWorkNumber %>
+                                                    </font>
+                                                </p>
+                                            </div>
+                </div>
+                <% if (workList[i].userFlagIsMine) { %>
+                    <p class="button6"><button type="button" class="black_button4"
+                            onclick="location.href='/work/<%- workList[i].id %>/edit'">編集</button></p>
+                    <% } else { %>
+                        <br>
+                        <a href="/work/<%- workList[i].id %>/report">
+                            <p class="tuuhou">
+                                <font size="2" color="red">通報する</font>
+                            </p>
+                        </a>
+                        <% } %>
+                            <br>
+                            </form>
+                            </section>
+            </div>
+            <div class="black-background js-black-bg" id="" onclick="closePopUp('listidx-<%-workList[i].id%>')"></div>
+            </div>
+            <% } %>
+                <% } %>

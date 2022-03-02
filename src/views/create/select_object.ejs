@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <%- include("../components/lib.ejs") %>
+    <title>U labeler</title>
+</head>
+
+<header class="header">
+  <%- include("../components/header.ejs") %>
+
+    <body>
+      <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
+        <article>
+          <br><br>
+          <!-- パンくずリスト -->
+          <div class="pan">
+            <h5>
+              <font size="5">素体選択</font> ＞ カラー選択 ＞ カスタマイズ ＞ 作品設定 ＞ 作品設定確認
+            </h5>
+          </div>
+          <h3 class="h3_center2">素体選択
+            <hr>
+          </h3>
+          <!-- ページ名 -->
+          <!-- ページサブ名 -->
+          <div class="box_wrapper">
+            <form method="post" class="box_item">
+              <input type="hidden" name="object" value="1">
+              <button class="aitem1">
+                <h3>ペットボトル</h3>
+                <div class="image_wrapper"><img src="/images/system/model3.jpeg" alt="" /></div>
+              </button>
+            </form>
+            <form method="post" class="box_item">
+              <input type="hidden" name="object" value="2">
+              <button class="aitem1">
+                <h3>皿</h3>
+                <div class="image_wrapper"><img src="/images/system/model6.jpeg" alt="" /></div>
+              </button>
+            </form>
+            <form method="post" class="box_item">
+              <input type="hidden" name="object" value="3">
+              <button class="aitem1">
+                <h3>スマホケース</h3>
+                <div class="image_wrapper"><img src="/images/system/model1.jpeg" alt="" /></div>
+              </button>
+            </form>
+            <form method="post" class="box_item">
+              <input type="hidden" name="object" value="20">
+              <button class="aitem1">
+                <h3>チロルチョコ</h3>
+                <div class="image_wrapper"><img src="/images/system/model9.jpeg" alt="" /></div>
+              </button>
+            </form>
+            <!-- <form method="post" class="box_item">
+              <input type="hidden" name="object" value="18">
+              <button class="aitem1">
+                <h3>トートバック</h3>
+                <div class="select_object_sub.html"><img src="/images/system/model10.jpeg" alt="" /></div>
+              </button>
+            </form> -->
+            <form method="post" class="box_item">
+              <input type="hidden" name="object" value="17">
+              <button class="aitem1">
+                <h3>腕時計</h3>
+                <div class="image_wrapper"><img src="/images/system/model5.jpg" alt="" /></div>
+              </button>
+            </form>
+          </div>
+        </article>
+        <%- include("../components/login.ejs") %>
+          <%- include("../components/footer.ejs") %>
+    </body>
+
+</html>

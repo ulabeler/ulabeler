@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("../components/lib.ejs") %>
+        <title>U labeler</title>
+</head>
+
+
+<body>
+
+    <article>
+        <!-- ページ名 -->
+        <h3 class="icon_setting_title">支払方法選択
+            <hr>
+        </h3>
+
+
+        <div class="address_input2">
+            <div class="select_payment">
+
+                <input type="radio" value="PayPay" name="paymentMethod">PayPay<br>
+                <input type="radio" value="クレジットカード" name="paymentMethod" checked>クレジットカード<br><br>
+                <div class="payment_detali">
+                    ご利用になるクレジットカードの情報を<br>
+                    お間違いのないようにご入力してください。<br>
+                    展示に際して、カード番号のチェックディジット確認等は行っていません。<br>
+                    架空の番号でお願いします。
+                </div>
+                <div class="choise_card">
+                    <br>
+                    ご利用可能なクレジットカード
+                    <img src="/images/system/visa.png" alt="">
+                </div>
+            </div>
+            <table>
+                <tr>
+                    <th></th>
+                    <td>　　　</td>
+                </tr>
+                <th></th>
+                <tr>
+                    <th colspan="2">カード名義人<font color="red">*</font>　　　：</th>
+                    <td colspan="4"><input type="text" id="name_card" name="name_card" class="" placeholder="半角ローマ字"
+                            required></td>
+                </tr>
+                <tr>
+                    <th colspan="2">カード番号<font color="red">*</font>　　　　：</th>
+                    <td colspan="4"><input type="text" name="cardnumber" id="cardnumber" class=""
+                            placeholder="カード番号(架空の番号でお願いします。)" maxlength="16" minlength="16" required></td>
+                </tr>
+                <tr>
+                    <th colspan="2">カード有効期限<font color="red">*</font>　　：</th>
+                    <td><select class="mati_select" name="expirationMonth" id="expirationMonth">
+                            <option value="01" selected>01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </td>
+                    <td>月</td>
+                    <td><select class="mati_select" name="expirationYear" id="expirationYear">
+                            <option value="1" selected>22</option>
+                            <option value="2">23</option>
+                            <option value="3">24</option>
+                            <option value="4">25</option>
+                            <option value="5">26</option>
+                            <option value="6">27</option>
+                            <option value="7">28</option>
+                            <option value="8">29</option>
+                            <option value="9">30</option>
+                            <option value="10">31</option>
+                            <option value="11">32</option>
+                            <option value="12">33</option>
+                        </select>
+                    </td>
+                    <td>年</td>
+
+                </tr>
+                <tr>
+                    <th colspan="2">セキュリティコード<font color="red">*</font>：</th>
+                    <td colspan="1"><input type="text" name="card" class="" placeholder="・・・" disabled></td>
+                    <!-- 今回は使わないので破棄 -->
+                </tr>
+            </table>
+        </div>
+
+        </div>
+
+        <!-- <div class="check4">
+        <input type="checkbox" class="check1" name="check" checked>保存
+    </div> -->
+
+
+        <div class="double_button">
+            <button type="button" class="white_button" onclick="window.close()">戻る</button><!-- 購入確認画面へ -->
+            <button type="button" class="black_button" onclick="send()">決定</button>
+        </div>
+
+    </article>
+    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+    <script>
+        bubbly({
+            blur: 5,
+            bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.1})`,
+            canvas: document.querySelector("#back"),
+            colorStart: '#fff',
+            colorStop: '#fff',
+            compose: 'source-over',
+            shadowColor: '#ffffef',
+            velocityFunc: () => Math.random() * 1.4,
+            radiusFunc: () => 3 + Math.random() * 20,
+        });
+
+        const paymentMethod = document.getElementsByName("paymentMethod");
+        const cardNameElement = document.getElementById("name_card");
+        const cardNumberElement = document.getElementById("cardnumber");
+        const cardExpirationMonth = document.getElementById("expirationMonth");
+        const cardExpirationYear = document.getElementById("expirationYear");
+
+        // paymentMethodの値がcardならば、全ての属性にrequiredを付与
+        // onchangeでpaymentMethodの値がcardならば、全ての属性にrequiredを付与
+        paymentMethod.forEach(function (element) {
+            element.addEventListener("change", function () {
+                if (element.value === "クレジットカード") {
+                    cardNameElement.required = true;
+                    cardNumberElement.required = true;
+                    cardExpirationMonth.required = true;
+                    cardExpirationYear.required = true;
+                } else {
+                    cardNameElement.required = false;
+                    cardNumberElement.required = false;
+                    cardExpirationMonth.required = false;
+                    cardExpirationYear.required = false;
+                }
+            });
+        });
+
+        // cardNameElementにアルファベット以外が入力されたら無効にする
+        cardNameElement.addEventListener("keyup", function (e) {
+            if (!(/^[a-zA-Z]+$/.test(e.target.value))) {
+                e.target.value = e.target.value.replace(/[^a-zA-Z]+/g, "");
+            }
+        });
+
+        // cardNumberElementに数字以外が入力されたら無効にする
+        cardNumberElement.addEventListener("keyup", function (e) {
+            if (!(/^[0-9]+$/.test(e.target.value))) {
+                e.target.value = e.target.value.replace(/[^0-9]+/g, "");
+            }
+        });
+
+        function send() {
+            let cardNumber = null;
+            let cardName = null;
+            let paymentMethodValue = "default";
+            let cardExpiration
+
+            for (let i = 0; i < paymentMethod.length; i++) {
+                if (paymentMethod[i].checked) {
+                    paymentMethodValue = paymentMethod[i].value;
+                }
+            }
+
+            console.log(paymentMethodValue);
+
+            if (paymentMethodValue == "クレジットカード") {
+                // cardNameElement cardNumberElementが空の場合は、エラーを表示
+                if (cardNameElement.value == "" || cardNumberElement.value == "") {
+                    alert("カード情報を入力してください");
+                    return;
+                }
+                // cardNameを変数に格納
+                cardName = cardNameElement.value;
+                cardNumber = `${cardNumberElement.value}`;
+                // cardExpirationMonthとcardExpirationYearを文字列連結する
+                cardExpiration = `${cardExpirationMonth.value}${cardExpirationYear.value}`;
+                console.log(cardNumber);
+                console.log(cardName);
+                console.log(cardExpiration);
+                
+                // cardNumberが16文字出ない場合はエラー
+                if (cardNumber.length != 16) {
+                    alert("カード番号は16桁で入力してください");
+                    return;
+                }
+            }
+
+            if (paymentMethodValue == "PayPay") {
+                cardName = "PayPay";
+                cardNumber = null;
+                cardExpiration = null;
+            }
+
+            axios.post("/api/user/updateUserCardInfo", {
+                cardName: cardName,
+                cardNumber: cardNumber,
+                cardExpiration: cardExpiration
+            })
+                .then(function (response) {
+                    console.log(response);
+                    if (response.status == 201) {
+                        var ref = window.opener || parent;
+                        ref.location.reload();
+                        console.log(response);
+                        window.close();
+                    } else {
+                        alert("情報の更新に失敗しました");
+                    }
+                })
+        }
+    </script>
+    <br>
+</body>
+
+</html>

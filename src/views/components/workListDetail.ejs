@@ -13,12 +13,14 @@
                             <div class="user_3">
 
                                 <div class="user_box_1">
-                                    <a href="">
+                                    <a href="/creator_work/<%= workList[i].created_by_user_id %>" onclick="event.stopPropagation(); ">
                                         <table cellpadding="0" 　class="usertable">
 
                                             <tr>
                                                 <th rowspan="4">
-                                                    <p class=user_img2><img src="<%= userInfo.icon_path %> " alt="商品画像">
+                                                    <% console.log(userInfo) %> 
+                                                    <% console.log(userInfo.icon_path) %> 
+                                                    <p class=user_img2><img src="<%= userInfo.icon_path %>" alt="<%- userInfo.id %>">
                                                     </p>
                                                 </th>
                                                 <td>　　　　　</td>
@@ -33,7 +35,7 @@
 
                                             </tr>
                                             <tr>
-                                                <td class="userid2">＠<%- userInfo.id %>
+                                                <td class="userid2">@<%- userInfo.id %>
                                                 </td>
                                                 <input type="hidden" name="">
                                             </tr>
@@ -61,64 +63,56 @@
                                                     <p>単価：<%- workList[i].unit_price %>円　</p>
                                                 </th>
                                                 <th class="cart_img2">
-                                                    <p class=cart_img><a href=""><img src="/images/system/cart-5.jpg"
-                                                                alt="商品画像"></a>
+                                                    <p class=cart_img><img src="/images/system/cart-5.jpg"
+                                                                alt="商品画像" onclick="addCart('<%=workList[i].id%>')">
                                                 </th>
                                             </tr>
                                         </table>
 
                                         <p class="explanation">
-                                            <%- baseCategoryList[i].name_subcategory %>
+                                            <%- workList[i].baseCategoryName %>
                                         </p>
                                         <h3 class="sakuhinnmei">「<%- workList[i].name %> 」</h3>
-                                        <div class="explanation2"><a href="">
-                                                <font size="2">
-                                                    <% if (workList[i].hashtag) { %>
-                                                        <% const hashTag=JSON.parse(workList[i].hashtag) %>
-                                                            <% for(let j=0; j < hashTag.length; j++){ %>
-                                                                <%- hashTag[j] %>
-                                                                    <% } %>
-                                                                        <% } %>
-                                                </font>
-                                            </a>
-                        </p>
+                                        <div class="explanation2">
+                                            <font size="2"><% if (workList[i].hashtag) { %>
+                                                <% const hashTag=JSON.parse(workList[i].hashtag) %>
+                                                <% if (hashTag !== null) { %>
+                                                    <% for(let j=0; j < hashTag.length; j++){ %>
+                                                        <a href="/search?q=%23<%- hashTag[j].slice(1) %>">
+                                                        <%- hashTag[j] %></a>
+                                                            <% } %>
+                                                                <% } %></font></p>
+                                                                <% } %> 
                 </div>
                 <br>
                 <p class="explanation3">
                     <%- workList[i].introduction %>
                 </p>
                 <div class="okiniiri">
-                    <% if (!favoritedWorkList) { %>
-                        <p class="star2"><button type="button"
-                                style="background: transparent;outline: none;border: none;"
-                                onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
-                                <font size="15" color="orange">☆</font>
-                            </button></p><!-- お気に入りしてない☆-->
+                    <% if (!workList[i].isFavorited) { %>
+                        <div id="click">
+                            <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
+                        </div> 
                         <% } else { %>
-                            <% if (favoritedWorkList[i]) { %>
-                                <p class="star2_1">
-                                    <button type="button" style="background: transparent;outline: none;border: none;"
-                                        onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',true)">
-                                        <font size="15" color="orange">★</font>
-                                    </button>
-                                </p>
+                            <% if (workList[i].isFavorited) { %>
+                                <div id="click">
+                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" checked><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
+                                </div> 
                             <% } else { %>
-                                <p class="star2">
-                                    <button type="button" style="background: transparent;outline: none;border: none;"
-                                            onclick="event.stopPropagation(); selectFavorite('<%-workList[i].id%>',false)">
-                                            <font size="15" color="orange">☆</font>
-                                    </button>
-                                </p><!-- お気に入りしてない☆-->
+                                <div id="click">
+                                    <label><input type="checkbox" name="favorite" class="favStatusIdx-<%-workList[i].id%>" ><div class = "star2_1 pyon" onclick="selectFavorite('<%-workList[i].id%>', 'detail')">★</div></label>
+                                </div> 
                             <% } %>
                                         <% } %>
                                             <div class="favorite3">
                                                 <p class="favorite2 favNumIdx-<%-workList[i].id%>"  id="favNumIdx-<%-workList[i].id%>">
                                                     <font size="4">
-                                                        <%= favoritedWorkNumberList[i]%>
+                                                        <%= workList[i].favoritedWorkNumber%>
                                                     </font>
                                                 </p>
                                             </div>
                 </div>
+                <% console.log(workList[i]) %> 
                 <% if (isMine) { %>
                     <p class="button6"><button type="button" class="black_button4"
                             onclick="location.href='/work/<%- workList[i].id %>/edit'">編集</button></p>

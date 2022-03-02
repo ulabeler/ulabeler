@@ -11,7 +11,7 @@ import {
   base_categoryTable,
 } from "../tools/TypeAlias/tableType_alias";
 import sideMenuList from "../tools/data/sidemenu.json";
-import { pickHashTags } from "../tools/pickHashTags";
+import { pickHashTags } from "../tools/parser";
 // import { v4 as uuidv4 } from "uuid";
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -19,10 +19,14 @@ const router = express.Router();
 // import crypto from "crypto";
 
 const env = process.env.U_DB_ENVIRONMENT || "development";
-const host =
-  env === "development"
-    ? "http://localhost:3001"
-    : "https://ulabeler.na2na.website";
+let host = "https://ulabeler.na2na.website";
+if (env === "development") {
+  host = "http://localhost:3001";
+} else if (env === "staging") {
+  host = "https://devulabeler.na2na.website";
+} else {
+  host = "https://ulabeler.na2na.website";
+}
 
 // 無理無理無理無理無理無理無理無理無理無理後回し
 // 作品に対するいいねの状態を操作するもの。

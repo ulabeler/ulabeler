@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="none,noindex,nofollow">
+    <meta name="description" content="ハンドメイドショップサイト">
+    <meta name="keywords" content="ECサイト">
+    <title>U labeler</title>
+    <link href="/css/top.css" rel="stylesheet" type="text/css">
+    </link>
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header_logo">
+            <h1><a href="template.html"><img src="/images/logo.png" alt="ロゴ"></a></h1>
+        </div>
+        <!-- 検索ボックス -->
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <span class="magnifying_glass"></span>
+        <form method="get" action="#" class="search_container">
+            <input type="text" size="25" placeholder="キーワード検索">
+            <input type="submit" value="&#xf002">
+        </form>
+        </div>
+        <input type="checkbox" id="nav1">
+        <label for="nav1" class="open"><span></span></label>
+        <label for="nav1" class="close"></label>
+        <nav class="menu">
+            <h2 href="template.html">U labelar</h2>
+            <ul>
+                <li><a href="#">マイ作品リスト</a></li>
+                <li><a href="#">お気に入り作品リスト</a></li>
+                <li><a href="#">お気に入り作者リスト</a></li>
+                <li><a href="#">購入履歴</a></li>
+                <li><a href="#">会員情報</a></li>
+                <li><a href="mail_address_modification.html">メールアドレス変更</a></li>
+                <li><a href="member_password_modification.html">パスワード変更</a></li>
+                <li><a href="#">退会</a></li>
+            </ul>
+        </nav>
+        <article>
+            <!-- ページ名 -->
+            <h3 class="h3_center2">購入確認画面
+                <hr>
+            </h3>
+            <div class="cart_flex">
+                <p>商品</p>
+                <p class="">数量</p>
+                <p class="total2">合計</p>
+            </div>
+            <hr class="cart_hr">
+            <form method="post" id="hoge">
+            <% result_r.forEach(function (value, key) { %>
+                <div class="cart_item_flex">
+                    <div class="cart_image">
+                        <img src="/images/<%= value.work_tex_path %>.png" alt="商品画像">
+                        <div class="cart_item_detail">
+                            <p>素体名:<%= value.name_subcategory %>
+                            </p>
+                            <p>作品名:<%= value.name %>
+                            </p>
+                            <p>カラー:<%= %>
+                            </p>
+                            <p>サイズ:</p>
+                            <p>単価:<%= value.unit_price %>
+                            </p>
+                        </div>
+                        <div class="cart_item_kazu">
+                            <div class="">
+                                <p>１</p>
+                            </div>
+                        </div>
+                        <div class="total">
+                            <p>
+                                <%= value.unit_price * 1 %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+                    <hr class="cart_hr">
+
+                    <hr class="cart_hr">
+                    <div class="cart_flex3">
+
+                        <p class="count1">小計</p>
+                        <p>1000</p>
+                    </div>
+                    <div class="cart_flex3">
+                        <div class="count1">
+                            <p>配送料</p>
+                        </div>
+                        <p>¥300</p>
+                    </div>
+                    <hr class="cart_hr">
+                    <div class="cart_flex3">
+                        <div class="count1">
+                            <p>合計</p>
+                        </div>
+                        <p>1300</p>
+                    </div>
+                    <br><br>
+                    <p class="subtitle">～配送情報～</p>
+
+                    <div class="purchase_2">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="purchase_box2">
+                                        <table cellpadding="10">
+                                            <tr>
+                                                <th>配達日付　: </th>
+                                                <td>
+                                                    <%= cookie.day %>
+                                                </td>
+                                                <td></td>
+                                                <input type="hidden" name="">
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="/select_delivery_date">　編集</a></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="purchase_2">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="purchase_box2">
+                                        <table cellpadding="10">
+                                            <tr>
+                                                <th>お名前: </th>
+                                                <% if(typeof result_c[0] !=='undefined' ){ %>
+                                                    <td>
+                                                        <%= result_c[0]["familyname"] %>
+                                                    </td>
+                                                    <td>
+                                                        <%= result_c[0]["firstname"] %>
+                                                    </td>
+                                                    <% } %>
+                                                        <input type="hidden" name="">
+                                            </tr>
+                                            <tr>
+                                                <th>ふりがな: </th>
+                                                <% if(typeof result_c[0] !=='undefined' ){ %>
+                                                    <td>
+                                                        <%= result_c[0]["familyname_furigana"] %>
+                                                    </td>
+                                                    <td>
+                                                        <%= result_c[0]["firstname_furigana"] %>
+                                                    </td>
+                                                    <% } %>
+                                                        <input type="hidden" name="">
+                                            </tr>
+                                            <tr>
+                                                <th>住所: </th>
+                                                <% if(typeof result_c[0] !=='undefined' ){ %>
+                                                    <td>〒<%= result_c[0]["zip_code"] %>
+                                                    </td>
+                                                    <% } %>
+                                                        <input type="hidden" name="">
+                                            </tr>
+                                            <tr>
+                                                <% if(typeof result_c[0] !=='undefined' ){ %>
+                                                    <th>
+                                                        <%= result_c[0]["address"] %>
+                                                    </th>
+                                                    <% } %>
+                                                        <td colspan="2"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="/select_address">　編集</a></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br>
+                    <p class="subtitle">～支払情報～</p>
+                    <div class="purchase_2">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="purchase_box2">
+                                        <table cellpadding="10">
+                                            <tr>
+                                                <% if(cookie.pay=="card" ){ %>
+                                                    <th>支払方法　:<%= cookie.pay %>
+                                                    </th>
+                                                    <td>
+                                                        <%= result_d[0]["cardnumber"] %>
+                                                    </td>
+                                                    <td>VISA</td>
+                                                    <% }else { %>
+                                                        <th>支払方法　:<%= cookie.pay %>
+                                                        </th>
+                                                        <% } %>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p><a href="/select_payment">　編集</a></p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+                    <br>
+                    <hr class="cart_hr">
+                    <br>
+                    <br>
+                    <div class="double_button2">
+                        <button type="button" class="white_button2"
+                            onclick="location.href='/workSet/work_setting_confirmation'">戻る</button>
+                        <button type="submit" class="black_button2" form="hoge">決定</button>
+                    </div>
+                    <noscript>
+                        <p>JavaScriptを有効にしてください。</p>
+                    </noscript>
+        </article>
+        <br>
+        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+        <br>
+        <a href="/purchase_confirmation" id="pagetop"><i class="up"></i>↑</a>
+</body>
+
+</html>

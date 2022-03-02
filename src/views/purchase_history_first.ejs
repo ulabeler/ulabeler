@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <%- include("./components/lib.ejs") %>
+        <title>U labeler</title>
+        <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css">
+</head>
+<header class="header">
+    <%- include("./components/header.ejs") %>
+
+        <body>
+            <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
+
+                <article>
+                    <!-- ページ名 -->
+                    <h3 class="h3_center2">購入履歴<hr></h3>
+
+                    <h3>購入履歴がありません。</h3>
+
+
+                    <noscript>
+                        <p>JavaScriptを有効にしてください。</p>
+                    </noscript>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+                </article>
+                <%- include("./components/login.ejs") %>
+                    <%- include("./components/footer.ejs") %>
+        </body>
+
+</html>

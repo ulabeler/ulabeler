@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fse = require("fs-extra");
-const glob = require('glob');
+const glob = require("glob");
 const distDir = require("../tsconfig.json").compilerOptions.outDir;
 
 // const distDir = "./built";
@@ -21,18 +21,56 @@ function cpPublicDir(distDir) {
     `${distDir}/tools/data/mailText.json`
   );
 
-  glob('./src/public/javascripts/**/*.js', (err, files) => {
+  glob("./src/public/javascripts/**/*.js", (err, files) => {
     if (files.length === 0) {
       return;
     }
-    console.log("Public: Things that are not TypeScript")
+    console.log("Public: Things that are not TypeScript");
     console.log(files);
-    files.forEach(file => {
+    files.forEach((file) => {
       // fileの末尾が.jsならばコピーする
-      if (file.includes('/util')) {
-        fse.copySync(file, `${distDir}/public/javascripts/util/${file.split('/')[5]}`);
+      if (file.includes("/util")) {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/util/${file.split("/")[5]}`
+        );
+      } else if (file.includes("/custom")) {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/custom/${file.split("/")[5]}`
+        );
       } else {
-        fse.copySync(file, `${distDir}/public/javascripts/${file.split('/')[4]}`);
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/${file.split("/")[4]}`
+        );
+      }
+    });
+  });
+
+  glob("./src/public/javascripts/**/*.json", (err, files) => {
+    if (files.length === 0) {
+      return;
+    }
+    console.log("Public: Things that are not TypeScript");
+    console.log(files);
+    files.forEach((file) => {
+      // fileの末尾が.jsならばコピーする
+      if (file.includes("/util")) {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/util/${file.split("/")[5]}`
+        );
+      } else if (file.includes("/custom")) {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/custom/${file.split("/")[5]}`
+        );
+      } else {
+        fse.copySync(
+          file,
+          `${distDir}/public/javascripts/${file.split("/")[4]}`
+        );
       }
     });
   });

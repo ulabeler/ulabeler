@@ -1,15 +1,15 @@
 export type userTable = {
   id: string;
-  name: string;
-  password: string;
-  mailaddress: string;
-  icon_path: string | null;
-  self_introduction: string | null;
-  cardnumber: string | null;
-  name_card: string | null;
-  expiration: string | null;
-  created_at: Date;
-  deleted_at: Date | null;
+  name?: string;
+  password?: string;
+  mailaddress?: string;
+  icon_path?: string | null;
+  self_introduction?: string | null;
+  cardnumber?: string | null;
+  name_card?: string | null;
+  expiration?: string | null;
+  created_at?: Date;
+  deleted_at?: Date | null;
 };
 
 export type mail_confirmationTable = {
@@ -51,16 +51,21 @@ export type favorited_user_numberTable = {
 export type purchase_historyTable = {
   id: string;
   user_id: string;
-  items: JSON; // TODO:後で書く
-  number_invoices: string;
+  number_invoice: string | null;
   purchased_at: Date | null;
   payment_method: string;
+};
+
+export type purchased_history_itemTable = {
+  purchase_history_id: string;
+  work_id: string;
+  quantity: number;
 };
 
 export type delivery_addressTable = {
   user_id: string;
   updated_at: Date;
-  zipcode: string;
+  zip_code: string;
   address: string;
   familyname: string;
   firstname: string;
@@ -70,26 +75,26 @@ export type delivery_addressTable = {
 
 export type delivery_statusTable = {
   purchase_record_id: string;
-  datetime_schedule: Date | null;
-  current_status: string | null;
-  zipcode: string;
-  address: string;
-  familyname: string;
-  firstname: string;
-  familyname_furigana: string | null;
-  firstname_furigana: string | null;
-  datetime_results: Date | null;
-  updated_at: Date | null;
+  datetime_schedule?: Date | null;
+  current_status?: string | null;
+  zipcode?: string;
+  address?: string;
+  familyname?: string;
+  firstname?: string;
+  familyname_furigana?: string | null;
+  firstname_furigana?: string | null;
+  datetime_results?: Date | null;
+  updated_at?: Date | null;
 };
 
 export type base_settingsTable = {
   id: number;
-  object_path: string;
-  base_tex_path: string;
-  thumbnail_path: string;
-  unit_price: number;
-  created_at: Date;
-  deleted_at: Date | null;
+  object_path?: string;
+  base_tex_path?: string;
+  thumbnail_path?: string;
+  unit_price?: number;
+  created_at?: Date;
+  deleted_at?: Date | null;
 };
 
 export type vendorTable = {
@@ -132,8 +137,8 @@ export type workTable = {
   thumbnail_path: string;
   flag_public: boolean;
   unit_price: number;
-  hashtag: JSON | null;
-  introduction: string | null;
+  hashtag: string | null;
+  introduction?: string | null;
   num_of_images: number;
   create_at: Date;
   // ext_name_subcategory: null | string;
@@ -171,4 +176,17 @@ export type sample_imagesTable = {
   id: number;
   sample_images_path: string;
   added_at: Date;
+};
+
+export type cartTable = {
+  workId: string;
+  userId: string;
+  quantity: number;
+};
+
+export type tempdeliverysettingsTable = {
+  userId: string;
+  estimatedDeliveryDate: Date;
+  estimatedDeliveryTimeCategory: string;
+  effectiveDate?: Date;
 };
