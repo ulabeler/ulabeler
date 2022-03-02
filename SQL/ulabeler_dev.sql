@@ -80,7 +80,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ulabeler_dev`.`base_settings` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `object_path` VARCHAR(255) NOT NULL,
+  `object_path` VARCHAR(255) NULL,
   `base_tex_path` VARCHAR(255) NOT NULL,
   `thumbnail_path` VARCHAR(255) NOT NULL,
   `unit_price` INT NOT NULL,

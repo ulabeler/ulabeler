@@ -89,12 +89,12 @@ export type delivery_statusTable = {
 
 export type base_settingsTable = {
   id: number;
-  object_path: string;
-  base_tex_path: string;
-  thumbnail_path: string;
-  unit_price: number;
-  created_at: Date;
-  deleted_at: Date | null;
+  object_path?: string;
+  base_tex_path?: string;
+  thumbnail_path?: string;
+  unit_price?: number;
+  created_at?: Date;
+  deleted_at?: Date | null;
 };
 
 export type vendorTable = {

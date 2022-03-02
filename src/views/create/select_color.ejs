@@ -25,7 +25,13 @@
   <div class = userpage>
   </div>
       
-      <div class="image_wrapper"><img src="/images/system/color.jpeg"  alt="" /></div>
+      <div class="image_wrapper"><img src="
+        <% if (typeof thumbnailPath !== 'undefined') { %> 
+        <%= thumbnailPath %>
+        <% } else { %>
+        <%= '/images/system/color.jpeg' %>
+        <% } %>
+        "  alt="" /></div>
       <br>
       <form method="post">
         <table>
@@ -64,5 +70,8 @@
 <%- include("../components/login.ejs") %>
 <%- include("../components/footer.ejs") %>
 </body>
+<script>
+  
+</script>
 
 </html>

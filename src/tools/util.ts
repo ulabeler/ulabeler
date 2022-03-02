@@ -9,6 +9,7 @@ import {
   favorited_work_numberTable,
   cartTable,
   favorited_workTable,
+  base_settingsTable,
 } from "./TypeAlias/tableType_alias";
 import { myFavoriteWorkList } from "./TypeAlias/miscAlias";
 
@@ -185,4 +186,18 @@ async function addCart(workId: string, userId: string, quantity?: number) {
   }
 }
 
-export { getMaxPage, getRandomIdList, addCart };
+// 素体のテクスチャパスを返すメソッド
+/**
+ * @param {int} objectId
+ */
+async function getObjectVanillaThumbnailPath(objectId: number) {
+  const texture: base_settingsTable[] = await knex("base_settings")
+    .select("thumbnail_path")
+    .where("id", objectId)
+    .catch((err: Error) => {
+      console.log(err);
+    });
+  return texture[0].thumbnail_path;
+}
+
+export { getMaxPage, getRandomIdList, addCart, getObjectVanillaThumbnailPath };

@@ -88,3 +88,18 @@ INSERT INTO `ulabeler_dev`.`purchased_history_item` (`purchase_history_id`, `wor
 
 INSERT INTO `ulabeler_dev`.`base_category` (`id`, `vendor_id`, `name_category`, `name_subcategory`) VALUES ('21', '1', 'スマホケース', 'iPhone13 mini');
 INSERT INTO `ulabeler_dev`.`base_category` (`id`, `vendor_id`, `name_category`, `name_subcategory`) VALUES ('22', '1', 'スマホケース', 'iPhone7');
+
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('1', '/images/object/pet500.png', '/images/object/pet500.png', '200', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('2', '/images/object/saucer2.png', '/images/object/saucer2.png', '500', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('3', '/images/object/iphone12 mini.png', '/images/object/iphone12 mini.png', '1200', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('4', '/images/object/iphone12.png', '/images/object/iphone12.png', '1200', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('5', '/images/object/iphone12 pro.png', '/images/object/iphone12 pro.png', '1300', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('6', '/images/object/iphone12 promax', '/images/object/iphone12 promax', '1300', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('7', '/images/object/iphone11.png', '/images/object/iphone11.png', '1100', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('8', '/images/object/iphone11 pro.png', '/images/object/iphone11 pro.png', '1200', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('12', '/images/object/iphone13.png', '/images/object/iphone13.png', '1400', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('13', '/images/object/iphone13 pro.png', '/images/object/iphone13 pro.png', '1400', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('14', '/images/object/iphone13 promax.png', '/images/object/iphone13 promax.png', '1400', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('17', '/images/object/watch.png', '/images/object/watch.png', '1400', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('20', '/images/object/tirol.png', '/images/object/tirol.png', '20', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('21', '/images/object/iphone13 mini.png', '/images/object/iphone13 mini.png', '1400', '2022-03-01 04:31:22');
