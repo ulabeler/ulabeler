@@ -196,7 +196,11 @@
     <br>
     <div class="double_button2">
         <button  type="button" class="white_button2" onclick="location.href=''">戻る</button>
-        <button  type="button" class="black_button2" onclick="location.href='/purchase/submit'">決定</button>
+        <button  type="button" class="black_button2" onclick="location.href='/purchase/submit'" 
+        <% if (typeof paymentMethod[0] == 'undefined' || typeof deliveryAddress[0] == 'undefined') { %>
+            disabled
+        <% } %>
+        >決定</button>
     </div>
     </article>
     

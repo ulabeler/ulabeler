@@ -8,6 +8,7 @@ import {
   base_categoryTable,
   favorited_work_numberTable,
   cartTable,
+  favorited_workTable,
 } from "./TypeAlias/tableType_alias";
 import { myFavoriteWorkList } from "./TypeAlias/miscAlias";
 
@@ -85,6 +86,24 @@ async function getRandomIdList(
         return favoritedWorkNumber[0].number;
       });
     topPageWorkList[i].favoritedWorkNumber = favoritedWorkNumber;
+  }
+
+  if (user) {
+    for (let i = 0; i < topPageWorkList.length; i++) {
+      // いいね数
+      const isFavorited: boolean = await knex("favorited_work")
+        .where("favorite_from", user.id)
+        .andWhere("favorite_to", topPageWorkList[i].id)
+        // eslint-disable-next-line camelcase
+        .then((favoritedWorkNumber: favorited_workTable[]) => {
+          if (favoritedWorkNumber.length === 0) {
+            return false;
+          } else {
+            return true;
+          }
+        });
+      topPageWorkList[i].isFavorited = isFavorited;
+    }
   }
 
   for (let i = 0; i < topPageWorkList.length; i++) {

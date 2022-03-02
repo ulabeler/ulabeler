@@ -4,29 +4,29 @@
     <meta charset="UTF-8">
     <meta name="robots" content="none,noindex,nofollow">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="/stylesheets/konva.css" rel="stylesheet" type="text/css"></link>
     <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css"></link>
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-    <title>Ulabeler</title>
+    <!-- <link rel="stylesheet" href="/js/jquery.js"> -->
     <link rel="stylesheet" href="/stylesheets/pop-up.css">
-    <link rel="stylesheet" href="/javascripts/jquery.js">
-    <link rel="stylesheet" href="/stylesheets/konva.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Indie+Flower&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:wght@300&family=Oswald:wght@300;400;500;600;700&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400;1,500&family=Shizuru&family=Slabo+13px&family=Slabo+27px&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Document</title>
 </head>
 <body>
     <header>
-        <h5 class="h5">素体選択 ＞ カラー選択 ＞<font size="5"> カスタマイズ</font> ＞ 作品設定 ＞ 作品設定確認</h5>
+        <h5 class="h5">素体選択 ＞ カラー選択 ＞<font size="4"> カスタマイズ</font> ＞ 作品設定 ＞ 作品設定確認</h5>
     </header>
     <div class="grid-area">
         <div class="parent">
             <div class="div1">
                 <div>
-                    <p>テキスト</p>
+                    <p>テキスト<button id="deletebtn"><img src="/images/system/custom/dalete.png" height ="25" width="auto" /></button></p>
                     <p id="selecterp"></p>
                     <form method="post" action="" onsubmit="return form1submit()">
                         <select name="font_style" id="font_style"><br>
@@ -58,68 +58,105 @@
                     <form onsubmit="return form2submit()">
                         <!-- <textarea id="message" name="message" cols="25" rows="10"></textarea> -->
                         <input type="text" name="message" id="message">
-                        <input type="submit">
+                        <input type="submit" class="sousinn">
                     </form>
-                    <button id="deletebtn">消す</button>
+                    
                 </div>
             </div>
             <div class="div2">
                 <p>スタンプ</p>
                 <div class="stp stp1 current" >
-                    <button id="stp10"><img src="/images/system/stamp/stamp10.png" alt=""></button>
-                    <button id="stp11"><img src="/images/system/stamp/stamp11.png" alt=""></button>
-                    <button id="stp12"><img src="/images/system/stamp/stamp12.png" alt=""></button>
-                    <button id="stp13"><img src="/images/system/stamp/stamp13.png" alt=""></button>
-                    <button id="stp14"><img src="/images/system/stamp/stamp14.png" alt=""></button>
-                    <button id="stp15"><img src="/images/system/stamp/stamp15.png" alt=""></button>
-                    <button id="stp16"><img src="/images/system/stamp/stamp16.png" alt=""></button>
-                    <button id="stp17"><img src="/images/system/stamp/stamp17.png" alt=""></button>
-                    <button id="stp18"><img src="/images/system/stamp/stamp18.png" alt=""></button>
+                    <button id="stp10"><img src="/images/stamp/stamp10.png" alt="スタンプ"></button>
+                    <button id="stp11"><img src="/images/stamp/stamp11.png" alt="スタンプ"></button>
+                    <button id="stp12"><img src="/images/stamp/stamp12.png" alt="スタンプ"></button>
+                    <button id="stp13"><img src="/images/stamp/stamp13.png" alt="スタンプ"></button>
+                    <button id="stp14"><img src="/images/stamp/stamp14.png" alt="スタンプ"></button>
+                    <button id="stp15"><img src="/images/stamp/stamp15.png" alt="スタンプ"></button>
+                    <button id="stp16"><img src="/images/stamp/stamp16.png" alt="スタンプ"></button>
+                    <button id="stp17"><img src="/images/stamp/stamp17.png" alt="スタンプ"></button>
                 </div>
                 <div class="stp stp2" >
-                    <button id="stp19"><img src="/images/system/stamp/stamp19.png" alt=""></button>
-                    <button id="stp20"><img src="/images/system/stamp/stamp20.png" alt=""></button>
-                    <button id="stp21"><img src="/images/system/stamp/stamp21.png" alt=""></button>
-                    <button id="stp23"><img src="/images/system/stamp/stamp22.png" alt=""></button>
-                    <button id="stp24"><img src="/images/system/stamp/stamp23.png" alt=""></button>
-                    <button id="stp25"><img src="/images/system/stamp/stamp24.png" alt=""></button>
-                    <button id="stp26"><img src="/images/system/stamp/stamp25.png" alt=""></button>
-                    <button id="stp27"><img src="/images/system/stamp/stamp26.png" alt=""></button>
-                    <button id="stp28"><img src="/images/system/stamp/stamp27.png" alt=""></button>
+                    <button id="stp18"><img src="/images/stamp/stamp18.png" alt="スタンプ"></button>
+                    <button id="stp19"><img src="/images/stamp/stamp19.png" alt="スタンプ"></button>
+                    <button id="stp20"><img src="/images/stamp/stamp20.png" alt="スタンプ"></button>
+                    <button id="stp21"><img src="/images/stamp/stamp21.png" alt="スタンプ"></button>
+                    <button id="stp22"><img src="/images/stamp/stamp22.png" alt="スタンプ"></button>
+                    <button id="stp23"><img src="/images/stamp/stamp23.png" alt="スタンプ"></button>
+                    <button id="stp24"><img src="/images/stamp/stamp24.png" alt="スタンプ"></button>
+                    <button id="stp25"><img src="/images/stamp/stamp25.png" alt="スタンプ"></button>
                 </div>
                 <div class="stp stp3" >
-                    <button id="stp28"><img src="/images/system/stamp/stamp28.png" alt=""></button>
-                    <button id="stp29"><img src="/images/system/stamp/stamp29.png" alt=""></button>
-                    <button id="stp30"><img src="/images/system/stamp/stamp30.png" alt=""></button>
-                    <button id="stp31"><img src="/images/system/stamp/stamp31.png" alt=""></button>
-                    <button id="stp32"><img src="/images/system/stamp/stamp32.png" alt=""></button>
-                    <button id="stp33"><img src="/images/system/stamp/stamp33.png" alt=""></button>
-                    <button id="stp34"><img src="/images/system/stamp/stamp34.png" alt=""></button>
-                    <button id="stp35"><img src="/images/system/stamp/stamp35.png" alt=""></button>
-                    <button id="stp36"><img src="/images/system/stamp/stamp36.png" alt=""></button>
+                    <button id="stp26"><img src="/images/stamp/stamp26.png" alt="スタンプ"></button>
+                    <button id="stp27"><img src="/images/stamp/stamp27.png" alt="スタンプ"></button>
+                    <button id="stp28"><img src="/images/stamp/stamp28.png" alt="スタンプ"></button>
+                    <button id="stp29"><img src="/images/stamp/stamp29.png" alt="スタンプ"></button>
+                    <button id="stp30"><img src="/images/stamp/stamp30.png" alt="スタンプ"></button>
+                    <button id="stp31"><img src="/images/stamp/stamp31.png" alt="スタンプ"></button>
+                    <button id="stp32"><img src="/images/stamp/stamp32.png" alt="スタンプ"></button>
+                    <button id="stp33"><img src="/images/stamp/stamp33.png" alt="スタンプ"></button>
+                </div>
+                <div class="stp stp4" >
+                    <button id="stp34"><img src="/images/stamp/stamp34.png" alt="スタンプ"></button>
+                    <button id="stp35"><img src="/images/stamp/stamp35.png" alt="スタンプ"></button>
+                    <button id="stp36"><img src="/images/stamp/stamp36.png" alt="スタンプ"></button>
+                    <button id="stp37"><img src="/images/stamp/stamp37.png" alt="スタンプ"></button>
+                    <button id="stp38"><img src="/images/stamp/stamp38.png" alt="スタンプ"></button>
+                    <button id="stp39"><img src="/images/stamp/stamp39.png" alt="スタンプ"></button>
+                    <button id="stp40"><img src="/images/stamp/stamp40.png" alt="スタンプ"></button>
+                    <button id="stp41"><img src="/images/stamp/stamp41.png" alt="スタンプ"></button>
+                </div>
+                <div class="stp stp5" >
+                    <button id="stp42"><img src="/images/stamp/stamp42.png" alt="スタンプ"></button>
+                    <button id="stp43"><img src="/images/stamp/stamp43.png" alt="スタンプ"></button>
+                    <button id="stp44"><img src="/images/stamp/stamp44.png" alt="スタンプ"></button>
+                    <button id="stp45"><img src="/images/stamp/stamp45.png" alt="スタンプ"></button>
+                    <button id="stp46"><img src="/images/stamp/stamp46.png" alt="スタンプ"></button>
+                    <button id="stp47"><img src="/images/stamp/stamp47.png" alt="スタンプ"></button>
+                    <button id="stp48"><img src="/images/stamp/stamp48.png" alt="スタンプ"></button>
+                    <button id="stp49"><img src="/images/stamp/stamp49.png" alt="スタンプ"></button>
+                </div>
+                <div class="stp stp6" >
+                    <button id="stp50"><img src="/images/stamp/stamp50.png" alt="スタンプ"></button>
+                    <button id="stp51"><img src="/images/stamp/stamp51.png" alt="スタンプ"></button>
+                    <button id="stp52"><img src="/images/stamp/stamp52.png" alt="スタンプ"></button>
+                    <button id="stp53"><img src="/images/stamp/stamp53.png" alt="スタンプ"></button>
+                    <button id="stp54"><img src="/images/stamp/stamp54.png" alt="スタンプ"></button>
+                    <button id="stp55"><img src="/images/stamp/stamp55.png" alt="スタンプ"></button>
+                    <button id="stp57"><img src="/images/stamp/stamp57.png" alt="スタンプ"></button>
+                    <button id="stp58"><img src="/images/stamp/stamp58.png" alt="スタンプ"></button>
+                </div>
+                <div class="stp stp7" >
+                    <button id="stp59"><img src="/images/stamp/stamp59.png" alt="スタンプ"></button>
+                    <button id="stp60"><img src="/images/stamp/stamp60.png" alt="スタンプ"></button>
+                    <button id="stp61"><img src="/images/stamp/stamp61.png" alt="スタンプ"></button>
+                    <!-- <button id="stp62"><img src="/images/stamp/stamp62.png" alt="スタンプ"></button> -->
+                    <button id="stp63"><img src="/images/stamp/stamp63.png" alt="スタンプ"></button>
+                    <button id="stp64"><img src="/images/stamp/stamp64.png" alt="スタンプ"></button>
+                    <button id="stp65"><img src="/images/stamp/stamp65.png" alt="スタンプ"></button>
                 </div>
                 <div class="pagenation">
                     <!-- ここの書き方分からん -->
                     <button id="page1">1</button>
                     <button id="page2">2</button>
                     <button id="page3">3</button>
+                    <button id="page4">4</button>
+                    <button id="page5">5</button>
+                    <button id="page6">6</button>
+                    <button id="page7">7</button>
                 </div>
             </div>
             <div class="div3">
                 <button id="" class="customize_button_syousai">
-                    画像選択
+                    <img src="/images/system/custom/picture.png" height ="40" width="auto" />
                 </button>
                 <button id="gridbtn" class="customize_button_syousai">
-                    グリッド
+                    <img src="/images/system/custom/grid.png" height ="40" width="auto" />
                 </button>
                 <button id="save" class="customize_button_syousai">
-                    保存                
+                    <img src="/images/system/custom/pdf.png" height ="40" width="auto" />
                 </button>
-                <!-- <form method="post" id="3D" onsubmit="btnsend1()">
-                    <input type="hidden" name="finish" value="3D">
-                </form> -->
-                <button>
-                    3DVIEW
+                <button class="dbutton">
+                    <img src="/images/system/custom/3d.png" height ="40" width="auto" />
                 </button>
                 <div class="">
                     <p id=""><%= object_name %></p>
@@ -131,12 +168,12 @@
             </div>
             <div class="div5">
                 <div class="customise_double_button">
-                    <button type="button" class="white_button">
+                    <button type="button" id="white_button">
                         <div id="js-show-popup">素体選択</div>
                     </button><!-- 購入確認画面へ -->
                     <form method="post" onsubmit="btnsend()" id="finish">
                         <input type="hidden" name="finish" value="finish">
-                        <button>終了</button>
+                        <button id="black_button">終了</button>
                     </form>
                 </div>
                 <div class="popup" id="js-popup">
@@ -161,7 +198,7 @@
                     </div>
                     <div class="black-background" id="js-black-bg"></div>
                 </div>
-                <script src="/javascripts/custom/pop-up.js"></script>
+                <script src="/jvascripts/custom/pop-up.js"></script>
             </div>
         </div>
     </div>
@@ -173,10 +210,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
 integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
 crossorigin="anonymous"
 ></script>
+<script type="text/javascript" src="/javascripts/custom/index.js"></script>
 <script type="text/javascript" src="/javascripts/custom/pagenation.js"></script>
 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<!-- <script type="text/javascript" src="/javascripts/custom/jquery.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
 <script>
     bubbly({
