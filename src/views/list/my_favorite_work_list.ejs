@@ -10,7 +10,6 @@
             <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
                 <%- include("../components/login.ejs") %>
                     <article>
-                        <div class="footerFixed">
                         <br>
                         <br>
                         <!-- ページ名 -->
@@ -33,7 +32,6 @@
                     <%- include("../components/listPagenation.ejs", { workList: workList, baseCategoryList: baseCategoryList, idx: idx, maxPage: maxPage, maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription: currentPageDescription,isCreatorView: isCreatorView }) %>
                     <% } %> 
                     <%- include("../components/footer.ejs") %>
-
         </body>
 
 </html>
