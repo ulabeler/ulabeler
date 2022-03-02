@@ -46,12 +46,12 @@ function getMaxPage(
 // eslint-disable-next-line valid-jsdoc
 /**
  * @param {number} limit 取得件数
- * @param {Express.Request["user"]} user ユーザー情報
+ * @param {userTable | null} user ユーザー情報
  * @return {myFavoriteWorkList[]} idList 取得したidの配列
  */
 async function getRandomIdList(
   limit: number,
-  user: Express.Request["user"]
+  user: userTable | null
 ): Promise<myFavoriteWorkList[]> {
   const topPageWorkList: myFavoriteWorkList[] = [];
   const workList: workTable[] = await knex("work")
