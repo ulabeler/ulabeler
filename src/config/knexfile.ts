@@ -9,7 +9,7 @@ module.exports = {
   development: {
     client: "mysql2",
     connection: {
-      database: process.env.DB_DATABASE,
+      database: "ulabeler_dev",
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
     },
@@ -22,7 +22,7 @@ module.exports = {
   staging: {
     client: "mysql2",
     connection: {
-      database: process.env.DB_DATABASE,
+      database: "ulabeler_dev",
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
     },
@@ -35,7 +35,7 @@ module.exports = {
   production: {
     client: "mysql2",
     connection: {
-      database: process.env.DB_DATABASE,
+      database: "ulabeler",
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
     },
