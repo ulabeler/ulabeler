@@ -23,6 +23,8 @@ app.use(bodyParser.raw({ limit: "10mb" }));
 app.use(bodyParser.json({ limit: "10mb" }));
 // できるだけlimitを大きくしておく
 
+const discordMentionTo = process.env.discord_mention || "";
+
 export const UpImgDirBase = path.join(__dirname, "public/images/");
 
 import { sendDiscord } from "./tools/discord_send_message"; // メッセ送信処理 できればこれで状態監視できるようにしたい
@@ -92,7 +94,13 @@ app.use("/customize", customizeRouter);
 app.use(function (request, response) {
   // requestURIを取得
   const requestURI = request.originalUrl;
-  sendDiscord(`404: ${requestURI}`);
+  let sendMessage: string;
+  if (environment === "production" || environment === "staging") {
+    sendMessage = `<@${discordMentionTo}>\nenv: **${environment}**\nStatus: **404**\n RequestURI: ${requestURI}`;
+  } else {
+    sendMessage = `<@${discordMentionTo}>\nenv: **${environment}**\nStatus: **404**\n RequestURI: ${requestURI}`;
+  }
+  sendDiscord(sendMessage);
   response.status(404).render("./404_error", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
@@ -106,9 +114,16 @@ app.use(function (error: any, request: any, response: any, next: any) {
   response.locals.message = error.message;
   console.log(error);
   response.locals.status = error.status;
+  // requestURIを取得
+  const requestURI = request.originalUrl;
   response.locals.error = request.app.get("env") === "development" ? error : {};
-
-  sendDiscord(environment + ": ```" + response.locals.message + "```");
+  let sendMessage: string;
+  if (environment === "production" || environment === "staging") {
+    sendMessage = `<@${discordMentionTo}>\nenv: **${environment}**\nStatus: **500**\n RequestURI: ${requestURI}\nMessage: \`\`\`${error.message}\`\`\``;
+  } else {
+    sendMessage = `env: **${environment}**\nStatus: **500**\n RequestURI: ${requestURI}\nMessage: \`\`\`${error.message}\`\`\``;
+  }
+  sendDiscord(sendMessage);
 
   // render the error page
   response.status(error.status || 500).render("./500_error", {
