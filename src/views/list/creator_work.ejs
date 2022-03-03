@@ -124,6 +124,15 @@
           })
           .catch(function (error) {
             console.log(error);
+            // checkedの状態を戻す
+            if (error.response.status === 401) {
+              alert('お気に入り登録するには、ログインしてください');
+            }
+            if (document.getElementById('favCheck').checked) {
+              document.getElementById('favCheck').checked = false;
+            } else {
+              document.getElementById('favCheck').checked = true;
+            }
           });
       }
       window.addEventListener('DOMContentLoaded', function () {
