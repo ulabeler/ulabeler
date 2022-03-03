@@ -67,7 +67,7 @@
             <p>¥<%= sumAmount + shippingFee %></p>
     </div>
     <br><br>
-    <p class = "subtitle">～配送情報～</p>
+    <div class = "subtitle"><img src="/images/system/delivery.png" class="delivery_card" alt="配送情報"></div>
 
     <div class="purchase_2">
         <form action="" method="post" id="hoge">
@@ -86,7 +86,7 @@
                     </td>
                     <td>
                         <!-- 別ウィンドウで"/select_delivery_date"を開く -->
-                        <p><a onclick="setNewDeriveryDate()">　編集</a></p>
+                        <img src="/images/system/edit_pen.png" class="edit_image" alt="お届け日編集" onclick="setNewDeriveryDate()">
                     </td>
                 </tr>
             </table>
@@ -138,7 +138,7 @@
                         </div>
                     </td>
                     <td>
-                        <p><a onclick="selectAddress()">　設定</a></p>
+                        <img src="/images/system/edit_pen.png" class="edit_image" alt="編集" onclick="selectAddress()">
                     </td>
                 </tr>
             </table>
@@ -161,7 +161,7 @@
                                         <td>PayPay</td>
                                     <% } else if (paymentMethod[0].name_card == null) { %>
                                         <td><font color='red'>支払設定をしてください*</font></td>
-                                    <% } else { %>  { %> 
+                                    <% } else { %>
                                         <td>
                                             <%# 先頭12桁を"*"に置き換える" %>  
                                             <%# paymentMethod[0].cardnumberを、4桁ずつに区切り、"-"を挿入する %>
@@ -184,7 +184,7 @@
                         </div>
                     </td>
                     <td>
-                        <p><a onclick="selectPaymentMethod()">　設定</a></p>
+                        <img src="/images/system/edit_pen.png" class="edit_image" alt="編集" onclick="selectPaymentMethod()">
                     </td>
                 </tr>
             </table>
