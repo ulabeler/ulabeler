@@ -1484,6 +1484,7 @@ p.new_warning{
 	margin: auto;
 	line-height: 10px;
 	padding-top: 40px;
+	width: 100px;
 	
 }
 .userpage{
@@ -1610,13 +1611,6 @@ p.new_warning{
 	padding-right: 20%;
 }
 
-.user_img2 img{
-	width: 50px;
-	height: 50px;
-	border: none;
-
-}
-
 .user_box_1{
     width: auto;
     color: #707070;/*フォントカラー */
@@ -1627,7 +1621,7 @@ p.new_warning{
 
 .user_3{
 	margin-top: -100px;
-    width: 59%;
+    width: 40%;
 	margin: 0 auto;
 	float: left;
 
@@ -1637,6 +1631,13 @@ p.new_warning{
 	width: 100%;
 	padding: 0;
 	/* border: 1px solid #4e4e4e; */
+
+}
+
+.user_img5 img{
+	width: 50px;
+	height: 50px;
+	border: none;
 
 }
 
