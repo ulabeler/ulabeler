@@ -1731,7 +1731,7 @@ p.new_warning{
 
 .cart_img:hover{
 	cursor: pointer;
-	transform: translateY(-5px);
+	transform: translateY(-3px);
 }
 
 .tannka_table{
