@@ -42,3 +42,10 @@ function loginAttempt() {
         "<p>ユーザID、またはパスワードを入力してください。</p>";
     });
 }
+
+// passwordにフォーカスが当たっている状態で、Enterキーが押されたらloginAttemptを実行
+password.addEventListener("keydown", function (event: KeyboardEvent) {
+  if (event.keyCode === 13) {
+    loginAttempt();
+  }
+});
