@@ -2516,7 +2516,7 @@ transform: translateY(-5px);
 
 
 /*                    カラー選択               */
-.image_wrapper8{
+/* .image_wrapper{
 	width: 100%;
 	height: 450px;
 	background: #eee;
@@ -2529,8 +2529,7 @@ transform: translateY(-5px);
 	background: rgb(0, 0, 0);
 }
 
-/*素体画像*/
 .sotai {
 	mask-image: url(../img/iphone11.png);
 	-webkit-mask-image: url(../img/iphone11.png);
-}
+} */
