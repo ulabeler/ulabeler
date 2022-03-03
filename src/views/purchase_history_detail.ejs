@@ -1,308 +1,280 @@
-
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="robots" content="none,noindex,nofollow">
-    <meta name="description" content="ハンドメイドショップサイト">
-    <meta name="keywords" content="ECサイト">
-    <title>U labeler</title>
-
-    <link href="css/top.css" rel="stylesheet" type="text/css"></link>
-    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-
+    <%- include("./components/lib.ejs") %>
+        <title>U labeler</title>
 </head>
 <header class="header">
-
-    <div class="header_logo">
-    <h1><a href="top.html"><img src="images/logo.png" alt="ロゴ"></a></h1>
-    </div>
-
-<!-- 検索ボックス -->
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-<div class = "headernakami">
-    <table class = "toptable" cellpadding="5">
-    <tr>
-        <th><span class="magnifying_glass"></span>
-            <form method="get" action="#" class="search_container">
-                <input type="text" size="25" placeholder="キーワード検索">
-                <input type="submit" value="&#xf002">
-            </form>
-        </th>
-    </tr>
-    <tr>
-        <div class="carticon15">
-            <a href="cart.html"><img src="images/cart-5.png" alt="ロゴ"></a>
-        </div>
-        
-    </tr>
-
-    </table>
-    <form action="">
-        <div class="cartsuuji">
-            <p>1</p>
-        </div>
-    </form>
-</div>
-
-
+    <%- include("./components/header.ejs") %>
     <body>
-
-    <input type="checkbox" id="nav1">
-    <label for="nav1" class="open"><span></span></label>
-    <label for="nav1" class="close"></label>
-
-
-    <nav class="menu">
-        <h2 href="top.html">U labelar</h2>
-        <ul>
-        <li><a href="#">マイ作品リスト</a></li>
-        <li><a href="#">お気に入り作品リスト</a></li>
-        <li><a href="#">お気に入り作者リスト</a></li>
-        <li><a href="#">購入履歴</a></li>
-        <li><a href="#">会員情報</a></li>
-        <li><a href="mail_address_modification.html">メールアドレス変更</a></li>
-        <li><a href="member_password_modification.html">パスワード変更</a></li>
-        </ul>
-    </nav>
-    
-    <article>
-        <!-- ページ名 -->
-        <div class="inquiry_title">
-            <h3>購入履歴詳細<hr></h3>
-        </div>
-
-        <div class="naiyou1">
-            <table class ="naiyou">
-                <tr>
-                    <th>注文日：</th>
-                    <th>2021/09/24</th>
-                    <th>　配達日： </th>
-                    <th>2021/09/24</th>
-                    <th>　配送番号： </th>
-                    <th>000000000001</th>
-                    <th>　配送番号： </th>
-                    <th>0000000000001</th>
-                </tr>
-            </table>
-        </div>
-        <br>
-
-
-    <div class="cart_flex">
-        <p>商品</p>
-        <p class="">数量</p>
-        <p class="total2">合計</p>
-    </div>
-    <hr class="cart_hr">
-
-    <div class="cart_item_flex">
-        <div class="cart_image">
-            <img src="images/item01.jpg" alt="商品画像">
-            <div class="cart_item_detail">
-                <p>素体名:あああああああああ</p>
-                <p>作品名:ああああああああああああ</p>
-                <p>カラー:あああ</p>
-                <p>サイズ:あああああ</p>
-                <p>やま金額</p>
+        <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
+        <article>
+            <!-- ページ名 -->
+            <div class="inquiry_title">
+                <h3>購入履歴詳細
+                    <hr>
+                </h3>
             </div>
-            <div class="cart_item_kazu">
-                <form action="" method="post" id="hoge">
-                    <div class="">
-                        <p>1</p>
+
+            <div class="naiyou1">
+                <table class="naiyou">
+                    <tr>
+                        <th>注文日：</th>
+                        <th><% const purchased_at=new Date(purchaseHistory[index].purchased_at)%>
+                            <%= purchased_at.getFullYear() + "/" + ('00' + (purchased_at.getMonth()+1)).slice(-2) + "/" +
+                                ('00' + purchased_at.getDate()).slice(-2) %></th>
+                        <th>　配達日： </th>
+                        <th>
+                            <% if (true) { %>
+                                未確定
+                            <% } %>
+                        </th>
+                        <th>　注文番号： </th>
+                        <th>
+                            <%= purchaseHistory[index].id %>
+                        </th>
+                        <th>　合計金額： </th>
+                        <th>
+                            <% let sumAmount = 0; %>
+                            <% for( let i = 0; i < purchaseHistory[index].itemsDetail.length; i++ ) { %>
+                                <% sumAmount += parseInt(purchaseHistory[index].itemsDetail[i].unitPrice) * purchaseHistory[index].itemsDetail[i].quantity %>
+                            <% } %>
+                            <%= sumAmount %>円
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <br>
+
+
+            <div class="cart_flex">
+                <p>商品</p>
+                <p class="">数量</p>
+                <p class="total2">合計</p>
+            </div>
+            <hr class="cart_hr">
+
+
+
+
+            <% for( let i = 0; i < purchaseHistory[index].itemsDetail.length; i++ ) { %>
+                <div class="cart_item_flex">
+                    <div class="cart_image">
+                    <img src="<%= purchaseHistory[index].itemsDetail[i].workImagePath %>" alt="商品画像">
+                    <div class="cart_item_detail">
+                        <p>素体名:<%= purchaseHistory[index].itemsDetail[i].baseCategoryName %></p>
+                        <p>作品名:「<%= purchaseHistory[index].itemsDetail[i].workName %>」</p>
+                        <!-- <p>カラー:あああ</p>
+                        <p>サイズ:あああああ</p> -->
+                        <p>数量: <%= purchaseHistory[index].itemsDetail[i].quantity %></p>
+                        <p>金額: ¥<%= purchaseHistory[index].itemsDetail[i].unitPrice %></p>
                     </div>
+                    <div class="cart_item_kazu">
+                        <div class="">
+                            <p>
+                                <%= purchaseHistory[index].itemsDetail[i].quantity %>
+                            </p>
+                        </div>
+                </div>
+                <div class="total">
+                    <p><%= parseInt(purchaseHistory[index].itemsDetail[i].unitPrice) * purchaseHistory[index].itemsDetail[i].quantity %></p>
+                </div>
+            </div>
+        </div>
+        <hr class="cart_hr">
+            <% } %>
+
+            <div class="cart_flex3">
+
+                <p class="count1">小計</p>
+                <p>¥4000</p>
+            </div>
+            <div class="cart_flex3">
+                <div class="count1">
+                    <p>配送料</p>
+                </div>
+                <p>¥300</p>
+            </div>
+            <hr class="cart_hr">
+            <div class="cart_flex3">
+                <div class="count1">
+                    <p>合計</p>
+                </div>
+                <p>¥4300</p>
+            </div>
+            <br><br>
+
+            <div class = "subtitle"><img src="/images/system/delivery.png" class="delivery_card" alt="配送情報"></div>
+
+            <div class="purchase_2">
+                <form action="" method="post" id="hoge">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="purchase_box2">
+                                    <table cellpadding="10">
+                                        <tr>
+                                            <th>配達日付　: </th>
+                                            <td><%= estimatedDeliveryTimeCategory %></td>
+                                            <td>18時~20時</td>
+                                            <input type="hidden" name="">
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
                 </form>
             </div>
-            <div class="total">
-                <p>¥2000</p>
-            </div>
-        </div>
-    </div>
-    
-    <hr class="cart_hr">
 
-    <div class="cart_item_flex">
-        <div class="cart_image">
-            <img src="images/item01.jpg" alt="商品画像">
-            <div class="cart_item_detail">
-                <p>素体名:あああああああああ</p>
-                <p>作品名:ああああああああああああ</p>
-                <p>カラー:あああ</p>
-                <p>サイズ:あああああ</p>
-                <p>やま金額</p>
-            </div>
-            <div class="cart_item_kazu">
+            <div class="purchase_2">
                 <form action="" method="post" id="hoge">
-                    <div class="">
-                        <p>1</p>
-                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="purchase_box2">
+                                    <table cellpadding="10">
+                                        <tr>
+                                            <th>お名前　　: </th>
+                                            <td><%= deliveryAddress[0].familyname %></td>
+                                            <td><%= deliveryAddress[0].firstname %></td>
+                                            <input type="hidden" name="">
+                                        </tr>
+                                        <tr>
+                                            <th>ふりがな　: </th>
+                                            <td><%= deliveryAddress[0].familyname_furigana %></td>
+                                            <td><%= deliveryAddress[0].firstname_furigana %></td>
+                                            <input type="hidden" name="">
+                                        </tr>
+                                        <tr>
+                                            <th>住所　　　: </th>
+                                            <td>〒
+                                                <% if (deliveryAddress[0].zip_code.includes("-")) { %>
+                                                    <%= deliveryAddress[0].zip_code %> 
+                                                   <% } else { %>
+                                                       <%= deliveryAddress[0].zip_code.substr(0, 3) %>-<%= deliveryAddress[0].zip_code.substr(3, 7) %>
+                                                       <% } %> 
+                                               </td>
+                                            <input type="hidden" name="">
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <td colspan="2"><%= deliveryAddress[0].address %></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
                 </form>
             </div>
-            <div class="total">
-                <p>¥2000</p>
+            <div class = "subtitle"><img src="/images/system/card_information.png" class="delivery_card" alt="～支払情報～"></div>
+            <div class="purchase_2">
+                <form action="" method="post" id="hoge">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="purchase_box2">
+                                    <table cellpadding="10">
+                                        <tr>
+                                            <th>支払方法　: </th>
+                                            <% if (paymentMethod[0].name_card == "PayPay") { %>
+                                                <td>PayPay</td>
+                                            <% } else if (paymentMethod[0].name_card == null) { %>
+                                                <td>PayPay</td>
+                                            <% } else { %>
+                                                <td>
+                                                    <%# 先頭12桁を"*"に置き換える" %>  
+                                                    <%# paymentMethod[0].cardnumberを、4桁ずつに区切り、"-"を挿入する %>
+                                                    <% var cardnumber = paymentMethod[0].cardnumber %>
+                                                    <% var cardnumber_1 = cardnumber.substr(0, 4) %>
+                                                    <% var cardnumber_2 = cardnumber.substr(4, 4) %>
+                                                    <% var cardnumber_3 = cardnumber.substr(8, 4) %>
+                                                    <% var cardnumber_4 = cardnumber.substr(12, 4) %>
+                                                    <% cardnumber_1 = cardnumber_1.replace(/[0-9]/g, "*") %>
+                                                    <% cardnumber_2 = cardnumber_2.replace(/[0-9]/g, "*") %>
+                                                    <% cardnumber_3 = cardnumber_3.replace(/[0-9]/g, "*") %>
+                                                    <% cardnumber_4 = cardnumber_4 %>
+                                                    <% cardnumber = cardnumber_1 + "-" + cardnumber_2 + "-" + cardnumber_3 + "-" + cardnumber_4 %>
+                                                    <%= cardnumber %>
+                                                </td>
+                                                <td>クレジットカード</td>
+                                            <% } %> 
+                                            <input type="hidden" name="">
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
-        </div>
-    </div>
+            <br>
+            <hr class="cart_hr">
+            <div class="button">
+                <!-- 閉じるボタン（ポップアップ閉じるボタン）jsページ -->
+                <button id="" class="white_button" onclick="window.history.back()">閉じる</button>
+            </div>
 
-    <hr class="cart_hr">
-    <div class="cart_flex3">
-        
-        <p class="count1">小計</p>
-        <p>¥4000</p>
-    </div>
-    <div class="cart_flex3">
-        <div class="count1">
-            <p>配送料</p>
-        </div>
-            <p>¥300</p>
-    </div>
-    <hr class="cart_hr">
-    <div class="cart_flex3">
-        <div class="count1">
-            <p>合計</p>
-        </div>
-            <p>¥4300</p>
-    </div>
-    <br><br>
-        
-    <p class = "subtitle">～配送情報～</p>
-
-    <div class="purchase_2">
-        <form action="" method="post" id="hoge">
-            <table>
-                <tr>
-                    <td>
-                        <div class="purchase_box2">
-                            <table cellpadding="10">
-                                <tr>
-                                    <th>配達日付　: </th>
-                                    <td>1月31日</td>
-                                    <td>18時~20時</td>
-                                    <input type="hidden" name="">
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-                    <td>
-                        
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-
-    <div class="purchase_2">
-        <form action="" method="post" id="hoge">
-            <table>
-                <tr>
-                    <td>
-                        <div class="purchase_box2">
-                            <table cellpadding="10">
-                                <tr>
-                                    <th>お名前　　: </th>
-                                    <td>山田</td>
-                                    <td>太郎</td>
-                                    <input type="hidden" name="">
-                                </tr>
-                                <tr>
-                                    <th>ふりがな　: </th>
-                                    <td>やまだ</td>
-                                    <td>たろう</td>
-                                    <input type="hidden" name="">
-                                </tr>
-                                <tr>
-                                    <th>住所　　　: </th>
-                                    <td>〒233-0012</td>
-                                    <input type="hidden" name="">
-                                </tr>
-                                <tr>
-                                    <th></th>
-                                    <td colspan="2">東京都新宿区西新宿１丁目７−３ 総合校舎コクーンタワ</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-                    <td>
-                        
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    <p class = "subtitle">～支払情報～</p>
-    <div class="purchase_2">
-        <form action="" method="post" id="hoge">
-            <table>
-                <tr>
-                    <td>
-                        <div class="purchase_box2">
-                            <table cellpadding="10">
-                                <tr>
-                                    <th>支払方法　: </th>
-                                    <td>****-****-****-**12</td>
-                                    <td>VISA</td>
-                                    <input type="hidden" name="">
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-                    <td>
-                    
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    <br>
-    <hr class="cart_hr">
-    <div class="button">
-        <!-- 閉じるボタン（ポップアップ閉じるボタン）jsページ -->
-        <button id="" class="white_button"  onclick="location.href='purchase_history.html'">閉じる</button>
-    </div>
-
-    <noscript>
-        <p>JavaScriptを有効にしてください。</p>
-    </noscript>
+            <noscript>
+                <p>JavaScriptを有効にしてください。</p>
+            </noscript>
 
 
-    </article>
-    <footer>
-        <br>
-        <br>
-        <div class ="footer_text1">
-    <table class ="footer_text">
-        
-            <tr>
-                <td><p><a href = "faq.html">よくある質問　</a></p></td>
-                <td><p><a href = "privacy_policy.html">プライバシーポリシー　</a></p></td>
-                <td><p><a href = "site_policy.html">サイトポリシー</a></p></td>
-            </tr>
-    </table>
-    </div>
-    <br>
-        <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
-        
-        <br>
-        <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
-    
-    </footer>
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
+        </article>
+        <footer>
+            <br>
+            <br>
+            <div class="footer_text1">
+                <table class="footer_text">
+
+                    <tr>
+                        <td>
+                            <p><a href="faq.html">よくある質問　</a></p>
+                        </td>
+                        <td>
+                            <p><a href="privacy_policy.html">プライバシーポリシー　</a></p>
+                        </td>
+                        <td>
+                            <p><a href="site_policy.html">サイトポリシー</a></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <p><a href="#"><span class="iro3">Copyright&copy; U labeler</span></p></a>
+
+            <br>
+            <a href="customize_editing.html" id="pagetop"><i class="up"></i>↑</a>
+
+        </footer>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bubbly-bg@1.0.0/dist/bubbly-bg.js"></script>
         <script>
             bubbly({
-            blur: 5,
-            bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.1})`,
-            canvas: document.querySelector("#back"),
-            colorStart: '#fff',
-            colorStop: '#fff',
-            compose: 'source-over',
-            shadowColor: '#ffffef',
-            velocityFunc:() => Math.random() * 1.4,
-            radiusFunc:() => 3 + Math.random() * 20,
+                blur: 5,
+                bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.1})`,
+                canvas: document.querySelector("#back"),
+                colorStart: '#fff',
+                colorStop: '#fff',
+                compose: 'source-over',
+                shadowColor: '#ffffef',
+                velocityFunc: () => Math.random() * 1.4,
+                radiusFunc: () => 3 + Math.random() * 20,
             });
         </script>
-    </script>
+        </script>
     </body>
-    </html>
+
+</html>

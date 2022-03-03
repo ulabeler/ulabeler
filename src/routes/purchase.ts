@@ -133,8 +133,94 @@ router.get("/history/:purchaseId", async (request, response) => {
   if (!request.user) {
     response.redirect("/invalidAccess");
     return;
-  }else{
+  } else {
     const purchaseId = request.params.purchaseId;
+    const purchaseHistory: purchaseHistoryView[] = await knex(
+      "purchase_history"
+    )
+      .where("id", purchaseId)
+      .orderBy("purchased_at", "desc")
+      .catch((err: Error) => {
+        console.log(err);
+      });
+
+    for (let i = 0; i < purchaseHistory.length; i++) {
+      // console.table(purchaseHistory[i]);
+      purchaseHistory[i].itemsDetail = await knex("purchased_history_item")
+        .select(knex.raw("work_id as workId, quantity"))
+        .where("purchase_history_id", purchaseHistory[i].id)
+        .orderBy("work_id", "asc");
+    }
+
+    for (let i = 0; i < purchaseHistory.length; i++) {
+      for (let j = 0; j < purchaseHistory[i].itemsDetail.length; j++) {
+        // inner joinで取得したってのしたかったけど生で書くの面倒で。。。リファクタリングでやる
+        const workInfo: purchaseHistoryWorkList[] = await knex("work")
+          .select(
+            knex.raw(
+              "id as workId, name as workName, thumbnail_path as workImagePath, unit_price as unitPrice, base_category_id as baseCategoryId"
+            )
+          )
+          .where("id", purchaseHistory[i].itemsDetail[j].workId);
+        // console.table(workInfo);
+        purchaseHistory[i].itemsDetail[j] = {
+          ...purchaseHistory[i].itemsDetail[j],
+          ...workInfo[0],
+        };
+      }
+    }
+
+    for (let i = 0; i < purchaseHistory.length; i++) {
+      for (let j = 0; j < purchaseHistory[i].itemsDetail.length; j++) {
+        const workInfo: purchaseHistoryWorkList[] = await knex("base_category")
+          .select(knex.raw("name_subcategory as baseCategoryName"))
+          .where("id", purchaseHistory[i].itemsDetail[j].baseCategoryId);
+        purchaseHistory[i].itemsDetail[j].baseCategoryName =
+          workInfo[0].baseCategoryName;
+      }
+    }
+
+    // 配送先 descで1件取得
+    const shippingAddress: delivery_addressTable[] = await knex(
+      "delivery_address"
+    )
+      .where("user_id", request.user.id)
+      .orderBy("updated_at", "desc")
+      .limit(1)
+      .catch((err: Error) => {
+        console.log(err);
+      });
+
+    // let estimatedDeliveryTimeCategory = "時間帯指定なし";
+
+    // console.table(currentTempDeliveryInfo);
+    // 3日後の日付をmm月dd日に変換
+    const estimatedDeliveryTime = new Date(
+      new Date().getTime() + 3 * 24 * 60 * 60 * 1000
+    );
+    const estimatedDeliveryTimeCategory =
+      estimatedDeliveryTime.getMonth() +
+      1 +
+      "月" +
+      estimatedDeliveryTime.getDate() +
+      "日";
+
+    const paymentMethod = await knex("user")
+      .select("name_card", "cardnumber")
+      .where("id", request.user.id);
+
+    // console.table(purchaseHistory[0].itemsDetail);
+    response.render("purchase_history_detail", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      purchaseId: purchaseId,
+      index: 0,
+      purchaseHistory: purchaseHistory,
+      deliveryAddress: shippingAddress,
+      estimatedDeliveryTimeCategory: estimatedDeliveryTimeCategory,
+      paymentMethod: paymentMethod,
+    });
   }
 });
 
