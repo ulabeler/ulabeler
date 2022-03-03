@@ -117,7 +117,7 @@ router.get("/history", async (request, response) => {
         }
       }
 
-      // console.table(purchaseHistory[index]);
+      console.table(purchaseHistory);
       response.render("purchase_history", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
           `${Boolean(request.user)}`
