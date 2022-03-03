@@ -2,6 +2,7 @@
 /* eslint-disable no-invalid-this */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable require-jsdoc */
+/* eslint-disable @typescript-eslint/no-this-alias */
 const width = document.getElementById("view").clientWidth;
 const height = document.getElementById("view").clientHeight;
 // width = 190;
@@ -254,20 +255,22 @@ const value = arr["object_name"];
 console.log(value);
 
 const objectarray = [
-  { name: "iPhone11", path: "iphone11.png" },
-  { name: "iPhone11 Pro", path: "iphone11 pro.png" },
-  { name: "iPhone12", path: "iphone12.png" },
-  { name: "iPhone12 mini", path: "iphone12 mini.png" },
-  { name: "iPhone12 Pro", path: "iphone12 pro.png" },
-  { name: "iPhone12 Pro Max", path: "iphone11 promax.png" },
-  { name: "iPhone13 mini", path: "iphone13 mini.png" },
-  { name: "iPhone13 Pro", path: "iphone13 pro.png" },
-  { name: "iPhone13 Pro Max", path: "iphone13 promax.png" },
+  { name: "iPhone11", path: "iphone13.png" },
+  { name: "iPhone11 Pro", path: "iphone13.png" },
+  { name: "iPhone12", path: "iphone13.png" },
+  { name: "iPhone12 mini", path: "iphone13.png" },
+  { name: "iPhone12 Pro", path: "iphone13.png" },
+  { name: "iPhone12 Pro Max", path: "iphone13.png" },
+  { name: "iPhone13 mini", path: "iphone13.png" },
+  { name: "iPhone13 Pro", path: "iphone13.png" },
+  { name: "iPhone13 Pro Max", path: "iphone13.png" },
+  { name: "iPhone7", path: "iphone7.png" },
   { name: "iPhone13", path: "iphone13.png" },
   { name: "ペットボトル", path: "pet500.png" },
-  { name: "皿", path: "saucer2.png" },
-  { name: "腕時計", path: "watch.png" },
+  { name: "皿", path: "saucer1.png" },
+  { name: "腕時計", path: "watch.jpg" },
   { name: "チロルチョコ", path: "tirol.png" },
+  { name: "トートバッグ", path: "bag.jpg" },
 ];
 console.log(objectarray);
 let objectpath;
@@ -290,6 +293,43 @@ Konva.Image.fromURL(`/images/object/${objectpath}`, (img) => {
 
 const x = document.getElementsByClassName("konvajs-content");
 x[0].style.margin = "50px auto";
+
+function previewImage(obj) {
+  const fileReader = new FileReader();
+  fileReader.onload = function () {
+    Konva.Image.fromURL(fileReader.result, (img) => {
+      img.setAttrs({
+        // 本体のサイズ挿入
+        width: 100,
+        height: 100,
+        name: "image",
+        draggable: true,
+      });
+      layer.add(img);
+      let imgcnt = 0;
+      img.on("click", function () {
+        if (imgcnt == 0) {
+          stptr = new Konva.Transformer({
+            nodes: [img],
+            keepRatio: false,
+            boundBoxFunc: (oldBox, newBox) => {
+              if (newBox.width < 10 || newBox.height < 10) {
+                return oldBox;
+              }
+              return newBox;
+            },
+          });
+          layer.add(stptr);
+          imgcnt = 1;
+        } else {
+          stptr.hide();
+          imgcnt = 0;
+        }
+      });
+    });
+  };
+  fileReader.readAsDataURL(obj.files[0]);
+}
 
 let cnt1 = 0;
 const textarray = ["", "", ""];
@@ -483,6 +523,25 @@ function drowimg(num) {
         stptr.hide();
         stpcnt = 0;
       }
+      const st = this;
+      const deletestp = () => {
+        st.destroy();
+        stptr.hide();
+      };
+      deletebtn.addEventListener("click", deletestp);
+      window.setTimeout(function () {
+        deletebtn.removeEventListener("click", deletestp);
+      }, 3000);
+    });
+    let dragcnt = 0;
+    img.on("dblclick", function () {
+      if (dragcnt == 0) {
+        this.draggable(false);
+        dragcnt = 1;
+      } else {
+        this.draggable(true);
+        dragcnt = 0;
+      }
     });
     // apply default left-top crop
     applyCrop("center-middle");
@@ -495,44 +554,10 @@ document.addEventListener("click", (e) => {
     }
   }
 });
-
-// スタンプここまで
-
-// what is url of dragging element?
-// var itemURL = '';
-// document
-// .getElementById('drag-items')
-// .addEventListener('dragstart', function (e) {
-//     itemURL = e.target.src;
-// });
-
-// var con = stage.container();
-//     con.addEventListener('dragover', function (e) {
-//     e.preventDefault(); // !important
-// });
-
-// con.addEventListener('drop', function (e) {
-// e.preventDefault();
-// // now we need to find pointer position
-// // we can't use stage.getPointerPosition() here, because that event
-// // is not registered by Konva.Stage
-// // we can register it manually:
-// stage.setPointersPositions(e);
-
-// Konva.Image.fromURL(itemURL, function (image) {
-//     layer.add(image);
-//     image.position(stage.getPointerPosition());
-//     image.draggable(true);
-//     image.on("dblclick", function() {
-//         this.moveToTop();
-//     });
-// });
-// });
-
 // 送信
 const btnsend = () => {
-  // tr.hide();
   const base = stage.toDataURL().replace(/^data:\w+\/\w+;base64,/, "");
+  console.log(base);
   const input = document.createElement("input");
   input.type = "hidden";
   input.value = base;

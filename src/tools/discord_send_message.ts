@@ -62,6 +62,11 @@ export function setDiscordPayload(
         },
         fields: [
           {
+            name: "Environment",
+            value: environment,
+            inline: false,
+          },
+          {
             name: "Type",
             value: Type,
             inline: true,
