@@ -5,6 +5,7 @@ body {
 }
 
 .grid-area {
+　　margin-top: 50px;
     width: 95%;
     height: 750px;
     position: absolute;
