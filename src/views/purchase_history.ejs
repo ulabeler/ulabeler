@@ -10,6 +10,7 @@
     <body>
         <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
     <article>
+        <div class="footerFixed">
         <!-- ページ名 -->
         <h3 class="h3_center2">購入履歴<hr></h3>
 
@@ -91,6 +92,7 @@
             <% } %>
         </ul>
     </div>
+</div>
     </article>
     <%- include("./components/login.ejs") %>
     <%- include("./components/footer.ejs") %>

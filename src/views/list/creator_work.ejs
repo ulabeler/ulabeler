@@ -13,6 +13,7 @@
         <%- include("../components/login.ejs") %>
 
           <article>
+            <div class="footerFixed">
             <br>
             <br>
 
@@ -89,6 +90,7 @@
               maxViewOnPage: maxViewOnPage, currentPage: currentPage, userInfo: userInfo, currentPageDescription:
               currentPageDescription,isMine: isMine}) %>
 
+</div>
           </article>
           <br>
           <%- include("../components/listPagenation.ejs", { workList :workList, idx: idx, maxPage: maxPage,

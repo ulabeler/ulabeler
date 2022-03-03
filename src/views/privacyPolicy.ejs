@@ -10,6 +10,7 @@
     <body>
         <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
         <article>
+            <div class="footerFixed">
             <!-- ページタイトル -->
             <h3 class="privacy_title">プライバシーポリシー
                 <hr>
@@ -26,7 +27,7 @@
                     <li>本方針は、外部公開するとともに従業員他に周知し、各自の教育、啓発に努め個人情報保護意識の高揚を図ります。</li>
                 </ol>
             </div>
-
+        </div>
         </article>
         <%- include("./components/login.ejs") %>
         <%- include("./components/footer.ejs") %>
