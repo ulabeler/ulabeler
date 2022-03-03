@@ -16,6 +16,8 @@ import app from "../app";
 const debug = require("debug")("ulabeler:server");
 import http from "http";
 
+import { sendDiscord } from "../tools/discord_send_message";
+
 /**
  * Get port from environment and store in Express.
  */
@@ -36,6 +38,19 @@ const server = http.createServer(app);
 server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
+
+// 起動したら、ログをDiscordに飛ばす。
+const environment = process.env.U_DB_ENVIRONMENT || "development";
+let sendMessage: string;
+
+if (environment === "production" || environment === "staging") {
+  sendMessage = `<@${process.env.discord_mention}>\nenv: **${environment}**\nMessage: \`\`\`listening on ${port}\`\`\``;
+} else {
+  sendMessage = `env: **${environment}**\nMessage: \`\`\`listening on ${port}\`\`\``;
+}
+server.on("listening", () => {
+  sendDiscord(sendMessage);
+});
 
 // Normalize a port into a number, string, or false.
 /**
