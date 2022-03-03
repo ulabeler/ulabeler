@@ -19,7 +19,7 @@
                     <br>
                     <br>
                     <br>
-                    <div class="wrap slide-paused" ontouchstart="">
+                    <div class="wrap slide-paused noselect" ontouchstart="">
                         <ul class="slideshow1">
                             <li class="content1 content-hover">
                                 <% if (userInfo==null) { %>
@@ -203,7 +203,7 @@
 
                     <!-- ページ名 -->
 
-
+                    <div class="noselect">
                     <h3 class="h3_center4 fadeInTrigger"> U labeler</h3>
                     <h4 class="h4size fadeInTrigger">世界に一つだけのオリジナル作品 作ってみてはいかがですか？？</h4>
                     <div class="btn_custmize fadeInTrigger">
@@ -221,11 +221,11 @@
                                 </a></p>
                             </div>
                                 <br>
-
+                    </div>
 
 
                                     <br><br>
-                                    <h3 class="h3_center7 fadeInTrigger">ライブラリ
+                                    <h3 class="h3_center7 fadeInTrigger noselect">ライブラリ
                                         <hr>
                                     </h3>
                                     <div id="js-show-popup">
@@ -398,7 +398,7 @@
                                                             (create_at.getMonth()+1)).slice(-2) + "/" + ('00' +
                                                             create_at.getDate()).slice(-2) %>
                                                 </p>
-                                                <div class="image_wrapper"><img src="<%= workList[i].thumbnail_path %>"
+                                                <div class="image_wrapper noselect"><img src="<%= workList[i].thumbnail_path %>"
                                                         alt="" />
                                                     <table class=tannka_table>
                                                         <tr>

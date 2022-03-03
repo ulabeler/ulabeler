@@ -12,6 +12,10 @@ body {
 	display: flex;
 }
 
+.noselect{
+	user-select: none;
+}
+
 a {
 	text-decoration: none;
 	color: #464646;
