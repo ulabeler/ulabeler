@@ -95,9 +95,12 @@ app.use("/customize", customizeRouter);
 // catch 404 and forward to error handler
 // これは動いてる
 app.use(function (request, response) {
+  // リクエストメソッドを取得
+  const method = request.method;
   const detail: discordMessageDetail = {
     requestURI: request.originalUrl,
     statusCode: 404,
+    method: method,
   };
   const payload = setDiscordPayload(environment, true, detail);
   sendDiscordV2(payload);

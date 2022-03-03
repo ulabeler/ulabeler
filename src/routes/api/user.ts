@@ -94,7 +94,7 @@ router.post("/sign_up", function (request, response) {
       mailaddress: request.body.email,
       created_at: new Date(),
       icon_path:
-        "https://mediaulabeler.na2na.website/media/icon/9d5c5ebe-17b0-4a9c-b2d2-79df2d0b2a43.png",
+        "https://mediaulabeler.na2na.website/media/icon/343d4753-0b68-4e0d-8898-2f39b4c301b9.webp",
     };
     knex("user")
       .insert({

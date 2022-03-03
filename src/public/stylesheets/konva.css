@@ -1,10 +1,11 @@
 body {
     width: 1000px;
     height: 800px;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .grid-area {
+    margin-top: 50px;
     width: 95%;
     height: 750px;
     position: absolute;
@@ -45,7 +46,7 @@ header > h5 {
     margin-left: 30px;
 }
 .div2 > div {
-    margin-left: 30px;
+    margin-left: 10px;
 }
 
 .div2 img  {
@@ -101,6 +102,8 @@ header > h5 {
 .pagenation {
     margin-top: 15px;
     width: 100%;
+    overflow-wrap: normal;
+
 }
 .pagenation button {
     background-color: transparent;
@@ -108,7 +111,8 @@ header > h5 {
     cursor: pointer;
     outline: none;
     padding: 0;
-    margin: 15px;
+    margin-top: 5px;
+    margin-left: 15px;
 }
 
 #deletebtn{
@@ -201,3 +205,20 @@ header > h5 {
     width: 40px;/ ボタンの長さ */
     border: solid 1px;
 }
+.filelabel {
+    background: none;
+	border: none;
+	outline: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+.filelabel IMG{
+    width: 40px;
+    height: 40px;
+    margin-top: 15px;
+}
+
+ #filesend {
+    display: none;  /* 本来のファイル選択フォームは非表示に */
+ }

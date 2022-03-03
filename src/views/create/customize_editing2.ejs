@@ -5,7 +5,7 @@
     <meta name="robots" content="none,noindex,nofollow">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="/stylesheets/konva.css" rel="stylesheet" type="text/css"></link>
-    <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css"></link>
+    <!-- <link href="/stylesheets/reset.css" rel="stylesheet" type="text/css"></link> -->
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
     <!-- <link rel="stylesheet" href="/js/jquery.js"> -->
     <link rel="stylesheet" href="/stylesheets/pop-up.css">
@@ -146,17 +146,19 @@
                 </div>
             </div>
             <div class="div3">
-                <button id="" class="customize_button_syousai">
-                    <img src="/images/system/custom/picture.png" height ="40" width="auto" />
-                </button>
+                <form>
+                    <label>
+                       <span class="filelabel customize_button_syousai" title="ファイルを選択">
+                          <img src="/images/system/custom/picture.png" alt="＋画像">
+                       </span>
+                    <input type="file" accept='image/*' onchange="previewImage(this);" id="filesend">
+                    </label>
+                 </form>
                 <button id="gridbtn" class="customize_button_syousai">
                     <img src="/images/system/custom/grid.png" height ="40" width="auto" />
                 </button>
                 <button id="save" class="customize_button_syousai">
                     <img src="/images/system/custom/pdf.png" height ="40" width="auto" />
-                </button>
-                <button class="dbutton">
-                    <img src="/images/system/custom/3d.png" height ="40" width="auto" />
                 </button>
                 <div class="">
                     <p id=""><%= object_name %></p>
@@ -210,7 +212,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
 integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
 crossorigin="anonymous"
 ></script>
-<script type="text/javascript" src="/javascripts/custom/index.js"></script>
+<!-- <script type="text/javascript" src="/javascripts/custom/index.js"></script> -->
 <script type="text/javascript" src="/javascripts/custom/pagenation.js"></script>
 <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>

@@ -115,4 +115,5 @@ export type discordMessageDetail = {
   statusCode?: number;
   message?: string;
   errStack?: string;
+  method?: string;
 };

@@ -47,6 +47,9 @@ export function setDiscordPayload(
   isError: boolean,
   detail?: discordMessageDetail
 ) {
+  // environmentの最初一文字を大文字に
+  const viewEnvironmentString =
+    environment.charAt(0).toUpperCase() + environment.slice(1);
   const TypeR = isError ? "Error💥" : "<:info:948981362868760637>Information";
   const Type = isError ? "Error" : "Information";
   const payload: discordPayload = {
@@ -61,6 +64,11 @@ export function setDiscordPayload(
           icon_url: "https://devulabeler.na2na.website/favicon.ico",
         },
         fields: [
+          {
+            name: "Environment",
+            value: viewEnvironmentString,
+            inline: false,
+          },
           {
             name: "Type",
             value: Type,
@@ -82,6 +90,12 @@ export function setDiscordPayload(
       payload.embeds[0].fields?.push({
         name: "Status Code",
         value: detail.statusCode.toString(),
+        inline: true,
+      });
+      payload.embeds[0].fields?.push({
+        name: "Request Method",
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        value: detail.method!,
         inline: true,
       });
     } else if (detail?.statusCode == 500) {
