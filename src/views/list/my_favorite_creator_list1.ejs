@@ -11,6 +11,7 @@
         <body>
             <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
                 <article>
+                    <div class="footerFixed">
 
                     <!-- ページタイトル -->
                     <h3 class="creator_list_title">
@@ -103,7 +104,7 @@
                                             </div>
                                             <% } %>
 
-
+                                        </div>
                 </article>
                 <%- include("../components/listPagenation.ejs", { workList :creatorList, idx: idx, maxPage: maxPage,
                     maxViewOnPage: maxViewOnPage, currentPage: currentPage, currentPageDescription:

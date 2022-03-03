@@ -10,6 +10,7 @@
     <body>
     <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
         <article>
+            <div class="footerFixed">
             <!-- ページ名 -->
             <div class="pan">
                 <h5>素体選択 ＞ カラー選択 ＞ カスタマイズ ＞ <font size="4">作品設定 </font>＞ 作品設定確認</h5>
@@ -102,9 +103,7 @@
             </section>
             </div>
             </div>
-            <noscript>
-                <p>JavaScriptを有効にしてください。</p>
-            </noscript>
+        </div>
         </article>
         <%- include("../components/footer.ejs") %>
         <script>

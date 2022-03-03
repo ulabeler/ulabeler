@@ -10,6 +10,7 @@
     <body>
         <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
     <article>
+        <div class="footerFixed">
         <!-- ページ名 -->
         <h3 class="h3_center2">購入履歴<hr></h3>
 
@@ -45,7 +46,7 @@
         </div>
         <br>
 
-        <% for( let i = 0; i < purchaseHistory[index].itemsDetail.length; i++ ) { %>
+        <% for( let i = index; i < index + 1; i++ ) { %>
             <div class="cart_item_flex">
                 <div class="cart_image7">
                     <img src="<%= purchaseHistory[index].itemsDetail[i].workImagePath %>" alt="商品画像">
@@ -57,8 +58,8 @@
                         <p>数量: <%= purchaseHistory[index].itemsDetail[i].quantity %></p>
                         <p>金額: <%= parseInt(purchaseHistory[index].itemsDetail[i].unitPrice) * purchaseHistory[index].itemsDetail[i].quantity %>円</p>
                         <div class="double_button5">
-                            <button  type="button" class="white_button" onclick="location.href='#'">詳細</button>
-                            <button  type="button" class="black_button" onclick="location.href='#'">再購入</button>
+                            <button  type="button" class="white_button" onclick="location.href='/purchase/history/<%= purchaseHistory[index].id %>'">詳細</button>
+                            <!-- <button  type="button" class="black_button" onclick="location.href='#'">再購入</button> -->
                         </div>
                     </div>
                     
@@ -91,6 +92,7 @@
             <% } %>
         </ul>
     </div>
+</div>
     </article>
     <%- include("./components/login.ejs") %>
     <%- include("./components/footer.ejs") %>

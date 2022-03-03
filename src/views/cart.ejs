@@ -12,6 +12,7 @@
 <body>
     <%- include("./components/sidemenu.ejs", {side_menu: side_menu}) %>
     <article>
+        <div class="footerFixed">
         <!-- ページ名 -->
     <h3 class="h3_center">カート<hr></h3>
     <% if (currentCartWorkDetailList.length === 0) { %>
@@ -94,7 +95,7 @@
 
     <% } %> 
     <input type="hidden" name="flg" id="flg" value="<%= currentCartWorkDetailList.length %>">
-    
+</div>
     </article>
     <%- include("./components/login.ejs") %>
     <%- include("./components/footer.ejs") %>

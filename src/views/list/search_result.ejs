@@ -13,6 +13,7 @@
             <%- include("../components/login.ejs") %>
 
                 <article>
+                    <div class="footerFixed">
                     <br>
                     <br>
                     <% if (false) { %>
@@ -114,6 +115,7 @@
                                 <% if (searchResult.workList) { %>
                                         <%- include("../components/workListDetailForSearch", { workList: searchResult.workList, maxViewOnPage: maxViewOnPage}) %>
                                     <% } %>
+                                </div>
                 </article>
                 <br>
 

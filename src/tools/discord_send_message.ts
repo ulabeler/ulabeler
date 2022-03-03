@@ -64,8 +64,8 @@ export function setDiscordPayload(
     environment.charAt(0).toUpperCase() +
     environment.slice(1) +
     `(${hostName()})`;
-  const TypeR = isError ? "Error💥" : "<:info:948981362868760637>Information";
-  const Type = isError ? "Error" : "Information";
+  const TypeR = isError ? "💥Error" : "<:info:948981362868760637>Information";
+  const Type = isError ? "💥Error" : "<:info:948981362868760637>Information";
   const payload: discordPayload = {
     avatar_url: "https://devulabeler.na2na.website/favicon.ico",
     embeds: [
