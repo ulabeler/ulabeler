@@ -15,4 +15,4 @@ jobs:
         with:
           node-version: '16'
       - name : Linting
-        run: npm run lint
+        run: npm run build && npm run lint
