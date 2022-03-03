@@ -104,8 +104,10 @@ router.get("/select_color", async function (request, response) {
   const objectName = request.cookies.object_name;
   const objectId = request.cookies.object_id;
   const thumbnailPath = await getObjectVanillaThumbnailPath(objectId).catch(
-    () => {
+    (error: Error) => {
+      console.error(error);
       response.redirect("/customize/select_object");
+      return;
     }
   );
 

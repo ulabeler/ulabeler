@@ -87,8 +87,6 @@ CREATE TABLE `base_settings` (
   `created_at` datetime NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `thumbnail_path_UNIQUE` (`thumbnail_path`),
-  UNIQUE KEY `object_path_UNIQUE` (`object_path`),
   CONSTRAINT `T_category_id` FOREIGN KEY (`id`) REFERENCES `base_category` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
