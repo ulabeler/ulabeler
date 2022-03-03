@@ -11,7 +11,6 @@
   <body>
   <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
     <article>
-      <div class="footerFixed">
     <br>
     <br>
     <div class="pan">
@@ -26,7 +25,10 @@
   <div class = userpage>
   </div>
       
-      <div class="image_wrapper"><img id="thumbnail" src="
+      
+      <form method="post">
+        <table class="colortable">
+            <div class="image_wrapper"><img id="thumbnail" src="
         <% if (typeof thumbnailPath !== 'undefined') { %> 
         <%= thumbnailPath %>
         <% } else { %>
@@ -34,14 +36,10 @@
         <% } %>
         "  alt="" /></div>
       <br>
-      <form method="post">
-        <table>
-          <tr>
-            <td><p class = "explanation"><%= object_name %></p></td>
-            <td>　　　　　　　　　　　　　　　　　　</td>
-            <td>カラー：</td>
-            <td><input type="color" id="color" name="color"></td>
-          </tr>
+            <p class = "explanation"><%= object_name %></p>
+            <div class="colorsenntaku">
+                <p>カラー：<input type="color" id="color" name="color"></p>
+            </div>
         </table>
         
         <br>
@@ -65,7 +63,7 @@
 </div>
 
 </div>
-</div>
+
     </article>
 </article>
 <%- include("../components/login.ejs") %>
