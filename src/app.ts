@@ -108,7 +108,7 @@ app.use(function (error: any, request: any, response: any, next: any) {
   response.locals.status = error.status;
   response.locals.error = request.app.get("env") === "development" ? error : {};
 
-  sendDiscord(environment + ": " + response.locals.message);
+  sendDiscord(environment + ": ```" + response.locals.message + "```");
 
   // render the error page
   response.status(error.status || 500).render("./500_error", {
