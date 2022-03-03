@@ -17,6 +17,18 @@ export function sendDiscord(message: string): void {
   }
 }
 
+const env = process.env.U_DB_ENVIRONMENT || "development";
+
+const hostName = () => {
+  if (env === "development") {
+    return "http://localhost:3001";
+  } else if (env === "staging") {
+    return "https://devulabeler.na2na.website";
+  } else {
+    return "https://ulabeler.na2na.website";
+  }
+};
+
 // Discordで通知送る
 /**
  * @param {any} payload - 通知メッセージ本文
@@ -49,7 +61,9 @@ export function setDiscordPayload(
 ) {
   // environmentの最初一文字を大文字に
   const viewEnvironmentString =
-    environment.charAt(0).toUpperCase() + environment.slice(1);
+    environment.charAt(0).toUpperCase() +
+    environment.slice(1) +
+    `(${hostName()})`;
   const TypeR = isError ? "Error💥" : "<:info:948981362868760637>Information";
   const Type = isError ? "Error" : "Information";
   const payload: discordPayload = {
