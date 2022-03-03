@@ -29,10 +29,10 @@
         blur: 5,
         bubbleFunc: () => `hsla(${Math.random() * 350}, 90%, 50%, ${Math.random() * 0.1})`,
         canvas: document.querySelector("#back"),
-        colorStart: '#fff',
-        colorStop: '#fff',
+        colorStart: 'rgba(250, 250, 250, 0.3)',
+        colorStop: 'rgba(250, 250, 250, 0.5)',
         compose: 'source-over',
-        shadowColor: '#ffffef',
+        shadowColor: 'rgba(245, 245, 245, 0.3)',
         velocityFunc: () => Math.random() * 1.4,
         radiusFunc: () => 3 + Math.random() * 20,
     });
