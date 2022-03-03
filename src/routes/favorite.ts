@@ -212,11 +212,10 @@ router.get("/creator", async (request, response) => {
       console.log(viewType);
       console.log(currentPage);
       console.log(idx);
-      response.render("list/my_favorite_creator_list1", {
+      response.render("list/my_favorite_creator_list_first", {
         side_menu: JSON.parse(JSON.stringify(sideMenuList))[
           `${Boolean(request.user)}`
         ],
-        currentPageDescription: currentPageDescription,
       });
     } else {
       const myFavoriteCreatorList: userTable[] = [];
