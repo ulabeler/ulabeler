@@ -1,0 +1,27 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out codes
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+      - name : Linting
+        run: npm run build && npm run lint

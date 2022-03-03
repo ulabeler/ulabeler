@@ -6,7 +6,7 @@
     "start": "node ./built/bin/www",
     "build": "npm install && npx tsc && node ./scripts/build.js",
     "test": "npx tsc && node ./scripts/build.js && echo 'サーバーを起動しました。' && node ./built/bin/www",
-    "lint": "eslint --ext .ts ./src --fix",
+    "lint": "eslint --ext .ts ./src --fix && eslint --ext .js ./src --fix && echo 'Lint finished.'",
     "hotfix": "node ./scripts/build.js"
   },
   "dependencies": {
