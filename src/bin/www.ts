@@ -16,7 +16,11 @@ import app from "../app";
 const debug = require("debug")("ulabeler:server");
 import http from "http";
 
-import { sendDiscord } from "../tools/discord_send_message";
+import {
+  sendDiscordV2,
+  setDiscordPayload,
+} from "../tools/discord_send_message";
+import { discordMessageDetail } from "tools/TypeAlias/miscAlias";
 
 /**
  * Get port from environment and store in Express.
@@ -39,17 +43,20 @@ server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
 
-// 起動したら、ログをDiscordに飛ばす。
-const environment = process.env.U_DB_ENVIRONMENT || "development";
-let sendMessage: string;
-
-if (environment === "production" || environment === "staging") {
-  sendMessage = `<@${process.env.discord_mention}>\nenv: **${environment}**\nMessage: \`\`\`listening on ${port}\`\`\``;
-} else {
-  sendMessage = `env: **${environment}**\nMessage: \`\`\`listening on ${port}\`\`\``;
-}
 server.on("listening", () => {
-  sendDiscord(sendMessage);
+  // 起動したら、ログをDiscordに飛ばす。
+  const environment = process.env.U_DB_ENVIRONMENT || "development";
+  const detail: discordMessageDetail = {
+    message: "",
+  };
+
+  if (environment === "production" || environment === "staging") {
+    detail.message = `listening on ${port}`;
+  } else {
+    detail.message = `listening on ${port}`;
+  }
+  const payload = setDiscordPayload(environment, false, detail);
+  sendDiscordV2(payload);
 });
 
 // Normalize a port into a number, string, or false.

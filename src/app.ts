@@ -23,11 +23,13 @@ app.use(bodyParser.raw({ limit: "10mb" }));
 app.use(bodyParser.json({ limit: "10mb" }));
 // できるだけlimitを大きくしておく
 
-const discordMentionTo = process.env.discord_mention || "";
-
 export const UpImgDirBase = path.join(__dirname, "public/images/");
 
-import { sendDiscord } from "./tools/discord_send_message"; // メッセ送信処理 できればこれで状態監視できるようにしたい
+import {
+  sendDiscord,
+  sendDiscordV2,
+  setDiscordPayload,
+} from "./tools/discord_send_message"; // メッセ送信処理 できればこれで状態監視できるようにしたい
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -59,6 +61,7 @@ import purchaseRouter from "./routes/purchase";
 import customizeRouter from "./routes/customize";
 import workSetRouter from "./routes/workSet";
 import passport from "passport";
+import { discordMessageDetail } from "tools/TypeAlias/miscAlias";
 
 // const usersRouter = require('./routes/alpha/users');
 // const createRouter = require('./routes/alpha/create');
@@ -92,15 +95,12 @@ app.use("/customize", customizeRouter);
 // catch 404 and forward to error handler
 // これは動いてる
 app.use(function (request, response) {
-  // requestURIを取得
-  const requestURI = request.originalUrl;
-  let sendMessage: string;
-  if (environment === "production" || environment === "staging") {
-    sendMessage = `<@${discordMentionTo}>\nenv: **${environment}**\nStatus: **404**\n RequestURI: ${requestURI}`;
-  } else {
-    sendMessage = `<@${discordMentionTo}>\nenv: **${environment}**\nStatus: **404**\n RequestURI: ${requestURI}`;
-  }
-  sendDiscord(sendMessage);
+  const detail: discordMessageDetail = {
+    requestURI: request.originalUrl,
+    statusCode: 404,
+  };
+  const payload = setDiscordPayload(environment, true, detail);
+  sendDiscordV2(payload);
   response.status(404).render("./404_error", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
@@ -117,13 +117,13 @@ app.use(function (error: any, request: any, response: any, next: any) {
   // requestURIを取得
   const requestURI = request.originalUrl;
   response.locals.error = request.app.get("env") === "development" ? error : {};
-  let sendMessage: string;
-  if (environment === "production" || environment === "staging") {
-    sendMessage = `<@${discordMentionTo}>\nenv: **${environment}**\nStatus: **500**\n RequestURI: ${requestURI}\nMessage: \`\`\`${error.message}\`\`\``;
-  } else {
-    sendMessage = `env: **${environment}**\nStatus: **500**\n RequestURI: ${requestURI}\nMessage: \`\`\`${error.message}\`\`\``;
-  }
-  sendDiscord(sendMessage);
+  const detail: discordMessageDetail = {
+    requestURI: requestURI,
+    statusCode: 500,
+    message: error.message,
+  };
+  const payload = setDiscordPayload(environment, true, detail);
+  sendDiscordV2(payload);
 
   // render the error page
   response.status(error.status || 500).render("./500_error", {
