@@ -1698,7 +1698,7 @@ p.new_warning{
 
 .user_3{
 	margin-top: -100px;
-    width: 78%;
+    width: 60%;
 	margin: 0 auto;
 	float: left;
 
@@ -1805,7 +1805,7 @@ p.new_warning{
 
 .cart_img:hover{
 	cursor: pointer;
-	transform: translateY(-5px);
+	transform: translateY(-3px);
 }
 
 .tannka_table{

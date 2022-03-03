@@ -103,7 +103,12 @@ router.post("/select_object_sub", async function (request, response) {
 router.get("/select_color", async function (request, response) {
   const objectName = request.cookies.object_name;
   const objectId = request.cookies.object_id;
-  const thumbnailPath = await getObjectVanillaThumbnailPath(objectId);
+  const thumbnailPath = await getObjectVanillaThumbnailPath(objectId).catch(
+    () => {
+      response.redirect("/customize/select_object");
+    }
+  );
+
   response.render("create/select_color", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
