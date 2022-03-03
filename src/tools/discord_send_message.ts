@@ -92,6 +92,12 @@ export function setDiscordPayload(
         value: detail.statusCode.toString(),
         inline: true,
       });
+      payload.embeds[0].fields?.push({
+        name: "Request Method",
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        value: detail.method!,
+        inline: true,
+      });
     } else if (detail?.statusCode == 500) {
       (payload.embeds[0].title = TypeR),
         (payload.embeds[0].description = "500エラーっぽい？");
