@@ -89,25 +89,21 @@ app.use("/customize", customizeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (request, response) {
-  const userInfo = request.user ? request.user : null;
-  response.status(404).render("./components/message", {
+  response.status(404).render("./404_error", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
-    message:
-      "404 Not Found.<br>この画面が出ている原因として、以下の理由が考えられます<center><ul><li>未実装</li><li>ファイルが見つからない</li><li>リクエストURIが間違っている</li></ul></center>",
-    userInfo: userInfo,
   });
 });
 
 // error handler
 app.use(function (
   error: { message: any; status: any },
-  request: { app: { get: (arg0: string) => string } },
+  request: any,
   response: {
     locals: { message: any; error: any };
     status: (arg0: any) => void;
-    render: (arg0: string) => void;
+    render: (arg0: string, arg1: any) => void;
   }
 ) {
   // set locals, only providing error in development
@@ -118,7 +114,12 @@ app.use(function (
 
   // render the error page
   response.status(error.status || 500);
-  response.render("error");
+  response.render("./500_error", {
+    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+      `${Boolean(request.user)}`
+    ],
+    status: error.status || 500,
+  });
 });
 
 export default app;
