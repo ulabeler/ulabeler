@@ -47,6 +47,9 @@ export function setDiscordPayload(
   isError: boolean,
   detail?: discordMessageDetail
 ) {
+  // environmentの最初一文字を大文字に
+  const viewEnvironmentString =
+    environment.charAt(0).toUpperCase() + environment.slice(1);
   const TypeR = isError ? "Error💥" : "<:info:948981362868760637>Information";
   const Type = isError ? "Error" : "Information";
   const payload: discordPayload = {
@@ -63,7 +66,7 @@ export function setDiscordPayload(
         fields: [
           {
             name: "Environment",
-            value: environment,
+            value: viewEnvironmentString,
             inline: false,
           },
           {
