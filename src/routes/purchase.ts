@@ -129,6 +129,15 @@ router.get("/history", async (request, response) => {
   }
 });
 
+router.get("/history/:purchaseId", async (request, response) => {
+  if (!request.user) {
+    response.redirect("/invalidAccess");
+    return;
+  }else{
+    const purchaseId = request.params.purchaseId;
+  }
+});
+
 router.get("/purchase_confirmation", async function (request, response) {
   if (!request.user) {
     response.redirect("/invalidAccess");
