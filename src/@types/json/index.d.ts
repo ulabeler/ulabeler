@@ -1,8 +1,8 @@
-declare module '*/config.json' {
-    interface CustomConfig {
-        maxViewOnPage: number;
-    }
+declare module "*/config.json" {
+  interface CustomConfig {
+    maxViewOnPage: number;
+  }
 
-    const value: CustomConfig;
-    export = value;
+  const value: CustomConfig;
+  export = value;
 }
