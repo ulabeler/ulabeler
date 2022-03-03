@@ -57,8 +57,8 @@
                         <p>数量: <%= purchaseHistory[index].itemsDetail[i].quantity %></p>
                         <p>金額: <%= parseInt(purchaseHistory[index].itemsDetail[i].unitPrice) * purchaseHistory[index].itemsDetail[i].quantity %>円</p>
                         <div class="double_button5">
-                            <button  type="button" class="white_button" onclick="location.href='#'">詳細</button>
-                            <button  type="button" class="black_button" onclick="location.href='#'">再購入</button>
+                            <button  type="button" class="white_button" onclick="location.href='/purchase/history/<%= purchaseHistory[index].id %>'">詳細</button>
+                            <!-- <button  type="button" class="black_button" onclick="location.href='#'">再購入</button> -->
                         </div>
                     </div>
                     
