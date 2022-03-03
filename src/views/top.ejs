@@ -204,8 +204,10 @@
                     <!-- ページ名 -->
 
 
-                    <h3 class="h3_center4"> U labeler</h3>
-                    <h4>世界に一つだけのオリジナル作品 作ってみてはいかがですか？？</h4>
+                    <h3 class="h3_center4 fadeInTrigger"> U labeler</h3>
+                    <h4 class="h4size fadeInTrigger">世界に一つだけのオリジナル作品 作ってみてはいかがですか？？</h4>
+                    <div class="btn_custmize fadeInTrigger">
+                        <p class="btn_custmize1 fadeInTrigger">
                     <% if (userInfo==null) { %>
                         <a onclick="showPopUp('showLogin')">
                             <% } else { %>
@@ -216,15 +218,14 @@
                                                 <font color="white">CUSTOMIZE</font>
                                             </p>
                                         </div>
-                                </a>
-                                <br>
-                                <br>
+                                </a></p>
+                            </div>
                                 <br>
 
 
-                                <div class="box18">
+
                                     <br><br>
-                                    <h3 class="h3_center7">ライブラリ
+                                    <h3 class="h3_center7 fadeInTrigger">ライブラリ
                                         <hr>
                                     </h3>
                                     <div id="js-show-popup">
@@ -233,7 +234,7 @@
 
                                             <% for( let i=0; i < workList.length; i++ ) { %>
                                                 <!-- セクション１個で１つの表示👇 -->
-                                                <section class="box_item_2"
+                                                <section class="box_item_2 fadeInTrigger"
                                                     onclick="showPopUp('listidx-<%-workList[i].id%>')">
                                                     <br>
                                                     <div class="userpage">
@@ -247,7 +248,7 @@
 
                                                                                 <tr>
                                                                                     <th rowspan="4">
-                                                                                        <p class=user_img2><img
+                                                                                        <p class=user_img5><img
                                                                                                 src="<%= workList[i].creatorIconPath %>"
                                                                                                 alt="<%- workList[i].name %>" />
                                                                                     </th>
@@ -323,13 +324,9 @@
                                                                     <% } %>
                                                                         <% } %>
                                                                             <div class="favorite3">
-                                                                                <p class="favorite2 favNumIdx-<%-workList[i].id%>"
-                                                                                    id="favNumIdx-<%-workList[i].id%>">
-                                                                                    <font size="4">
-                                                                                        <%=
-                                                                                            workList[i].favoritedWorkNumber%>
-                                                                                    </font>
-                                                                                </p>
+                                                                                <div class="favorite2 favNumIdx-<%-workList[i].id%>"
+                                                                                    id="favNumIdx-<%-workList[i].id%>"><%=workList[i].favoritedWorkNumber%>
+                                                                                </div>
                                                                             </div>
                                                 </section>
                                                 <!-- ここまで👆 -->
@@ -337,7 +334,7 @@
 
                                         </div>
                                     </div>
-                                </div>
+
 
                                 <!-- ポップアップの中身 -->
 
