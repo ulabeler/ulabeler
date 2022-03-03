@@ -26,6 +26,7 @@ MySQL は別で動かしておく必要があります。
 - [ ] https://github.com/na2na-p/ulabeler/issues/37
 - [ ] public/javascripts以下のリファクタリング
 - [ ] ルーティング関係のリファクタリング
+- [ ] トップ差し替え
 
 # その他
 
