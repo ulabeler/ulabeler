@@ -76,7 +76,6 @@ export function setDiscordPayload(
   }
 
   if (isError) {
-    payload.content = `<@${discordMentionTo}>`;
     if (detail?.statusCode == 404) {
       payload.embeds[0].title = TypeR;
       payload.embeds[0].description = "エラーか攻撃っぽい？";
