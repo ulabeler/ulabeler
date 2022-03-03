@@ -105,4 +105,19 @@ router.post("/cartRemove", async (request, response) => {
   }
 });
 
+router.get("/createError", (request, response) => {
+  // エラーを発生させたあとで、そのエラーをキャッチして、そのエラーを返す
+  try {
+    const err = new Error("createError");
+    err.message = "testError";
+    throw err;
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+router.get("/createEjsError", (request, response) => {
+  response.render("wawa");
+});
+
 export default router;
