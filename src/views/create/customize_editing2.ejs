@@ -168,7 +168,7 @@
             </div>
             <div class="div5">
                 <div class="customise_double_button">
-                    <button type="button" id="white_button">
+                    <button type="button" id="white_button" onclick="showPopUp('askReturn')">
                         <div id="js-show-popup">素体選択</div>
                     </button><!-- 購入確認画面へ -->
                     <form method="post" onsubmit="btnsend()" id="finish">
@@ -176,7 +176,7 @@
                         <button id="black_button">終了</button>
                     </form>
                 </div>
-                <div class="popup" id="js-popup">
+                <div class="popup" id="askReturn">
                     <div class="popup-inner">
                         <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
                         <section class="box_item_3">
@@ -191,14 +191,14 @@
                                 <button type="button" class="white_button2"
                                         onclick="location.href='/customize/select_object'">はい</button>
                                 <button type="submit" class="red_button2" form=="hoge"
-                                        onclick="location.href='/customize/customize_editing'">いいえ</button>
+                                        onclick="closePopUp('askReturn')">いいえ</button>
                             </div>
                         </section>
                         <!-- 作品詳細（自分）ここまで👆 -->
                     </div>
                     <div class="black-background" id="js-black-bg"></div>
                 </div>
-                <script src="/javascripts/custom/pop-up.js"></script>
+                <script src="/javascripts/pop-up.js"></script>
             </div>
         </div>
     </div>
