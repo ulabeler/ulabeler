@@ -144,6 +144,11 @@ router.get("/history/:purchaseId", async (request, response) => {
         console.log(err);
       });
 
+    if (purchaseHistory.length === 0) {
+      response.redirect("/purchase/history");
+      return;
+    }
+
     for (let i = 0; i < purchaseHistory.length; i++) {
       // console.table(purchaseHistory[i]);
       purchaseHistory[i].itemsDetail = await knex("purchased_history_item")
