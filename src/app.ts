@@ -88,7 +88,11 @@ app.use("/workSet", workSetRouter);
 app.use("/customize", customizeRouter);
 
 // catch 404 and forward to error handler
+// これは動いてる
 app.use(function (request, response) {
+  // requestURIを取得
+  const requestURI = request.originalUrl;
+  sendDiscord(`404: ${requestURI}`);
   response.status(404).render("./404_error", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
@@ -96,30 +100,30 @@ app.use(function (request, response) {
   });
 });
 
-// error handler
-app.use(function (
-  error: { message: any; status: any },
-  request: any,
-  response: {
-    locals: { message: any; error: any };
-    status: (arg0: any) => void;
-    render: (arg0: string, arg1: any) => void;
-  }
-) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use(function (error: any, request: any, response: any, next: any) {
   // set locals, only providing error in development
   response.locals.message = error.message;
+  console.log(error);
+  response.locals.status = error.status;
   response.locals.error = request.app.get("env") === "development" ? error : {};
 
-  sendDiscord(error.message);
+  sendDiscord(environment + ": " + response.locals.message);
 
   // render the error page
-  response.status(error.status || 500);
-  response.render("./500_error", {
+  response.status(error.status || 500).render("./500_error", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[
       `${Boolean(request.user)}`
     ],
     status: error.status || 500,
   });
+  return;
+});
+
+// Errorが発生したらsendDiscordで文字列を送信する
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use(function (error: any, request: any, response: any, next: any) {
+  sendDiscord(error.message);
 });
 
 export default app;

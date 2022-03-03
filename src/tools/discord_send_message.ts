@@ -6,7 +6,8 @@ import { Webhook } from "discord-webhook-node";
  * @return {void}
  */
 export function sendDiscord(message: string): void {
-  const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL || null;
+  const discordWebhookUrl = process.env.discord_webhook || null;
+  console.log(`discordWebhookUrl: ${discordWebhookUrl}`);
   if (discordWebhookUrl) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const discordWebhook: any = new Webhook(discordWebhookUrl);
