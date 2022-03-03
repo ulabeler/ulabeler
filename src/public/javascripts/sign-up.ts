@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable max-len */
 // TODO
@@ -226,6 +227,7 @@ InputPassword.addEventListener("keyup", function () {
 /**
  * @return {boolean} 入力した2つのパスワードが合致していればtrueを返します。
  */
+// @ts-ignore
 function checkPasswordConfirm() {
   if (InputPassword.value !== InputPasswordConfirm.value) {
     ErrorPassword.innerText = "パスワードが一致しません";
