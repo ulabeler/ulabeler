@@ -39,7 +39,7 @@ router.get("/select_object", function (request, response) {
 });
 
 router.post("/select_object", async function (request, response) {
-  // ベース洗濯後の分岐
+  // ベース選択後の分岐
   if (!request.user) {
     response.redirect("/invalidAccess"); // 未ログイン時の処理を追加すべき。
     return;
