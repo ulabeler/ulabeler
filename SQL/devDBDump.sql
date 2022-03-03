@@ -57,7 +57,7 @@ CREATE TABLE `base_category` (
   KEY `category_settings_name_idx` (`name_subcategory`),
   CONSTRAINT `category_settings_name` FOREIGN KEY (`name_subcategory`) REFERENCES `category_settings` (`name`),
   CONSTRAINT `vendor_id` FOREIGN KEY (`vendor_id`) REFERENCES `vendor` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `base_category` (
 
 LOCK TABLES `base_category` WRITE;
 /*!40000 ALTER TABLE `base_category` DISABLE KEYS */;
-INSERT INTO `base_category` VALUES (1,1,'ペットボトル','ペットボトル'),(2,1,'皿','皿'),(3,1,'スマホケース','iPhone12 mini'),(4,1,'スマホケース','iPhone12'),(5,1,'スマホケース','iPhone12 Pro'),(6,1,'スマホケース','iPhone12 Pro Max'),(7,1,'スマホケース','iPhone11'),(8,1,'スマホケース','iPhone11 Pro'),(9,1,'スマホケース','iPhone8/SE(第二世代)'),(10,1,'スマホケース','iPhone7'),(11,1,'スマホケース','Xperia Z5'),(12,1,'スマホケース','iPhone13'),(13,1,'スマホケース','iPhone13 Pro'),(14,1,'スマホケース','iPhone13 Pro Max'),(15,1,'お弁当箱','お弁当箱'),(16,1,'サーフボード','サーフボード'),(17,1,'腕時計','腕時計'),(18,1,'トートバッグ','トートバッグ'),(19,1,'靴','靴'),(20,1,'チロルチョコ','チロルチョコ'),(21,1,'スマホケース','iPhone13 mini'),(22,1,'スマホケース','iPhone7');
+INSERT INTO `base_category` VALUES (1,1,'ペットボトル','ペットボトル'),(2,1,'皿','皿'),(3,1,'スマホケース','iPhone12 mini'),(4,1,'スマホケース','iPhone12'),(5,1,'スマホケース','iPhone12 Pro'),(6,1,'スマホケース','iPhone12 Pro Max'),(7,1,'スマホケース','iPhone11'),(8,1,'スマホケース','iPhone11 Pro'),(9,1,'スマホケース','iPhone8/SE(第二世代)'),(10,1,'スマホケース','iPhone7'),(11,1,'スマホケース','Xperia Z5'),(12,1,'スマホケース','iPhone13'),(13,1,'スマホケース','iPhone13 Pro'),(14,1,'スマホケース','iPhone13 Pro Max'),(15,1,'お弁当箱','お弁当箱'),(16,1,'サーフボード','サーフボード'),(17,1,'腕時計','腕時計'),(18,1,'トートバッグ','トートバッグ'),(19,1,'靴','靴'),(20,1,'チロルチョコ','チロルチョコ'),(21,1,'スマホケース','iPhone13 mini'),(22,1,'スマホケース','iPhone7'),(23,1,'トートバッグ','トートバッグ');
 /*!40000 ALTER TABLE `base_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,10 +86,8 @@ CREATE TABLE `base_settings` (
   `created_at` datetime NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `thumbnail_path_UNIQUE` (`thumbnail_path`),
-  UNIQUE KEY `object_path_UNIQUE` (`object_path`),
   CONSTRAINT `T_category_id` FOREIGN KEY (`id`) REFERENCES `base_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +96,7 @@ CREATE TABLE `base_settings` (
 
 LOCK TABLES `base_settings` WRITE;
 /*!40000 ALTER TABLE `base_settings` DISABLE KEYS */;
-INSERT INTO `base_settings` VALUES (1,NULL,'/images/object/pet500.png','/images/object/pet500.png',200,'2022-03-01 04:31:22',NULL),(2,NULL,'/images/object/saucer2.png','/images/object/saucer2.png',500,'2022-03-01 04:31:22',NULL),(3,NULL,'/images/object/iphone12 mini.png','/images/object/iphone12 mini.png',1200,'2022-03-01 04:31:22',NULL),(4,NULL,'/images/object/iphone12.png','/images/object/iphone12.png',1200,'2022-03-01 04:31:22',NULL),(5,NULL,'/images/object/iphone12 pro.png','/images/object/iphone12 pro.png',1300,'2022-03-01 04:31:22',NULL),(6,NULL,'/images/object/iphone12 promax','/images/object/iphone12 promax',1300,'2022-03-01 04:31:22',NULL),(7,NULL,'/images/object/iphone11.png','/images/object/iphone11.png',1100,'2022-03-01 04:31:22',NULL),(8,NULL,'/images/object/iphone11 pro.png','/images/object/iphone11 pro.png',1200,'2022-03-01 04:31:22',NULL),(12,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1400,'2022-03-01 04:31:22',NULL),(13,NULL,'/images/object/iphone13 pro.png','/images/object/iphone13 pro.png',1400,'2022-03-01 04:31:22',NULL),(14,NULL,'/images/object/iphone13 promax.png','/images/object/iphone13 promax.png',1400,'2022-03-01 04:31:22',NULL),(17,NULL,'/images/object/watch.png','/images/object/watch.png',1400,'2022-03-01 04:31:22',NULL),(20,NULL,'/images/object/tirol.png','/images/object/tirol.png',20,'2022-03-01 04:31:22',NULL),(21,NULL,'/images/object/iphone13 mini.png','/images/object/iphone13 mini.png',1400,'2022-03-01 04:31:22',NULL);
+INSERT INTO `base_settings` VALUES (1,NULL,'/images/object/pet500.png','/images/object/pet500.png',200,'2022-03-01 04:31:22',NULL),(2,NULL,'/images/object/saucer2.png','/images/object/saucer2.png',500,'2022-03-01 04:31:22',NULL),(3,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1200,'2022-03-01 04:31:22',NULL),(4,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1200,'2022-03-01 04:31:22',NULL),(5,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1300,'2022-03-01 04:31:22',NULL),(6,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1300,'2022-03-01 04:31:22',NULL),(7,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1100,'2022-03-01 04:31:22',NULL),(8,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1200,'2022-03-01 04:31:22',NULL),(12,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1400,'2022-03-01 04:31:22',NULL),(13,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1400,'2022-03-01 04:31:22',NULL),(14,NULL,'/images/object/iphone13.png','/images/object/iphone13.png',1400,'2022-03-01 04:31:22',NULL),(17,NULL,'/images/object/watch.png','/images/object/watch.png',1400,'2022-03-01 04:31:22',NULL),(20,NULL,'/images/object/tirol.png','/images/object/tirol.png',20,'2022-03-01 04:31:22',NULL),(21,NULL,'/images/object/iphone13 mini.png','/images/object/iphone13.png',1400,'2022-03-01 04:31:22',NULL),(22,NULL,'/images/object/iphone7.png','/images/object/iphone7.png',1100,'2022-03-01 04:31:22',NULL),(23,NULL,'/images/object/bag.png','/images/object/bag.png',1200,'2022-03-01 04:31:22',NULL);
 /*!40000 ALTER TABLE `base_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -719,4 +717,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-03-04  4:02:29
+-- Dump completed on 2022-03-04  6:05:54

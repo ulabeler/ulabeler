@@ -85,6 +85,9 @@ async function getRandomIdList(
       // eslint-disable-next-line camelcase
       .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
         return favoritedWorkNumber[0].number;
+      })
+      .catch((err: Error) => {
+        console.log(err);
       });
     topPageWorkList[i].favoritedWorkNumber = favoritedWorkNumber;
   }
@@ -191,13 +194,17 @@ async function addCart(workId: string, userId: string, quantity?: number) {
  * @param {int} objectId
  */
 async function getObjectVanillaThumbnailPath(objectId: number) {
-  const texture: base_settingsTable[] = await knex("base_settings")
-    .select("thumbnail_path")
-    .where("id", objectId)
-    .catch((err: Error) => {
-      console.log(err);
-    });
-  return texture[0].thumbnail_path;
+  try {
+    const texture: base_settingsTable[] = await knex("base_settings")
+      .select("thumbnail_path")
+      .where("id", objectId)
+      .catch((err: Error) => {
+        console.log(err);
+      });
+    return texture[0].thumbnail_path;
+  } catch (error) {
+    return "";
+  }
 }
 
 export { getMaxPage, getRandomIdList, addCart, getObjectVanillaThumbnailPath };

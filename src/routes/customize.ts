@@ -104,8 +104,10 @@ router.get("/select_color", async function (request, response) {
   const objectName = request.cookies.object_name;
   const objectId = request.cookies.object_id;
   const thumbnailPath = await getObjectVanillaThumbnailPath(objectId).catch(
-    () => {
+    (error: Error) => {
+      console.error(error);
       response.redirect("/customize/select_object");
+      return;
     }
   );
 
@@ -167,7 +169,7 @@ router.post("/customize_editing", async function (request, response) {
       id: uuidv4().substring(36 - 12),
       created_by_user_id: request.user.id,
       base_category_id: request.cookies.object_id,
-      name: "dummy",
+      name: "情報編集中のアイテム",
       work_tex_path: `${mediaProxyPrefix}${workTexPath}`,
       thumbnail_path: `${mediaProxyPrefix}${thumbnailPath}`,
       flag_public: false,

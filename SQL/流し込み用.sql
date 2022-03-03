@@ -103,3 +103,4 @@ INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_pa
 INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('17', '/images/object/watch.png', '/images/object/watch.png', '1400', '2022-03-01 04:31:22');
 INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('20', '/images/object/tirol.png', '/images/object/tirol.png', '20', '2022-03-01 04:31:22');
 INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('21', '/images/object/iphone13 mini.png', '/images/object/iphone13 mini.png', '1400', '2022-03-01 04:31:22');
+INSERT INTO `ulabeler_dev`.`base_settings` (`id`, `base_tex_path`, `thumbnail_path`, `unit_price`, `created_at`) VALUES ('22', '/images/object/iphone7.png', '/images/object/iphone7.png', '1100', '2022-03-01 04:31:22');
