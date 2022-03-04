@@ -21,7 +21,7 @@ import {
   // eslint-disable-next-line camelcase
   favorited_work_numberTable,
 } from "tools/TypeAlias/tableType_alias";
-import { getObjectVanillaThumbnailPath } from "../tools/util";
+// import { getObjectVanillaThumbnailPath } from "../tools/util";
 
 // オブジェクト選択
 router.get("/select_object", function (request, response) {
@@ -101,23 +101,24 @@ router.post("/select_object_sub", async function (request, response) {
 
 // カラー選択
 router.get("/select_color", async function (request, response) {
-  const objectName = request.cookies.object_name;
-  const objectId = request.cookies.object_id;
-  const thumbnailPath = await getObjectVanillaThumbnailPath(objectId).catch(
-    (error: Error) => {
-      console.error(error);
-      response.redirect("/customize/select_object");
-      return;
-    }
-  );
+  // const objectName = request.cookies.object_name;
+  // const objectId = request.cookies.object_id;
+  // const thumbnailPath = await getObjectVanillaThumbnailPath(objectId).catch(
+  //   (error: Error) => {
+  //     console.error(error);
+  //     response.redirect("/customize/select_object");
+  //     return;
+  //   }
+  // );
 
-  response.render("create/select_color", {
-    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-      `${Boolean(request.user)}`
-    ],
-    object_name: objectName,
-    thumbnailPath: thumbnailPath,
-  });
+  // response.render("create/select_color", {
+  //   side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+  //     `${Boolean(request.user)}`
+  //   ],
+  //   object_name: objectName,
+  //   thumbnailPath: thumbnailPath,
+  // });
+  response.redirect("/customize/customize_editing");
 });
 router.post("/select_color", function (request, response) {
   const color = request.body.color;
