@@ -130,15 +130,18 @@ router.post("/select_color", function (request, response) {
 // カスタマイズ画面
 router.get("/customize_editing", function (request, response) {
   // console.log( request.cookies.color);
-  const color = request.cookies.color;
   const objectName = request.cookies.object_name;
-  response.render("create/customize_editing2", {
-    color: color,
-    object_name: objectName,
-    side_menu: JSON.parse(JSON.stringify(sideMenuList))[
-      `${Boolean(request.user)}`
-    ],
-  });
+  if (request.cookies.object_name == undefined) {
+    response.redirect("/customize/select_object");
+    return;
+  } else {
+    response.render("create/customize_editing2", {
+      object_name: objectName,
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+    });
+  }
 });
 
 router.post("/customize_editing", async function (request, response) {
