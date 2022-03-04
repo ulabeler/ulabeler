@@ -22,6 +22,13 @@ import { pickHashTags } from "../tools/parser";
 // import { v4 as uuidv4 } from "uuid"; // uuidv4()
 // const mediaProxyPrefix = process.env.MEDIAPROXYPREFIX || "";
 // import sharp from "sharp";
+const environment = process.env.U_DB_ENVIRONMENT || "development";
+
+import {
+  sendDiscordV2,
+  setDiscordPayload,
+} from "../tools/discord_send_message";
+import { discordMessageDetail } from "tools/TypeAlias/miscAlias";
 
 router.get("/work_setting", async function (request, response) {
   if (!request.user) {
@@ -150,19 +157,27 @@ router.post("/work_setting_confirmation", async function (request, response) {
         introduction: parse.text,
         flag_public: isNewPublicTinyInt,
         // parse.hashTag.lengthが0ならばnullにする
-        hashtag: parse.hashTag.length === 0 ? null : parse.hashTag,
+        hashtag:
+          parse.hashTag.length === 0 ? null : JSON.stringify(parse.hashTag),
       })
       .where("id", workId)
+      .then(() => {
+        addCart(workId, request.user!.id);
+        response.status(200).send(true);
+        return;
+      })
       .catch((err: Error) => {
+        const detail: discordMessageDetail = {
+          requestURI: request.originalUrl,
+          statusCode: 500,
+          message: err.message,
+        };
+        const payload = setDiscordPayload(environment, true, detail);
+        sendDiscordV2(payload);
         console.log(err);
         response.sendStatus(500);
         return;
       });
-
-    addCart(workId, request.user.id);
-
-    response.status(200).send(true);
-    return;
   }
 });
 
