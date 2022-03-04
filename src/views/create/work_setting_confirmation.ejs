@@ -80,6 +80,7 @@
                     <br>
                     <p class = "explanation3"><%- newIntroduction %></p>
                     <br>
+                    <input type="hidden" value="<%= rawNewIntroduction %>" id="rawNewIntroduction"> 
                     
                     <div class="check">
                         <input id="newIsPublic" type="checkbox" class="check1" name="check" <%- newIsPublic %>
@@ -113,6 +114,7 @@
     const newIsPublic = document.getElementById("newIsPublic");
     const workId = document.getElementById("workId").value;
     const rawNewName = document.getElementById("newName");
+    const rawNewIntroduction = document.getElementById("rawNewIntroduction");
 
     //rawnewNameから"「"を削除し、"」"を削除する
     let newName = rawNewName.innerText.replace(/「/g, '').replace(/」/g, '');
@@ -122,7 +124,8 @@
         axios.post(`/workSet/work_setting_confirmation`, {
             newIsPublic: newIsPublic.checked,
             newName: newName,
-            workId: workId
+            workId: workId,
+            rawNewIntroduction: rawNewIntroduction.value
         })
             .then(function (response) {
                 if (response.status == 200 && response.data) {
