@@ -267,7 +267,7 @@ const objectarray = [
   { name: "iPhone7", path: "iphone7.png" },
   { name: "iPhone13", path: "iphone13.png" },
   { name: "ペットボトル", path: "pet500.png" },
-  { name: "皿", path: "saucer1.png" },
+  { name: "皿", path: "saucer2.png" },
   { name: "腕時計", path: "watch.png" },
   { name: "チロルチョコ", path: "tirol.png" },
   { name: "トートバッグ", path: "bag.png" },
