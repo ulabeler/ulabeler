@@ -2576,3 +2576,7 @@ transform: translateY(-5px);
 	.fadeRightTrigger{
 		opacity: 0;
 	}
+
+.mywork_delete{
+	text-align: left;
+}
