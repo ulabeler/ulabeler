@@ -115,6 +115,7 @@ router.post("/work_setting", async function (request, response) {
         newIsPublic: request.body.isPublic,
         hashTag: parse.hashTag,
         baseCategory: currentWorkBaseInfo[0].name_subcategory,
+        rawNewIntroduction: newIntroduction,
       });
       return;
     }
@@ -124,17 +125,45 @@ router.post("/work_setting", async function (request, response) {
 
 router.post("/work_setting_confirmation", async function (request, response) {
   if (!request.user) {
-    response.redirect("/invalidAccess");
+    response.status(401).redirect("/invalidAccess");
+    return;
+  } else if (
+    typeof request.body.newIsPublic === "undefined" &&
+    !request.body.newName &&
+    !request.body.workId &&
+    !request.body.rawNewIntroduction
+  ) {
+    response.status(400).send("Bad Request");
+    return;
+  } else {
+    // console.log(request.body);
+    const workId = request.body.workId;
+    // const name = request.body.newName;
+    const parse = pickHashTags(request.body.rawNewIntroduction);
+    console.table(parse);
+
+    const isNewPublicTinyInt = request.body.newIsPublic === "true" ? 1 : 0;
+
+    await knex("work")
+      .update({
+        name: request.body.newName,
+        introduction: parse.text,
+        flag_public: isNewPublicTinyInt,
+        // parse.hashTag.lengthが0ならばnullにする
+        hashtag: parse.hashTag.length === 0 ? null : parse.hashTag,
+      })
+      .where("id", workId)
+      .catch((err: Error) => {
+        console.log(err);
+        response.sendStatus(500);
+        return;
+      });
+
+    addCart(workId, request.user.id);
+
+    response.status(200).send(true);
     return;
   }
-  // console.log(request.body);
-  const workId = request.body.workId;
-  // const name = request.body.newName;
-
-  addCart(workId, request.user.id);
-
-  response.status(200).send(true);
-  return;
 });
 
 export default router;
