@@ -31,7 +31,7 @@
                     <tr>
                         <th>住所<font color="red">*</font>　　：　〒</th>
                         <td><input type="text" id="zipcode" maxlength="8" name="zip_code" value="1600023"></td>
-                        <td><button type="button" class="" id="search_btn">住所選択</button></td>
+                        <td><button type="button" class="" id="zip-code" onclick=" searchAddress()">住所選択</button></td>
                     </tr>
                     <tr>
                         <th></th>
@@ -142,47 +142,29 @@
             velocityFunc: () => Math.random() * 1.4,
             radiusFunc: () => 3 + Math.random() * 20,
         });
-
-        $(function () {
-            //検索ボタンをクリックされたときに実行
-            $("#search_btn").click(function () {
-                //入力値をセット
-                var param = { zipcode: $('#zipcode').val() }
-
-                // paramから"-"を除去
-                param.zipcode = param.zipcode.replace(/-/g, '');
-                //zipcloudのAPIのURL
-                var send_url = "http://zipcloud.ibsnet.co.jp/api/search";
-                $.ajax({
-                    type: "GET",
-                    cache: false,
-                    data: param,
-                    url: send_url,
-                    dataType: "jsonp",
-                    success: function (res) {
-                        //結果によって処理を振り分ける
-                        if (res.status == 200) {
-                            //処理が成功したとき
-                            //該当する住所を表示
-                            for (var i = 0; i < res.results.length; i++) {
-                                var result = res.results[i];
-                                $("#address1").val(result.address1);
-                                $("#address2").val(result.address2);
-                                $("#address3").val(result.address3);
-                            }
-                        } else {
-                            //エラーだった時
-                            //エラー内容を表示
-                            $('#zip_result').html(res.message);
-                        }
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log(XMLHttpRequest);
-                    }
-                });
+        function searchAddress() {
+            const url = 'https://zipcloud.ibsnet.co.jp/api/search';
+            // name=zipcode の input の値を取得
+            const zipcode = $("input[id=zipcode").val();
+            console.log(zipcode);
+            // AJAX
+            $.ajax({
+                url: url,
+                type: "get",
+                data: {zipcode: zipcode},
+            }).done(function(data) {
+                console.log(data);
+                // JSONをオブジェクトに変換
+                var values = JSON.parse(data);
+                console.log(values);
+                if(!values.results) {
+                    return;
+                }
+                $("input[name=address1").val(values["results"][0]["address1"]);
+                $("input[name=address2").val(values["results"][0]["address2"]);
+                $("input[name=address3").val(values["results"][0]["address3"]);
             });
-        });
-
+        }
 
         const familyname = document.getElementById('familyname');
         const firstname = document.getElementById('firstname');
