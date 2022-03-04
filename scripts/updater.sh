@@ -1,4 +1,4 @@
 #!/bin/sh
+cd /opt/ulabeler/
 git pull
 npm run build
-systemctl restart ulabeler.service
