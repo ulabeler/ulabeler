@@ -483,7 +483,7 @@
                                                         </p>
                                                         <% } else { %>
                                                             <br>
-                                                            <a href="/work/<%- workList[i].id %>/report"
+                                                            <a href="#"
                                                                 onclick="event.stopPropagation(); checkIsLoginForReport('<%=workList[i].id%>')">
                                                                 <p class="tuuhou">
                                                                     <font size="2" color="red">通報する</font>
@@ -571,7 +571,7 @@
             function checkIsLoginForReport(id) {
                 axios.post("/api/user/isLogin")
                     .then(function (response) {
-                        if (response.data.isLogin) {
+                        if (response.data) {
                             location.href = `/work/${id}/report`;
                         } else {
                             alert("ログインしてください。");
