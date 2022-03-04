@@ -46,7 +46,7 @@
         </div>
         <br>
 
-        <% for( let i = index; i < index + 1; i++ ) { %>
+        <% for( let i = 0; i < purchaseHistory[index].itemsDetail.length; i++ ) { %>
             <div class="cart_item_flex">
                 <div class="cart_image7">
                     <img src="<%= purchaseHistory[index].itemsDetail[i].workImagePath %>" alt="商品画像">
