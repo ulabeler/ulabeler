@@ -149,18 +149,21 @@ router.post("/work_setting_confirmation", async function (request, response) {
     const parse = pickHashTags(request.body.rawNewIntroduction);
     console.table(parse);
 
-    const isNewPublicTinyInt = request.body.newIsPublic === "true" ? 1 : 0;
+    const newIsPublic = request.body.newIsPublic;
 
     await knex("work")
       .update({
         name: request.body.newName,
         introduction: parse.text,
-        flag_public: isNewPublicTinyInt,
+        flag_public: newIsPublic,
         // parse.hashTag.lengthが0ならばnullにする
         hashtag:
           parse.hashTag.length === 0 ? null : JSON.stringify(parse.hashTag),
       })
       .where("id", workId)
+      .on("query", function (data: string[]) {
+        console.log(data);
+      })
       .then(() => {
         addCart(workId, request.user!.id);
         response.status(200).send(true);
