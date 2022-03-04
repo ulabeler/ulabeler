@@ -2518,7 +2518,9 @@ transform: translateY(-5px);
 	width:200px;
 }
 
-
+.mywork_delete{
+	text-align: left;
+}
 
 /*                    カラー選択               */
 /* .image_wrapper{
