@@ -56,6 +56,7 @@ async function getRandomIdList(
   const topPageWorkList: myFavoriteWorkList[] = [];
   const workList: workTable[] = await knex("work")
     .where("flag_public", 1)
+    .andWhere("deleted_at", null)
     .orderByRaw("RAND()")
     .limit(limit)
     .then((work: workTable[]) => {
