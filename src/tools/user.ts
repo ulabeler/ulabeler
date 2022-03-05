@@ -63,6 +63,7 @@ async function getUserSocialInfo(userId: string) {
   const userSocialInfo: userTable[] = await knex("user")
     .select("id", "name", "icon_path", "self_introduction")
     .where("id", userId)
+    .andWhere("deleted_at", null)
     .catch((error: Error) => {
       console.log(error);
     });

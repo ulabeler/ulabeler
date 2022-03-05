@@ -144,6 +144,28 @@ router.get("/logout", function (request, response) {
   });
 });
 
+router.get("/withdrawal", async (request, response) => {
+  if (!request.user) {
+    response.redirect("/invalidAccess");
+    return;
+  } else {
+    await knex("user")
+      .update({
+        deleted_at: new Date(),
+      })
+      .where("id", request.user.id);
+    request.logout();
+    const message =
+      "退会手続きが完了しました。<br>再びご利用いただけるのをお待ちしております。";
+    response.render("./components/message", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      message: message,
+    });
+  }
+});
+
 router.get("/reset_password/complete", function (request, response) {
   if (request.headers.referer) {
     const rawReferer = request.headers.referer;
