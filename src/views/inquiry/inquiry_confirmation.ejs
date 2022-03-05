@@ -2,13 +2,20 @@
 <html lang="ja">
 
 <head>
-    <%- include("../components/lib.ejs") %>
+    <meta charset="utf-8">
+    <meta name="robots" content="none,noindex,nofollow">
+    <meta name="description" content="ハンドメイドショップサイト">
+    <meta name="keywords" content="ECサイト">
     <title>U labeler</title>
+    <link href="css/top.css" rel="stylesheet" type="text/css">
+    </link>
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+
 </head>
 <header class="header">
 
     <div class="header_logo">
-        <h1><a href="/"><img src="/images/system/logo.png" alt="Ulabeler"></a></h1>
+        <h1><a href="top.html"><img src="images/logo.png" alt="ロゴ"></a></h1>
     </div>
 
     <!-- 検索ボックス -->
@@ -26,7 +33,7 @@
             </tr>
             <tr>
                 <div class="carticon15">
-                    <a href="cart.html"><img src="/images/system/cart-5.png" alt="ロゴ"></a>
+                    <a href="cart.html"><img src="images/cart-5.png" alt="ロゴ"></a>
                 </div>
 
             </tr>
@@ -34,7 +41,7 @@
         </table>
         <form action="">
             <div class="cartsuuji">
-                <p id="currentKeepCartNum"></p>
+                <p>1</p>
             </div>
         </form>
     </div>
@@ -58,25 +65,23 @@
             </ul>
         </nav>
         <article>
-            <div class="footerFixed">
             <br>
             <br>
 
             <!-- ページ名 -->
-            <h3 class="h3_center2">お問い合わせ
+            <h3 class="h3_center4">お問い合わせ内容確認
                 <hr>
             </h3>
 
             <section class="box_item_4">
 
                 <div class=userpage>
-                    <!-- </div>
-                <p class = "date1">2022/02/02</p>
-                <div class="image_wrapper"><img src="images/color.jpeg"  alt="" /></div> -->
+
                     <form action="select_color.html" method="post">
 
                         <br>
-                        <table class="setumeitable2">
+                        <br>
+                        <table class="setumeitable2" cellpadding="3">
                             <tr>
                                 <th>お名前　　　　　　：</th>
                                 <!--空白いじらないで -->
@@ -101,54 +106,29 @@
                                 </th>
 
                             </tr>
-
-
-
                             <tr>
-                                <th class="otoiawase">お問い合わせ項目 <font color="red">*</font>：</th>
-                                <th>
-                                    <select class="toiawase_select">
-                                        <option value="" selected>カスタマイズについて</option>
-                                        <option value="1">個人情報について</option>
-                                        <option value="2">配送について</option>
-                                        <option value="3">購入について</option>
-                                        <option value="4">商品について</option>
-                                        <option value="5">その他について</option>
-                                    </select>
-                                </th>
-
+                                <th>お問い合わせ項目　：</th>
+                                <th>商品について</th>
                             </tr>
                             <tr>
                                 <th></th>
-                                <th>
-                                    <p class="error_message6">※選択してください。</p><!-- やま jsエラーメッセージ -->
-                                </th>
                             </tr>
 
                             <tr>
-                                <th>お問い合わせ内容 <font color="red">*</font>：</th>
-                                <th>
-                                    <font color="#85858"><textarea class="tekisuto3" name="example2" cols="47" rows="8"
-                                            wrap="soft">
-
-記入してください。
-
-#ハッシュタグ
+                                <th>お問い合わせ内容　：</th>
+                                <th>プレゼント包装はお願いできますか。</th>
                                 </textarea></font>
-                                    </p>
-                                </th><!-- インデント気持ち悪いけど変えないで… placeholdeきかない…-->
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <th>
-                                    <p class="error_message">※1000文字以内で入力してください。</p><!-- やま jsエラーメッセージ -->
+                                </p>
                                 </th>
                             </tr>
 
                         </table>
-                        <br>
-                        <p class="button6"><button type="submit" class="black_button4"
-                                onclick="location.href=''">決定</button></p>
+                        <div class="double_button">
+                            <!-- やま 会員情報変更画面へ遷移 -->
+                            <button type="button" class="white_button" onclick="location.href=''">戻る</button>
+                            <button tyoe="submit" class="black_button" form="hoge">決定</button>
+
+                        </div>
                         <br>
                     </form>
             </section>
@@ -156,7 +136,10 @@
             </div>
 
             </div>
-        </div>
+
+            <noscript>
+                <p>JavaScriptを有効にしてください。</p>
+            </noscript>
         </article>
 
         <footer>
