@@ -28,6 +28,7 @@ import { cartListWorkDetail } from "../tools/TypeAlias/miscAlias";
 import { v4 as uuidv4 } from "uuid";
 
 import PAYPAY from "@paypayopa/paypayopa-sdk-node";
+import { sendMail } from "../tools/sendmail";
 const PAYPAY_API_KEY = process.env.PAYPAY_API_KEY;
 const PAYPAY_API_SECRET = process.env.PAYPAY_API_SECRET;
 const PAYPAY_MERCHANT_ID = process.env.PAYPAY_MERCHANT_ID;
@@ -500,7 +501,7 @@ router.get("/submit", async (request, response) => {
 
         // cartテーブルのデータを削除
         await knex("cart").where("userId", request.user.id).del();
-
+        sendMail("purchase", request.user.mailaddress);
         response.render("purchase/purchase_completion", {
           side_menu: JSON.parse(JSON.stringify(sideMenuList))[
             `${Boolean(request.user)}`
@@ -672,6 +673,7 @@ router.get("/paypay/callback/:orderId", async (request, response) => {
 
   // cartテーブルのデータを削除
   await knex("cart").where("userId", request.user.id).del();
+  sendMail("purchase", request.user.mailaddress);
 
   response.render("purchase/purchase_completion", {
     side_menu: JSON.parse(JSON.stringify(sideMenuList))[

@@ -208,6 +208,7 @@ router.get("/my_work", async function (request, response) {
     // workから、userIdと一致するworkを取得
     const userWorkList: useWorkList[] = await knex("work")
       .where("created_by_user_id", userId)
+      .andWhere("deleted_at", null)
       .orderBy("create_at", "desc")
       .catch((err: Error) => {
         console.log(err);
@@ -249,6 +250,10 @@ router.get("/my_work", async function (request, response) {
         // eslint-disable-next-line camelcase
         .then((favoritedWorkNumber: favorited_work_numberTable[]) => {
           return favoritedWorkNumber[0].number;
+        })
+        .catch((err: Error) => {
+          console.log(err);
+          response.status(500).send("Internal Server Error");
         });
       userWorkList[i].favoritedWorkNumber = favoritedWorkNumber;
     }
@@ -352,6 +357,7 @@ router.get("/creator_work/:userId", async function (request, response) {
       const userWorkList: useWorkList[] = await knex("work")
         .where("created_by_user_id", request.params.userId)
         .andWhere("flag_public", 1)
+        .andWhere("deleted_at", null)
         .orderBy("create_at", "desc")
         .catch((err: Error) => {
           console.log(err);

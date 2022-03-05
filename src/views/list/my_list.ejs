@@ -38,4 +38,19 @@
                     <%- include("../components/footer.ejs") %>
         </body>
 
+        <script>
+            function deleteAttempt(id){
+                axios.post("/api/work/delete", {
+                    workId: id
+                })
+                .then(function (response) {
+                    alert("削除しました");
+                    location.reload();
+                })
+                .catch(function (error) {
+                    alert.log("削除に失敗しました");
+                });
+            }
+        </script>
+
 </html>

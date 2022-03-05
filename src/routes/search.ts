@@ -28,6 +28,7 @@ router.get("/", async (request, response) => {
     // ユーザーidが含まれている場合の処理
     knex("user")
       .where("id", parsedQuery.userId)
+      .andWhere("deleted_at", null)
       .select("id")
       .then((user: userTable[]) => {
         if (user.length === 0) {

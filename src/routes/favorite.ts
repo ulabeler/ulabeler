@@ -51,7 +51,7 @@ router.get("/work", async (request, response) => {
       "favorited_work"
     )
       .where("favorite_from", userId)
-      .orderBy(orderBy)
+      .orderBy(orderBy, "desc")
       .catch((error: Error) => {
         console.log(error);
       });

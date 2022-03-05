@@ -116,6 +116,9 @@
                 <% if (isMine) { %>
                     <p class="button6"><button type="button" class="black_button4"
                             onclick="location.href='/work/<%- workList[i].id %>/edit'">編集</button></p>
+                            <br>
+                            <div class="mywork_delete" onclick="showPopUp('cartidx-<%-workList[i].id%>')">削除</div>
+                            <br>
                     <% } else { %>
                         <br>
                         <a href="/work/<%- workList[i].id %>/report">
@@ -123,12 +126,47 @@
                                 <font size="2" color="red">通報する</font>
                             </p>
                         </a>
+                        <br>
                         <% } %>
-                            <br>
                             </form>
                             </section>
             </div>
             <div class="black-background js-black-bg" id="" onclick="closePopUp('listidx-<%-workList[i].id%>')"></div>
+            </div>
+
+            <div class="popup" id="cartidx-<%-workList[i].id%>">
+                <div class="popup-inner">
+                    <div class="close-btn" id="js-close-btn" onclick="closePopUp('cartidx-<%-workList[i].id%>')"><i class="fas fa-times"></i></div>
+        
+        
+                    <section class="box_item_3">
+                        <br>
+                        <h3>この作品を<font color = "red">削除</font>しますか？</h3>
+                        
+                        <br>
+                            <p>作品は完全に削除されます。</p>
+                            <p>この操作は、完了後に取り消すことはできません。</p>
+                        <br>
+                        
+                        
+                        <div class="double_button4">
+                            <table class="button_table">
+                                <tr>
+                                    <th style = "width: 20%;"></th>
+                                    <th><button  type="button" class="white_button2" onclick="closePopUp('cartidx-<%-workList[i].id%>')">戻る</button></th>
+                                    <th style = "width: 30%;"></th>
+                                    <th><button  type="submit" class="red_button2" onclick="deleteAttempt('<%-workList[i].id%>')">削除</button></th>
+                                    <th style = "width: 20%;"></th>
+                                </tr>
+                            </table>
+                            <br>
+                            
+                        </div>
+                    </section>
+        
+                    
+                </div>
+                <div class="black-background" id="js-black-bg" onclick="closePopUp('cartidx-<%-workList[i].id%>')"></div>
             </div>
             <% } %>
                 <% } %>

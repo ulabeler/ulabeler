@@ -249,4 +249,29 @@ router.post("/getuserfavnum", (request, response) => {
   }
 });
 
+router.post("/delete", (request, response) => {
+  if (!request.user) {
+    response.status(401).send("unAuthorized");
+  } else if (!request.body.workId) {
+    response.status(400).send("Bad Request");
+  } else {
+    const targetWorkId = request.body.workId;
+    const deletedAt = new Date();
+    knex("work")
+      .update({
+        deleted_at: deletedAt,
+      })
+      .where({
+        id: targetWorkId,
+      })
+      .then(() => {
+        response.status(200).send("Deleted");
+      })
+      .catch((err: Error) => {
+        console.log(err);
+        response.status(500).send("error");
+      });
+  }
+});
+
 export default router;
