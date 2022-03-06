@@ -116,4 +116,6 @@ export type discordMessageDetail = {
   message?: string;
   errStack?: string;
   method?: string;
+  userAgent?: string;
+  ip?: string;
 };
