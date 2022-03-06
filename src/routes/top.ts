@@ -565,6 +565,18 @@ router.get("/cart", async (request, response) => {
   }
 });
 
+router.get("/contact", (request, response) => {
+  const userInfo = request.user ? request.user : null;
+  if (userInfo) {
+    response.render("./inquiry/member_inquiry.ejs", {
+      side_menu: JSON.parse(JSON.stringify(sideMenuList))[
+        `${Boolean(request.user)}`
+      ],
+      userInfo: userInfo,
+    });
+  }
+});
+
 router.get("/invalidAccess", function (request, response) {
   const userInfo = request.user ? request.user : null;
   response.render("./components/message", {

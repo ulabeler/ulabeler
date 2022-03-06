@@ -145,6 +145,20 @@ export function setDiscordPayload(
       inline: false,
     });
   }
+  if (detail?.userAgent) {
+    payload.embeds[0].fields?.push({
+      name: "UserAgent",
+      value: detail.userAgent,
+      inline: true,
+    });
+  }
+  if (detail?.ip) {
+    payload.embeds[0].fields?.push({
+      name: "IP",
+      value: detail.ip,
+      inline: true,
+    });
+  }
   if (detail?.errorMessage) {
     payload.embeds[0].fields?.push({
       name: "Message",

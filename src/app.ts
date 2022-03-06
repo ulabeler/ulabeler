@@ -97,10 +97,17 @@ app.use("/customize", customizeRouter);
 app.use(function (request, response) {
   // リクエストメソッドを取得
   const method = request.method;
+  // UA取得
+  const ua = request.headers["user-agent"];
+  // 接続元IP取得
+  const ip = request.ip;
+  console.log(`${method} ${request.url} from ${ip}`);
   const detail: discordMessageDetail = {
     requestURI: request.originalUrl,
     statusCode: 404,
     method: method,
+    userAgent: ua,
+    ip: ip,
   };
   const payload = setDiscordPayload(environment, true, detail);
   sendDiscordV2(payload);
