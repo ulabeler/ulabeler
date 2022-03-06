@@ -2520,6 +2520,11 @@ transform: translateY(-5px);
 
 .mywork_delete{
 	text-align: left;
+	color: rgb(255, 83, 126);
+}
+
+.th3{
+	width: 70%;
 }
 
 /*                    カラー選択               */
