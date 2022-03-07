@@ -7,15 +7,17 @@
 </head>
 <header class="header">
 
-  <div class="header_logo">
+  <div class="header">
     <%- include("../components/header.ejs") %>
   <body>
     <%- include("../components/sidemenu.ejs", {side_menu: side_menu}) %>
-
+<br><br><br>
       <article>
         <div class="footerFixed">
-        <%- include("../components/login.ejs") %>
-        <div class="box09">
+          <%- include("../components/login.ejs") %>
+          <div class="box09">
+          <h3>パスワードリセットの手続き</h3>
+          <p>登録したメールアドレスへ、案内のメールをお送りいたします。</p>
 
           <!-- 入力フォーム -->
           <form action="" method="post" id="hoge">
