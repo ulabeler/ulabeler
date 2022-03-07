@@ -107,7 +107,7 @@ app.use(function (request, response) {
     statusCode: 404,
     method: method,
     userAgent: ua,
-    ip: ip,
+    // ip: ip,
   };
   const payload = setDiscordPayload(environment, true, detail);
   sendDiscordV2(payload);
