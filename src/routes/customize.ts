@@ -121,8 +121,8 @@ router.get("/select_color", async function (request, response) {
   response.redirect("/customize/customize_editing");
 });
 router.post("/select_color", function (request, response) {
-  const color = request.body.color;
-  response.cookie("color", color, { maxAge: 100 * 60 * 100, httpOnly: false });
+  // const color = request.body.color;
+  // response.cookie("color", color, { maxAge: 100 * 60 * 100, httpOnly: false });
   response.redirect("/customize/customize_editing");
   return;
 });
@@ -140,6 +140,7 @@ router.get("/customize_editing", function (request, response) {
       side_menu: JSON.parse(JSON.stringify(sideMenuList))[
         `${Boolean(request.user)}`
       ],
+      object_id: request.cookies.object_id,
     });
   }
 });
@@ -149,6 +150,7 @@ router.post("/customize_editing", async function (request, response) {
     response.redirect("/invalidAccess"); // 未ログイン時の処理を追加すべき。
     return;
   } else {
+    // console.log(request.body.baseId);
     const base = request.body.base;
     const workTexPath = "media/workTexture/" + uuidv4() + ".png";
     const thumbnailPath = "media/workThumbnail/" + uuidv4() + ".webp";
@@ -172,7 +174,7 @@ router.post("/customize_editing", async function (request, response) {
     const workInfo: workTable = {
       id: uuidv4().substring(36 - 12),
       created_by_user_id: request.user.id,
-      base_category_id: request.cookies.object_id,
+      base_category_id: request.body.baseId,
       name: "情報編集中のアイテム",
       work_tex_path: `${mediaProxyPrefix}${workTexPath}`,
       thumbnail_path: `${mediaProxyPrefix}${thumbnailPath}`,
