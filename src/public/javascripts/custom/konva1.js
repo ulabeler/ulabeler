@@ -562,6 +562,8 @@ const btnsend = () => {
   input.type = "hidden";
   input.value = base;
   input.name = "base";
+  const baseId = document.getElementById("baseId");
+  document.getElementById("finish").appendChild(input);
   document.getElementById("finish").append(input);
 };
 
