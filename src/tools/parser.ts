@@ -145,4 +145,17 @@ function searchQueryParser(query: string): parsedQuery {
   return parsedQuery;
 }
 
+// 今日の天気を取得するメソッド
+/**
+ * @param {string} city 取得したい都市
+ * @return {string} 今日の天気
+ */
+async function getTodayWeather(city: string): Promise<string> {
+  const url = `http://weather.livedoor.com/forecast/webservice/json/v1?city=${city}`;
+  const response = await fetch(url);
+  const json = await response.json();
+  const todayWeather = json.forecasts[0].telop;
+  return todayWeather;
+}
+
 export { pickHashTags, searchWordParse, searchQueryParser };
