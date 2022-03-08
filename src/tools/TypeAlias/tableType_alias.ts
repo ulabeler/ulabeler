@@ -141,7 +141,6 @@ export type workTable = {
   introduction?: string | null;
   num_of_images: number;
   create_at: Date;
-  // ext_name_subcategory: null | string;
 };
 
 export type inquiryTable = {
