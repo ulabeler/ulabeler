@@ -1,0 +1,19 @@
+name: ESLint
+on:
+  push:
+    branches-ignore:
+      - main
+jobs:
+  ESLint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.x
+      - name: ci
+        run: yarn install --immutable --immutable-cache --check-cache
+      - name: ESLint
+        run: yarn lint
