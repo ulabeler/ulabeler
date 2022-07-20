@@ -1,5 +1,3 @@
-# このリポジトリはアーカイブされています。
-
 # 導入
 `sudo git clone -b master --recursive https://github.com/ulabeler/ulabeler.git`  
 `npm install && npm run build`した後DBをいい感じにします。  
