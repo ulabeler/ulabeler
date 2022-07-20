@@ -21,7 +21,8 @@
 				"esbenp.prettier-vscode",
 				"vector-of-bool.gitflow",
 				"oderwat.indent-rainbow",
-				"EditorConfig.EditorConfig"
+				"EditorConfig.EditorConfig",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	},
