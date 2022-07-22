@@ -1,11 +1,292 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model administrator {
+  id      String    @id @db.VarChar(15)
+  name    String?   @db.VarChar(45)
+  inquiry inquiry[]
+}
+
+model base_category {
+  id                Int               @id @default(autoincrement())
+  vendor_id         Int
+  name_category     String            @db.VarChar(45)
+  name_subcategory  String            @db.VarChar(45)
+  category_settings category_settings @relation(fields: [name_subcategory], references: [name], onDelete: NoAction, onUpdate: NoAction, map: "category_settings_name")
+  vendor            vendor            @relation(fields: [vendor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "vendor_id")
+  base_settings     base_settings?
+  work              work[]
+
+  @@index([name_subcategory], map: "category_settings_name_idx")
+  @@index([vendor_id], map: "vendor_id_idx")
+}
+
+model base_settings {
+  id             Int           @id @default(autoincrement())
+  object_path    String?       @db.VarChar(255)
+  base_tex_path  String        @db.VarChar(255)
+  thumbnail_path String        @db.VarChar(255)
+  unit_price     Int
+  created_at     DateTime      @db.DateTime(0)
+  deleted_at     DateTime?     @db.DateTime(0)
+  base_category  base_category @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "T_category_id")
+}
+
+model cart {
+  workId   String @db.Char(12)
+  userId   String @db.VarChar(45)
+  quantity Int    @db.SmallInt
+  user     user   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userId")
+  work     work   @relation(fields: [workId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "workId")
+
+  @@id([workId, userId])
+  @@index([userId], map: "userId_idx")
+}
+
+model category_settings {
+  name           String          @id @db.VarChar(45)
+  thumbnail_path String?         @db.VarChar(255)
+  created_at     DateTime?       @db.DateTime(0)
+  base_category  base_category[]
+}
+
+model delivery_address {
+  user_id             String   @db.VarChar(15)
+  updated_at          DateTime @db.DateTime(0)
+  zip_code            String   @db.Char(7)
+  address             String   @db.VarChar(255)
+  familyname          String   @db.VarChar(15)
+  firstname           String   @db.VarChar(15)
+  familyname_furigana String   @db.VarChar(45)
+  firstname_furigana  String   @db.VarChar(45)
+  user                user     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_delivery_addr")
+
+  @@id([user_id, updated_at])
+}
+
+model delivery_status {
+  purchase_record_id  String           @id @db.VarChar(20)
+  datetime_scheduled  String?          @db.VarChar(20)
+  current_status      String?          @db.VarChar(45)
+  zip_code            String?          @db.Char(7)
+  address             String           @db.VarChar(255)
+  familyname          String           @db.VarChar(15)
+  firstname           String           @db.VarChar(15)
+  familyname_furigana String?          @db.VarChar(45)
+  firstname_furigana  String?          @db.VarChar(45)
+  datetime_results    DateTime?        @db.DateTime(0)
+  updated_at          DateTime?        @db.DateTime(0)
+  purchase_history    purchase_history @relation(fields: [purchase_record_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "purchase_record_id")
+}
+
+model favorited_user {
+  favorite_from                           String   @db.VarChar(15)
+  favorite_to                             String   @db.VarChar(15)
+  favorited_at                            DateTime @db.DateTime(0)
+  user_favorited_user_favorite_fromTouser user     @relation("favorited_user_favorite_fromTouser", fields: [favorite_from], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_fav_user_from")
+  user_favorited_user_favorite_toTouser   user     @relation("favorited_user_favorite_toTouser", fields: [favorite_to], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_fav_user_to")
+
+  @@id([favorite_from, favorite_to])
+  @@index([favorite_to], map: "user_id_fav_user_to_idx")
+}
+
+model favorited_user_number {
+  favorited_to_id String @id @db.VarChar(15)
+  number          Int    @default(0)
+  user            user   @relation(fields: [favorited_to_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_favnum_user")
+}
+
+model favorited_work {
+  favorite_from String   @db.VarChar(15)
+  favorite_to   String   @db.Char(12)
+  favorited_at  DateTime @db.DateTime(0)
+  user          user     @relation(fields: [favorite_from], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_fav_work")
+  work          work     @relation(fields: [favorite_to], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "work_id_fav_work")
+
+  @@id([favorite_from, favorite_to])
+  @@index([favorite_to], map: "F_work_ID_idx")
+}
+
+model favorited_work_number {
+  favorited_to_id String @id @db.Char(12)
+  number          Int    @default(0)
+  work            work   @relation(fields: [favorited_to_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "favorited_to_id")
+}
+
+model inquiry {
+  id                 Int           @id @default(autoincrement())
+  user_id            String        @db.VarChar(15)
+  category           Int           @db.TinyInt
+  description        Json
+  name               String        @db.VarChar(45)
+  mail_address       String        @db.VarChar(255)
+  status             String        @db.VarChar(45)
+  reply              Json?
+  replyed_by_user_id String        @db.VarChar(15)
+  posted_at          DateTime      @db.DateTime(0)
+  updated_at         DateTime      @db.DateTime(0)
+  administrator      administrator @relation(fields: [replyed_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "admin_id_inq")
+  user               user          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_inq")
+
+  @@index([replyed_by_user_id], map: "admin_id_inq_idx")
+  @@index([user_id], map: "id_user_idx")
+}
+
+model mail_confirmation {
+  user_id            String   @db.VarChar(15)
+  datetime_issue     DateTime @db.DateTime(0)
+  mailaddress_new    String?  @db.VarChar(255)
+  token_confirmation String   @db.Char(4)
+  user               user     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_main_confim")
+
+  @@id([user_id, datetime_issue])
+  @@index([user_id], map: "F_user_ID_idx")
+}
+
+model password_reset {
+  id             String   @db.VarChar(15)
+  datetime_issue DateTime @db.DateTime(0)
+  temp_password  String   @db.VarChar(255)
+  token          String   @unique(map: "token_UNIQUE") @db.Char(32)
+  user           user     @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_pass_reset")
+
+  @@id([id, datetime_issue])
+}
+
+model purchase_history {
+  id                     String                   @id @db.VarChar(20)
+  user_id                String                   @db.VarChar(15)
+  number_invoice         String?                  @db.VarChar(20)
+  purchased_at           DateTime?                @db.DateTime(0)
+  payment_method         String                   @db.VarChar(45)
+  user                   user                     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_purchase")
+  delivery_status        delivery_status?
+  purchased_history_item purchased_history_item[]
+
+  @@index([user_id], map: "user_id_Index")
+}
+
+model purchased_history_item {
+  purchase_history_id String           @db.VarChar(20)
+  work_id             String           @db.Char(12)
+  quantity            Int              @db.SmallInt
+  purchase_history    purchase_history @relation(fields: [purchase_history_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "purchase_history_id")
+  work                work             @relation(fields: [work_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "work_id")
+
+  @@id([purchase_history_id, work_id])
+  @@index([work_id], map: "work_id_idx")
+}
+
+model report {
+  id                                      Int      @id @default(autoincrement())
+  reported_to_user_id                     String   @db.VarChar(15)
+  reported_from_user_id                   String   @db.VarChar(15)
+  category_id                             Int      @db.TinyInt
+  reported_description                    String   @db.Text
+  reported_at                             DateTime @db.DateTime(0)
+  user_report_reported_from_user_idTouser user     @relation("report_reported_from_user_idTouser", fields: [reported_from_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_report_from")
+  user_report_reported_to_user_idTouser   user     @relation("report_reported_to_user_idTouser", fields: [reported_to_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_report_to")
+
+  @@index([reported_to_user_id], map: "F_user_ID_idx1")
+  @@index([reported_from_user_id], map: "user_id_report_from_idx")
+}
+
+model sample_images {
+  id                 Int       @id @default(autoincrement())
+  sample_images_path String?   @db.VarChar(255)
+  added_at           DateTime? @db.DateTime(0)
+}
+
+model stamp_settings {
+  id               Int                @id @default(autoincrement())
+  name             String             @unique(map: "name_UNIQUE") @db.VarChar(45)
+  img_path         String             @db.VarChar(255)
+  unit_price       Int
+  work_used_stamps work_used_stamps[]
+}
+
+model tempdeliverysettings {
+  userId                        String   @id @db.VarChar(15)
+  estimatedDeliveryDate         DateTime @db.DateTime(0)
+  estimatedDeliveryTimeCategory String   @db.VarChar(45)
+  effectiveDate                 DateTime @db.DateTime(0)
+}
+
+model user {
+  id                                                String                 @id @db.VarChar(15)
+  name                                              String                 @db.VarChar(45)
+  password                                          String                 @db.VarChar(255)
+  mailaddress                                       String                 @unique(map: "mailaddress_UNIQUE") @db.VarChar(255)
+  icon_path                                         String?                @db.VarChar(255)
+  self_introduction                                 String?                @db.Text
+  cardnumber                                        String?                @db.Char(16)
+  name_card                                         String?                @db.VarChar(45)
+  expiration                                        String?                @db.Char(4)
+  created_at                                        DateTime               @db.DateTime(0)
+  deleted_at                                        DateTime?              @db.DateTime(0)
+  cart                                              cart[]
+  delivery_address                                  delivery_address[]
+  favorited_user_favorited_user_favorite_fromTouser favorited_user[]       @relation("favorited_user_favorite_fromTouser")
+  favorited_user_favorited_user_favorite_toTouser   favorited_user[]       @relation("favorited_user_favorite_toTouser")
+  favorited_user_number                             favorited_user_number?
+  favorited_work                                    favorited_work[]
+  inquiry                                           inquiry[]
+  mail_confirmation                                 mail_confirmation[]
+  password_reset                                    password_reset[]
+  purchase_history                                  purchase_history[]
+  report_report_reported_from_user_idTouser         report[]               @relation("report_reported_from_user_idTouser")
+  report_report_reported_to_user_idTouser           report[]               @relation("report_reported_to_user_idTouser")
+  work                                              work[]
+
+  @@index([id], map: "id_idx")
+  @@index([mailaddress], map: "mailaddress_idx")
+  @@index([name], map: "name_idx")
+}
+
+model vendor {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(255)
+  base_category base_category[]
+}
+
+model work {
+  id                     String                   @id @db.Char(12)
+  created_by_user_id     String                   @db.VarChar(15)
+  base_category_id       Int
+  name                   String                   @db.VarChar(40)
+  work_tex_path          String                   @unique(map: "work_tex_path_UNIQUE") @db.VarChar(255)
+  thumbnail_path         String                   @unique(map: "thumbnail_path_UNIQUE") @db.VarChar(255)
+  flag_public            Int                      @db.TinyInt
+  unit_price             Decimal                  @db.Decimal(10, 0)
+  hashtag                Json?
+  introduction           String?                  @db.VarChar(255)
+  num_of_images          Int?                     @default(0) @db.TinyInt
+  create_at              DateTime                 @db.DateTime(0)
+  base_category          base_category            @relation(fields: [base_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category_id")
+  user                   user                     @relation(fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_work")
+  cart                   cart[]
+  favorited_work         favorited_work[]
+  favorited_work_number  favorited_work_number?
+  purchased_history_item purchased_history_item[]
+  work_used_stamps       work_used_stamps[]
+
+  @@index([created_by_user_id], map: "F_user_ID_idx")
+  @@index([base_category_id], map: "category_id_idx")
+}
+
+model work_used_stamps {
+  work_id           String         @db.Char(12)
+  stamp_settings_id Int
+  num_used          Int?
+  stamp_settings    stamp_settings @relation(fields: [stamp_settings_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_stamp")
+  work              work           @relation(fields: [work_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_work")
+
+  @@id([work_id, stamp_settings_id])
+  @@index([stamp_settings_id], map: "id_stamp_idx")
 }
