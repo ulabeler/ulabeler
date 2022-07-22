@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -33,8 +33,8 @@ model base_settings {
   base_tex_path  String        @db.VarChar(255)
   thumbnail_path String        @db.VarChar(255)
   unit_price     Int
-  created_at     DateTime      @db.DateTime(0)
-  deleted_at     DateTime?     @db.DateTime(0)
+  created_at     DateTime
+  deleted_at     DateTime?
   base_category  base_category @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "T_category_id")
 }
 
@@ -52,13 +52,13 @@ model cart {
 model category_settings {
   name           String          @id @db.VarChar(45)
   thumbnail_path String?         @db.VarChar(255)
-  created_at     DateTime?       @db.DateTime(0)
+  created_at     DateTime?
   base_category  base_category[]
 }
 
 model delivery_address {
   user_id             String   @db.VarChar(15)
-  updated_at          DateTime @db.DateTime(0)
+  updated_at          DateTime
   zip_code            String   @db.Char(7)
   address             String   @db.VarChar(255)
   familyname          String   @db.VarChar(15)
@@ -80,15 +80,15 @@ model delivery_status {
   firstname           String           @db.VarChar(15)
   familyname_furigana String?          @db.VarChar(45)
   firstname_furigana  String?          @db.VarChar(45)
-  datetime_results    DateTime?        @db.DateTime(0)
-  updated_at          DateTime?        @db.DateTime(0)
+  datetime_results    DateTime?
+  updated_at          DateTime?
   purchase_history    purchase_history @relation(fields: [purchase_record_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "purchase_record_id")
 }
 
 model favorited_user {
   favorite_from                           String   @db.VarChar(15)
   favorite_to                             String   @db.VarChar(15)
-  favorited_at                            DateTime @db.DateTime(0)
+  favorited_at                            DateTime
   user_favorited_user_favorite_fromTouser user     @relation("favorited_user_favorite_fromTouser", fields: [favorite_from], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_fav_user_from")
   user_favorited_user_favorite_toTouser   user     @relation("favorited_user_favorite_toTouser", fields: [favorite_to], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_fav_user_to")
 
@@ -105,7 +105,7 @@ model favorited_user_number {
 model favorited_work {
   favorite_from String   @db.VarChar(15)
   favorite_to   String   @db.Char(12)
-  favorited_at  DateTime @db.DateTime(0)
+  favorited_at  DateTime
   user          user     @relation(fields: [favorite_from], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_fav_work")
   work          work     @relation(fields: [favorite_to], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "work_id_fav_work")
 
@@ -122,15 +122,15 @@ model favorited_work_number {
 model inquiry {
   id                 Int           @id @default(autoincrement())
   user_id            String        @db.VarChar(15)
-  category           Int           @db.TinyInt
+  category           Int           @db.SmallInt
   description        Json
   name               String        @db.VarChar(45)
   mail_address       String        @db.VarChar(255)
   status             String        @db.VarChar(45)
   reply              Json?
   replyed_by_user_id String        @db.VarChar(15)
-  posted_at          DateTime      @db.DateTime(0)
-  updated_at         DateTime      @db.DateTime(0)
+  posted_at          DateTime
+  updated_at         DateTime
   administrator      administrator @relation(fields: [replyed_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "admin_id_inq")
   user               user          @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_inq")
 
@@ -140,18 +140,17 @@ model inquiry {
 
 model mail_confirmation {
   user_id            String   @db.VarChar(15)
-  datetime_issue     DateTime @db.DateTime(0)
+  datetime_issue     DateTime
   mailaddress_new    String?  @db.VarChar(255)
   token_confirmation String   @db.Char(4)
   user               user     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_main_confim")
 
   @@id([user_id, datetime_issue])
-  @@index([user_id], map: "F_user_ID_idx")
 }
 
 model password_reset {
   id             String   @db.VarChar(15)
-  datetime_issue DateTime @db.DateTime(0)
+  datetime_issue DateTime
   temp_password  String   @db.VarChar(255)
   token          String   @unique(map: "token_UNIQUE") @db.Char(32)
   user           user     @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_pass_reset")
@@ -163,7 +162,7 @@ model purchase_history {
   id                     String                   @id @db.VarChar(20)
   user_id                String                   @db.VarChar(15)
   number_invoice         String?                  @db.VarChar(20)
-  purchased_at           DateTime?                @db.DateTime(0)
+  purchased_at           DateTime?
   payment_method         String                   @db.VarChar(45)
   user                   user                     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_purchase")
   delivery_status        delivery_status?
@@ -187,9 +186,9 @@ model report {
   id                                      Int      @id @default(autoincrement())
   reported_to_user_id                     String   @db.VarChar(15)
   reported_from_user_id                   String   @db.VarChar(15)
-  category_id                             Int      @db.TinyInt
+  category_id                             Int      @db.SmallInt
   reported_description                    String   @db.Text
-  reported_at                             DateTime @db.DateTime(0)
+  reported_at                             DateTime
   user_report_reported_from_user_idTouser user     @relation("report_reported_from_user_idTouser", fields: [reported_from_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_report_from")
   user_report_reported_to_user_idTouser   user     @relation("report_reported_to_user_idTouser", fields: [reported_to_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_report_to")
 
@@ -200,7 +199,7 @@ model report {
 model sample_images {
   id                 Int       @id @default(autoincrement())
   sample_images_path String?   @db.VarChar(255)
-  added_at           DateTime? @db.DateTime(0)
+  added_at           DateTime?
 }
 
 model stamp_settings {
@@ -213,9 +212,9 @@ model stamp_settings {
 
 model tempdeliverysettings {
   userId                        String   @id @db.VarChar(15)
-  estimatedDeliveryDate         DateTime @db.DateTime(0)
+  estimatedDeliveryDate         DateTime
   estimatedDeliveryTimeCategory String   @db.VarChar(45)
-  effectiveDate                 DateTime @db.DateTime(0)
+  effectiveDate                 DateTime
 }
 
 model user {
@@ -228,8 +227,8 @@ model user {
   cardnumber                                        String?                @db.Char(16)
   name_card                                         String?                @db.VarChar(45)
   expiration                                        String?                @db.Char(4)
-  created_at                                        DateTime               @db.DateTime(0)
-  deleted_at                                        DateTime?              @db.DateTime(0)
+  created_at                                        DateTime
+  deleted_at                                        DateTime?
   cart                                              cart[]
   delivery_address                                  delivery_address[]
   favorited_user_favorited_user_favorite_fromTouser favorited_user[]       @relation("favorited_user_favorite_fromTouser")
@@ -262,12 +261,12 @@ model work {
   name                   String                   @db.VarChar(40)
   work_tex_path          String                   @unique(map: "work_tex_path_UNIQUE") @db.VarChar(255)
   thumbnail_path         String                   @unique(map: "thumbnail_path_UNIQUE") @db.VarChar(255)
-  flag_public            Int                      @db.TinyInt
-  unit_price             Decimal                  @db.Decimal(10, 0)
+  flag_public            Boolean
+  unit_price             Decimal                  @db.Money
   hashtag                Json?
   introduction           String?                  @db.VarChar(255)
-  num_of_images          Int?                     @default(0) @db.TinyInt
-  create_at              DateTime                 @db.DateTime(0)
+  num_of_images          Int?                     @default(0) @db.SmallInt
+  create_at              DateTime
   base_category          base_category            @relation(fields: [base_category_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "category_id")
   user                   user                     @relation(fields: [created_by_user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "user_id_work")
   cart                   cart[]
