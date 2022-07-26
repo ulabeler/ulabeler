@@ -7,7 +7,6 @@ module.exports = {
 	'extends': [
 		'plugin:react/recommended',
 		'google',
-		'next/core-web-vitals',
 	],
 	'parser': '@typescript-eslint/parser',
 	'parserOptions': {
@@ -22,10 +21,23 @@ module.exports = {
 		'@typescript-eslint',
 	],
 	'rules': {
+		'require-jsdoc': 'off',
+		'no-tabs': 'off',
+		'max-len': 'off',
 		'indent': [
 			'error',
 			'tab',
 		],
-		'no-tabs': 'off',
+		'no-unused-vars': 'warn',
+		'new-cap': [
+			'error',
+			{
+				'capIsNewExceptions': [
+					'Router',
+					'Controller',
+					'Get',
+				],
+			},
+		],
 	},
 };

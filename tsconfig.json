@@ -2,13 +2,12 @@
 	"compilerOptions": {
 		"incremental": false,
 		"target": "ESNext",
-		"module": "esnext",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
+		"module": "NodeNext",
+		"allowJs": false,
 		"rootDir": "src",
 		"typeRoots": ["src/@types", "node_modules/@types"],
 		"baseUrl": ".",
-		"moduleResolution": "NodeNext",
+		"outDir": "./built",
 		"declaration": true,
 		"removeComments": true,
 		"noEmitOnError": true,
@@ -20,21 +19,20 @@
 		"noFallthroughCasesInSwitch": true,
 		"skipLibCheck": true,
 		"noImplicitReturns": true,
+		"resolveJsonModule": true,
 		"noLib": false,
 		"sourceMap": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
-		"noEmit": true,
-		"isolatedModules": true,
-		"jsx": "preserve",
+		"strictPropertyInitialization": false,
 		"paths": {
 			"@/*": ["src/*"],
 			"@modules/*": ["src/modules/*"],
 			"@config/*": [".config/*"],
-			"@utils/*": ["src/utils/*"]
-		},
-		"resolveJsonModule": true
+			"@utils/*": ["src/utils/*"],
+			"@types/*": ["src/types/*"],
+			"@routes/*": ["src/routes/*"]
+		}
 	},
-	"include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx"],
-	"exclude": ["node_modules"]
+	"include": ["./src/**/*.ts"]
 }
