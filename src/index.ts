@@ -5,6 +5,7 @@ import {UlabelerServer} from './server.js';
 import path from 'path';
 import flash from 'connect-flash';
 import favicon from 'serve-favicon';
+import {dirname} from './utils/dirname.js';
 
 // ミドルウェアを配列の形で列挙
 const middleware = [
@@ -14,9 +15,9 @@ const middleware = [
 	bodyParser.json({limit: '10mb'}),
 	express.json(),
 	express.urlencoded({extended: false}),
-	express.static(path.join(path.dirname(new URL(import.meta.url).pathname), '../files/public')),
+	express.static(path.join(dirname, '../files/public')),
 	flash(),
-	favicon(path.join(path.dirname(new URL(import.meta.url).pathname), '../files/system', 'favicon.ico')),
+	favicon(path.join(dirname, '../files/system', 'favicon.ico')),
 ];
 
 // ルーティングを配列の形で列挙

@@ -29,5 +29,13 @@ module.exports = {
 			'tab',
 		],
 		'no-unused-vars': 'warn',
+		'new-cap': [
+			'error',
+			{
+				'capIsNewExceptions': [
+					'Router',
+				],
+			},
+		],
 	},
 };
