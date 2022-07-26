@@ -17,6 +17,7 @@
 		"@prisma/client": "4.1.0",
 		"autobind-decorator": "^2.4.0",
 		"body-parser": "^1.20.0",
+		"chalk": "^5.0.1",
 		"connect-flash": "^0.1.1",
 		"dotenv": "^16.0.1",
 		"express": "^4.18.1",

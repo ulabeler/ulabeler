@@ -8,11 +8,11 @@ export class UlabelerServer {
 	private readonly app: express.Application = express();
 	private readonly port: number = config.port;
 
-	constructor(middleware: Array<RequestHandler>, route: Array<Router> = []) {
+	constructor(middleware: Array<RequestHandler>, route: Array<Router>) {
 		// ミドルウェアを追加
 		this.setMiddleware(middleware);
 
-		// ルーティング追加
+		// TODO: ルーティング追加
 		route.forEach((r) => {
 			// this.app.use(r.path, r.router);
 		});

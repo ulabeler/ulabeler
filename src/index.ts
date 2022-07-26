@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Router} from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import {UlabelerServer} from './server.js';
@@ -6,6 +6,7 @@ import path from 'path';
 import flash from 'connect-flash';
 import favicon from 'serve-favicon';
 
+// ミドルウェアを配列の形で列挙
 const middleware = [
 	logger('dev'),
 	bodyParser.urlencoded({extended: true, limit: '10mb'}),
@@ -18,4 +19,8 @@ const middleware = [
 	favicon(path.join(path.dirname(new URL(import.meta.url).pathname), '../files/system', 'favicon.ico')),
 ];
 
-new UlabelerServer(middleware);
+// ルーティングを配列の形で列挙
+// TODO: どうやるか未定なので型はとりあえず適当な感じに
+const routes: Array<Router> = [];
+
+new UlabelerServer(middleware, routes);
