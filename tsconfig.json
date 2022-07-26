@@ -28,7 +28,8 @@
 			"@/*": ["src/*"],
 			"@modules/*": ["src/modules/*"],
 			"@config/*": [".config/*"],
-			"@utils/*": ["src/utils/*"]
+			"@utils/*": ["src/utils/*"],
+			"@types/*": ["src/types/*"]
 		}
 	},
 	"include": ["./src/**/*.ts"]
