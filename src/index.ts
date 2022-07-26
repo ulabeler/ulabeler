@@ -9,7 +9,7 @@ import {dirname} from './utils/dirname.js';
 // import {Ulabeler} from './types/utils.js';
 
 // ミドルウェアを配列の形で列挙
-const middleware = [
+const middleware: Array<Function> | Array<string> = [
 	logger('dev'),
 	bodyParser.urlencoded({extended: true, limit: '10mb'}),
 	bodyParser.raw({limit: '10mb'}),
@@ -22,13 +22,12 @@ const middleware = [
 ];
 
 // ルーティングを配列の形で列挙
-import {TestAPIRouter} from '@routes/api/v1/test.js';
-import {TestAPIRouter2} from '@routes/api/v1/test2.js';
-import {TestAPIRouter3} from '@routes/api/v1/test3.js';
-const routes: Array<any> = [
-	new TestAPIRouter(),
-	new TestAPIRouter2(),
-	new TestAPIRouter3(),
+// import {TestAPIRouter} from '@routes/api/v1/test.js';
+// import {TestAPIRouter2} from '@routes/api/v1/test2.js';
+// import {TestAPIRouter3} from '@routes/api/v1/test3.js';
+import {TestAPIRouter4} from '@routes/api/v1/test4.js';
+const routes: Array<Function> | Array<string> = [
+	TestAPIRouter4,
 ];
 
 new UlabelerServer(middleware, routes);

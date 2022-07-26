@@ -24,6 +24,7 @@
 		"sourceMap": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
+		"strictPropertyInitialization": false,
 		"paths": {
 			"@/*": ["src/*"],
 			"@modules/*": ["src/modules/*"],

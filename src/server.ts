@@ -1,21 +1,18 @@
-import express, {RequestHandler} from 'express';
-import {boundMethod} from 'autobind-decorator';
+import express from 'express';
+import {useExpressServer} from 'routing-controllers';
 import {config} from '@/config.js';
 import {PrismaClient} from '@prisma/client';
-import {Ulabeler} from './types/utils.js';
 export const prisma = new PrismaClient();
 
 export class UlabelerServer {
 	private readonly app: express.Application = express();
 	private readonly port: number = config.port;
 
-	constructor(middleware: Array<RequestHandler>, routes: Array<any>) {
-		// ミドルウェアを追加
-		this.setMiddleware(middleware);
-
+	constructor(middleware: Array<Function> | Array<string>, routes: Array<Function> | Array<string>) {
 		// TODO: ルーティング追加
-		routes.forEach((route: Ulabeler.routerRegister) => {
-			this.app.use(route.basePath, route.router);
+		useExpressServer(this.app, {
+			controllers: routes,
+			middlewares: middleware,
 		});
 
 		// 起動
@@ -23,11 +20,4 @@ export class UlabelerServer {
 			console.log(`Server listening on port ${this.port}`);
 		});
 	};
-
-	@boundMethod
-	private setMiddleware(middleware: Array<RequestHandler>): void {
-		middleware.forEach((m) => {
-			this.app.use(m);
-		});
-	}
 };
