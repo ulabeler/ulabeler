@@ -42,5 +42,13 @@
 		"eslint-config-google": "^0.14.0",
 		"eslint-plugin-react": "^7.30.1",
 		"typescript": "^4.7.4"
-	}
+	},
+	"eslintIgnore": [
+		".eslintrc.js",
+		"node_modules",
+		"built",
+		"scripts",
+		"test",
+		"assets"
+	]
 }
