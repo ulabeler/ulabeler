@@ -15,9 +15,9 @@ const middleware = [
 	bodyParser.json({limit: '10mb'}),
 	express.json(),
 	express.urlencoded({extended: false}),
-	express.static(path.join(dirname, '../files/public')),
+	express.static(path.join(dirname(import.meta.url), '../files/public')),
 	flash(),
-	favicon(path.join(dirname, '../files/system', 'favicon.ico')),
+	favicon(path.join(dirname(import.meta.url), '../files/system', 'favicon.ico')),
 ];
 
 // ルーティングを配列の形で列挙
