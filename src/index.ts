@@ -1,4 +1,4 @@
-import express, {Router} from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import {UlabelerServer} from './server.js';
@@ -6,6 +6,7 @@ import path from 'path';
 import flash from 'connect-flash';
 import favicon from 'serve-favicon';
 import {dirname} from './utils/dirname.js';
+// import {Ulabeler} from './types/utils.js';
 
 // ミドルウェアを配列の形で列挙
 const middleware = [
@@ -21,7 +22,13 @@ const middleware = [
 ];
 
 // ルーティングを配列の形で列挙
-// TODO: どうやるか未定なので型はとりあえず適当な感じに
-const routes: Array<Router> = [];
+import {TestAPIRouter} from '@routes/api/v1/test.js';
+import {TestAPIRouter2} from '@routes/api/v1/test2.js';
+import {TestAPIRouter3} from '@routes/api/v1/test3.js';
+const routes: Array<any> = [
+	new TestAPIRouter(),
+	new TestAPIRouter2(),
+	new TestAPIRouter3(),
+];
 
 new UlabelerServer(middleware, routes);

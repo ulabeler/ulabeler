@@ -29,7 +29,8 @@
 			"@modules/*": ["src/modules/*"],
 			"@config/*": [".config/*"],
 			"@utils/*": ["src/utils/*"],
-			"@types/*": ["src/types/*"]
+			"@types/*": ["src/types/*"],
+			"@routes/*": ["src/routes/*"]
 		}
 	},
 	"include": ["./src/**/*.ts"]

@@ -1,20 +1,21 @@
-import express, {RequestHandler, Router} from 'express';
+import express, {RequestHandler} from 'express';
 import {boundMethod} from 'autobind-decorator';
 import {config} from '@/config.js';
 import {PrismaClient} from '@prisma/client';
+import {Ulabeler} from './types/utils.js';
 export const prisma = new PrismaClient();
 
 export class UlabelerServer {
 	private readonly app: express.Application = express();
 	private readonly port: number = config.port;
 
-	constructor(middleware: Array<RequestHandler>, route: Array<Router>) {
+	constructor(middleware: Array<RequestHandler>, routes: Array<any>) {
 		// ミドルウェアを追加
 		this.setMiddleware(middleware);
 
 		// TODO: ルーティング追加
-		route.forEach((r) => {
-			// this.app.use(r.path, r.router);
+		routes.forEach((route: Ulabeler.routerRegister) => {
+			this.app.use(route.basePath, route.router);
 		});
 
 		// 起動
