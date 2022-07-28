@@ -1,5 +1,5 @@
 import {Controller, Get, Res} from 'routing-controllers';
-import { Response } from 'express';
+import {Response} from 'express';
 // import indexHtml from '../../../client/dist/index.html';
 import {dirname} from '@utils/dirname.js';
 import fs from 'fs';
