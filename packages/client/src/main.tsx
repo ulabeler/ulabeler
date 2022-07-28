@@ -1,9 +1,19 @@
-import React from 'react'
-import { createRoot } from 'react-dom/client';
-import App from './App'
-import './index.css'
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const container = document.getElementById("app");
-const root = createRoot(container!); // createRoot(container!) if you use TypeScript
-root.render(<App />);
+import Home from '@/sample/home/index';
+import About from '@/sample/about/index';
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path={`/`} element={<Home />} />
+				<Route path={`/about`} element={<About />} />
+				{/* 上から順番にマッチしていく */}
+				<Route path="*" element={<div>not found</div>} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;

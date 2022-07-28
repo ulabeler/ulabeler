@@ -23,7 +23,8 @@
 				"oderwat.indent-rainbow",
 				"EditorConfig.EditorConfig",
 				"ms-azuretools.vscode-docker",
-				"Prisma.prisma"
+				"Prisma.prisma",
+				"jundat95.react-native-snippet"
 			]
 		}
 	},

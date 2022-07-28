@@ -5,7 +5,7 @@ module.exports = {
     },
     "extends": [
         "plugin:react/recommended",
-        "standard"
+        "google"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
