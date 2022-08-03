@@ -23,10 +23,8 @@ const middleware: Array<Function> | Array<string> = [
 ];
 
 // ルーティングを配列の形で列挙
-import {PageRouter} from '@routes/pageRouter.js';
 import {TestAPIRouter4} from '@routes/api/v1/test4.js';
 const routes: Array<Function> | Array<string> = [
-	PageRouter,
 	TestAPIRouter4,
 ];
 
