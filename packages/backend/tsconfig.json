@@ -31,7 +31,8 @@
 			"@config/*": [".config/*"],
 			"@utils/*": ["src/utils/*"],
 			"@types/*": ["src/types/*"],
-			"@routes/*": ["src/routes/*"]
+			"@routes/*": ["src/routes/*"],
+			"@cleintBuilt/*": ["../client/dist/*"]
 		}
 	},
 	"include": ["./src/**/*.ts"]
