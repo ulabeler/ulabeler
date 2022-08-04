@@ -7,8 +7,8 @@
 		"dev": "vite",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
-		"lint": "yarn eslint --ext .js,.ts .",
-		"lint:fix": "yarn eslint --ext .js,.ts . --fix"
+		"lint": "yarn eslint --ext .tsx,.ts ./src",
+		"lint:fix": "yarn eslint --ext .tsx,.ts ./src --fix"
 	},
 	"dependencies": {
 		"@types/node": "18.6.3",
@@ -37,6 +37,7 @@
 		".eslintrc.js",
 		"node_modules",
 		"built",
-		"vite.config.*"
+		"vite.config.*",
+		"vite-env.d.ts"
 	]
 }
