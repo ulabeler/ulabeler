@@ -1,9 +1,11 @@
 export default () => {
+  // 現在のホスト名を取得
+  const hostname = window.location.hostname;
   return (
     <article>
       <br /><br />
       <h3 className="title">サイトポリシー<hr /></h3>
-      <p>U-labeler(以下、当社といいます。)が提供するwebサイト(url)<br />をご利用いただく方は、以下の内容を十分にお読みください。</p>
+      <p>U-labeler(以下、当社といいます。)が提供するwebサイト({hostname})<br />をご利用いただく方は、以下の内容を十分にお読みください。</p>
       <small>※サイトポリシーおよび関連する規定は、変更させていただく場合が
                 ございますので予めご了承ください。</small>
       <div className="content">
