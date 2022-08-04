@@ -1,19 +1,14 @@
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 import Home from '@/sample/home/index';
 import About from '@/sample/about/index';
+import Footer from './components/Footer';
 
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path={`/`} element={<Home />} />
-        <Route path={`/about`} element={<About />} />
-        {/* 上から順番にマッチしていく */}
-        <Route path="*" element={<div>not found</div>} />
-      </Routes>
-    </BrowserRouter>
-  );
-};
-
-export default App;
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+    <React.StrictMode>
+      <Footer />
+    </React.StrictMode>,
+);

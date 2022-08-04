@@ -31,7 +31,8 @@
 		"eslint-plugin-react": "7.30.1",
 		"msw": "^0.44.2",
 		"typescript": "4.7.4",
-		"vite": "3.0.4"
+		"vite": "3.0.4",
+		"vite-tsconfig-paths": "^3.5.0"
 	},
 	"eslintIgnore": [
 		".eslintrc.js",
