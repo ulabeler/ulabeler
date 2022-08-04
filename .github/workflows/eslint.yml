@@ -4,7 +4,7 @@ on:
     branches-ignore:
       - main
 jobs:
-  ESLint:
+  ESLint-Backend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,3 +17,16 @@ jobs:
         run: cd packages/backend && yarn install --immutable --immutable-cache --check-cache
       - name: ESLint
         run: cd packages/backend && yarn lint
+  ESLint-Frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: ci
+        run: cd packages/client && yarn install --immutable --immutable-cache --check-cache
+      - name: ESLint
+        run: cd packages/client && yarn lint
