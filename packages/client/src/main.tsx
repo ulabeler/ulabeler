@@ -8,9 +8,11 @@ import Sitepolicy from '@pages/fromFooter/sitepolicy/index';
 import Faq from '@/pages/fromFooter/faq/index';
 
 import Footer from '@components/Footer/Footer';
+import Header from './components/Header/Header';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
+      <Header />
       <BrowserRouter>
         <Routes>
           {/* <Route path={`/`} element={<Home />} /> */}
