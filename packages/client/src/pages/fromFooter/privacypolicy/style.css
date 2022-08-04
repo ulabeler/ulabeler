@@ -1,0 +1,29 @@
+.title {
+	text-align: center;
+	font-size: 28px;
+	margin-bottom: 60px;
+	color: #707070;
+}
+
+.title hr {
+	height: 2px; /* hrの線の太さ */
+	width: 350px; /* hrの線の長さ */
+	background-color: #707070;
+	border: none;
+	margin-top: -2px;
+}
+
+.box {
+	width: 80%;
+	max-width: 700px;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+	border-radius: 10px; /*枠の丸み*/
+	background-color: #fff;
+	padding: 20px;
+	text-align: left;
+	margin: 0 auto;
+}
+
+.box p {
+	font-size: 17px;
+}

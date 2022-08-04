@@ -23,5 +23,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'require-jsdoc': 'off',
     'react/display-name': 'off',
+    'no-tabs': 'off',
+    'max-len': 'off',
   },
 };

@@ -1,3 +1,6 @@
 {
-	"recommendations": ["ms-vscode-remote.vscode-remote-extensionpack"]
+	"recommendations": [
+		"ms-vscode-remote.vscode-remote-extensionpack",
+		"styled-components.vscode-styled-components"
+	]
 }

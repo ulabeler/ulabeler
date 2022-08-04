@@ -24,7 +24,8 @@
 				"EditorConfig.EditorConfig",
 				"ms-azuretools.vscode-docker",
 				"Prisma.prisma",
-				"jundat95.react-native-snippet"
+				"jundat95.react-native-snippet",
+				"styled-components.vscode-styled-components"
 			]
 		}
 	},

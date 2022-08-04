@@ -1,8 +1,10 @@
+import './Footer.css';
+
 export default () => {
   return (
     <footer>
-      <div className="footer_text1">
-        <table className="footer_text">
+      <div className='footerDiv'>
+        <table className='footerTable'>
           <tr>
             <td>
               <p><a href="/faq">よくある質問</a></p>
