@@ -1,0 +1,3 @@
+[submodule "packages/client"]
+	path = packages/client
+	url = git@github.com:ulabeler/ulabeler-frontend.git
