@@ -1,5 +1,7 @@
 {
+	"type": "module",
 	"scripts": {
-		"client:dev": "cd packages/client && npm run dev"
+		"install": "cd packages/client && yarn install && cd ../backend && yarn install",
+		"client:dev": "cd packages/client && yarn dev"
 	}
 }
