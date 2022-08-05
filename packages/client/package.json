@@ -11,7 +11,7 @@
 		"lint:fix": "yarn eslint --ext .tsx,.ts ./src --fix"
 	},
 	"dependencies": {
-		"@emotion/react": "^11.10.0",
+		"@emotion/react": "11.10.0",
 		"@fortawesome/fontawesome-svg-core": "6.1.2",
 		"@fortawesome/free-solid-svg-icons": "6.1.2",
 		"@fortawesome/react-fontawesome": "0.2.0",
@@ -33,10 +33,10 @@
 		"eslint-plugin-n": "15.2.4",
 		"eslint-plugin-promise": "6.0.0",
 		"eslint-plugin-react": "7.30.1",
-		"msw": "^0.44.2",
+		"msw": "0.44.2",
 		"typescript": "4.7.4",
 		"vite": "3.0.4",
-		"vite-tsconfig-paths": "^3.5.0"
+		"vite-tsconfig-paths": "3.5.0"
 	},
 	"eslintIgnore": [
 		".eslintrc.js",
